@@ -5992,3 +5992,65 @@ ul.top-v2-doors.list-unstyled {
   content: none;
 }
 
+
+/* オーナー追加指示2件（バッチB外・親が直接適用 2026-07-10）:
+   1) もくじふせんのクリーム交互を廃止し全タブ白統一。単調化の補償として
+      傾きの振れ幅をわずかに拡大
+   2) SP/タブレットの見出しは「折り返さない最大サイズ」を見出しごとに
+      個別割り当て（一律12vwを廃止）。あの頃・みんなでの2見出しは
+      設計上の2行を維持し行単位で最大化。上限64pxはタブレット帯の
+      過大化防止 */
+.top-v2-anchor-circle-item:nth-child(even) .top-v2-anchor-circle {
+  --fusen-rot: 1.8deg;
+  background: #fff;
+}
+.top-v2-anchor-circle-item:nth-child(odd) .top-v2-anchor-circle {
+  --fusen-rot: -2deg;
+}
+@media (max-width: 991px) {
+  #faq .top-v2-h,
+  #location .top-v2-h {
+    font-size: min(12vw, 64px);
+  }
+  #stay .top-v2-h,
+  #landscape .top-v2-h,
+  #price .top-v2-h {
+    font-size: min(11vw, 64px);
+  }
+  #usagescene .top-v2-h {
+    font-size: min(9.8vw, 64px);
+  }
+  #playroll .top-v2-h {
+    font-size: min(8vw, 64px);
+  }
+  #flow .top-v2-h {
+    font-size: min(7.4vw, 64px);
+  }
+}
+
+/* 実測微調整: 375pxでprice(11vw)とflow(7.4vw)がマーカー余白ぶん数px溢れて
+   スパン内部折れ → それぞれ一段絞る（折返し禁止が最優先） */
+@media (max-width: 991px) {
+  #price .top-v2-h {
+    font-size: min(10.4vw, 64px);
+  }
+  #flow .top-v2-h {
+    font-size: min(7vw, 64px);
+  }
+}
+
+/* flow再調整: 12文字+マーカー余白がコンテナ327pxに対し6.6vwでようやく1行 */
+@media (max-width: 991px) {
+  #flow .top-v2-h {
+    font-size: min(6.6vw, 60px);
+  }
+}
+
+/* flow最終裁定: <br>入りの設計2行（予約はかんたん/4ステップ）と判明。
+   1行化で縮めるのではなく、他の設計2行見出しと同じ「行単位最大化」を
+   適用して11vwへ（最長行7文字が収まる最大） */
+@media (max-width: 991px) {
+  #flow .top-v2-h {
+    font-size: min(11vw, 64px);
+  }
+}

@@ -242,9 +242,133 @@
     render(false);
   }
 
+  // ---- ハイブリッドボード（TOP: グループ人数＋お子さま人数） --------------
+  // chalk-count（おとな人数のgroupステッパー）とfam-elem/fam-pre（お子さま
+  // 人数のfamilyステッパー）が同居するボード専用。子ども0人のときは
+  // initGroupBoardと1文字も変わらない表示を保ち、1人以上になったら
+  // 家族ボード相当の内訳表示（おとな/小学生/3〜5歳の単価内訳＋合計）へ切替える。
+  function initHybridBoard() {
+    var countEl = document.getElementById('chalk-count');
+    var minus = document.getElementById('chalk-minus');
+    var plus = document.getElementById('chalk-plus');
+    var stepperEl = document.querySelector('.top-v2-chalk-stepper');
+    var seasonBtns = document.querySelectorAll('.top-v2-chalk-season .top-v2-chalk-tab');
+    var formulaEl = document.querySelector('.top-v2-chalk-formula');
+    var answerEl = document.querySelector('.top-v2-chalk-answer');
+    var breakdownEl = document.getElementById('chalk-breakdown');
+    if (!countEl || !minus || !plus || !formulaEl || !answerEl || !breakdownEl) { return; }
+
+    var KID_LIMITS = { elem: { min: 0, max: 12 }, pre: { min: 0, max: 8 } };
+    var countEls = { elem: document.getElementById('fam-elem'), pre: document.getElementById('fam-pre') };
+    var minusBtns = { elem: document.getElementById('fam-elem-minus'), pre: document.getElementById('fam-pre-minus') };
+    var plusBtns = { elem: document.getElementById('fam-elem-plus'), pre: document.getElementById('fam-pre-plus') };
+    var kidsMenuEl = document.querySelector('.top-v2-chalk-menu--kids');
+    var kidsStateEl = kidsMenuEl ? kidsMenuEl.querySelector('.top-v2-chalk-menu-state') : null;
+
+    var MAX = (stepperEl && parseInt(stepperEl.dataset.max, 10)) || 30;
+    var initialSeasonBtn = Array.prototype.filter.call(seasonBtns, function (b) { return b.classList.contains('is-on'); })[0];
+    var season = (initialSeasonBtn && initialSeasonBtn.dataset.season) || 'weekday';
+    var n = parseInt(countEl.textContent, 10);
+    if (isNaN(n)) { n = SEASONS[season].minPeople; }
+    var counts = {
+      elem: parseInt(countEls.elem && countEls.elem.textContent, 10) || 0,
+      pre: parseInt(countEls.pre && countEls.pre.textContent, 10) || 0
+    };
+
+    var meal = setupMealSlots(render);
+    var slots = meal.slots;
+    var choice = meal.choice;
+
+    function render(animate) {
+      var cfg = SEASONS[season];
+      if (n < cfg.minPeople) { n = cfg.minPeople; }
+
+      var mealCost = { adult: 0, elem: 0, pre: 0 };
+      var bdParts = ['宿泊 ' + fmt(cfg.adult)];
+      var anyPaid = false;
+      Object.keys(slots).forEach(function (slot) {
+        var mealKey = choice[slot];
+        if (mealKey !== 'byo') {
+          anyPaid = true;
+          var m = MEALS[mealKey];
+          mealCost.adult += m.adult;
+          mealCost.elem += m.elem;
+          mealCost.pre += m.pre;
+          bdParts.push((MEAL_LABELS[mealKey] || mealKey) + ' ' + fmt(m.adult));
+        }
+      });
+
+      var adultUnit = cfg.adult + mealCost.adult;
+      var elemUnit = cfg.elem + mealCost.elem;
+      var preUnit = cfg.pre + mealCost.pre;
+      var kidsCount = counts.elem + counts.pre;
+      // おとな最小人数ルールでn*adultUnitがfloor(42000/69300)を自動的に
+      // 上回るため、家族ボードのようなfloor補正は不要。
+      var total = n * adultUnit + counts.elem * elemUnit + counts.pre * preUnit;
+
+      countEl.textContent = n + '人';
+      minus.disabled = n <= cfg.minPeople;
+      plus.disabled = n >= MAX;
+
+      ['elem', 'pre'].forEach(function (key) {
+        if (countEls[key]) { countEls[key].textContent = counts[key]; }
+        if (minusBtns[key]) { minusBtns[key].disabled = counts[key] <= KID_LIMITS[key].min; }
+        if (plusBtns[key]) { plusBtns[key].disabled = counts[key] >= KID_LIMITS[key].max; }
+      });
+      if (kidsStateEl) {
+        kidsStateEl.textContent = kidsCount > 0 ? '（' + kidsCount + '人）' : '（なし）';
+      }
+
+      var animateTargets;
+      if (kidsCount === 0) {
+        // 子ども0人: initGroupBoardと1文字も変わらない表示（式は×＝、こたえは割り勘）
+        formulaEl.innerHTML = '<span id="chalk-unit">' + fmt(adultUnit) + '</span> <span class="top-v2-chalk-op">×</span> <span id="chalk-n">' + n + '人</span> <span class="top-v2-chalk-op">=</span> <span id="chalk-total">' + fmt(total) + '</span>';
+        answerEl.innerHTML = 'こたえ：割り勘で 1人 <strong id="chalk-per">' + fmt(adultUnit) + '</strong>〜';
+        breakdownEl.textContent = '1人あたり: ' + bdParts.join(' ＋ ');
+        animateTargets = [document.getElementById('chalk-unit'), document.getElementById('chalk-n'), document.getElementById('chalk-total')];
+      } else {
+        // お子さま1人以上: 家族ボード相当の内訳表示に切替
+        var formulaText = 'おとな' + n + '人';
+        if (counts.elem > 0) { formulaText += ' ＋ 小学生' + counts.elem + '人'; }
+        if (counts.pre > 0) { formulaText += '（＋ 3〜5歳' + counts.pre + '人）'; }
+        formulaEl.textContent = formulaText;
+        answerEl.innerHTML = 'こたえ：みんなで <strong>' + fmt(total) + '</strong>〜';
+        breakdownEl.textContent = '1人あたり: おとな ' + fmt(adultUnit) + '・小学生 ' + fmt(elemUnit) + '・3〜5歳 ' + fmt(preUnit) + (anyPaid ? '（お食事込み）' : '');
+        animateTargets = [formulaEl, answerEl];
+      }
+      if (animate) { animateRewrite(animateTargets); }
+    }
+
+    minus.addEventListener('click', function () { if (n > SEASONS[season].minPeople) { n -= 1; render(true); } });
+    plus.addEventListener('click', function () { if (n < MAX) { n += 1; render(true); } });
+    ['elem', 'pre'].forEach(function (key) {
+      if (!minusBtns[key] || !plusBtns[key]) { return; }
+      minusBtns[key].addEventListener('click', function () {
+        if (counts[key] > KID_LIMITS[key].min) { counts[key] -= 1; render(true); }
+      });
+      plusBtns[key].addEventListener('click', function () {
+        if (counts[key] < KID_LIMITS[key].max) { counts[key] += 1; render(true); }
+      });
+    });
+    seasonBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        season = btn.dataset.season;
+        seasonBtns.forEach(function (b) {
+          b.classList.toggle('is-on', b === btn);
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        render(true);
+      });
+    });
+
+    render(false);
+  }
+
   // ---- ボードタイプ自動判別 ------------------------------------------------
   if (document.getElementById('fam-adult')) {
     initFamilyBoard();
+  } else if (document.getElementById('chalk-count') && document.getElementById('fam-elem')) {
+    initHybridBoard();
   } else if (document.getElementById('chalk-count')) {
     initGroupBoard();
   }
