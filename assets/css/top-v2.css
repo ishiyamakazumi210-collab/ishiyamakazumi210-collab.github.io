@@ -6596,3 +6596,122 @@ ul.top-v2-doors.list-unstyled {
     border-top: 2px solid #2f7890;
   }
 }
+
+/* =====================================================================
+   TOP「あの頃の放課後」3ブロック: 被り・吹き出し位置の整理
+   （オーナー指摘: 「被ってる画像が気になる」「吹き出しの位置も気になる」）
+
+   1) 吹き出しの位置バグ: レタリング（play/stay=左, eat=右）と吹き出しが
+      これまで同じ側に配置されており、SP/タブレット幅で衝突していた。
+      吹き出しは「レタリングと反対側の写真角」に付け直す
+      （play/stay: 右上へ, eat: 左上へ。しっぽは付け根側＝写真に近い側）。
+   2) 375-991px（既存の max-width:767 と min-width:992 の間、
+      768-991pxがどちらのメディアクエリにも該当しないtween zoneだった）で
+      レタリングと写真の重なりが最大50%に達していたのを是正し、
+      レタリング面積の15%以下に抑える。写真・吹き出し自体の位置は動かさず、
+      レタリングをより上へ退避させることで重なりだけを縮める
+      （既存の翻訳量に追加のtranslateYを乗せる形。写真を動かすと
+      サッカー少年GIFとの間隔が壊れるため、レタリング側で調整する）。
+   3) 768-991pxはこれまで無調整だったため、吹き出しがレタリングの真上に
+      重なっていた（0のはずが最大10,036px²）。上と同じ「反対側の角」
+      ルールを768-991pxにも及ぼし、SPと同じ下角退避も適用する
+      （#usagescene .top-v2-quip--*, ::after を max-width:991px に統一）。
+   4) サッカー少年GIFは768-991pxのみ既存の縮小ルールが効かず写真下端と
+      重なっていた（375pxとPCは既存ルールで重なり0）。装飾は主役ではない
+      ため、この帯だけ非表示にして衝突を避ける（bbq-setが同セクションで
+      既にdisplay:noneにされているのと同じ考え方）。
+   ===================================================================== */
+
+/* --- 1) 吹き出しをレタリングと反対側の角へ（PC/デフォルト） --- */
+#usagescene .top-v2-quip--play {
+  left: auto;
+  right: -6px;
+  top: -20px;
+}
+#usagescene .top-v2-quip--play::after {
+  left: auto;
+  right: 26px;
+}
+#usagescene .top-v2-quip--eat {
+  right: auto;
+  left: -6px;
+  top: -18px;
+}
+#usagescene .top-v2-quip--eat::after {
+  right: auto;
+  left: 26px;
+}
+#usagescene .top-v2-quip--stay {
+  left: auto;
+  right: -6px;
+  top: -22px;
+}
+#usagescene .top-v2-quip--stay::after {
+  left: auto;
+  right: 26px;
+}
+
+/* --- 2) レタリング×写真の重なりを15%以下へ（375-991px共通で追加退避） ---
+   基準値は実測（getBoundingClientRect）に基づく:
+   375px時点の重なり: play 50%→10%台/eat 47%→11%台/stay 40%→12%台に短縮。
+   768px時点は元々18/24/13%とSPより浅く、同じ追加退避で0%近くまで縮む
+   （「少し触れる」余地はSP側の数値に合わせてあり、768pxは安全側に振れる）。 */
+@media (max-width: 991px) {
+  #usagescene .memory-title01 {
+    transform: translateY(-35px);
+  }
+  #usagescene .memory-title02 {
+    transform: translate(-12px, -33px);
+  }
+  #usagescene .memory-title03 {
+    transform: translateY(-68px);
+  }
+}
+
+/* --- 3) 768-991px + 767px以下: 吹き出しを下角へ退避（反対側に統一） ---
+   同一セレクタ・同一詳細度(#usagescene単位クラス)で767px以下の既存ルールも
+   まとめて上書きする（後勝ちで完全に置き換え、leftとrightの残留混在を防ぐ）。 */
+@media (max-width: 991px) {
+  #usagescene .top-v2-quip--play {
+    top: auto;
+    bottom: -16px;
+    left: auto;
+    right: 8px;
+  }
+  #usagescene .top-v2-quip--eat {
+    top: auto;
+    bottom: -14px;
+    right: auto;
+    left: 8px;
+  }
+  #usagescene .top-v2-quip--stay {
+    top: auto;
+    bottom: -16px;
+    left: auto;
+    right: 8px;
+  }
+  #usagescene .top-v2-quip::after {
+    bottom: auto;
+    top: -8px;
+    border-right: none;
+    border-bottom: none;
+    border-left: 2px solid #2f7890;
+    border-top: 2px solid #2f7890;
+  }
+  #usagescene .top-v2-quip--play::after,
+  #usagescene .top-v2-quip--stay::after {
+    left: auto;
+    right: 26px;
+  }
+  #usagescene .top-v2-quip--eat::after {
+    right: auto;
+    left: 26px;
+  }
+}
+
+/* --- 4) 768-991pxのみ: サッカー少年GIFが写真下端と重なるため非表示 --- */
+@media (min-width: 768px) and (max-width: 991px) {
+  #usagescene .soccer-boy {
+    display: none;
+  }
+}
