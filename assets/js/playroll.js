@@ -35,7 +35,7 @@
   }
 
   // 行ごとの目標速度(px/秒)。行で微差をつけて機械的な同期を避ける
-  var ROW_SPEEDS = [46, 40, 44, 38];
+  var ROW_SPEEDS = [26, 22, 25, 20];
 
   function rowIndexOf(track) {
     var rows = document.querySelectorAll('.top-v2-playroll-row');
