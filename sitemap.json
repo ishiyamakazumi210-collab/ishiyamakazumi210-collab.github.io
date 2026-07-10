@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-07-10T00:23:30.715Z",
+  "source": "new-hp/src/pages",
+  "policy": "WordPress-derived HTML/CSS is preserved; edit headings, copy, sections, and links in place.",
+  "pages": [
+    {
+      "path": "/about/",
+      "source": "src/pages/about/index.html"
+    },
+    {
+      "path": "/access/",
+      "source": "src/pages/access/index.html"
+    },
+    {
+      "path": "/album/",
+      "source": "src/pages/album/index.html"
+    },
+    {
+      "path": "/contact/",
+      "source": "src/pages/contact/index.html"
+    },
+    {
+      "path": "/family/",
+      "source": "src/pages/family/index.html"
+    },
+    {
+      "path": "/faq/",
+      "source": "src/pages/faq/index.html"
+    },
+    {
+      "path": "/friends/",
+      "source": "src/pages/friends/index.html"
+    },
+    {
+      "path": "/gasshuku/",
+      "source": "src/pages/gasshuku/index.html"
+    },
+    {
+      "path": "/",
+      "source": "src/pages/index.html"
+    },
+    {
+      "path": "/map/",
+      "source": "src/pages/map/index.html"
+    },
+    {
+      "path": "/open-bar/",
+      "source": "src/pages/open-bar/index.html"
+    },
+    {
+      "path": "/play/",
+      "source": "src/pages/play/index.html"
+    },
+    {
+      "path": "/play/option/",
+      "source": "src/pages/play/option/index.html"
+    }
+  ]
+}

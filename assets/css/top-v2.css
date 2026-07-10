@@ -1,0 +1,5548 @@
+/* TOP v2 微調整専用。
+   現行WordPress由来のCSS（style.css / lp-style.css）を正とし、
+   ここには新規コンポーネントを定義しない。
+   旧Codex版のスタイルは top-v2-codex-archive.css に退避済み。 */
+
+.top-v2-enjoy-title {
+  margin: 0;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(26px, 4.4vw, 54px);
+  line-height: 1.32;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.top-v2-cta-big {
+  width: auto;
+  white-space: nowrap;
+  font-size: clamp(17px, 2.2vw, 24px);
+  padding: 18px 116px 18px 44px;
+  min-height: 56px;
+}
+@media (max-width: 767px) {
+  .top-v2-cta-big { display: block; padding: 16px 96px 16px 20px; text-align: center; white-space: normal; }
+}
+
+/* MVヒーロー: キーフレーズはgptimage2生成ロゴ（mv-key-logo.png、透過済み）、
+   メディアパネル＋バッジは元mv-title.png(700x850)の下半分(y=320〜850)を
+   CSSクロップで表示。 */
+.top-v2-mv-stack {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: min(660px, 88%);
+  text-align: center;
+}
+
+.top-v2-mv-key {
+  margin: 0;
+  animation: top-v2-pop 0.5s ease-out both;
+}
+
+.top-v2-mv-key img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(20, 50, 65, 0.35));
+}
+
+@keyframes top-v2-pop {
+  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-mv-key { animation: none; }
+}
+
+.top-v2-mv-price {
+  animation: top-v2-fade-up 0.52s 0.14s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.top-v2-mv-ribbon {
+  animation: top-v2-fade-up 0.52s 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.top-v2-mv-panel {
+  animation: top-v2-fade-up 0.52s 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.top-v2-mv-badges li {
+  animation: top-v2-badge-in 0.58s cubic-bezier(0.18, 0.9, 0.24, 1.25) both;
+}
+
+.top-v2-mv-badges li:nth-child(1) { animation-delay: 0.44s; }
+.top-v2-mv-badges li:nth-child(2) { animation-delay: 0.52s; }
+.top-v2-mv-badges li:nth-child(3) { animation-delay: 0.60s; }
+
+@keyframes top-v2-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: none;
+  }
+}
+
+@keyframes top-v2-badge-in {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.84) rotate(-3deg);
+    filter: blur(2px);
+  }
+  72% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.04) rotate(1deg);
+    filter: none;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-mv-price,
+  .top-v2-mv-ribbon,
+  .top-v2-mv-panel,
+  .top-v2-mv-badges li {
+    animation: none;
+  }
+}
+
+.top-v2-mv-price {
+  display: inline-block;
+  margin: 12px auto 0;
+  padding: 7px 24px;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(14px, 1.8vw, 20px);
+  box-shadow: 0 3px 10px rgba(20, 50, 65, 0.25);
+}
+
+.top-v2-mv-price strong {
+  color: #f0831e;
+  font-size: 1.3em;
+}
+
+/* リボン（生成画像）はパネル上端に少し重ねる */
+.top-v2-mv-ribbon {
+  position: relative;
+  z-index: 2;
+  width: min(280px, 50%);
+  margin: 10px auto -15px;
+}
+
+.top-v2-mv-ribbon img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 3px 8px rgba(20, 50, 65, 0.3));
+}
+
+.top-v2-mv-panel {
+  width: 86%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 12px;
+  padding: 26px 16px 14px;
+  box-shadow: 0 4px 14px rgba(20, 50, 65, 0.25);
+}
+
+.top-v2-mv-panel img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: clamp(90px, 12vw, 116px);
+  object-fit: contain;
+}
+
+.top-v2-mv-badges {
+  display: flex;
+  justify-content: center;
+  gap: 3%;
+  width: 84%;
+  margin: 12px auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.top-v2-mv-badges li {
+  width: 30%;
+}
+
+.top-v2-mv-badges img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 3px 8px rgba(20, 50, 65, 0.3));
+}
+
+@media (max-width: 767px) {
+  .top-v2-mv-stack {
+    width: 90%;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .top-v2-mv-stack {
+    width: min(540px, 50vw);
+  }
+
+  .top-v2-mv-price {
+    margin-top: 8px;
+    padding: 6px 20px;
+    font-size: 16px;
+  }
+
+  .top-v2-mv-ribbon {
+    width: min(230px, 48%);
+    margin: 8px auto -12px;
+  }
+
+  .top-v2-mv-panel {
+    width: 80%;
+    padding: 22px 14px 12px;
+  }
+
+  .top-v2-mv-panel img {
+    max-height: 86px;
+  }
+
+  .top-v2-mv-badges {
+    width: 74%;
+    gap: 2.5%;
+    margin-top: 10px;
+  }
+}
+
+/* 料金セクション（#price / #banner）: 焼き込み画像からHTMLカードへ置換 */
+.top-v2-price {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.top-v2-price-card {
+  background: #fff;
+  border: 2px solid #2f7890;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(47, 120, 144, 0.12);
+}
+
+.top-v2-price-title {
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(19px, 2.4vw, 26px);
+  text-align: center;
+  margin: 0 0 14px;
+}
+
+.top-v2-price-title small {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #665a4a;
+}
+
+.top-v2-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid #f2dfb6;
+}
+
+.top-v2-price-row:last-child {
+  border-bottom: none;
+}
+
+.top-v2-price-row dt {
+  font-weight: 800;
+  color: #2e2518;
+}
+
+.top-v2-price-row dt small {
+  display: block;
+  font-size: 12px;
+  color: #665a4a;
+  font-weight: 700;
+}
+
+.top-v2-price-row dd {
+  margin: 0;
+}
+
+.top-v2-price-row dd strong {
+  color: #f0831e;
+  font-size: clamp(26px, 3.4vw, 38px);
+  font-weight: 900;
+}
+
+.top-v2-price-row dd span {
+  font-size: 13px;
+  color: #665a4a;
+  font-weight: 700;
+}
+
+.top-v2-price-min {
+  text-align: center;
+  margin: 14px 0 0;
+  font-weight: 800;
+  color: #2e2518;
+  background: #fff8e8;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.top-v2-price-min strong {
+  color: #f0831e;
+  font-size: 1.25em;
+}
+
+.top-v2-price-notes {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 20px;
+  font-size: 12px;
+  color: #665a4a;
+  line-height: 1.8;
+}
+
+.top-v2-price-actions {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.top-v2-price-detail {
+  color: #2f7890;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-price-card {
+    padding: 18px;
+  }
+
+  .top-v2-price-actions {
+    flex-direction: column;
+  }
+
+  .top-v2-price-actions .top-v2-cta-big {
+    width: 100%;
+  }
+}
+
+.top-v2-purpose-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.top-v2-purpose-link:hover .memory-image img {
+  transform: scale(1.02);
+}
+.top-v2-purpose-link .memory-image img {
+  transition: transform 0.25s ease;
+}
+
+.top-v2-actions {
+  margin: 36px 0 8px;
+  text-align: center;
+}
+.top-v2-btn-outline {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 2px solid #f0831e;
+  border-radius: 999px;
+  background: #fff;
+  color: #a5540e;
+  font-weight: 900;
+  font-size: clamp(15px, 1.9vw, 19px);
+  text-decoration: none;
+}
+.top-v2-btn-outline:hover {
+  background: #fff4e6;
+  color: #a5540e;
+}
+@media (max-width: 767px) {
+  .top-v2-btn-outline { display: block; margin: 0 16px; text-align: center; }
+}
+
+/* MV下〜「あの頃の放課後」セクション: スクロール出現演出 */
+.top-v2-reveal-target {
+  opacity: 0;
+  transition:
+    opacity 0.62s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.62s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.62s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform, filter;
+}
+
+.top-v2-reveal-target.is-inview {
+  opacity: 1;
+  filter: none;
+}
+
+.top-v2-reveal-rise {
+  transform: translateY(28px) scale(0.98);
+  filter: blur(2px);
+}
+
+.top-v2-reveal-rise.is-inview {
+  transform: translateY(0) scale(1);
+}
+
+.top-v2-reveal-left {
+  transform: translateX(-22px) rotate(-4deg);
+  filter: blur(1px);
+}
+
+.top-v2-reveal-right {
+  transform: translateX(22px) rotate(4deg);
+  filter: blur(1px);
+}
+
+.top-v2-reveal-left.is-inview,
+.top-v2-reveal-right.is-inview {
+  transform: translateX(0) rotate(0deg);
+}
+
+.top-v2-reveal-photo {
+  transform: translateY(30px) scale(0.985);
+  filter: saturate(0.92) brightness(0.96) blur(1px);
+}
+
+.top-v2-reveal-photo.is-inview {
+  transform: translateY(0) scale(1);
+}
+
+.top-v2-reveal-title {
+  transform: translateY(18px) scale(0.9) rotate(var(--reveal-rotate, -2deg));
+  filter: blur(1px);
+  transition-timing-function: cubic-bezier(0.18, 0.9, 0.24, 1.2);
+}
+
+.top-v2-reveal-title.is-inview {
+  transform: translateY(0) scale(1) rotate(0deg);
+}
+
+.top-v2-reveal-accent {
+  filter: blur(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-reveal-target {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* ＼／バナーの叫び（gptimage2生成画像） */
+.top-v2-callout {
+  width: min(560px, 90%);
+  margin: 0 auto 16px;
+}
+
+.top-v2-callout img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 施設説明ブロックの写真キャプション（HTML白帯。焼き込みキャプションの後継） */
+.top-v2-photo-caption {
+  margin: 10px auto 0;
+  padding: 9px 18px;
+  width: fit-content;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(20, 50, 65, 0.18);
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(15px, 1.9vw, 19px);
+  text-align: center;
+}
+
+/* 目的別カード: 説明文とPC2カラム化（間延び対策） */
+.top-v2-purpose-desc {
+  margin: 6px 0 0;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: clamp(13px, 1.6vw, 15px);
+  line-height: 1.7;
+}
+
+@media (min-width: 992px) {
+  #stay .memory-section {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 44px 36px;
+    align-items: start;
+    max-width: 1060px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #stay .memory-item {
+    margin: 0;
+    width: auto;
+    max-width: none;
+  }
+}
+
+/* §5余白システム: バナー2箇所の上下リズムを96px基準に載せる */
+.cta-section01 {
+  padding: 40px 0 56px;
+}
+
+.cta-section {
+  padding: 48px 0 72px;
+}
+
+@media (max-width: 767px) {
+  .cta-section01 { padding: 28px 0 40px; }
+  .cta-section { padding: 36px 0 56px; }
+}
+
+/* キーボード操作時のフォーカス可視化（a11y） */
+.top-v2-cta-big:focus-visible,
+.top-v2-btn-outline:focus-visible,
+.top-v2-price-detail:focus-visible,
+.top-v2-purpose-link:focus-visible,
+.l-header_btnReserve:focus-visible,
+.l-footer_reserveLink:focus-visible {
+  outline: 3px solid #f0831e;
+  outline-offset: 3px;
+}
+
+/* あそび物量ティッカー（主張「遊びきれない」の証拠帯） */
+.top-v2-ticker {
+  display: grid;
+  gap: 10px;
+  margin: 36px 0 0;
+  overflow: hidden;
+}
+
+.top-v2-ticker-row {
+  display: flex;
+  overflow: hidden;
+}
+
+.top-v2-ticker-track {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  justify-content: space-around;
+  gap: 10px;
+  margin: 0;
+  padding: 0 5px;
+  list-style: none;
+  animation: top-v2-ticker 38s linear infinite;
+}
+
+.top-v2-ticker-row--rev .top-v2-ticker-track {
+  animation-direction: reverse;
+  animation-duration: 46s;
+}
+
+.top-v2-ticker li {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border: 2px solid rgba(47, 120, 144, 0.35);
+  border-radius: 999px;
+  background: #fff;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: clamp(13px, 1.6vw, 16px);
+  white-space: nowrap;
+}
+
+.top-v2-ticker li:nth-child(even) {
+  background: #fff8e8;
+}
+
+@keyframes top-v2-ticker {
+  to { transform: translateX(calc(-100% - 10px)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-ticker-track { animation: none; flex-wrap: wrap; justify-content: center; }
+  .top-v2-ticker-track[aria-hidden="true"] { display: none; }
+}
+
+/* ティッカー: ホバー/タッチ長押しで一時停止（読みたい人への配慮） */
+.top-v2-ticker-row:hover .top-v2-ticker-track,
+.top-v2-ticker-row:active .top-v2-ticker-track {
+  animation-play-state: paused;
+}
+
+/* ポップ文字タイトル（帯なし）: 白フチ込みで写真に負けない幅に補正 */
+#usagescene .memory-title01 img,
+#usagescene .memory-title02 img {
+  width: clamp(240px, 34vw, 340px);
+  height: auto;
+}
+
+#usagescene .memory-title03 img {
+  width: clamp(280px, 40vw, 390px);
+  height: auto;
+}
+
+/* タイトルと写真の重なりを約14pxに統一（配置の意図を揃える） */
+#usagescene .memory-title03 {
+  transform: translateY(-27px);
+}
+
+@media (max-width: 767px) {
+  #usagescene .memory-title01 { transform: translateY(11px); }
+  #usagescene .memory-title02 { transform: translate(-12px, 7px); }
+  #usagescene .memory-title03 { transform: translateY(-33px); }
+}
+
+/* SP: 装飾（GIF少年・矢印・スリッパ）と新要素の衝突解消 */
+@media (max-width: 767px) {
+  #usagescene .soccer-boy {
+    transform: translateY(50px) scale(0.82);
+    transform-origin: top left;
+  }
+
+  #usagescene .arrow-down {
+    transform: translateX(-40px) translateY(-8px) scale(0.8);
+    transform-origin: top center;
+  }
+
+  #usagescene .arrow-up {
+    transform: translateX(-40px) translateY(-14px) scale(0.75);
+    transform-origin: top center;
+  }
+
+  #usagescene .slippers {
+    transform: translate(-6px, -70px) scale(0.85);
+    transform-origin: bottom left;
+  }
+}
+
+/* 食べて写真と情報が被るため、BBQ切り抜き装飾はこのセクションでは使わない */
+#usagescene .bbq-set {
+  display: none;
+}
+
+.top-v2-food-pieces {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.top-v2-food-piece {
+  position: absolute;
+  display: block;
+  height: auto;
+  user-select: none;
+}
+
+/* PC: 施設説明ブロックのマガジン組み（グリッド本組み版）
+   文字カラム=筆文字＋吹き出しキャプションの縦センター、写真620px交互 */
+@media (min-width: 992px) {
+  #usagescene .memory-item1 {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 620px;
+    grid-template-rows: 1fr auto auto 1fr;
+    column-gap: 48px;
+    margin-bottom: 116px;
+  }
+
+  #usagescene .memory-item--left {
+    grid-template-columns: 620px minmax(0, 1fr);
+  }
+
+  #usagescene .memory-item1 [class*="memory-title0"] {
+    position: static;
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+    transform: none;
+    margin: 0 0 6px;
+  }
+
+  #usagescene .memory-item--left [class*="memory-title0"] {
+    grid-column: 2;
+  }
+
+  #usagescene .memory-title01 img { width: min(340px, 100%); }
+  #usagescene .memory-title02 img { width: min(340px, 100%); }
+  #usagescene .memory-title03 img { width: min(390px, 100%); }
+
+  #usagescene .memory-item1 .memory-image {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    align-self: center;
+    width: 620px;
+    max-width: 620px;
+    margin: 0;
+  }
+
+  #usagescene .memory-item--left .memory-image {
+    grid-column: 1;
+  }
+
+  #usagescene .memory-item1 .top-v2-photo-caption {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: center;
+    margin: 12px 0 0;
+  }
+
+  #usagescene .memory-item--left .top-v2-photo-caption {
+    grid-column: 2;
+  }
+
+  #usagescene .memory-item--left .top-v2-food-pieces {
+    position: relative;
+    inset: auto;
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    justify-self: center;
+    width: min(390px, 100%);
+    height: 0;
+    z-index: 4;
+  }
+
+  #usagescene .top-v2-food-piece--lunch {
+    width: 64px;
+    right: 168px;
+    top: -56px;
+    transform: rotate(-7deg);
+  }
+
+  #usagescene .top-v2-food-piece--drinks {
+    width: 50px;
+    right: 22px;
+    top: -24px;
+    transform: rotate(8deg);
+  }
+
+  #usagescene .top-v2-food-piece--veg {
+    display: none;
+  }
+
+  #usagescene .top-v2-food-piece--meat {
+    display: none;
+  }
+
+  #usagescene .top-v2-food-piece--grill {
+    width: 88px;
+    right: 42px;
+    top: 356px;
+    transform: rotate(4deg);
+  }
+
+  /* 装飾: 文字カラムの脇役 */
+  #usagescene .soccer-boy {
+    left: 48px; top: auto; bottom: -84px;
+    transform: scale(0.48);
+    transform-origin: bottom left;
+  }
+
+  #usagescene .bbq-set {
+    display: none;
+  }
+
+  #usagescene .slippers {
+    left: 40px; right: auto; top: auto; bottom: -100px;
+    transform: scale(0.4);
+    transform-origin: bottom left;
+  }
+
+  /* ポップ矢印: ブロック間の橋渡し */
+  #usagescene .arrow-down {
+    width: 164px; height: auto;
+    left: 40%; top: auto; bottom: -128px;
+    transform: rotate(-4deg);
+  }
+
+  #usagescene .arrow-up {
+    width: 158px; height: auto;
+    left: 58%; right: auto; top: auto; bottom: -132px;
+    transform: rotate(6deg);
+  }
+}
+
+/* SP: 矢印は非表示（隙間55-65pxでは豆サイズ化してノイズになるため。
+   縦積みのSPは接続装飾なしでもリズムが成立している） */
+@media (max-width: 991px) {
+  #usagescene .arrow-down,
+  #usagescene .arrow-up {
+    display: none;
+  }
+
+  #usagescene .top-v2-food-pieces {
+    z-index: 4;
+  }
+
+  #usagescene .top-v2-food-piece--lunch {
+    display: none;
+  }
+
+  #usagescene .top-v2-food-piece--drinks {
+    width: 68px;
+    right: 18px;
+    bottom: -42px;
+    transform: rotate(8deg);
+  }
+
+  #usagescene .top-v2-food-piece--veg {
+    display: none;
+  }
+
+  #usagescene .top-v2-food-piece--meat {
+    display: none;
+  }
+
+  #usagescene .top-v2-food-piece--grill {
+    width: 92px;
+    right: 98px;
+    bottom: -76px;
+    transform: rotate(4deg);
+  }
+}
+
+/* 小さなゴシック体ツッコミ。主見出しより軽い「余白の書き込み」として扱う */
+.top-v2-photo-caption--img {
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  width: min(150px, 42%);
+}
+
+.top-v2-photo-caption--img img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.top-v2-bubble-2 { width: min(166px, 46%); }
+.top-v2-bubble-3 { width: min(172px, 46%); }
+
+/* 注釈は中心軸から少し外して、写真への重なりを浅くする */
+.top-v2-bubble-1 { transform: translate(54px, -2px); }
+.top-v2-bubble-2 { transform: translate(-46px, -2px); }
+.top-v2-bubble-3 { transform: translate(44px, -4px); }
+
+@media (max-width: 991px) {
+  .top-v2-photo-caption--img { width: min(122px, 36%); margin-left: auto; margin-right: auto; }
+  .top-v2-bubble-2 { width: min(142px, 42%); }
+  .top-v2-bubble-3 { width: min(148px, 42%); }
+  .top-v2-bubble-1 { transform: translate(14%, -4px); }
+  .top-v2-bubble-2 { transform: translate(-14%, -2px); }
+  .top-v2-bubble-3 { transform: translate(12%, -6px); }
+}
+
+/* ==========================================================================
+   シーン別専用ページ共通コンポーネント（第1弾: /friends/ 卒業旅行・友達旅）
+   §5基準: 色は#2f7890/#f0831e/#fff8e8/白のみ。セクション上下 PC96px/SP56px。
+   ========================================================================== */
+
+.top-v2-scene-section {
+  padding: 96px 0;
+}
+
+.top-v2-scene-section--gray {
+  background: #ecedf2;
+}
+
+.top-v2-scene-section--cream {
+  background: #fff8e8;
+}
+
+@media (max-width: 767px) {
+  .top-v2-scene-section {
+    padding: 56px 0;
+  }
+}
+
+.top-v2-scene-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.top-v2-scene-inner--narrow {
+  max-width: 860px;
+}
+
+/* --- ヒーロー --- */
+.top-v2-scene-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 56px 20px 0;
+}
+
+@media (min-width: 992px) {
+  .top-v2-scene-hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 56px;
+    padding: 72px 20px 0;
+  }
+}
+
+.top-v2-scene-eyebrow {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 6px 20px;
+  border-radius: 999px;
+  background: #fff8e8;
+  border: 2px solid #f0831e;
+  color: #a5540e;
+  font-weight: 900;
+  font-size: clamp(13px, 1.6vw, 15px);
+}
+
+.top-v2-scene-hero h1 {
+  margin: 0 0 18px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(30px, 4.6vw, 56px);
+  line-height: 1.3;
+}
+
+.top-v2-scene-lead {
+  margin: 0 0 28px;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.9;
+}
+
+.top-v2-scene-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .top-v2-scene-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .top-v2-scene-hero-actions .top-v2-cta-big,
+  .top-v2-scene-hero-actions .top-v2-btn-outline {
+    width: 100%;
+  }
+}
+
+.top-v2-scene-hero-photo {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(20, 50, 65, 0.18);
+}
+
+.top-v2-scene-hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- 見出し（セクション共通） --- */
+.top-v2-scene-title {
+  margin: 0 0 40px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(24px, 3.6vw, 40px);
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* --- できることカード（4枚） --- */
+.top-v2-scene-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .top-v2-scene-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.top-v2-scene-card {
+  background: #fff;
+  border: 2px solid #2f7890;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(47, 120, 144, 0.12);
+}
+
+.top-v2-scene-card-photo {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.top-v2-scene-card-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.top-v2-scene-card-body {
+  padding: 20px 22px 24px;
+}
+
+.top-v2-scene-card-body h3 {
+  margin: 0 0 10px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(17px, 2vw, 20px);
+}
+
+.top-v2-scene-card-body p {
+  margin: 0;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: clamp(14px, 1.6vw, 15px);
+  line-height: 1.8;
+}
+
+/* --- モデルコース タイムライン --- */
+.top-v2-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.top-v2-timeline::before {
+  content: "";
+  position: absolute;
+  left: 78px;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background: #2f7890;
+  opacity: 0.35;
+}
+
+.top-v2-timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  column-gap: 24px;
+  padding: 0 0 32px;
+}
+
+.top-v2-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.top-v2-timeline-time {
+  position: relative;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(14px, 1.7vw, 17px);
+  text-align: right;
+  padding-right: 22px;
+}
+
+.top-v2-timeline-time::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #f0831e;
+  border: 3px solid #fff8e8;
+  box-shadow: 0 0 0 2px #2f7890;
+}
+
+.top-v2-timeline-body h3 {
+  margin: 0 0 6px;
+  color: #2e2518;
+  font-weight: 900;
+  font-size: clamp(16px, 1.9vw, 19px);
+}
+
+.top-v2-timeline-body p {
+  margin: 0;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: clamp(14px, 1.6vw, 15px);
+  line-height: 1.8;
+}
+
+.top-v2-timeline-note {
+  margin: 28px 0 0;
+  color: #665a4a;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 575px) {
+  .top-v2-timeline::before {
+    left: 58px;
+  }
+
+  .top-v2-timeline-item {
+    grid-template-columns: 58px 1fr;
+    column-gap: 14px;
+  }
+
+  .top-v2-timeline-time {
+    font-size: 13px;
+    padding-right: 14px;
+  }
+}
+
+/* --- 最終CTA（画像バナーなしのテキスト版） --- */
+.top-v2-scene-finalcta {
+  text-align: center;
+}
+
+.top-v2-scene-finalcta h2 {
+  margin: 0 0 28px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(26px, 4vw, 44px);
+  line-height: 1.4;
+}
+
+/* --- 他シーンへの横リンク --- */
+.top-v2-scene-otherlinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 28px;
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.top-v2-scene-otherlinks a {
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.top-v2-scene-otherlinks a:hover {
+  color: #f0831e;
+}
+
+/* --- 要確認注記の視認性（オーナー赤入れ用の一時マーカー。公開前に本文確定して除去） --- */
+.top-v2-needcheck {
+  color: #a5540e;
+  font-weight: 800;
+}
+
+/* 焼き込みキャプション付きカード素材から写真領域だけを見せる
+   (enjoy_slide系1440x1040の上部58%が写真) */
+.top-v2-scene-card-photo:has(.top-v2-crop-cardphoto) {
+  aspect-ratio: 1440 / 600;
+  overflow: hidden;
+}
+
+.top-v2-scene-card-photo img.top-v2-crop-cardphoto {
+  width: 100%;
+  height: auto;
+  object-fit: unset;
+  display: block;
+}
+
+/* --- friends/index.html 追補: タイムライン行内リンク --- */
+.top-v2-inline-link {
+  color: #2f7890;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+/* --- friends/index.html 追補: 予約までの流れ（4ステップ） --- */
+.top-v2-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 1080px;
+  margin: 28px auto 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.top-v2-flow li {
+  background: #fff;
+  border: 2px solid #2f7890;
+  border-radius: 14px;
+  padding: 20px 18px;
+  box-shadow: 0 4px 14px rgba(47, 120, 144, 0.12);
+  text-align: center;
+}
+
+.top-v2-flow li strong {
+  display: block;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(16px, 1.9vw, 19px);
+  margin-bottom: 8px;
+}
+
+.top-v2-flow li span {
+  display: block;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+@media (max-width: 991px) {
+  .top-v2-flow {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* --- friends/index.html 追補: 最終CTAのLINE共有 --- */
+.top-v2-share {
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* --- friends/index.html 追補: タイムライン行の学校メタファーラベル --- */
+.top-v2-timeline-label {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 3px 14px;
+  border-radius: 999px;
+  background: #fff8e8;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* --- friends/index.html 追補: パンくず --- */
+.top-v2-breadcrumb {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  font-size: 12px;
+  color: #665a4a;
+}
+
+@media (min-width: 768px) {
+  .top-v2-breadcrumb {
+    font-size: 13px;
+  }
+}
+
+.top-v2-breadcrumb a {
+  color: #2f7890;
+}
+
+.top-v2-breadcrumb span {
+  margin: 0 6px;
+  color: #665a4a;
+}
+
+/* --- friends/index.html 追補: ヒーローH1の袋文字化（手描き風タイトルの意匠を継承） --- */
+.top-v2-brush-h1 {
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(34px, 4.6vw, 58px);
+  line-height: 1.25;
+  -webkit-text-stroke: 0.14em #fff;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 10px rgba(20, 50, 65, 0.12);
+}
+
+/* --- friends/index.html 追補: eyebrowチップを手貼りシール風に --- */
+.top-v2-scene-hero .top-v2-scene-eyebrow {
+  background: #fff8e8;
+  border: 2px solid #2f7890;
+  transform: rotate(-2deg);
+}
+
+/* --- friends/index.html 追補: ヒーロー写真のコラージュ風オフセット影 --- */
+.top-v2-scene-hero-photo {
+  border-radius: 16px;
+  box-shadow: 10px 10px 0 #d7e7ee;
+}
+
+/* --- friends/index.html 追補: セクション見出しの生成りマーカーハイライト --- */
+.top-v2-scene-title-mark {
+  display: inline-block;
+  background: linear-gradient(transparent 58%, #fff8e8 58%);
+}
+
+/* --- friends/index.html 追補: 「定番の過ごし方」見出し左右の人物切り抜き（PCのみ） --- */
+.top-v2-cando-titlewrap {
+  position: relative;
+}
+
+.top-v2-cando-figure {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .top-v2-cando-titlewrap {
+    padding: 0 130px;
+  }
+
+  .top-v2-cando-figure {
+    display: block;
+    position: absolute;
+    top: 50%;
+    height: 90px;
+    width: auto;
+    transform: translateY(-50%);
+  }
+
+  .top-v2-cando-figure--left {
+    left: 0;
+  }
+
+  .top-v2-cando-figure--right {
+    right: 0;
+  }
+}
+
+/* --- friends/index.html 追補: タイムラインのチップ色リズム（奇数=青緑/生成り, 偶数=オレンジ/薄橙） --- */
+.top-v2-timeline-item:nth-child(even) .top-v2-timeline-label {
+  background: #ffe9d2;
+  color: #bd5b11;
+}
+
+.top-v2-timeline-time {
+  font-weight: 900;
+  color: #2f7890;
+}
+
+/* --- friends/index.html 追補: 料金アクション直後の賑やかしコールアウト --- */
+.top-v2-callout--sm {
+  width: min(380px, 76%);
+  margin: 26px auto 0;
+}
+
+/* --- friends/index.html 追補: FAQ見出しの吹き出し装飾 --- */
+.top-v2-faq-titlewrap {
+  position: relative;
+  text-align: center;
+}
+
+.top-v2-faq-balloon {
+  display: block;
+  width: 60px;
+  height: auto;
+  margin: 0 auto 8px;
+}
+
+@media (min-width: 768px) {
+  .top-v2-faq-balloon {
+    position: absolute;
+    left: calc(50% - 220px);
+    top: -12px;
+    margin: 0;
+  }
+}
+
+/* --- friends/index.html 追補: 最終CTAゾーンの人物切り抜き（PCのみ・右下） --- */
+.top-v2-scene-finalcta {
+  position: relative;
+}
+
+.top-v2-finalcta-figure {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .top-v2-finalcta-figure {
+    display: block;
+    position: absolute;
+    right: 32px;
+    bottom: 24px;
+    height: 120px;
+    width: auto;
+  }
+}
+
+.top-v2-breadcrumb span[aria-current="page"] {
+  margin: 0;
+  color: #665a4a;
+}
+
+/* /friends/ 余白・バランス監査の是正 (2026-07-04実測ベース) */
+/* 1. ヒーローに上余白、写真を主役サイズへ */
+#hero.top-v2-scene-section {
+  padding-top: 48px !important; /* 既存のhero上余白0指定に競り負けるため単発で強制 */
+}
+
+@media (min-width: 992px) {
+  .top-v2-scene-hero {
+    grid-template-columns: minmax(0, 1fr) 560px;
+    gap: 56px;
+    align-items: center;
+  }
+}
+
+/* 2. flowの余白リズムを96px基準に統一 */
+#flow.l-section {
+  padding: 48px 0;
+}
+
+/* 3. セクション交互背景はTOPと同じ 白⇄#ECEDF2（2026-07-04
+   オーナー指摘: 生成り#FFF8E8の大面積ベタ塗りはオレンジに見える。
+   生成りは付箋・チップ等の小面積コンポーネント専用に格下げ） */
+.top-v2-scene-section--gray {
+  background: #ecedf2;
+}
+
+#price.top-v2-scene-section--cream {
+  background: transparent;
+}
+
+#faq.top-v2-scene-section {
+  background: #ecedf2;
+}
+
+/* 4. SPの余白は56px基準(§5) */
+@media (max-width: 767px) {
+  .top-v2-scene-section {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  #hero.top-v2-scene-section {
+    padding-top: 24px;
+  }
+}
+
+/* friends: h1生成ロゴと最終CTAコールアウト */
+.top-v2-scene-h1logo {
+  margin: 0;
+}
+
+.top-v2-scene-h1logo img {
+  display: block;
+  width: min(470px, 100%);
+  height: auto;
+  filter: drop-shadow(0 3px 10px rgba(20, 50, 65, 0.12));
+}
+
+.top-v2-callout--cta {
+  width: min(480px, 90%);
+  margin: 0 auto 10px;
+}
+
+/* 料金セクション「今日の算数」黒板演出 */
+.top-v2-chalkboard {
+  position: relative;
+  max-width: 640px;
+  margin: 8px auto 22px;
+  padding: 34px 36px 30px;
+  background: #29464f;
+  border: 10px solid #4e4538;
+  border-radius: 8px;
+  box-shadow: 0 10px 26px rgba(30, 40, 45, 0.25), inset 0 0 60px rgba(255, 255, 255, 0.04);
+  color: #fdfdf8;
+  text-align: center;
+}
+
+.top-v2-chalk-label {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 3px 14px;
+  border: 2px dashed rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.top-v2-chalk-formula {
+  margin: 0;
+  font-size: clamp(22px, 3.4vw, 34px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.top-v2-chalk-op {
+  color: #f4b271;
+  margin: 0 6px;
+}
+
+.top-v2-chalk-answer {
+  margin: 14px auto 0;
+  width: fit-content;
+  padding: 6px 22px;
+  border: 2px dashed #f4b271;
+  border-radius: 50% / 46%;
+  font-size: clamp(15px, 2vw, 19px);
+  font-weight: 800;
+}
+
+.top-v2-chalk-answer strong {
+  color: #f4b271;
+  font-size: 1.35em;
+}
+
+.top-v2-chalk-sub {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 26px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.top-v2-sticky {
+  position: absolute;
+  width: 158px;
+  padding: 12px 12px 14px;
+  background: #fff8e8;
+  color: #4e4538;
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1.6;
+  text-align: left;
+  box-shadow: 0 6px 14px rgba(30, 40, 45, 0.25);
+}
+
+.top-v2-sticky--1 {
+  top: -26px;
+  right: -34px;
+  transform: rotate(4deg);
+  background: #ffe9d2;
+}
+
+.top-v2-sticky--2 {
+  bottom: -30px;
+  left: -34px;
+  transform: rotate(-3deg);
+}
+
+.top-v2-price-notes--center {
+  text-align: center;
+  margin-top: 26px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-chalkboard {
+    padding: 26px 18px 24px;
+    border-width: 8px;
+    margin-bottom: 40px;
+  }
+
+  .top-v2-sticky--1 { top: -22px; right: -8px; transform: rotate(3deg) scale(0.92); }
+  .top-v2-sticky--2 { bottom: -34px; left: -8px; transform: rotate(-2deg) scale(0.92); }
+}
+
+/* 黒板: CSS描画を廃止し生成アート+HTML数式のハイブリッドへ */
+.top-v2-chalkboard--art {
+  max-width: 760px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.top-v2-chalkboard-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.top-v2-chalkboard-write {
+  position: absolute;
+  left: 11%;
+  right: 11%;
+  top: 30%;
+  bottom: 22%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4%;
+}
+
+.top-v2-chalkboard--art .top-v2-chalk-formula {
+  font-size: clamp(17px, 4.2vw, 33px);
+}
+
+.top-v2-chalkboard--art .top-v2-chalk-answer {
+  margin-top: 0;
+  font-size: clamp(12px, 2.3vw, 18px);
+}
+
+.top-v2-chalkboard--art .top-v2-chalk-sub {
+  margin-top: 0;
+  font-size: clamp(10px, 1.7vw, 13px);
+  gap: 4px 20px;
+}
+
+.top-v2-chalkboard--art .top-v2-sticky--1 {
+  top: 2%;
+  right: -22px;
+}
+
+.top-v2-chalkboard--art .top-v2-sticky--2 {
+  bottom: -18px;
+  left: -22px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-chalkboard--art .top-v2-sticky--1 { top: -14px; right: -4px; }
+  .top-v2-chalkboard--art .top-v2-sticky--2 { bottom: -10px; left: -4px; }
+  .top-v2-sticky { width: 132px; font-size: 11px; padding: 9px 10px; }
+}
+
+@media (max-width: 767px) {
+  .top-v2-chalkboard-write { top: 27%; bottom: 14%; gap: 2%; }
+  .top-v2-chalkboard--art .top-v2-chalk-answer { font-size: 11px; }
+  .top-v2-chalkboard--art .top-v2-chalk-sub { font-size: 9.5px; gap: 2px 12px; }
+}
+
+@media (max-width: 767px) {
+  .top-v2-chalkboard--art .top-v2-sticky--2 { bottom: -34px; left: -4px; width: 168px; }
+}
+
+@media (min-width: 768px) {
+  .top-v2-chalkboard--art .top-v2-sticky { width: 178px; }
+}
+
+/* 7. 他のシーンへ（写真カード） */
+.top-v2-otherscenes {
+  margin-top: 40px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.top-v2-otherscenes-title {
+  text-align: center;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(17px, 2.2vw, 22px);
+  margin-bottom: 20px;
+}
+
+.top-v2-otherscenes-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.top-v2-otherscenes-cards a {
+  display: block;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 8px 8px 0 #d7e7ee;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.top-v2-otherscenes-cards a:hover {
+  transform: translateY(-4px);
+}
+
+.top-v2-otherscenes-cards a:hover .top-v2-otherscenes-label {
+  color: #f0831e;
+}
+
+.top-v2-otherscenes-cards img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
+.top-v2-otherscenes-label {
+  display: block;
+  padding: 12px 16px 2px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.top-v2-otherscenes-note {
+  display: block;
+  padding: 0 16px 14px;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-otherscenes-cards {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* 中間幅では他シーンカード(max-width 900px)と右下の切り抜きが衝突するため非表示 */
+@media (min-width: 768px) and (max-width: 1119px) {
+  .top-v2-finalcta-figure { display: none; }
+}
+
+/* --- friends/index.html 追補: 時間割セクション PC2カラム化（タイムライン＋スナップ写真コラージュ） --- */
+.top-v2-schedule-snaps {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .top-v2-schedule-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .top-v2-schedule-snaps {
+    display: block;
+    position: sticky;
+    top: 120px;
+    height: 360px;
+  }
+}
+
+.top-v2-schedule-snap {
+  margin: 0;
+  position: absolute;
+  inset: 0;
+  width: 320px;
+  max-width: 100%;
+  padding: 10px 10px 14px;
+  background: #fff;
+  box-shadow: 10px 10px 0 #cfe0e8;
+  opacity: 0;
+  transform: scale(0.96) rotate(0deg);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.top-v2-schedule-snap img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.top-v2-schedule-snap figcaption {
+  margin-top: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #4e4538;
+  text-align: center;
+}
+
+.top-v2-schedule-snap[data-band="day"] { transform: scale(0.96) rotate(-2.5deg); }
+.top-v2-schedule-snap[data-band="evening"] { transform: scale(0.96) rotate(1.5deg); }
+.top-v2-schedule-snap[data-band="night"] { transform: scale(0.96) rotate(-1deg); }
+.top-v2-schedule-snap[data-band="morning"] { transform: scale(0.96) rotate(2deg); }
+
+.top-v2-schedule-snap.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.top-v2-schedule-snap[data-band="day"].is-active { transform: scale(1) rotate(-2.5deg); }
+.top-v2-schedule-snap[data-band="evening"].is-active { transform: scale(1) rotate(1.5deg); }
+.top-v2-schedule-snap[data-band="night"].is-active { transform: scale(1) rotate(-1deg); }
+.top-v2-schedule-snap[data-band="morning"].is-active { transform: scale(1) rotate(2deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-schedule-snap {
+    transition: none;
+  }
+}
+
+/* --- friends/index.html 追補: 夜パート（19:30-22:00）の黒板ネイビー演出 --- */
+.top-v2-timeline-item--night .top-v2-timeline-body {
+  padding: 14px 18px;
+  border-radius: 12px;
+  background-color: #2a4750;
+  background-image:
+    radial-gradient(circle 1.5px, rgba(255, 248, 232, 0.5) 1.5px, transparent 2px),
+    radial-gradient(circle 1.5px, rgba(255, 248, 232, 0.35) 1.5px, transparent 2px),
+    radial-gradient(circle 1.5px, rgba(255, 248, 232, 0.4) 1.5px, transparent 2px);
+  background-repeat: no-repeat;
+  background-position: 12% 20%, 82% 65%, 45% 85%;
+}
+
+.top-v2-timeline-item--night .top-v2-timeline-body h3 {
+  color: #fff8e8;
+}
+
+.top-v2-timeline-item--night .top-v2-timeline-body p {
+  color: rgba(255, 248, 232, 0.85);
+}
+
+.top-v2-timeline-item--night .top-v2-timeline-label {
+  background: rgba(255, 248, 232, 0.16);
+  color: #fff8e8;
+}
+
+.top-v2-timeline-item--night .top-v2-inline-link {
+  color: #9ed3e6;
+}
+
+/* 時間割2カラム時はnarrowコンテナを広げる（左372px圧迫の解消） */
+@media (min-width: 992px) {
+  #schedule .top-v2-scene-inner--narrow {
+    max-width: 1080px;
+  }
+}
+
+/* .l-main{overflow:hidden}がstickyを無効化するため、クリップ挙動は保ったまま
+   スクロールコンテナ化だけ解除（非対応ブラウザはhiddenのまま=無害） */
+@media (min-width: 992px) {
+  .l-main {
+    overflow: clip;
+  }
+}
+
+/* 夜行チップ統一: nth-child(even)ルールとの特異性競合を解消し3枚とも桃色に */
+.top-v2-timeline-item.top-v2-timeline-item--night .top-v2-timeline-label {
+  background: #ffe9d2;
+  color: #bd5b11;
+}
+
+/* --- friends/index.html 追補: できることカード アルバム貼り写真化（#can-doのみ） --- */
+#can-do .top-v2-scene-cards .top-v2-scene-card {
+  box-shadow: 10px 10px 0 #cfe0e8;
+  transform: rotate(0deg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(1) {
+  transform: rotate(-1.4deg);
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(2) {
+  transform: rotate(1.1deg);
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(3) {
+  transform: rotate(-0.9deg);
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(4) {
+  transform: rotate(1.3deg);
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:hover {
+  transform: rotate(0deg) translateY(-6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #can-do .top-v2-scene-cards .top-v2-scene-card {
+    transition: box-shadow 0.25s ease;
+  }
+}
+
+/* --- friends/index.html 追補: できることカード 科目札チップ --- */
+#can-do .top-v2-scene-card-photo {
+  position: relative;
+  overflow: visible;
+}
+
+.top-v2-scene-card-tag {
+  position: absolute;
+  top: 10px;
+  left: -8px;
+  z-index: 1;
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: #fff8e8;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.6;
+  transform: rotate(-3deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+#can-do .top-v2-scene-card:nth-child(4) .top-v2-scene-card-tag {
+  background: #2a4750;
+  color: #fff8e8;
+}
+
+/* --- friends/index.html 追補: あそび物量ティッカー 視認性強化 --- */
+.top-v2-ticker {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.top-v2-ticker li {
+  font-size: clamp(15px, 1.8vw, 18px);
+}
+
+/* --- friends/index.html 追補: となりの教室も、のぞいてみる？ 教室札（ホーロー札）風ラベル --- */
+.top-v2-otherscenes-cards a {
+  overflow: hidden;
+}
+
+.top-v2-otherscenes-cards a:hover {
+  transform: translateY(-6px);
+}
+
+.top-v2-otherscenes-cards img {
+  transition: transform 0.25s ease;
+}
+
+.top-v2-otherscenes-cards a:hover img {
+  transform: scale(1.04);
+}
+
+.top-v2-otherscenes-label {
+  position: relative;
+  z-index: 1;
+  margin-top: -14px;
+  display: inline-block;
+  padding: 4px 14px;
+  background: #2a4750;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.top-v2-otherscenes-cards a:hover .top-v2-otherscenes-label {
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-otherscenes-cards a,
+  .top-v2-otherscenes-cards img {
+    transition: none;
+  }
+}
+
+/* --- friends/index.html 追補: 予約フロー番号バッジ・通学路・最終ステップ --- */
+.top-v2-flow li {
+  position: relative;
+}
+
+.top-v2-flow-num {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #2f7890;
+  color: #fff;
+  font-weight: 900;
+  font-size: 16px;
+  box-shadow: 0 3px 8px rgba(30, 40, 45, 0.25);
+}
+
+.top-v2-flow li:last-child .top-v2-flow-num {
+  background: #f0831e;
+}
+
+.top-v2-flow li:last-child {
+  border-color: #f0831e;
+  border-width: 2px;
+}
+
+@media (min-width: 992px) {
+  .top-v2-flow li:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: 50%;
+    right: -22px;
+    transform: translateY(-50%);
+    color: #2f7890;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 1;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 991px) {
+  .top-v2-flow {
+    gap: 30px;
+  }
+
+  .top-v2-flow li:not(:last-child)::after {
+    content: "▼";
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #2f7890;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 1;
+  }
+}
+
+.top-v2-flow-next {
+  text-align: center;
+  margin-top: 28px;
+  color: #2f7890;
+  font-weight: 800;
+}
+
+/* --- friends/index.html 追補: 黒板の人数タブ --- */
+.top-v2-chalk-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 auto 18px;
+}
+
+.top-v2-chalk-tab {
+  border: 2px dashed rgba(47, 120, 144, 0.5);
+  background: transparent;
+  color: #2f7890;
+  border-radius: 10px;
+  font-weight: 900;
+  padding: 8px 22px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.top-v2-chalk-tab:hover {
+  border-style: solid;
+}
+
+.top-v2-chalk-tab.is-on {
+  background: #2f7890;
+  color: #fff8e8;
+  border-style: solid;
+}
+
+.chalk-rewrite {
+  animation: top-v2-chalk-rewrite 0.25s ease;
+}
+
+@keyframes top-v2-chalk-rewrite {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chalk-rewrite {
+    animation: none;
+  }
+}
+
+/* --- friends/index.html 追補: せんせいより注記カード --- */
+.top-v2-teacher-note {
+  background: #fff8e8;
+  border-radius: 12px;
+  padding: 16px 22px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.top-v2-teacher-note-label {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #bd5b11;
+}
+
+.top-v2-teacher-note .top-v2-price-notes--center {
+  margin-top: 0;
+}
+
+/* 縦積み時の▼はバッジの背後に隠れて見えないため撤去（バッジが区切りを兼ねる） */
+@media (max-width: 991px) {
+  ol.top-v2-flow li:not(:last-child)::after {
+    content: none;
+  }
+}
+
+/* PCの→矢印がgap20pxでは隣ボックスに接触するため間隔を確保 */
+@media (min-width: 992px) {
+  ol.top-v2-flow {
+    gap: 30px;
+  }
+}
+
+/* --- friends/index.html 追補: マスキングテープ演出（写真を貼った風） --- */
+
+/* 1. ヒーロー実写写真：左上=tape-4、右上=tape-3 */
+.top-v2-scene-hero-photo {
+  position: relative;
+  overflow: visible;
+}
+
+.top-v2-scene-hero-photo::before,
+.top-v2-scene-hero-photo::after {
+  content: "";
+  position: absolute;
+  top: -18px;
+  width: 110px;
+  height: 44px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.top-v2-scene-hero-photo::before {
+  left: 18px;
+  background-image: url(/assets/img/tape-4.png);
+  transform: rotate(-8deg);
+}
+
+.top-v2-scene-hero-photo::after {
+  right: 18px;
+  background-image: url(/assets/img/tape-3.png);
+  transform: rotate(7deg);
+}
+
+@media (max-width: 767px) {
+  .top-v2-scene-hero-photo::before,
+  .top-v2-scene-hero-photo::after {
+    width: 90px;
+    height: 36px;
+  }
+}
+
+/* 2. できることカード（#can-do）：上辺中央にテープ、カードの傾きと逆位相 */
+/* カード本体のoverflow:hiddenがテープのはみ出しを切り取るため上書き */
+#can-do .top-v2-scene-cards .top-v2-scene-card {
+  overflow: visible;
+}
+
+#can-do .top-v2-scene-card-photo::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 110px;
+  height: 44px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(1) .top-v2-scene-card-photo::before {
+  background-image: url(/assets/img/tape-1.png);
+  transform: translateX(-50%) rotate(4deg);
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(2) .top-v2-scene-card-photo::before {
+  background-image: url(/assets/img/tape-2.png);
+  transform: translateX(-50%) rotate(-3deg);
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(3) .top-v2-scene-card-photo::before {
+  background-image: url(/assets/img/tape-3.png);
+  transform: translateX(-50%) rotate(3deg);
+}
+
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(4) .top-v2-scene-card-photo::before {
+  background-image: url(/assets/img/tape-4.png);
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+@media (max-width: 767px) {
+  #can-do .top-v2-scene-card-photo::before {
+    width: 90px;
+    height: 36px;
+  }
+}
+
+/* 3. 時間割スナップ写真：上辺中央にテープ、スナップの傾きと逆位相 */
+.top-v2-schedule-snap::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 110px;
+  height: 44px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.top-v2-schedule-snap:nth-child(1)::before {
+  background-image: url(/assets/img/tape-2.png);
+  transform: translateX(-50%) rotate(3deg);
+}
+
+.top-v2-schedule-snap:nth-child(2)::before {
+  background-image: url(/assets/img/tape-4.png);
+  transform: translateX(-50%) rotate(-2deg);
+}
+
+.top-v2-schedule-snap:nth-child(3)::before {
+  background-image: url(/assets/img/tape-1.png);
+  transform: translateX(-50%) rotate(2deg);
+}
+
+.top-v2-schedule-snap:nth-child(4)::before {
+  background-image: url(/assets/img/tape-3.png);
+  transform: translateX(-50%) rotate(-3deg);
+}
+
+@media (max-width: 767px) {
+  .top-v2-schedule-snap::before {
+    width: 90px;
+    height: 36px;
+  }
+}
+
+/* --- friends/index.html 追補: 予約フロー ステップアイコン --- */
+.top-v2-flow-icon {
+  display: block;
+  height: 64px;
+  width: auto;
+  margin: 14px auto 6px;
+}
+
+@media (max-width: 991px) {
+  .top-v2-flow-icon {
+    height: 56px;
+  }
+}
+
+/* --- friends/index.html 追補: 合宿カード写真（22人集合写真）の顔位置調整 --- */
+.top-v2-otherscenes-cards li:first-child img {
+  object-fit: cover;
+  object-position: 50% 62%;
+}
+
+/* --- friends/index.html 追補: となりの教室カード 教室ドア化 --- */
+.top-v2-door {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 751 / 1344;
+}
+
+.top-v2-door-photo {
+  position: absolute;
+  left: 14.9%;
+  top: 12.8%;
+  width: 69.3%;
+  height: 44.9%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* 顔位置調整ルール(li:first-child img)はドア窓内でも維持しつつ、枠画像には効かせない */
+.top-v2-door-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  object-fit: fill;
+  object-position: center;
+}
+
+.top-v2-door-plate {
+  position: absolute;
+  left: 33.3%;
+  top: 0.6%;
+  width: 33.8%;
+  height: 4.4%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4e4538;
+  font-weight: 800;
+  font-size: clamp(11px, 1.1vw, 14px);
+  letter-spacing: 0.15em;
+}
+
+.top-v2-otherscenes-cards a:hover .top-v2-door-photo {
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-door-photo {
+    transition: none;
+  }
+}
+
+/* 旧構造の画像スタイル(3:2トリミング/枠なし/width:100%)がドア構造に干渉しないよう、詳細度を上げて無効化 */
+.top-v2-otherscenes-cards .top-v2-door img {
+  aspect-ratio: auto;
+}
+
+.top-v2-otherscenes-cards .top-v2-door img.top-v2-door-photo {
+  width: 69.3%;
+  height: 44.9%;
+  transition: transform 0.3s ease;
+}
+
+.top-v2-otherscenes-cards .top-v2-door img.top-v2-door-frame {
+  width: 100%;
+  height: 100%;
+}
+
+.top-v2-otherscenes-cards a:hover .top-v2-door-frame {
+  transform: none;
+}
+
+/* ドア構造化に伴い、写真直後の余白マージンをドア用に調整 */
+.top-v2-otherscenes-cards a:hover .top-v2-door ~ .top-v2-otherscenes-label,
+.top-v2-door + .top-v2-otherscenes-label {
+  margin-top: 8px;
+}
+
+/* レイアウト: PC=3枚横並び(最大260px中央寄せ)、SP(767px以下)=1列(最大240px中央寄せ)縦積み */
+.top-v2-otherscenes-cards {
+  justify-items: center;
+}
+
+.top-v2-otherscenes-cards li {
+  width: 100%;
+  max-width: 260px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-otherscenes-cards li {
+    max-width: 240px;
+  }
+}
+
+/* --- friends/index.html 追補: 夜パネル 星空グラデーション重ね --- */
+.top-v2-timeline-item--night .top-v2-timeline-body {
+  background-image:
+    radial-gradient(circle 1.5px, rgba(255, 248, 232, 0.5) 1.5px, transparent 2px),
+    radial-gradient(circle 1.5px, rgba(255, 248, 232, 0.35) 1.5px, transparent 2px),
+    radial-gradient(circle 1.5px, rgba(255, 248, 232, 0.4) 1.5px, transparent 2px),
+    linear-gradient(180deg, #223c47 0%, #2a4750 40%);
+  background-repeat: no-repeat;
+  background-position: 12% 20%, 82% 65%, 45% 85%, 0 0;
+}
+
+/* --- friends/index.html 追補: 泊まる場所カード アルバム貼り写真化（#roomsのみ） --- */
+#rooms .top-v2-scene-cards .top-v2-scene-card {
+  overflow: visible;
+  box-shadow: 10px 10px 0 #cfe0e8;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#rooms .top-v2-scene-cards .top-v2-scene-card:nth-child(1) {
+  transform: rotate(-1deg);
+}
+
+#rooms .top-v2-scene-cards .top-v2-scene-card:nth-child(2) {
+  transform: rotate(1.2deg);
+}
+
+#rooms .top-v2-scene-cards .top-v2-scene-card:hover {
+  transform: rotate(0deg) translateY(-6px);
+}
+
+#rooms .top-v2-scene-card-photo {
+  position: relative;
+  overflow: visible;
+}
+
+#rooms .top-v2-scene-card-photo::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 110px;
+  height: 44px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#rooms .top-v2-scene-cards .top-v2-scene-card:nth-child(1) .top-v2-scene-card-photo::before {
+  background-image: url(/assets/img/tape-4.png);
+  transform: translateX(-50%) rotate(-2deg);
+}
+
+#rooms .top-v2-scene-cards .top-v2-scene-card:nth-child(2) .top-v2-scene-card-photo::before {
+  background-image: url(/assets/img/tape-2.png);
+  transform: translateX(-50%) rotate(3deg);
+}
+
+@media (max-width: 767px) {
+  #rooms .top-v2-scene-card-photo::before {
+    width: 90px;
+    height: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #rooms .top-v2-scene-cards .top-v2-scene-card {
+    transition: box-shadow 0.25s ease;
+  }
+}
+
+/* --- friends/index.html 追補: FAQ Qチップ --- */
+.top-v2-faq-q {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #2f7890;
+  color: #fff;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.faq_title {
+  display: flex;
+  align-items: center;
+}
+
+/* --- friends/index.html 追補: できることカード 科目札の揺れ --- */
+#can-do .top-v2-scene-card:hover .top-v2-scene-card-tag {
+  transform: rotate(-1deg) scale(1.08);
+  transition: transform 0.2s ease;
+}
+
+/* フロー番号バッジ: 数字が本文の茶色を継承して読めなかった不具合の修正 */
+.top-v2-flow-num {
+  color: #fff;
+}
+
+/* 上記修正の詳細度不足の追い直し（ol...li spanルールに勝つ） */
+ol.top-v2-flow li span.top-v2-flow-num {
+  color: #fff;
+}
+
+/* ===== オーナーフィードバック 2026-07-06 ===== */
+
+/* 2. hero2ボタンの不揃い解消: 高さ統一・cta-bigの非対称パディング縮小 */
+#hero .top-v2-cta-big {
+  padding: 15px 100px 15px 34px;
+  min-height: 60px;
+  box-sizing: border-box;
+}
+#hero .top-v2-btn-outline {
+  min-height: 60px;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* 3. バナナ吹き出し: 60px→拡大して読めるジョークに */
+.top-v2-faq-balloon {
+  width: 112px;
+}
+@media (min-width: 768px) {
+  .top-v2-faq-balloon {
+    width: 168px;
+    left: calc(50% - 320px);
+    top: -46px;
+    transform: rotate(-5deg);
+  }
+}
+
+/* 4. FAQのQマーカーを吹き出し形に（左下だけ角を立てると吹き出しに読める） */
+.top-v2-faq-q {
+  border-radius: 50% 50% 50% 4px;
+}
+
+/* 6. LINE共有ボタンはLINEブランド色（緑禁止ルールの唯一の例外） */
+.top-v2-btn-line {
+  background: #06C755;
+  border-color: #06C755;
+  color: #fff;
+}
+.top-v2-btn-line:hover {
+  background: #05b34c;
+  border-color: #05b34c;
+  color: #fff;
+}
+
+/* オーナーFB第2弾: heroの主従逆転を解消（見出し570px > 写真460px へ） */
+@media (min-width: 992px) {
+  .top-v2-scene-hero {
+    grid-template-columns: minmax(0, 1.25fr) 1fr;
+    gap: 48px;
+  }
+}
+
+/* フロー番号: 36px円に13px数字が泳いでいた違和感の解消 */
+ol.top-v2-flow li span.top-v2-flow-num {
+  font-size: 18px;
+  line-height: 36px;
+  text-align: center;
+}
+
+/* 付箋1（お酒）: 黒板右上の太陽・音符の落書きと被っていたのを回避。
+   PC=枠の上角に掛ける / SP=付箋2と対で枠下にぶら下げる */
+.top-v2-chalkboard--art .top-v2-sticky--1 {
+  top: -34px;
+  right: -28px;
+}
+@media (max-width: 767px) {
+  .top-v2-chalkboard--art .top-v2-sticky--1 {
+    top: auto;
+    bottom: -52px;
+    right: -4px;
+  }
+  /* 付箋2枚を枠下にぶら下げる余白を確保（せんせいよりカードとの衝突回避） */
+  .top-v2-chalkboard--art {
+    margin-bottom: 64px;
+  }
+}
+
+/* 円表記で数式が伸びたためSPでの折り返し(「円」の孤立)を防ぐ */
+@media (max-width: 767px) {
+  .top-v2-chalkboard--art .top-v2-chalk-formula {
+    font-size: clamp(13px, 4vw, 17px);
+    white-space: nowrap;
+  }
+}
+
+/* FAQ Qマーカー再設計: 潰れたQ→しっぽ付き吹き出し、1行目に揃える */
+#faq .top-v2-faq-q {
+  width: 28px;
+  height: 28px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  border-radius: 50%;
+  align-self: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  margin-top: 1px;
+}
+#faq .top-v2-faq-q::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  bottom: -4px;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-top-color: #2f7890;
+  border-left-color: #2f7890;
+  transform: rotate(8deg);
+}
+
+/* Qがテーマの白フチ袋文字を継承して白い塊に見えていたのを解除 */
+#faq .top-v2-faq-q {
+  -webkit-text-stroke: 0;
+  text-stroke: 0;
+  text-shadow: none;
+  paint-order: normal;
+  color: #fff;
+}
+
+/* 夜パネルの星ドット撤去（文字の横に来ると汚れ/誤植に見える）＋本文の可読性UP */
+.top-v2-timeline-item--night .top-v2-timeline-body {
+  background-image: linear-gradient(180deg, #223c47 0%, #2a4750 40%);
+}
+.top-v2-timeline-item--night .top-v2-timeline-body p {
+  color: #fff8e8;
+  font-size: 15px;
+}
+.top-v2-timeline-body p {
+  color: #4e4538;
+  font-size: 15px;
+}
+
+/* タブレット帯(768-991): 付箋の左右はみ出しがoverflow:hiddenで切られるため内側へ */
+@media (min-width: 768px) and (max-width: 991px) {
+  .top-v2-chalkboard--art .top-v2-sticky--1 { right: 0; }
+  .top-v2-chalkboard--art .top-v2-sticky--2 { left: 0; }
+}
+
+/* --- index.html 追補: 目的別入口 教室ドアカード --- */
+.top-v2-doors {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px 22px;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.top-v2-doors a { display: block; text-decoration: none; color: inherit; text-align: center; }
+.top-v2-doors a:hover .top-v2-door-photo { transform: scale(1.06); }
+.top-v2-doors .top-v2-door img { aspect-ratio: auto; }
+.top-v2-doors-label { display: block; margin-top: 12px; font-weight: 800; font-size: 17px; color: #333; }
+.top-v2-doors a:hover .top-v2-doors-label { color: #2F7890; }
+.top-v2-doors-note { display: block; margin-top: 4px; font-size: 13px; line-height: 1.6; color: #666; }
+.top-v2-doors-gasshuku .top-v2-door-photo { object-position: 50% 62%; }
+@media (max-width: 991px) {
+  .top-v2-doors { grid-template-columns: repeat(2, 1fr); gap: 24px 14px; }
+  .top-v2-doors-label { font-size: 15px; }
+  .top-v2-doors-note { font-size: 12px; }
+}
+
+/* 教室ドアのショート化: 何もない下半分の板を刈り込み、窓（写真）を主役に。
+   ドア画像は natural比率のままコンテナ下端でクロップし、
+   窓/札の座標は751:900コンテナ基準に再計算（元: 751:1344基準） */
+.top-v2-door {
+  aspect-ratio: 751 / 900;
+  overflow: hidden;
+  border-radius: 6px 6px 10px 10px;
+}
+.top-v2-otherscenes-cards .top-v2-door img.top-v2-door-frame,
+.top-v2-doors .top-v2-door img.top-v2-door-frame {
+  height: auto;
+}
+.top-v2-otherscenes-cards .top-v2-door img.top-v2-door-photo,
+.top-v2-doors .top-v2-door img.top-v2-door-photo {
+  top: 19.1%;
+  height: 67%;
+}
+.top-v2-door-plate {
+  top: 0.9%;
+  height: 6.6%;
+}
+
+/* 人数タブ → チョーク風ステッパー（5〜30人の任意人数） */
+.top-v2-chalk-stepper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.top-v2-chalk-step {
+  width: 44px;
+  height: 44px;
+  border: 2px dashed rgba(47, 120, 144, 0.55);
+  border-radius: 50%;
+  background: transparent;
+  color: #2f7890;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-style 0.15s, background 0.15s;
+}
+.top-v2-chalk-step:hover:not(:disabled) {
+  border-style: solid;
+  background: rgba(47, 120, 144, 0.08);
+}
+.top-v2-chalk-step:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.top-v2-chalk-count {
+  min-width: 88px;
+  text-align: center;
+  color: #2f7890;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+/* --- index.html 追補: 料金セクション 付箋 --- */
+.top-v2-price { position: relative; }
+.top-v2-sticky--price1 { top: -26px; right: -6px; transform: rotate(3deg); }
+.top-v2-sticky--price2 { bottom: 176px; left: -6px; transform: rotate(-2.5deg); }
+@media (max-width: 991px) {
+  .top-v2-sticky--price1, .top-v2-sticky--price2 {
+    position: static;
+    display: inline-block;
+    margin: 10px 6px 0;
+    transform: rotate(-1.5deg);
+  }
+}
+
+/* ===== 教室ドア → 廊下の窓アートへ全面差し替え（C案採用） =====
+   窓は1253x931横長。写真は左右ガラスの合算領域(左16.6% 上16.3% 幅73.7% 高59.4%)
+   に1枚で敷き、中央の桟はアート側が写真の上に重なる */
+.top-v2-door {
+  aspect-ratio: 1253 / 931;
+  border-radius: 8px;
+}
+.top-v2-otherscenes-cards .top-v2-door img.top-v2-door-frame {
+  height: 100%;
+}
+.top-v2-otherscenes-cards .top-v2-door img.top-v2-door-photo {
+  left: 16.6%;
+  top: 16.3%;
+  width: 73.7%;
+  height: 59.4%;
+}
+.top-v2-door-plate {
+  left: 39.9%;
+  top: 0.6%;
+  width: 21.4%;
+  height: 5.2%;
+}
+/* 横長になったのでカード幅を拡張 */
+@media (min-width: 768px) {
+  .top-v2-otherscenes-cards li { max-width: 330px; }
+}
+@media (max-width: 767px) {
+  .top-v2-otherscenes-cards li { max-width: 300px; }
+}
+
+/* 時間割: 夜の開始を明示するディバイダー（三日月＋点線） */
+.top-v2-timeline-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 26px 0 22px;
+  color: #2a4750;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  list-style: none;
+}
+.top-v2-timeline-divider::before,
+.top-v2-timeline-divider::after {
+  content: "";
+  flex: 1;
+  border-top: 2px dashed rgba(42, 71, 80, 0.35);
+}
+.top-v2-moon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-shadow: inset 5px -3px 0 0 #2a4750;
+  flex-shrink: 0;
+}
+
+/* 料金セクションのリード（この時間割例に近い内容なら）を中央へ */
+#price .top-v2-scene-lead {
+  text-align: center;
+}
+
+/* SPで「まずは、定番の過ごし方から。」が2行に折れるのを防ぐ */
+@media (max-width: 767px) {
+  .top-v2-scene-title-mark {
+    font-size: 21px;
+  }
+}
+
+/* FAQ質問文の白袋文字（テーマ由来）を解除 */
+#faq .faq_title {
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  paint-order: normal;
+}
+
+/* ===== となりの教室: 窓アート廃止 → アルバム言語に統一（B案） =====
+   テープ留め・白フチ・微回転・オフセット影＝定番/泊まるカードと同じ文法 */
+.top-v2-scenecard-photo {
+  display: block;
+  position: relative;
+  padding: 10px 10px 12px;
+  background: #fff;
+  box-shadow: 10px 10px 0 #cfe0e8;
+  border-radius: 4px;
+}
+.top-v2-scenecard-photo::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 104px;
+  height: 42px;
+  margin-left: -52px;
+  background: url(/assets/img/tape-1.png) no-repeat center/contain;
+  pointer-events: none;
+  z-index: 2;
+}
+.top-v2-otherscenes-cards li:nth-child(1) .top-v2-scenecard-photo { transform: rotate(-1.6deg); }
+.top-v2-otherscenes-cards li:nth-child(2) .top-v2-scenecard-photo { transform: rotate(1.2deg); }
+.top-v2-otherscenes-cards li:nth-child(3) .top-v2-scenecard-photo { transform: rotate(-0.9deg); }
+.top-v2-otherscenes-cards li:nth-child(2) .top-v2-scenecard-photo::before { background-image: url(/assets/img/tape-3.png); transform: rotate(5deg); }
+.top-v2-otherscenes-cards li:nth-child(3) .top-v2-scenecard-photo::before { background-image: url(/assets/img/tape-4.png); transform: rotate(-4deg); }
+.top-v2-scenecard-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.top-v2-otherscenes-cards a:hover .top-v2-scenecard-photo {
+  transform: rotate(0) translateY(-6px);
+  transition: transform 0.25s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-otherscenes-cards a:hover .top-v2-scenecard-photo { transition: none; }
+}
+/* ホーロー札は写真の下端に少し重ねる（batch2の元仕様に戻す） */
+.top-v2-otherscenes-cards .top-v2-otherscenes-label {
+  margin-top: -12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* SPのhero2ボタン: 左右端を完全に揃える（相談ボタンだけ16px内側に居た） */
+@media (max-width: 767px) {
+  #hero .top-v2-scene-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #hero .top-v2-btn-outline {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+  }
+  #hero .top-v2-cta-big {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* となりの教室カード: 旧ホバーズーム時代の overflow:hidden がテープを切断していたのを解除。
+   ズームはカード自体のリフトに役目を譲り廃止（白フチからのはみ出し防止） */
+.top-v2-otherscenes-cards a {
+  overflow: visible;
+}
+.top-v2-otherscenes-cards a:hover img {
+  transform: none;
+}
+/* 写真下の青いオフセット帯 → 印画紙らしい柔らかい影へ */
+.top-v2-scenecard-photo {
+  box-shadow: 0 10px 24px rgba(20, 50, 65, 0.16);
+}
+
+/* 動きの復活: 写真プリント全体が「持ち上がる」ホバー（クリップ不要なのでテープは切れない） */
+.top-v2-otherscenes-cards a .top-v2-scenecard-photo {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.top-v2-otherscenes-cards a:hover .top-v2-scenecard-photo {
+  transform: rotate(0deg) translateY(-8px) scale(1.03);
+  box-shadow: 0 18px 32px rgba(20, 50, 65, 0.22);
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-otherscenes-cards a .top-v2-scenecard-photo { transition: none; }
+}
+
+/* 朝のディバイダー（夜との対）: 昇る朝日 */
+.top-v2-sun {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f0831e;
+  flex-shrink: 0;
+}
+
+/* SPのバナナ吹き出し: 見出しの右肩に寄り添わせる（無所属で浮いていた） */
+@media (max-width: 767px) {
+  .top-v2-faq-titlewrap {
+    position: relative;
+  }
+  .top-v2-faq-balloon {
+    position: absolute;
+    right: 6px;
+    top: -46px;
+    width: 96px;
+    margin: 0;
+    transform: rotate(6deg);
+  }
+}
+
+/* バナナ吹き出し: SPは置き場が無く2案とも不自然だったため非表示に
+   （§5「本文・CTAに重なる装飾はSPで非表示」の原則に準拠。PCは従来通り） */
+@media (max-width: 767px) {
+  .top-v2-faq-balloon {
+    display: none;
+  }
+}
+
+/* 訂正: SPのバナナ吹き出しは非表示ではなく「見出しの左肩」に（オーナー指定） */
+@media (max-width: 767px) {
+  .top-v2-faq-balloon {
+    display: block;
+    position: absolute;
+    left: 4px;
+    right: auto;
+    top: -46px;
+    width: 94px;
+    margin: 0;
+    transform: rotate(-6deg);
+  }
+}
+
+/* ===== 「あの頃の放課後」3ブロック: friendsのアルバム文法を移植 =====
+   写真=白フチ+マステ+柔影（.top-v2-scenecard-photo）。吹き出し・小物は
+   写真ラッパー（.memory-image、position:relativeはlp-style.css由来）基準で
+   角にアンカーし、「素材が余白に浮く」状態を解消する。 */
+
+/* 写真を白フチ・マステ・微回転カードに（friendsの.top-v2-scenecard-photoを流用） */
+#usagescene .top-v2-usagescene-photo {
+  width: 100%;
+}
+
+#usagescene .top-v2-usagescene-photo img,
+#usagescene .top-v2-usagescene-photo picture {
+  display: block;
+}
+
+#usagescene .top-v2-usagescene-photo--1 { transform: rotate(-1.5deg); }
+#usagescene .top-v2-usagescene-photo--2 { transform: rotate(1.2deg); }
+#usagescene .top-v2-usagescene-photo--3 { transform: rotate(-0.9deg); }
+
+/* テープの柄をブロックごとに変える（friendsの:nth-child書式を単一クラスへ移植） */
+#usagescene .top-v2-usagescene-photo--2::before {
+  background-image: url(/assets/img/tape-3.png);
+  transform: rotate(5deg);
+}
+#usagescene .top-v2-usagescene-photo--3::before {
+  background-image: url(/assets/img/tape-4.png);
+  transform: rotate(-4deg);
+}
+
+/* memory-image を吹き出し・小物のアンカー基準に */
+#usagescene .memory-image {
+  overflow: visible;
+}
+
+/* 吹き出し: 写真の角に3〜4割重ね、外へ6〜7割はみ出す「貼った感」 */
+#usagescene .top-v2-usagescene-bubble {
+  position: absolute;
+  width: 58%;
+  max-width: none;
+  margin: 0;
+  z-index: 5;
+}
+
+#usagescene .memory-image--right01 .top-v2-usagescene-bubble {
+  right: -22%;
+  top: -30%;
+  transform: rotate(5deg);
+}
+
+#usagescene .memory-image--left01 .top-v2-usagescene-bubble {
+  left: -14%;
+  bottom: -32%;
+  top: auto;
+  transform: rotate(-6deg);
+}
+
+#usagescene .stay-img .top-v2-usagescene-bubble {
+  left: 4%;
+  right: auto;
+  top: -34%;
+  transform: rotate(-5deg);
+}
+
+/* 小物: 写真の縁から少しはみ出す位置（吹き出しと同じ角は避ける） */
+#usagescene .top-v2-usagescene-trinket {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+}
+
+#usagescene .memory-image--left01 .top-v2-usagescene-trinket.top-v2-food-piece--grill {
+  width: 78px;
+  right: -30px;
+  bottom: -26px;
+  top: auto;
+  left: auto;
+  transform: rotate(6deg);
+}
+
+#usagescene .stay-img .top-v2-usagescene-trinket.slippers {
+  position: absolute;
+  width: 96px;
+  left: auto;
+  right: -34px;
+  bottom: -22px;
+  top: auto;
+  transform: rotate(-8deg) scale(1);
+  transform-origin: bottom right;
+}
+
+/* PC: グリッドの間延び是正＋縦リズム圧縮（現状の約2/3） */
+@media (min-width: 992px) {
+  #usagescene .memory-item1 {
+    column-gap: 28px;
+    margin-bottom: 78px;
+  }
+
+  #usagescene .memory-item1 .memory-image {
+    width: 560px;
+    max-width: 560px;
+  }
+
+  #usagescene .memory-title01 img,
+  #usagescene .memory-title02 img {
+    width: min(300px, 100%);
+  }
+
+  #usagescene .memory-title03 img {
+    width: min(340px, 100%);
+  }
+}
+
+/* SP: 吹き出し幅を写真の55%に、小物はやや控えめに、縦間隔を圧縮 */
+@media (max-width: 991px) {
+  #usagescene .memory-item1 {
+    margin-bottom: 56px;
+  }
+
+  #usagescene .top-v2-usagescene-bubble {
+    width: 46%;
+  }
+
+  #usagescene .memory-image--right01 .top-v2-usagescene-bubble {
+    right: 3%;
+    left: auto;
+    top: 30%;
+    bottom: auto;
+  }
+
+  #usagescene .memory-image--left01 .top-v2-usagescene-bubble {
+    left: 3%;
+    right: auto;
+    top: auto;
+    bottom: 4%;
+  }
+
+  #usagescene .stay-img .top-v2-usagescene-bubble {
+    left: auto;
+    right: 3%;
+    top: 30%;
+    bottom: auto;
+  }
+
+  #usagescene .memory-image--left01 .top-v2-usagescene-trinket.top-v2-food-piece--grill {
+    width: 58px;
+    right: -16px;
+    bottom: -16px;
+  }
+
+  #usagescene .stay-img .top-v2-usagescene-trinket.slippers {
+    width: 66px;
+    left: -14px;
+    right: auto;
+    bottom: -12px;
+  }
+}
+
+@media (max-width: 767px) {
+  #usagescene .memory-item1 {
+    margin-bottom: 44px;
+  }
+}
+
+/* ===== 目的別入口カード: 教室ドア型 → friendsのアルバム文法に統一 =====
+   オーナーが教室ドア構造を2回却下し最終承認した .top-v2-scenecard-photo
+   （実写＋白フチ＋マステ＋自然影＋ホーロー札）を .top-v2-doors にも適用する。 */
+.top-v2-doors a {
+  overflow: visible;
+}
+.top-v2-doors .top-v2-scenecard-photo img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  width: 100%;
+}
+.top-v2-doors-gasshuku .top-v2-scenecard-photo img {
+  object-position: 50% 62%;
+}
+
+/* カードごとの微回転とマステ柄（friendsのnth-child書式を4枚用に拡張） */
+.top-v2-doors li:nth-child(1) .top-v2-scenecard-photo { transform: rotate(-1.5deg); }
+.top-v2-doors li:nth-child(2) .top-v2-scenecard-photo { transform: rotate(1.1deg); }
+.top-v2-doors li:nth-child(3) .top-v2-scenecard-photo { transform: rotate(-0.9deg); }
+.top-v2-doors li:nth-child(4) .top-v2-scenecard-photo { transform: rotate(1.4deg); }
+.top-v2-doors li:nth-child(1) .top-v2-scenecard-photo::before {
+  background-image: url(/assets/img/tape-1.png);
+}
+.top-v2-doors li:nth-child(2) .top-v2-scenecard-photo::before {
+  background-image: url(/assets/img/tape-3.png);
+  transform: rotate(5deg);
+}
+.top-v2-doors li:nth-child(3) .top-v2-scenecard-photo::before {
+  background-image: url(/assets/img/tape-4.png);
+  transform: rotate(-4deg);
+}
+.top-v2-doors li:nth-child(4) .top-v2-scenecard-photo::before {
+  background-image: url(/assets/img/tape-2.png);
+  transform: rotate(3deg);
+}
+
+/* ホバー: プリントごと持ち上がる（friendsの.top-v2-otherscenes-cards同様） */
+.top-v2-doors a .top-v2-scenecard-photo {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.top-v2-doors a:hover .top-v2-scenecard-photo {
+  transform: rotate(0deg) translateY(-8px) scale(1.03);
+  box-shadow: 0 18px 32px rgba(20, 50, 65, 0.22);
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-doors a .top-v2-scenecard-photo { transition: none; }
+}
+
+/* ラベルのホーロー札化（friendsの.top-v2-otherscenes-labelと同仕様） */
+.top-v2-doors .top-v2-doors-label {
+  background: #2a4750;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  padding: 4px 14px;
+  display: inline-block;
+  margin-top: -12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* くわしく→ 誘導リンク */
+.top-v2-doors-more {
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 13px;
+  display: inline-block;
+  margin-top: 6px;
+}
+.top-v2-doors a:hover .top-v2-doors-more {
+  text-decoration: underline;
+}
+
+/* --- 所在地セクション: 地図の額装＋情報カード化（2カラム） --- */
+.top-v2-address-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* 地図の額装 */
+.top-v2-map-frame {
+  position: relative;
+  overflow: visible;
+  background: #fff;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(20, 50, 65, 0.16);
+}
+
+.top-v2-map-frame .l-address_map {
+  margin-bottom: 0;
+  line-height: 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.top-v2-map-frame .l-address_map iframe {
+  display: block;
+}
+
+.top-v2-map-frame::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 110px;
+  height: 44px;
+  background: url(/assets/img/tape-1.png) no-repeat center/contain;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (max-width: 767px) {
+  .top-v2-map-frame::before {
+    width: 90px;
+    height: 36px;
+  }
+}
+
+/* 情報のカード化 */
+.top-v2-address-card {
+  background: #fff8e8;
+  border-radius: 12px;
+  padding: 18px 22px;
+  max-width: 480px;
+}
+
+.top-v2-address-card .l-address_info {
+  text-align: left;
+}
+
+.top-v2-address-card .l-address_info + .l-address_info {
+  margin-top: 22px;
+}
+
+.top-v2-address-card .l-address_infoTitle {
+  font-weight: 800;
+  color: #2f7890;
+}
+
+.top-v2-address-card .top-v2-actions {
+  margin-top: 22px;
+}
+
+@media (min-width: 768px) {
+  .top-v2-address-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .top-v2-address-layout .top-v2-map-frame,
+  .top-v2-address-layout .top-v2-address-card {
+    flex: 1 1 50%;
+    min-width: 0;
+  }
+}
+
+/* --- index.html 追補: 料金セクション「黒板＋人数ステッパー」移植（friends流用） --- */
+/* 日帰りカード: 1行のみで右側が空くため、既存のMVバッジ画像を軽く添えてバランスを取る */
+.top-v2-price-card--day {
+  position: relative;
+}
+
+.top-v2-price-day-badge {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .top-v2-price-day-badge {
+    display: block;
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%) rotate(6deg);
+    width: 84px;
+    height: auto;
+    filter: drop-shadow(0 3px 8px rgba(20, 50, 65, 0.18));
+  }
+
+  .top-v2-price-card--day .top-v2-price-rows {
+    max-width: 78%;
+  }
+}
+
+/* 吹き出しのSP配置修正: 写真中央で人物に被っていた → 人のいない縁へ
+   （遊んで=床のある右下、食べて=窓のある右上、泊まれる=左上）縦は枠外に逃がす */
+@media (max-width: 767px) {
+  #usagescene .memory-image--right01 .top-v2-usagescene-bubble {
+    right: 2%;
+    left: auto;
+    top: auto;
+    bottom: -12%;
+  }
+  #usagescene .memory-image--left01 .top-v2-usagescene-bubble {
+    right: 2%;
+    left: auto;
+    top: -10%;
+    bottom: auto;
+  }
+  #usagescene .stay-img .top-v2-usagescene-bubble {
+    left: 2%;
+    right: auto;
+    top: -10%;
+  }
+}
+
+/* 目的別カード: PCは4列→2×2（写真主役の大きさを確保、ラベルの変な折返しも解消） */
+@media (min-width: 992px) {
+  .top-v2-doors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 1000px;
+    gap: 44px 40px;
+  }
+}
+
+/* 食べて吹き出し: 右上はタイトル画像と重なるため右下（机のみの領域）へ */
+@media (max-width: 767px) {
+  #usagescene .memory-image--left01 .top-v2-usagescene-bubble {
+    top: auto;
+    bottom: -12%;
+  }
+}
+
+/* 放課後の吹き出し: SPは写真上で人物・タイトルとの場所の取り合いになるため
+   非表示（§5原則）。PCは余白への掛かりが自然なので継続 */
+@media (max-width: 767px) {
+  #usagescene .top-v2-usagescene-bubble {
+    display: none;
+  }
+}
+
+/* 放課後の吹き出し: PC配置も不自然とのオーナー判断で全面引退。
+   写真・テープ・生成タイトルでセクションは成立している */
+#usagescene .top-v2-usagescene-bubble {
+  display: none;
+}
+
+/* 目的別カード: Bootstrap .list-unstyled の padding-left:0 に食われて
+   左余白だけ消えていたのを復元（左右対称に） */
+ul.top-v2-doors.list-unstyled {
+  padding-left: 16px !important; /* テーマ側の強制リセットに勝てないため */
+}
+
+/* 見出しマーカー: 2行時に帯がブロック全体に1回だけ掛かり
+   下行だけ浮いて見えるのを、行ごとに帯を複製して解消 */
+.top-v2-scene-title-mark {
+  display: inline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 6px;
+}
+
+/* せんせいより: 素の注記カード → 学校のプリント（おたより）風に演出
+   事実文言は不変。ノート罫線・左マージン線・テープ留め・「だいじ」スタンプ */
+.top-v2-teacher-note {
+  position: relative;
+  transform: rotate(-0.4deg);
+  background: #fff8e8;
+  border-left: 3px solid rgba(47, 120, 144, 0.35);
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.10);
+}
+.top-v2-teacher-note::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 104px;
+  height: 42px;
+  margin-left: -52px;
+  background: url(/assets/img/tape-3.png) no-repeat center/contain;
+  pointer-events: none;
+}
+.top-v2-teacher-note::after {
+  content: "だいじ";
+  position: absolute;
+  top: -16px;
+  right: -12px;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid rgba(240, 131, 30, 0.75);
+  border-radius: 50%;
+  color: rgba(240, 131, 30, 0.85);
+  font-size: 13px;
+  font-weight: 900;
+  transform: rotate(10deg);
+  pointer-events: none;
+}
+.top-v2-teacher-note .top-v2-price-notes li {
+  margin: 0;
+  padding: 0;
+  line-height: 28px;
+}
+.top-v2-teacher-note .top-v2-price-notes li::first-letter {
+  color: #f0831e;
+  font-weight: 900;
+}
+@media (max-width: 767px) {
+  .top-v2-teacher-note::after { width: 46px; height: 46px; font-size: 11px; top: -12px; right: -6px; }
+}
+
+/* シーズントグル（平日/土日祝）: 既存チョークタブ意匠を流用 */
+.top-v2-chalk-season {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* せんせいより: 罫線の位相ズレ修正 — 罫線をカードでなくリスト自身に敷き、
+   1行目から必ず行の真下に線が来るようにする */
+.top-v2-teacher-note {
+  background: #fff8e8;
+}
+.top-v2-teacher-note .top-v2-price-notes {
+  margin: 0;
+  padding: 0;
+  line-height: 28px;
+  background-image: repeating-linear-gradient(
+    transparent 0,
+    transparent 27px,
+    rgba(47, 120, 144, 0.14) 27px,
+    rgba(47, 120, 144, 0.14) 28px
+  );
+  background-position: 0 0;
+}
+
+/* 料金セクション: 上パディングが二重(.py-sm-5の48px + .pt-5の48px)で
+   カード群との間が144pxに間延び。内側の重複分を削り§5目標の96pxへ */
+#price .l-section_inner.pt-5 {
+  padding-top: 0 !important;
+}
+
+/* セクション余白の間延び一掃（#priceと同種の重複パディング）
+   目標: 各セクション上下48px＝境界96px（§5リズム）に統一 */
+/* #location: 上96(pt-5+py-sm-5)/下144(pb-5+pb-sm-5+py-sm-5)の重複を解消 */
+#location .l-section_inner {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+#location .l-section_bg--lightgray {
+  padding-bottom: 0 !important;
+}
+/* #flow: 上下とも py-5(inner)+l-section の二重 → innerを無効化 */
+#flow .l-section_inner {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* ===== family/index.html 追補 ===== */
+
+/* ヒーローh1をテキスト見出しに（専用ロゴ画像が用意でき次第、friendsと同様の画像h1に差し替え予定） */
+.top-v2-scene-h1text {
+  font-size: clamp(30px, 5.2vw, 60px);
+  font-weight: 900;
+  color: #2f7890;
+  line-height: 1.3;
+}
+
+/* 他シーンカードの並び順がfriendsと異なるため、カード位置(li:first-child)依存だった
+   顔位置調整をsrc指定で写真ごとに再固定する（friendsページの表示には影響しない） */
+.top-v2-otherscenes-cards img[src*="university_friends"] {
+  object-fit: cover;
+  object-position: 50% 62%;
+}
+.top-v2-otherscenes-cards img[src*="friends-entrance-group"] {
+  object-position: center;
+}
+
+/* --- family/index.html 追補: 家族向け3種ステッパー（おとな・小学生・3〜5歳） --- */
+.top-v2-chalk-family { display: flex; flex-direction: column; gap: 8px; align-items: center; margin-bottom: 14px; }
+.top-v2-chalk-frow { display: flex; align-items: center; gap: 12px; }
+.top-v2-chalk-flabel { width: 68px; text-align: right; color: #2f7890; font-weight: 900; font-size: 15px; }
+.top-v2-chalk-fcount { min-width: 44px; text-align: center; color: #2f7890; font-weight: 900; font-size: 20px; }
+/* 家族版は数式が長いので黒板内で1行に収める */
+.top-v2-chalkboard--art .top-v2-chalk-formula { white-space: nowrap; }
+@media (max-width: 767px) {
+  .top-v2-chalkboard--art .top-v2-chalk-formula { font-size: clamp(12px, 3.6vw, 16px); }
+  .top-v2-chalk-flabel { width: 60px; font-size: 14px; }
+}
+
+/* シーズントグル: 平日(2字)/土日祝(3字)の幅差で右重りに見えるのを、等幅化で解消 */
+.top-v2-chalk-season .top-v2-chalk-tab {
+  min-width: 96px;
+  text-align: center;
+}
+
+/* 家族ステッパー: 数字を黒板の中心軸に揃える（ラベルは数字の左へ寄せる）。
+   1fr[ラベル] − 数 ＋ 1fr の5カラムで、両端1frが等幅→数字が行の中央＝黒板中央 */
+.top-v2-chalk-family .top-v2-chalk-frow {
+  display: grid;
+  grid-template-columns: 60px auto auto auto 60px;
+  align-items: center;
+  column-gap: 12px;
+}
+.top-v2-chalk-family .top-v2-chalk-flabel {
+  grid-column: 1;
+  justify-self: end;
+  width: auto;
+  white-space: nowrap;
+}
+
+/* FAQ答えのテーマ由来の白袋文字(text-shadow16枚)を解除。top-v2.cssが最後に
+   読まれるためlp-styleに勝つ。灰/白背景では白縁は不要で違和感が出るため */
+.faq_body {
+  text-shadow: none;
+}
+
+/* トグル/ステッパーは連打するので、モバイルのダブルタップ拡大を抑止（タップは維持） */
+.top-v2-chalk-tab,
+.top-v2-chalk-step {
+  touch-action: manipulation;
+}
+
+/* 給食トグル行（家族黒板） */
+.top-v2-chalk-mealrow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.top-v2-chalk-meal {
+  min-width: 0;
+  font-size: 14px;
+}
+
+/* タッチ端末のホバー代替: 押している間プリントが沈む（hover演出のタッチ版） */
+@media (hover: none) {
+  .top-v2-otherscenes-cards a:active .top-v2-scenecard-photo,
+  .top-v2-doors a:active .top-v2-scenecard-photo {
+    transform: rotate(0deg) scale(0.97);
+    box-shadow: 0 4px 12px rgba(20, 50, 65, 0.18);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .top-v2-chalk-step:active:not(:disabled),
+  .top-v2-chalk-tab:active {
+    transform: scale(0.92);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* 家族黒板のアレルギー付箋: 右下に低く垂れていたのを右中段（落書きの下）へ引き上げ。
+   黒板右上の☀♪落書き(上部~28%)は避け、本文は中央寄せで付箋は右外へ逃がす */
+#price .top-v2-chalkboard--art .top-v2-sticky--1 {
+  top: 81%;
+  bottom: auto;
+  right: -10px;
+}
+/* 家族黒板は付箋2枚が下に垂れるため、せんせいよりカードとの間に余白を確保 */
+#price .top-v2-chalkboard--art {
+  margin-bottom: 40px;
+}
+
+/* 合宿ページ #support: 幹事さんの負担を減らす4カード。top-v2-price-cardの色調・角丸を踏襲 */
+.top-v2-support-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.top-v2-support-card {
+  background: #fff;
+  border: 2px solid #2f7890;
+  border-radius: 14px;
+  padding: 24px 26px;
+  box-shadow: 0 4px 14px rgba(47, 120, 144, 0.12);
+}
+
+.top-v2-support-card h3 {
+  margin: 0 0 10px;
+  font-size: clamp(16px, 1.9vw, 19px);
+  font-weight: 900;
+  color: #2f7890;
+}
+
+.top-v2-support-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #2e2518;
+}
+
+@media (max-width: 767px) {
+  .top-v2-support-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .top-v2-support-card {
+    padding: 20px;
+  }
+}
+
+/* 合宿のしおり: 運営サポートをプリント風に（せんせいよりと同じ言語） */
+.top-v2-shiori {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 22px 26px;
+  background: #fff8e8;
+  border-left: 3px solid rgba(47, 120, 144, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.10);
+  transform: rotate(-0.4deg);
+}
+.top-v2-shiori::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 104px;
+  height: 42px;
+  margin-left: -52px;
+  background: url(/assets/img/tape-1.png) no-repeat center/contain;
+  pointer-events: none;
+}
+.top-v2-shiori-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 26px;
+  margin-top: 14px;
+}
+@media (max-width: 767px) {
+  .top-v2-shiori-list { grid-template-columns: 1fr; }
+}
+.top-v2-shiori-item h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  color: #2f7890;
+  font-size: 16px;
+  font-weight: 900;
+}
+.top-v2-shiori-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2f7890;
+  color: #fff;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.top-v2-shiori-item p {
+  margin: 0;
+  color: #4e4538;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* 食事トグル2つ並び（合宿黒板） */
+.top-v2-chalk-mealrow {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* きょうの食事: 5ボタンを折りたたみ、普段は1行の献立表示に */
+.top-v2-chalk-menu {
+  max-width: 560px;
+  margin: 0 auto 12px;
+}
+.top-v2-chalk-menu-summary {
+  display: block;
+  list-style: none;
+  cursor: pointer;
+  text-align: center;
+  padding: 9px 18px;
+  border: 2px dashed rgba(47, 120, 144, 0.5);
+  border-radius: 10px;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 14px;
+  touch-action: manipulation;
+}
+.top-v2-chalk-menu-summary::-webkit-details-marker { display: none; }
+.top-v2-chalk-menu-summary::after {
+  content: "▾ 変更する";
+  margin-left: 8px;
+  font-size: 12px;
+  color: rgba(47, 120, 144, 0.7);
+}
+.top-v2-chalk-menu[open] .top-v2-chalk-menu-summary::after {
+  content: "▴ 閉じる";
+}
+.top-v2-chalk-menu[open] .top-v2-chalk-menu-summary {
+  border-style: solid;
+  border-radius: 10px 10px 0 0;
+}
+.top-v2-chalk-menu .top-v2-chalk-mealrow {
+  margin: 0;
+  padding: 14px;
+  border: 2px solid rgba(47, 120, 144, 0.5);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: #fff8e8;
+}
+
+/* きょうの食事: 昼/夜/朝の3行ラジオペア */
+.top-v2-chalk-mealrows {
+  padding: 14px;
+  border: 2px solid rgba(47, 120, 144, 0.5);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: #fff8e8;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.top-v2-chalk-mealtime {
+  display: grid;
+  grid-template-columns: 28px 1fr 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.top-v2-chalk-mtlabel {
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 15px;
+  text-align: center;
+}
+.top-v2-chalk-mealtime .top-v2-chalk-tab {
+  min-width: 0;
+  font-size: 12.5px;
+  padding: 8px 6px;
+}
+.top-v2-chalk-menu-note {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #4e4538;
+  text-align: center;
+}
+/* シーズントグルの小書き */
+.top-v2-chalk-season .top-v2-chalk-tab small {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.85;
+  letter-spacing: 0.05em;
+}
+
+/* 食事ボタン: 名前+料金の2段表記（中途半端な折り返しの根絶） */
+.top-v2-chalk-mealtime .top-v2-chalk-tab {
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.top-v2-chalk-mealtime .top-v2-chalk-tab small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  opacity: 0.85;
+  letter-spacing: 0.04em;
+}
+
+/* 料金黒板の付箋: 本文の丈がトグルで伸縮するため、板の中の固定位置では
+   どこかの状態で必ず文字に被る。全シーン共通で「板の下端の外側」に固定し、
+   どの選択状態でも本文と干渉しない配置にする（オーナー指示: 全体的に下げる） */
+#price .top-v2-chalkboard--art .top-v2-sticky--1 {
+  top: auto;
+  bottom: -66px;
+  right: -6px;
+}
+#price .top-v2-chalkboard--art .top-v2-sticky--2 {
+  top: auto;
+  bottom: -66px;
+  left: -6px;
+}
+#price .top-v2-chalkboard--art {
+  margin-bottom: 96px;
+}
+
+/* ===== 目的別入口カード: ポラロイド1枚化（オーナー指摘: 説明文とくわしく→が
+   枠の外に裸で浮いてダサい）。写真・紺ラベル板・キャプション・くわしく→を
+   1枚の白い台紙カードにまとめ、縦積みして底を揃える。既存の写真/テープ/
+   ホバー演出（.top-v2-scenecard-photoの回転・影・リフト）はそのまま活かす */
+.top-v2-doors li {
+  list-style: none;
+  height: 100%;
+}
+.top-v2-doors a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 16px 14px;
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.10);
+}
+.top-v2-doors .top-v2-scenecard-photo {
+  width: 100%;
+}
+.top-v2-doors-note {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4e4538;
+  text-align: center;
+}
+.top-v2-doors-more {
+  margin-top: auto;
+  align-self: flex-end;
+  padding-top: 10px;
+  color: #2f7890;
+  font-size: 12.5px;
+}
+@media (max-width: 991px) {
+  .top-v2-doors a { padding: 16px 10px 10px; border-radius: 12px; }
+  .top-v2-doors-note { font-size: 12px; }
+  .top-v2-doors-label { font-size: 13px; }
+  .top-v2-doors .top-v2-doors-label { padding: 4px 10px; }
+}
+
+/* 単語の途中で折り返さないための文節スパン（カードキャプション等で使用） */
+.top-v2-kinsoku {
+  display: inline-block;
+}
+
+/* ===== play/index.html #banner 追補: 料金ブロック刷新（旧PNGバナー+モーダル→テキスト+黒板計算機） ===== */
+
+/* リード文中央寄せ（#priceと同じ演出をid違いで踏襲） */
+#banner .top-v2-scene-lead {
+  text-align: center;
+}
+
+/* 黒板の付箋: 本文の丈がトグルで伸縮するため板下端の外側に固定（familyの#price同種ルールをid違いで踏襲） */
+#banner .top-v2-chalkboard--art .top-v2-sticky--1 {
+  top: auto;
+  bottom: -66px;
+  right: -6px;
+}
+#banner .top-v2-chalkboard--art .top-v2-sticky--2 {
+  top: auto;
+  bottom: -66px;
+  left: -6px;
+}
+#banner .top-v2-chalkboard--art {
+  margin-bottom: 96px;
+}
+
+/* --- 過ごし方の例カード（写真なし・チップ主体の3枚） --- */
+.top-v2-way-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  margin: 0 0 48px;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .top-v2-way-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.top-v2-way-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border: 2px solid #2f7890;
+  border-radius: 14px;
+  padding: 20px 20px 18px;
+  box-shadow: 0 4px 14px rgba(47, 120, 144, 0.12);
+}
+
+.top-v2-way-card-title {
+  margin: 0 0 12px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.5;
+}
+
+.top-v2-way-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.top-v2-way-chip {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #fff8e8;
+  border: 1px solid rgba(47, 120, 144, 0.3);
+  color: #2e2518;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.top-v2-way-link {
+  margin-top: auto;
+  align-self: flex-end;
+  padding-top: 4px;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.top-v2-way-link:hover {
+  color: #f0831e;
+}
+
+/* --- 正式料金表カード（PNGバナー2枚+割引モーダルの置き換え） --- */
+.top-v2-price-card--formal {
+  max-width: 720px;
+  margin: 0 auto 32px;
+}
+
+.top-v2-formal-subtitle {
+  margin: 0 0 12px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(15px, 1.9vw, 17px);
+}
+
+.top-v2-price-card--formal .top-v2-formal-subtitle:not(:first-child) {
+  margin-top: 28px;
+}
+
+.top-v2-formal-tablewrap {
+  overflow-x: auto;
+}
+
+.top-v2-formal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.top-v2-formal-table th,
+.top-v2-formal-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #f2dfb6;
+  text-align: center;
+}
+
+.top-v2-formal-table thead th {
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 12.5px;
+}
+
+.top-v2-formal-table thead th small {
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  color: #665a4a;
+}
+
+.top-v2-formal-table tbody th {
+  color: #2e2518;
+  font-weight: 800;
+  text-align: left;
+}
+
+.top-v2-formal-table tbody th small {
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  color: #665a4a;
+}
+
+.top-v2-formal-table tbody td {
+  color: #a5540e;
+  font-weight: 900;
+}
+
+.top-v2-formal-lead {
+  margin: 0 0 6px;
+  color: #2e2518;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.top-v2-formal-lead strong {
+  color: #a5540e;
+  font-size: 1.3em;
+}
+
+.top-v2-formal-note {
+  margin: 0;
+  color: #665a4a;
+  font-size: 12.5px;
+  line-height: 1.8;
+}
+
+@media (max-width: 767px) {
+  .top-v2-formal-table {
+    font-size: 12px;
+  }
+
+  .top-v2-formal-table th,
+  .top-v2-formal-table td {
+    padding: 8px 5px;
+  }
+}
+
+/* ===== play/index.html #banner 追補2: 料金ページへのフック1行ブロック
+   （黒板+正式表からテキスト+リンク+CTAへ縮退。詳細計算機は/play/option/#priceへ移設） ===== */
+.top-v2-banner-hook {
+  margin: 0 0 20px;
+  text-align: center;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(26px, 4.2vw, 40px);
+  line-height: 1.5;
+}
+
+.top-v2-banner-hook strong {
+  color: #f0831e;
+  font-size: 1.15em;
+}
+
+.top-v2-banner-hook small {
+  display: block;
+  margin-top: 8px;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.top-v2-banner-link {
+  margin: 0 0 28px;
+  text-align: center;
+  font-size: clamp(15px, 1.8vw, 17px);
+}
+
+/* 料金・オプション頁: 黒板直下の予約システム誘導行と「せんせいより」
+   カードの間隔を確保（付箋ぶら下げ用margin内で行が折り返すと先端が
+   カードに食い込むため） */
+#price .top-v2-chalkboard--art + .top-v2-formal-note {
+  margin: 0 16px 20px;
+}
+
+/* ===== play/option/index.html #price・#stay-option 追補: おたより化
+   （学校文法＝テープ・クリーム台紙・ノート罫線・チップ・ハンコ風バッジを未適用箇所へ展開） ===== */
+
+/* --- タスク1: 計算機まわり（季節トグル・食事引き出し・人数ステッパー）を「さんすうプリント」用紙に --- */
+.top-v2-worksheet {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto 24px;
+  padding: 30px 32px 22px;
+  background: #fff;
+  border-left: 3px solid rgba(47, 120, 144, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(20, 50, 65, 0.10);
+  transform: rotate(-0.4deg);
+}
+
+.top-v2-worksheet::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 104px;
+  height: 42px;
+  margin-left: -52px;
+  background: url(/assets/img/tape-2.png) no-repeat center/contain;
+  pointer-events: none;
+}
+
+.top-v2-worksheet-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 0 0 16px;
+}
+
+.top-v2-worksheet-hint {
+  color: #665a4a;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.top-v2-worksheet > .top-v2-chalk-season,
+.top-v2-worksheet > .top-v2-chalk-menu {
+  margin-bottom: 10px;
+}
+
+.top-v2-worksheet > .top-v2-chalk-family {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .top-v2-worksheet {
+    padding: 22px 16px 16px;
+  }
+}
+
+/* プリント風の小タブラベル（もんだい／席替えのお知らせ等で共用するチップ） */
+.top-v2-print-tab {
+  display: inline-block;
+  padding: 4px 14px;
+  background: #fff8e8;
+  border: 1px solid rgba(47, 120, 144, 0.3);
+  border-radius: 999px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+/* --- タスク2: 正式料金表（宿泊基本料金・日帰りプラン・割引）を「集金だより」に --- */
+.top-v2-price-card--formal {
+  position: relative;
+  background: #fff8e8;
+  border: none;
+  border-left: 3px solid rgba(47, 120, 144, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.10);
+  transform: rotate(0.35deg);
+}
+
+.top-v2-price-card--formal::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 104px;
+  height: 42px;
+  margin-left: -52px;
+  background: url(/assets/img/tape-4.png) no-repeat center/contain;
+  pointer-events: none;
+}
+
+.top-v2-price-card--formal::after {
+  content: "ほぞんばん";
+  position: absolute;
+  top: -18px;
+  right: -12px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2.5px solid rgba(240, 131, 30, 0.75);
+  border-radius: 50%;
+  background: #fff;
+  color: rgba(240, 131, 30, 0.85);
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 900;
+  transform: rotate(8deg);
+  pointer-events: none;
+  box-shadow: 0 3px 8px rgba(20, 50, 65, 0.12);
+}
+
+@media (max-width: 767px) {
+  .top-v2-price-card--formal::after {
+    width: 48px;
+    height: 48px;
+    font-size: 9.5px;
+    top: -14px;
+    right: -8px;
+  }
+}
+
+.top-v2-price-card--formal .top-v2-formal-subtitle {
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(47, 120, 144, 0.45);
+}
+
+/* 表罫線をノート罫線調（半透明の板紺）に */
+.top-v2-formal-table th,
+.top-v2-formal-table td {
+  border-bottom: 1px solid rgba(42, 71, 80, 0.2);
+}
+
+/* 金額の色をインク紺（本文色）に統一。オレンジは宿泊基本料金表「おとな」行の2つだけ残す */
+.top-v2-formal-table tbody td {
+  color: #2e2518;
+}
+
+.top-v2-price-card--formal .top-v2-formal-tablewrap:first-of-type .top-v2-formal-table tbody tr:first-child td {
+  color: #f0831e;
+}
+
+/* --- タスク3: #stay-option（部屋分け）を「席替えのお知らせ」に --- */
+.top-v2-price-card--notice {
+  position: relative;
+  background: #fff8e8;
+  border: none;
+  border-left: 3px solid rgba(47, 120, 144, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.10);
+  transform: rotate(-0.4deg);
+}
+
+.top-v2-price-card--notice::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 104px;
+  height: 42px;
+  margin-left: -52px;
+  background: url(/assets/img/tape-1.png) no-repeat center/contain;
+  pointer-events: none;
+}
+
+.top-v2-notice-sublabel {
+  display: inline-block;
+  margin: 0 0 10px;
+}
+
+.top-v2-roomplan {
+  margin: 26px auto 8px;
+  max-width: 460px;
+}
+
+.top-v2-roomplan-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.top-v2-roomplan-caption {
+  margin: 6px 0 0;
+  text-align: center;
+  font-size: 12.5px;
+  color: #665a4a;
+  line-height: 1.7;
+}
+
+/* おたより化の仕上げ微調整（品質評価パス）:
+   1) ほぞんばんバッジが56px円内で「ほぞんば/ん」と折れる → 2行を明示
+   2) 375pxで表ヘッダが「平日オフシーズ/ン」と単語途中で折れる → 縮小 */
+.top-v2-price-card--formal::after {
+  content: "ほぞん\A ばん";
+  white-space: pre-line;
+}
+@media (max-width: 480px) {
+  .top-v2-formal-table thead th {
+    font-size: 11px;
+    letter-spacing: 0;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
+
+/* ===== play/option/index.html #food・#spa 追補: 献立表化
+   （バッチ①のおたより文法＝白台紙カード・チョーク破線見出し・値札チップ・
+   テープ留め写真を、大きい裸写真＋青見出しだった食事メニュー/温泉カードへ
+   展開し、#price・#stay-optionと世界観を統一する） ===== */
+
+/* --- 時間帯見出し（昼食/夕食/朝食）: 青文字見出し→チョーク破線下線に
+   （.top-v2-formal-subtitleと併用。文字幅だけに線を敷くためinline-block化） --- */
+.top-v2-menu-heading {
+  display: inline-block;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(47, 120, 144, 0.45);
+}
+
+.top-v2-menu-catch {
+  margin: 8px 0 28px;
+  text-align: center;
+  color: #665a4a;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* --- 献立カードグリッド: PC(≥992px)2列・タブレット以下1列 --- */
+.top-v2-menu-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 992px) {
+  .top-v2-menu-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
+/* 温泉セクション: カード1枚だけなので中央寄せ・最大幅つき */
+.top-v2-menu-grid.top-v2-menu-grid--single {
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- 献立カード本体（白台紙・角丸・薄影。枚数が多いので傾きは付けない） --- */
+.top-v2-menu-card {
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 20px 24px;
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.10);
+}
+
+.top-v2-menu-photo {
+  position: relative;
+  display: block;
+  margin: 6px 0 18px;
+}
+
+.top-v2-menu-photo::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 86px;
+  height: 34px;
+  margin-left: -43px;
+  background: url(/assets/img/tape-2.png) no-repeat center/contain;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.top-v2-menu-photo img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* さがら子生まれ温泉カード: Bootstrapタブ切替の4枚組写真を同じ枠に収める
+   （.tab-content > .tab-pane の直下関係はJS/CSS連動のため維持し、
+   角丸とサイズだけをdescendantセレクタで揃える） */
+.top-v2-menu-photo--tabs .tab-content {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.top-v2-menu-photo--tabs .tab-pane img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.top-v2-menu-thumbnav {
+  margin: 10px 0 0;
+}
+
+.top-v2-menu-thumblist {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.top-v2-menu-thumb-item {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.top-v2-menu-thumb-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  background: none;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.top-v2-menu-thumb-btn img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.top-v2-menu-thumb-btn.active {
+  border-color: #2f7890;
+}
+
+/* --- カード本文: 校外学習タブ・名前・値札チップ・説明・注記 --- */
+.top-v2-menu-body {
+  text-align: left;
+}
+
+.top-v2-menu-tag {
+  margin: 0 0 10px;
+}
+
+.top-v2-menu-name {
+  margin: 0 0 10px;
+  color: #2e2518;
+  font-weight: 900;
+  font-size: clamp(16px, 1.9vw, 18px);
+}
+
+/* 値札チップ（クリーム地×インク紺文字。価格の数字部分はstrongで太字） */
+.top-v2-menu-price {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 6px 14px;
+  background: #fff8e8;
+  border: 1px solid rgba(47, 120, 144, 0.3);
+  border-radius: 999px;
+  color: #2e2518;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.top-v2-menu-price strong {
+  font-weight: 900;
+}
+
+.top-v2-menu-desc {
+  margin: 0;
+  color: #665a4a;
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+
+.top-v2-menu-note {
+  margin: 6px 0 0;
+  color: #8a7a5f;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media (max-width: 575px) {
+  .top-v2-menu-card {
+    padding: 18px 16px 20px;
+  }
+}
+
+/* 献立表化の仕上げ（品質評価パス）: 時間帯見出し（昼食/夕食/朝食）が
+   15pxではカードより弱く階層が逆転するため、セクション内の中見出しと
+   して立たせる */
+.top-v2-menu-heading {
+  font-size: 21px;
+  letter-spacing: 0.06em;
+}
+@media (min-width: 992px) {
+  .top-v2-menu-heading {
+    font-size: 24px;
+  }
+}
+
+/* ===== play/option/index.html #nav 追補: アンカー5circleナビ（旧SVG画像3個→CSS製5個）
+   食事/遊び/温泉の3リンクに料金・宿泊を加えて5リンクに再構成。旧anchor_*.svgは
+   全ページから参照を外すが、オーナー提供アセットのためファイル自体は削除しない ===== */
+.top-v2-anchor-circles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.top-v2-anchor-circle-item {
+  list-style: none;
+}
+
+.top-v2-anchor-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 94px;
+  height: 94px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #2f7890;
+  box-shadow: 0 5px 0 rgba(20, 50, 65, 0.28), 0 6px 14px rgba(20, 50, 65, 0.18);
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.top-v2-anchor-circle:hover,
+.top-v2-anchor-circle:focus-visible {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 rgba(20, 50, 65, 0.28), 0 3px 8px rgba(20, 50, 65, 0.18);
+}
+
+.top-v2-anchor-circle-label {
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.top-v2-anchor-circle-arrow {
+  font-size: 9px;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+/* タッチ端末のホバー代替: 押している間だけ沈んだ状態にする */
+@media (hover: none) {
+  .top-v2-anchor-circle:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 rgba(20, 50, 65, 0.28), 0 3px 8px rgba(20, 50, 65, 0.18);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+}
+
+@media (max-width: 575px) {
+  .top-v2-anchor-circles {
+    gap: 14px 12px;
+  }
+  .top-v2-anchor-circle {
+    width: 74px;
+    height: 74px;
+  }
+  .top-v2-anchor-circle-label {
+    font-size: 12.5px;
+  }
+}
+
+/* --- #price 追補: シーン別料金例の文リンク3本→ピル3個のリンクチップに。
+   .top-v2-way-chipの地色ピル(情報表示用)と見分けがつくよう、
+   クリックできると分かる白地+teal枠+teal文字のピルにする --- */
+.top-v2-scene-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.top-v2-scene-chip {
+  display: inline-block;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1.5px solid #2f7890;
+  color: #2f7890;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.top-v2-scene-chip:hover,
+.top-v2-scene-chip:focus-visible {
+  background: #2f7890;
+  color: #fff;
+}
+
+/* アンカー円: 375pxで4+1の孤立折返しになるため、コンテナ幅を絞って
+   3+2のバランスに */
+@media (max-width: 575px) {
+  .top-v2-anchor-circles {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ===================================================================
+   play/option/index.html 改善バッチ④: #price 縦圧縮 + メニューカード刷新
+   タスクA: #priceの間延び解消（折りたたみ・注記の行間詰め・余白詰め）
+   タスクB: メニューカードの値札化（文章ピル→価格タグ+条件タグ）
+   タスクC: メニューカードのポラロイド化（白フチ写真・角のテープ・影）
+   #price はfriends/family/gasshuku/トップページとも共有IDのため、
+   このページの#price section自身に付けた .top-v2-price-scope を経由して
+   スコープし、他ページの同名コンポーネントに影響させない。
+   =================================================================== */
+
+/* --- タスクA-3: 見出し→シーンチップ→さんすうプリント→黒板→集金だより の
+   間延びを詰める（各ブロックのmargin-bottomを個別に短縮。スマホ基準） --- */
+.top-v2-price-scope .top-v2-scene-title {
+  margin-bottom: 20px;
+}
+
+.top-v2-price-scope .top-v2-scene-lead {
+  margin-bottom: 16px;
+}
+
+.top-v2-scene-chip-list {
+  margin-bottom: 16px;
+}
+
+.top-v2-worksheet {
+  margin-bottom: 16px;
+}
+
+.top-v2-price-scope .top-v2-chalkboard--art {
+  margin-bottom: 24px;
+}
+
+/* --- タスクA-2: せんせいより注記の行間を28px→22px（約21%減）に詰める。
+   ノート罫線はrepeating-linear-gradientの周期をline-heightと同期させて維持 --- */
+.top-v2-price-scope .top-v2-teacher-note .top-v2-price-notes {
+  line-height: 22px;
+  background-image: repeating-linear-gradient(
+    transparent 0,
+    transparent 21px,
+    rgba(47, 120, 144, 0.14) 21px,
+    rgba(47, 120, 144, 0.14) 22px
+  );
+  background-position: 0 0;
+}
+
+.top-v2-price-scope .top-v2-teacher-note .top-v2-price-notes li {
+  line-height: 22px;
+}
+
+/* --- タスクA-1: 集金だよりの「日帰りプラン」「割引」を折りたたみに。
+   宿泊基本料金表は常時表示のまま。summaryの見た目は既存の
+   .top-v2-formal-subtitle（チョーク破線下線）を踏襲しつつ右端に▾/▴を追加
+   （gasshuku等で使う.top-v2-chalk-menu-summaryの::afterパターンを参考） --- */
+.top-v2-formal-fold {
+  display: block;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.top-v2-formal-fold-summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  list-style: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.top-v2-formal-fold-summary::-webkit-details-marker {
+  display: none;
+}
+
+.top-v2-formal-fold-summary::after {
+  content: "▾";
+  flex-shrink: 0;
+  font-size: 13px;
+  color: rgba(47, 120, 144, 0.7);
+}
+
+.top-v2-formal-fold[open] .top-v2-formal-fold-summary::after {
+  content: "▴";
+}
+
+/* 折りたたみの直後に続く案内文（食事・温泉オプションへの導線）は常時見せる。
+   最後の.top-v2-formal-foldの直後だけ少し間隔を空ける */
+.top-v2-formal-fold + .top-v2-formal-note {
+  margin-top: 16px;
+}
+
+/* ===== play/option/index.html #food・#play・#spa 追補: 献立カードの
+   ポラロイド化と値札タグ化（品質評価パス・バッチ④） ===== */
+
+/* --- タスクC: カード自体の枠・影を底上げ。既存CSSは変更せず、
+   .top-v2-menu-gridを親に足した詳細度で勝つ追記として上書きする --- */
+.top-v2-menu-grid {
+  align-items: stretch;
+}
+
+.top-v2-menu-grid .top-v2-menu-card {
+  border: 1px solid rgba(47, 120, 144, 0.14);
+  box-shadow: 0 10px 24px rgba(20, 50, 65, 0.08);
+}
+
+/* 写真はカードpadding内に置いたまま白台紙の縁を効かせ、写真自体に細枠を追加 */
+.top-v2-menu-grid .top-v2-menu-photo > img {
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid rgba(42, 71, 80, 0.12);
+}
+
+/* さがら子生れ温泉カード（タブ切替4枚）は表示枠側に同じ縁を適用。
+   サムネイルナビ（.top-v2-menu-thumb-btn img）は対象外 */
+.top-v2-menu-grid .top-v2-menu-photo--tabs .tab-content {
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid rgba(42, 71, 80, 0.12);
+}
+
+/* テープ: 写真上部中央 → 左上角・-4度回転に変更（素材は流用） */
+.top-v2-menu-grid .top-v2-menu-photo::before {
+  top: -12px;
+  left: -6px;
+  margin-left: 0;
+  transform: rotate(-4deg);
+}
+
+.top-v2-menu-grid .top-v2-menu-name {
+  font-size: 19px;
+}
+
+/* PC(≥992px)のみカードホバーで軽く浮かせる。reduced-motionでは無効化 */
+@media (min-width: 992px) {
+  .top-v2-menu-grid .top-v2-menu-card {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .top-v2-menu-grid .top-v2-menu-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px rgba(20, 50, 65, 0.14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-menu-grid .top-v2-menu-card {
+    transition: none;
+  }
+  .top-v2-menu-grid .top-v2-menu-card:hover {
+    transform: none;
+  }
+}
+
+/* --- タスクB: 値札タグ（旧.top-v2-menu-priceの文章ピルを価格タグ+条件タグの
+   2チップ構成に再構成。事実の数値・税込表記は不変、組版のみ変更） --- */
+.top-v2-menu-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.top-v2-menu-pricetag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 7px 14px;
+  background: #fff8e8;
+  border: 1px solid rgba(47, 120, 144, 0.3);
+  border-radius: 999px;
+}
+
+.top-v2-menu-pricetag strong {
+  font-size: 19px;
+  font-weight: 900;
+  color: #a5540e;
+  line-height: 1;
+}
+
+.top-v2-menu-pricetag small {
+  font-size: 11px;
+  font-weight: 700;
+  color: #665a4a;
+}
+
+.top-v2-menu-condtag {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #fff;
+  border: 1.5px solid #2f7890;
+  border-radius: 999px;
+  color: #2f7890;
+  font-size: 11.5px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* ===================================================================
+   改善バッチ⑤: 食事オプションsummaryの選択状態表示 + お子さま人数の引き出し化
+   （/play/option/ の#price。食事引き出しの状態表示はJS生成のため5ページ共通）
+   =================================================================== */
+
+/* --- タスクA: 「食事オプション（有） ▾ 変更する」のように、summary本文
+   （14px/800）と末尾の::afterヒント（12px/rgba0.7）の間に自然に収まるよう、
+   本文よりやや小さく・太字にせず・同系色にする --- */
+.top-v2-chalk-menu-state {
+  margin-left: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(47, 120, 144, 0.85);
+}
+
+/* --- タスクC: お子さま人数引き出し。.top-v2-chalk-familyを
+   .top-v2-chalk-mealrows（食事引き出しと同じパネル）に入れ子にするため、
+   .top-v2-worksheet直下向けのmargin-bottom:0上書き（既存）が効かなくなる分だけ
+   打ち消す。それ以外の見た目（点線ピル・開閉表記）は.top-v2-chalk-menuを
+   共有しているため追加CSS不要 --- */
+.top-v2-chalk-mealrows > .top-v2-chalk-family {
+  margin-bottom: 0;
+}
+
+/* バッチ⑥で宿泊基本料金表（おとな行オレンジの意図先）を撤去したため、
+   :first-of-type の基準が割引foldの連泊割表にずれてオレンジ漏れが発生。
+   fold内の表は全てインク紺に固定する（基本料金の強調はヒーローカードが担う） */
+.top-v2-price-card--formal .top-v2-formal-fold .top-v2-formal-tablewrap:first-of-type .top-v2-formal-table tbody tr:first-child td {
+  color: #2e2518;
+}
+
+/* ヒーロー価格カード: 「(税込)〜/人」が狭幅で「(税/込)」と折れるのを防ぐ。
+   スパンごと2行目に落ちるのは許容（きれいな折れ方） */
+.top-v2-price-row dd > span {
+  white-space: nowrap;
+}
+
+/* 料金・オプション頁の読みやすさ調整（オーナー指摘3件・このページ限定スコープ）:
+   1) せんせいよりの複数行注記は中央揃えだと折返しが読みにくい
+      → 左寄せ+※のぶら下げインデント
+   2) せんせいより(クリーム)と集金だより(クリーム)が近接して一枚に同化
+      → 間隔を広げ、集金だよりは「白い配布プリント」に分離
+      （手書きメモ=クリーム/配布プリント=白、という意味の分離） */
+.top-v2-price-scope .top-v2-price-notes {
+  text-align: left;
+}
+.top-v2-price-scope .top-v2-price-notes li {
+  text-align: left;
+  padding-left: 1.5em;
+  text-indent: -1.5em;
+}
+.top-v2-price-scope .top-v2-price-card--formal {
+  margin-top: 30px;
+  background: #fff;
+  border: 1px solid rgba(47, 120, 144, 0.16);
+}
+
+/* アンカー円: teal塗り+強い影が「浮いたツヤボタン」に見える（オーナー指摘）。
+   だいじ/ほぞんばんバッジと同じ「白地+リングのスタンプ」文法に変更し、
+   上に「もくじ」タブを置いて目次として意味づけする */
+.top-v2-anchor-tab {
+  display: table;
+  margin: 0 auto 16px;
+}
+.top-v2-anchor-circle {
+  background: #fff;
+  border: 2.5px solid rgba(47, 120, 144, 0.75);
+  box-shadow: 0 3px 8px rgba(20, 50, 65, 0.10);
+}
+.top-v2-anchor-circle .top-v2-anchor-circle-label,
+.top-v2-anchor-circle .top-v2-anchor-circle-arrow {
+  color: #2f7890;
+}
+.top-v2-anchor-circle-item:nth-child(odd) .top-v2-anchor-circle {
+  transform: rotate(-2.5deg);
+}
+.top-v2-anchor-circle-item:nth-child(even) .top-v2-anchor-circle {
+  transform: rotate(2deg);
+}
+.top-v2-anchor-circle:hover,
+.top-v2-anchor-circle:focus-visible {
+  background: #fff8e8;
+}
+
+/* 料金・オプション頁の額縁調整（オーナー診断3点の残り）:
+   1) MVを温泉夕景→校舎と青空に差し替えたため、白タイトルの可読性を
+      シャドウで確保
+   2) セクション背景のリズム: 白⇄#ECEDF2交互のルールに合わせ #spa を
+      グレー帯に（price白/food灰/play白/spa灰/stay-option白） */
+.top-v2-mv-price .l-mv_title {
+  text-shadow: 0 2px 18px rgba(20, 50, 65, 0.55), 0 1px 4px rgba(20, 50, 65, 0.45);
+}
+#spa.l-section {
+  background: #ECEDF2;
+}
+
+/* ===== TOP #usagescene: あそびティッカーをフォトカードマーキー
+   「時間割は、ぜんぶ遊び。」に刷新。旧 .top-v2-ticker 一式は index.html から
+   削除したが、CSS定義はそのまま残置（このファイルは末尾追記のみのため）。
+   ループ機構は旧ティッカーと同じ「トラック複製（aria-hidden）+
+   translateXループ」だが、カードが3〜5枚と少ないため旧来の
+   min-width:100%+justify-content:space-around は使わず、トラックを
+   内容幅のまま複製してtranslateX(-100%)で送る（内容幅=自身の100%なので
+   広い画面でもカード間が間延びしない） */
+.top-v2-playroll-title {
+  margin-top: 36px;
+}
+
+.top-v2-playroll-lead {
+  text-align: center;
+}
+
+.top-v2-playroll {
+  display: grid;
+  gap: 22px;
+}
+
+.top-v2-playroll-tab {
+  display: inline-block;
+  margin: 0 0 8px;
+}
+
+.top-v2-playroll-viewport {
+  display: flex;
+  overflow: hidden;
+  padding: 8px 4px;
+  margin: -8px -4px;
+}
+
+.top-v2-playroll-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 0;
+  padding: 0 8px;
+  list-style: none;
+  animation: top-v2-playroll-scroll 42s linear infinite;
+}
+
+.top-v2-playroll-row--admire .top-v2-playroll-track { animation-duration: 38s; }
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track { animation-duration: 46s; animation-direction: reverse; }
+.top-v2-playroll-row--nature .top-v2-playroll-track { animation-duration: 42s; }
+.top-v2-playroll-row--everyone .top-v2-playroll-track { animation-duration: 50s; animation-direction: reverse; }
+
+@keyframes top-v2-playroll-scroll {
+  to { transform: translateX(-100%); }
+}
+
+.top-v2-playcard {
+  flex-shrink: 0;
+  width: clamp(100px, 28vw, 136px);
+  background: #fff;
+  border-radius: 3px;
+  padding: 7px 7px 10px;
+  box-shadow: 0 4px 10px rgba(20, 50, 65, 0.16);
+}
+
+.top-v2-playroll-track .top-v2-playcard:nth-child(odd) { transform: rotate(-1.6deg); }
+.top-v2-playroll-track .top-v2-playcard:nth-child(even) { transform: rotate(1.4deg); }
+
+.top-v2-playcard-photo {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 1px;
+  background: #e7e1d2;
+}
+
+.top-v2-playcard-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.top-v2-playcard-name {
+  display: block;
+  margin-top: 6px;
+  color: #2a4750;
+  font-weight: 800;
+  font-size: clamp(11px, 2.6vw, 12.5px);
+  line-height: 1.3;
+  text-align: center;
+}
+
+.top-v2-playroll-actions {
+  margin-top: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-playroll-viewport { overflow-x: auto; }
+  .top-v2-playroll-track { animation: none; }
+  .top-v2-playroll-track[aria-hidden="true"] { display: none; }
+}
+
+/* マーキー: ホバー/タッチ長押しで一時停止（読みたい人への配慮。現ティッカーと同仕様） */
+.top-v2-playroll-row:hover .top-v2-playroll-track,
+.top-v2-playroll-row:active .top-v2-playroll-track {
+  animation-play-state: paused;
+}
+
+/* ===================================================================
+   TOP index.html 構成改編バッチ（並べ替え・見出し統一・背景リズム）
+   =================================================================== */
+
+/* --- タスク2: 見出し8種を1システムに統一（元気系）
+   既存 .top-v2-scene-title / .top-v2-scene-title-mark（クリームのマーカーswipe
+   文法）をそのまま流用し、.top-v2-h はサイズ(SP26/PC34px)・行間(1.35)・
+   わずかな元気回転のみを上書きするモディファイア。新規クラスのため他ページの
+   .top-v2-scene-title 利用箇所（friends/family/gasshuku等のヒーロー見出し）
+   には一切波及しない。
+   マーカーspan(.top-v2-scene-title-mark)はdisplay:inline
+   （2行見出しでクリーム帯を行ごとに複製するためbox-decoration-break:cloneを
+   使用）で、inline要素にtransformは適用されない仕様のため、「わずかな元気回転」
+   は見出しブロック(h2)側に掛けて同じ視覚効果を得ている（h2の子はマーカーspan
+   だけなので見た目は同一） */
+.top-v2-h {
+  font-size: 26px;
+  line-height: 1.35;
+  transform: rotate(-1deg);
+}
+
+@media (min-width: 992px) {
+  .top-v2-h {
+    font-size: 34px;
+  }
+}
+
+/* --- タスク3: 背景リズムを新セクション順で白⇄#ECEDF2に厳密化
+   #playroll/#usagescene/#stay/#landscape/#location はTOP専用idなので
+   bare idセレクタで安全にスコープできる。#price/#faq/#flowは
+   family/friends/gasshuku/play/option等と共有idだが、#price(.l-song)は
+   元々l-section_bg--grayでグレー、#faq(.l-section_bg。他ページの#faqは
+   l-section_bgクラスを持たずTOP限定の組み合わせ)と#stay(.l-option)/#flowは
+   元々背景指定なし(=白)で、新リズム(playroll白→usagescene灰→stay白→
+   price灰→flow白→landscape灰→faq白→location灰)と既定のまま一致するため
+   追加CSSは不要。ズレていた3つ（usagescene/landscape/locationを灰へ）だけ
+   上書きする。#locationは上下2枚のl-section_bg系divが不透明背景を持つため、
+   外側#locationではなく内側divを直接上書き（詳細度はID+classで既存の
+   bare classルールに勝つ。!importantは不使用） */
+#usagescene {
+  background: #ECEDF2;
+}
+
+#landscape {
+  background: #ECEDF2;
+}
+
+#location .l-section_bg,
+#location .l-section_bg--lightgray {
+  background: #ECEDF2;
+}
+
+/* 見出し統一の再調整（オーナー指摘: 旧見出しの方が大きくて元気だった）:
+   旧テーマ実寸は SP 9.06667vw / PC 96px。統一見出しをこのスケールに
+   引き上げる（縮めた統一は誤り）。マーカーの余白はem基準で追従 */
+.top-v2-h {
+  font-size: 9.06667vw;
+  line-height: 1.3;
+}
+.top-v2-h .top-v2-scene-title-mark {
+  padding: 0.04em 0.18em;
+}
+@media (min-width: 992px) {
+  .top-v2-h {
+    font-size: 96px;
+  }
+}
+
+/* マーキーの行ラベル: クリームの事務タブ(もんだい文法)は元気な写真の川
+   ではダサい（オーナー指摘）→ 扉カードと同じ紺の名札プレート文法に変更。
+   96px見出しに釣り合うようサイズも一段上げ、名札らしく少し傾ける */
+.top-v2-playroll-tab.top-v2-print-tab {
+  background: #2a4750;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 5px 16px;
+  transform: rotate(-1.5deg);
+  box-shadow: 2px 3px 0 rgba(42, 71, 80, 0.18);
+}
+@media (min-width: 992px) {
+  .top-v2-playroll-tab.top-v2-print-tab {
+    font-size: 18px;
+    padding: 6px 20px;
+  }
+}
+
+/* マーキーカード: 真の375pxでは幅105pxに9文字名が入らず「肝試/し」等の
+   孤立折れが発生（前回検証は広い画面で見落とし）→ SPの下限を128pxへ */
+.top-v2-playcard {
+  width: clamp(128px, 34vw, 136px);
+}
+
+/* ===================================================================
+   TOP #playroll「貼り散らかし」バッチ（オーナー評「整いすぎてまだダサい」
+   への処方）。マーキーの track 複製・速度・方向・reduced-motion対応、
+   カード名・写真は一切変更しない。既存の nth-child(odd/even) 機械的傾き
+   (4927-4928行)・.top-v2-playcard(4918行)・.top-v2-playroll-tab.top-v2-print-tab
+   の傾き(5042-5053行)は行削除禁止のため残置するが、本ブロックが後方かつ
+   同等以上の詳細度のため実質上書きする。 */
+
+/* --- タスク1: 6周期の「貼り散らかし」回転+縦ゆらぎ。CSS変数(--pc-rot/--pc-ty)
+   に値を持たせ、1つの合成transformルールで読み出す。行ごとに位相をずらす
+   ため、既定(admire/nature)と代替(nostalgic/everyone=3つ分位相シフト)の
+   2パターンを用意（値の集合は同一のため±8pxのはみ出し安全域は変わらない）。
+   合成ルールのセレクタに :nth-child(n) を足しているのは、既存の
+   :nth-child(odd/even)ルール(詳細度0,0,3,0)に対して同格以上の詳細度を
+   確保し、後方ルールとして確実に勝つため（:nth-child(n)は全要素に一致し
+   対象範囲は変えない、詳細度調整のみの目的） */
+.top-v2-playroll-track .top-v2-playcard:nth-child(n) {
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transform: translateY(var(--pc-ty, 0px)) rotate(var(--pc-rot, 0deg));
+}
+
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+1) { --pc-rot: -3.5deg; --pc-ty: 0px; }
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+2) { --pc-rot: 2deg; --pc-ty: 6px; }
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+3) { --pc-rot: -1deg; --pc-ty: -5px; }
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+4) { --pc-rot: 3.5deg; --pc-ty: 3px; }
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+5) { --pc-rot: -2.5deg; --pc-ty: -7px; }
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+6) { --pc-rot: 1.5deg; --pc-ty: 4px; }
+
+/* 2・4行目は同じ6値を3つ分位相シフトして再割当て（4行が同じ揺れ方をしない） */
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track .top-v2-playcard:nth-child(6n+1),
+.top-v2-playroll-row--everyone .top-v2-playroll-track .top-v2-playcard:nth-child(6n+1) { --pc-rot: 3.5deg; --pc-ty: 3px; }
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track .top-v2-playcard:nth-child(6n+2),
+.top-v2-playroll-row--everyone .top-v2-playroll-track .top-v2-playcard:nth-child(6n+2) { --pc-rot: -2.5deg; --pc-ty: -7px; }
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track .top-v2-playcard:nth-child(6n+3),
+.top-v2-playroll-row--everyone .top-v2-playroll-track .top-v2-playcard:nth-child(6n+3) { --pc-rot: 1.5deg; --pc-ty: 4px; }
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track .top-v2-playcard:nth-child(6n+4),
+.top-v2-playroll-row--everyone .top-v2-playroll-track .top-v2-playcard:nth-child(6n+4) { --pc-rot: -3.5deg; --pc-ty: 0px; }
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track .top-v2-playcard:nth-child(6n+5),
+.top-v2-playroll-row--everyone .top-v2-playroll-track .top-v2-playcard:nth-child(6n+5) { --pc-rot: 2deg; --pc-ty: 6px; }
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track .top-v2-playcard:nth-child(6n+6),
+.top-v2-playroll-row--everyone .top-v2-playroll-track .top-v2-playcard:nth-child(6n+6) { --pc-rot: -1deg; --pc-ty: -5px; }
+
+/* 隣接カードの衝突防止（最大3.5°回転分の見込みで16px→20pxへ） */
+.top-v2-playroll-track {
+  gap: 20px;
+}
+
+/* ホバーで「手に取る」演出。対象カードのみ平らに戻して持ち上げる */
+.top-v2-playroll-row .top-v2-playroll-track .top-v2-playcard:hover {
+  transform: translateY(-4px) rotate(0deg) scale(1.05);
+  box-shadow: 0 10px 22px rgba(20, 50, 65, 0.32);
+  z-index: 5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-playroll-row .top-v2-playroll-track .top-v2-playcard:hover {
+    transform: translateY(var(--pc-ty, 0px)) rotate(var(--pc-rot, 0deg));
+    box-shadow: 0 4px 10px rgba(20, 50, 65, 0.16);
+    transition: none;
+  }
+}
+
+/* --- タスク2: マスキングテープ留め。3枚に1枚(nth-child(3n+1))は
+   6n+1と6n+4の2グループの和と等しいため、この2セレクタで表現しつつ
+   グループごとにテープ画像を出し分ける（行パターンで計4種類を使用） */
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+1)::before,
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+4)::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 48px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+1)::before {
+  left: 42%;
+  background-image: url(/assets/img/tape-1.png);
+  transform: translateX(-50%) rotate(-6deg);
+}
+.top-v2-playroll-track .top-v2-playcard:nth-child(6n+4)::before {
+  left: 58%;
+  background-image: url(/assets/img/tape-3.png);
+  transform: translateX(-50%) rotate(5deg);
+}
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track .top-v2-playcard:nth-child(6n+1)::before,
+.top-v2-playroll-row--everyone .top-v2-playroll-track .top-v2-playcard:nth-child(6n+1)::before {
+  background-image: url(/assets/img/tape-2.png);
+}
+.top-v2-playroll-row--nostalgic .top-v2-playroll-track .top-v2-playcard:nth-child(6n+4)::before,
+.top-v2-playroll-row--everyone .top-v2-playroll-track .top-v2-playcard:nth-child(6n+4)::before {
+  background-image: url(/assets/img/tape-4.png);
+}
+
+/* --- タスク3: 先生の丸つけ。赤ペンの不完全な楕円(始点と終点が重なる
+   一筆書き)で「20種類以上」を囲む。文字サイズ・文言は不変。svgはspan
+   の実測幅に対する%指定(width)と em指定(height)を併用し、実際の文字幅に
+   追従しつつ line-height由来の縦方向の間延びを避ける */
+.top-v2-maru {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.top-v2-maru svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 130%;
+  height: 2.5em;
+  transform: translate(-50%, -50%) rotate(-2.5deg);
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* --- タスク4: 余白の落書き（既存矢印2 + インラインSVG3 = 計5個まで）。
+   矢印は見出し脇(l-section_innerは基底CSSでposition:relative済み)と
+   グリッド下端(CTA直前)、SVG落書きは各行タブ横の空き（カードの描画が
+   始まる前の帯）に配置し、マーキーカード本体とは重ならない */
+.top-v2-playroll-doodle-arrow {
+  position: absolute;
+  pointer-events: none;
+}
+.top-v2-playroll-doodle-arrow--intro {
+  top: 6px;
+  left: 3%;
+  width: 48px;
+  height: auto;
+  transform: rotate(10deg);
+}
+.top-v2-playroll-doodle-arrow--outro {
+  top: 100%;
+  margin-top: 6px;
+  left: 3%;
+  width: 46px;
+  height: auto;
+  transform: rotate(-12deg);
+}
+@media (max-width: 767px) {
+  /* SPはCTAボタンがdisplay:blockで実質全幅になり、46px幅の矢印だと
+     margin:0 16pxの余白に収まらずボタンと重なるため非表示にする
+     （SPの落書きは既存矢印の1個のみ・「2個まで」の上限内） */
+  .top-v2-playroll-doodle-arrow--outro {
+    display: none;
+  }
+}
+
+.top-v2-playroll {
+  position: relative;
+}
+
+/* 注記: .top-v2-playroll-row/.top-v2-playroll-viewport は既存のflex/grid
+   構成により、getBoundingClientRect()上は(overflow:hiddenで視覚的には
+   クリップされるが)マーキー全カード分の実寸(数千px)を報告する既存の
+   挙動があるため、行基準のposition:absolute + %指定は破綻する（要素が
+   クリップ域外に飛ぶ）。落書きSVGはタブ直後のインラインフローに乗せる
+   ことでこの挙動を回避し、タブ幅に関わらずタブ末尾に必ず収まる
+   （カード領域はタブの次の行=別ボックスのため重なりようがない） */
+.top-v2-playroll-doodle {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0 8px 8px;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  overflow: visible;
+}
+.top-v2-playroll-doodle--star { transform: rotate(-6deg); }
+.top-v2-playroll-doodle--circle { transform: rotate(5deg); }
+.top-v2-playroll-doodle--speed { width: 30px; transform: rotate(-4deg); }
+
+@media (max-width: 767px) {
+  /* SPはインラインSVG3個を非表示にし、既存矢印1個(intro)のみ残す
+     （outroは直前のルールで別途非表示済み）。「2個まで」の上限内 */
+  .top-v2-playroll-doodle {
+    display: none;
+  }
+}
+
+/* --- タスク5: 行ラベルの傾きを交互に。既存ルール(5042行)は全行-1.5°の
+   ため、2・4行目のみ+1°で上書き（1・3行目は既存の-1.5°のまま） */
+.top-v2-playroll-row--nostalgic .top-v2-playroll-tab.top-v2-print-tab,
+.top-v2-playroll-row--everyone .top-v2-playroll-tab.top-v2-print-tab {
+  transform: rotate(1deg);
+}
+
+/* マーキーの遊び心・追い込み（オーナー指摘2件）:
+   1) 行ラベルは左置きだと事務的 → 中央置き+テープ留めで川に少し重ねる
+   2) 丸つけは3px均一線だと完成度が低い → 筆ペンの塗りリング(太さ変化)に
+      置換済み。輪が太くなった分だけ余白を広げ、-3°傾けてペンの勢いを出す */
+.top-v2-playroll-rowhead {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 3;
+  margin-bottom: -10px;
+}
+.top-v2-playroll-tab.top-v2-print-tab {
+  position: relative;
+}
+.top-v2-playroll-tab.top-v2-print-tab::before {
+  content: "";
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 46px;
+  height: 16px;
+  transform: translateX(-50%) rotate(-5deg);
+  background: url(/assets/img/tape-2.png) center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.top-v2-maru svg {
+  transform: rotate(-3deg);
+  inset: -0.5em -0.75em;
+}
+
+/* 根本修正: grid親の下で viewport が無クリップのため行幅が track 実寸
+   (4400px超)に膨張し、ラベル中央化が画面外に飛んでいた。viewport を
+   正規のクリッパーにし、行をコンテナ幅へ収める（マーキーの動きは不変） */
+.top-v2-playroll-row {
+  max-width: 100%;
+  min-width: 0;
+}
+.top-v2-playroll-viewport {
+  overflow: hidden;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* PCでは最少の6枚列でも一巡分を画面幅より長くする。
+   同じ列を2本つなぐ無限スクロールで、同一カードが同じ画面内に
+   左右2枚同時に現れないための寸法。超ワイド画面は1920pxで止める。 */
+@media (min-width: 992px) {
+  .top-v2-playroll {
+    width: min(100%, 1920px);
+    margin-inline: auto;
+  }
+
+  .top-v2-playcard {
+    width: max(176px, calc((min(100vw, 1920px) - 60px) / 5));
+  }
+}
+
+/* 行ラベル最終形（オーナー指摘: 紺の四角自体がダサい）:
+   紺プレートは写真上に載る扉カード用の文法で、白地に単体だと官僚的な
+   掲示プレートになる → 大見出しと同じクリームのマーカーswipeのミニ版へ。
+   枠なし・塗り箱なし・テープと傾きは維持（親子関係: 96px見出し→ミニ札） */
+.top-v2-playroll-tab.top-v2-print-tab {
+  background: linear-gradient(transparent 55%, #fff8e8 55%);
+  color: #2f7890;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 8px 2px;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+}
+@media (min-width: 992px) {
+  .top-v2-playroll-tab.top-v2-print-tab {
+    font-size: 22px;
+    padding: 0 10px 3px;
+  }
+}
+
+/* 行ラベル新装置「nじかんめ」（オーナー指摘: マーカーだと大見出しと被る）:
+   箱もswipeもやめ、オレンジの時限表示+teal太字+手描き波線の下線だけに。
+   セクション見出し「時間割は、ぜんぶ遊び。」のオチとして4行を
+   1〜4じかんめのコマに見立てる。テープは箱がなくなったため撤去 */
+.top-v2-playroll-tab.top-v2-print-tab {
+  background: none;
+  padding: 0 2px 8px;
+}
+.top-v2-playroll-tab.top-v2-print-tab::before {
+  content: none;
+}
+.top-v2-playroll-tab.top-v2-print-tab::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -6px;
+  bottom: 0;
+  height: 9px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 10" preserveAspectRatio="none"><path d="M3 6 C 20 2 40 9 60 5 C 80 1 102 8 117 4" fill="none" stroke="%232f7890" stroke-width="3" stroke-linecap="round"/></svg>') center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.top-v2-playroll-period {
+  display: inline-block;
+  color: #f0831e;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-right: 7px;
+  transform: rotate(-4deg) translateY(-2px);
+}
+@media (min-width: 992px) {
+  .top-v2-playroll-period {
+    font-size: 14px;
+  }
+}
+
+/* TOP仕上げ一括（オーナー指摘6点対応 2026-07-10）:
+   1) 波の継ぎ目: /play/の波SVGは「グレー区間の末尾」用の形（上辺両肩が
+      グレー）。白区間末尾に置くと白地に浮いた羽になるため上下反転して
+      白→グレーのドームに。svgのinlineベースライン由来の白い髪の毛線も
+      display:blockで根絶
+   2) みんなで行くと、いくら？をPCで1行に（96pxでは収まらないため
+      その見出しだけ7.4vwで追従。SPはkinsokuスパンで文節2行）
+   3) せんせいより↔空き状況CTAが-1px密着、料金の詳細↔セクション端が
+      0pxだったため呼吸を確保（#bannerはTOPの#price内にのみ存在） */
+/* 波SVG流用は形の前提が逆（グレー区間末尾用）でフリップしても中央の
+   接点が破綻するため撤回し、グレー区間の上辺自体を楕円ドームに丸める
+   方式へ（border-radiusのみ=継ぎ目・髪の毛線が構造的に発生しない） */
+#playroll .l-banner_border--btm,
+#flow .l-banner_border--btm,
+#faq .l-banner_border--btm {
+  display: none;
+}
+#usagescene,
+#landscape {
+  border-top-left-radius: 50% 46px;
+  border-top-right-radius: 50% 46px;
+}
+#location > .l-section_bg {
+  border-top-left-radius: 50% 46px;
+  border-top-right-radius: 50% 46px;
+}
+@media (min-width: 992px) {
+  #price .top-v2-h {
+    font-size: min(96px, 7.4vw);
+    white-space: nowrap;
+  }
+}
+#price #banner .top-v2-cta-big {
+  margin-top: 34px;
+}
+#price #banner .top-v2-price-detail {
+  display: inline-block;
+  margin: 20px 0 48px;
+}
+
+/* ===================================================================
+   TOP index.html 追補（タスク3）: #location 住所カードを
+   「がっこうのれんらくさき」おたよりカードに。文言・住所・営業時間・
+   ボタンのリンク先は不変、地図(.top-v2-map-frame)は無変更。
+   料金セクションで確立したテープ+印刷タブ+丸バッジ文法
+   （.top-v2-price-card--formal/.top-v2-teacher-note）を流用する。
+   ===================================================================*/
+
+.top-v2-address-card {
+  position: relative;
+  transform: rotate(-0.3deg);
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.10);
+}
+
+/* 上端のテープ留め（.top-v2-price-card--formalと同仕様、柄違いのtape-4）。
+   左上タブ「がっこうのれんらくさき」と横位置を奪い合わないよう中央でなく
+   右寄り（バッジとの間）に配置。せまい幅でも両者と重ならないよう
+   right基準で固定し、SPはテープ自体も少し縮小して余裕を確保 */
+.top-v2-address-card::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  right: 58px;
+  width: 92px;
+  height: 38px;
+  background: url(/assets/img/tape-4.png) no-repeat center/contain;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .top-v2-address-card::before {
+    top: -11px;
+    right: 46px;
+    width: 60px;
+    height: 25px;
+  }
+}
+
+/* 右上の丸バッジ「たいせつ」（だいじ/ほぞんばんと同じスタンプ文法。
+   56px円内で4文字が窮屈なため、ほぞんばんと同様に最初から2行固定） */
+.top-v2-address-card::after {
+  content: "たい\A せつ";
+  white-space: pre-line;
+  position: absolute;
+  top: -18px;
+  right: -12px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2.5px solid rgba(240, 131, 30, 0.75);
+  border-radius: 50%;
+  background: #fff;
+  color: rgba(240, 131, 30, 0.85);
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 900;
+  transform: rotate(8deg);
+  pointer-events: none;
+  box-shadow: 0 3px 8px rgba(20, 50, 65, 0.12);
+}
+
+@media (max-width: 767px) {
+  .top-v2-address-card::after {
+    width: 48px;
+    height: 48px;
+    font-size: 9.5px;
+    top: -14px;
+    right: -8px;
+  }
+}
+
+/* 左上のクリーム小タブ「がっこうのれんらくさき」(.top-v2-print-tab流用) */
+.top-v2-address-tab {
+  position: absolute;
+  top: -16px;
+  left: 22px;
+  transform: rotate(-3deg);
+  z-index: 2;
+  font-size: 11.5px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-address-tab {
+    top: -13px;
+    left: 14px;
+    font-size: 10.5px;
+    padding: 3px 10px;
+  }
+}
+
+/* 「住所」「営業時間」小見出しの手描き波線下線
+   （マーキー行ラベル.top-v2-playroll-tab.top-v2-print-tab::afterと同じ
+   SVG data-URIを流用。inline-blockで見出し文字幅にだけ線を敷く） */
+.top-v2-address-heading {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.top-v2-address-heading::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  bottom: 0;
+  height: 8px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 10" preserveAspectRatio="none"><path d="M3 6 C 20 2 40 9 60 5 C 80 1 102 8 117 4" fill="none" stroke="%232f7890" stroke-width="3" stroke-linecap="round"/></svg>') center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+/* 住所行あたまの手描き旗アイコン（teal線画、装飾のみでaria-hidden） */
+.top-v2-address-doodle {
+  display: inline-block;
+  vertical-align: -3px;
+  margin-right: 4px;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+/* ===================================================================
+   TOP index.html 追補（タスク1改訂）: マーキーの「写真なしカード」用
+   プレースホルダー。.top-v2-playcard-photoに重ねる修飾クラスで、
+   後日<img>に差し替わっても親要素の見た目(角丸・4:3)は不変 */
+.top-v2-playcard-photo--placeholder {
+  background: #fff8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-v2-playcard-placeholder-art {
+  width: 72%;
+  height: 72%;
+}

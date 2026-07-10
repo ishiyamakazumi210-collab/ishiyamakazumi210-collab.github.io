@@ -1,0 +1,24 @@
+/*
+ * Theme Name: katasho
+ * Description: かた小
+ * Author: 株式会社マキノハラボ
+*/
+
+@import url('/assets/wp/themes/katasho/asset/css/app.min.css');
+
+
+.paly_content{}
+.play_content_title{}
+.play_content_title textpath{
+  font-size:12px;
+  font-family: 'Glory', sans-serif;
+}
+.play_content_title p{}
+.play_content_subTitle{}
+.play_content_subTitle1{}
+.play_content_subTitle1 p{}
+.play_content_subTitle2{}
+.play_content_subTitle2 p{}
+.play_content_subTitle3{}
+.play_content_subTitle3 p{}
+.play_content_subTitle3 span{}

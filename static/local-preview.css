@@ -1,0 +1,11 @@
+[data-static-disabled="true"] {
+  position: relative;
+}
+.katasho-static-form-note {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid #d0b36f;
+  background: #fff8df;
+  color: #4a3a12;
+  font-size: 14px;
+}
