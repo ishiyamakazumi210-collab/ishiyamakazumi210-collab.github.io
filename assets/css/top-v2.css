@@ -6507,3 +6507,92 @@ ul.top-v2-doors.list-unstyled {
     grid-column: 1 / -1;
   }
 }
+
+/* あの頃3カードのセリフ復活（オーナー文言・2026-07-11）:
+   旧・画像吹き出し(comment-*.png)は「配置が不自然」で全面引退済み。
+   今回はコンパクトなテキスト吹き出しとして再設計 — 写真の角にちょこんと
+   載る白バブル+しっぽ。昼夕は叫び、夜は囁き（消灯後）で声量が沈む構成 */
+.top-v2-quip {
+  position: absolute;
+  z-index: 5;
+  margin: 0;
+  background: #fff;
+  border: 2.5px solid #2f7890;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.35;
+  padding: 9px 14px;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(20, 50, 65, 0.14);
+  white-space: nowrap;
+}
+.top-v2-quip::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 26px;
+  width: 13px;
+  height: 13px;
+  background: #fff;
+  border-right: 2.5px solid #2f7890;
+  border-bottom: 2.5px solid #2f7890;
+  transform: rotate(45deg);
+}
+.top-v2-quip--play {
+  left: -6px;
+  top: -20px;
+  transform: rotate(-4deg);
+}
+.top-v2-quip--eat {
+  right: -6px;
+  top: -18px;
+  transform: rotate(3deg);
+}
+.top-v2-quip--eat::after {
+  left: auto;
+  right: 26px;
+}
+.top-v2-quip--stay {
+  left: -6px;
+  top: -22px;
+  transform: rotate(-3deg);
+}
+@media (max-width: 767px) {
+  .top-v2-quip {
+    font-size: 12.5px;
+    padding: 7px 11px;
+    border-width: 2px;
+  }
+  .top-v2-quip--play { top: -14px; }
+  .top-v2-quip--eat { top: -12px; }
+  .top-v2-quip--stay { top: -16px; }
+}
+
+/* SPの吹き出しはレタリング（遊んで等）が写真上角を占有して隠れるため、
+   写真の下角へ退避（しっぽは上向きに反転）。PCは上角のまま */
+@media (max-width: 767px) {
+  .top-v2-quip--play {
+    top: auto;
+    bottom: -16px;
+    left: 8px;
+  }
+  .top-v2-quip--eat {
+    top: auto;
+    bottom: -14px;
+    right: 8px;
+  }
+  .top-v2-quip--stay {
+    top: auto;
+    bottom: -16px;
+    left: 8px;
+  }
+  .top-v2-quip::after {
+    bottom: auto;
+    top: -8px;
+    border-right: none;
+    border-bottom: none;
+    border-left: 2px solid #2f7890;
+    border-top: 2px solid #2f7890;
+  }
+}
