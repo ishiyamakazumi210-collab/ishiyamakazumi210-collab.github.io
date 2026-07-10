@@ -276,6 +276,9 @@ height: 78vw;
             <li class="nav-item ">
               <a class="l-nav_menuLink nav-link" href="/gasshuku/">サークル・ゼミ合宿</a>
             </li>
+            <li class="nav-item ">
+              <a class="l-nav_menuLink nav-link" href="/kenshu/">ゼミ・研修・会議</a>
+            </li>
             <li class="nav-item menu-item-has-children">
               <a class="l-nav_menuLink nav-link" href="/play/option/">料金・オプション</a>
               <ul class="l-nav_menuSublist list-unstyled">
@@ -366,7 +369,7 @@ height: 78vw;
         <section class="l-section" id="playroll">
           <div class="l-section_bg">
             <div class="l-section_inner py-5">
-              <h2 class="top-v2-scene-title top-v2-playroll-title top-v2-h"><span class="top-v2-scene-title-mark">時間割は、ぜんぶ遊び。</span></h2>
+              <h2 class="top-v2-scene-title top-v2-playroll-title top-v2-h"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">時間割は、</span><span class="top-v2-kinsoku">ぜんぶ遊び。</span></span></h2>
               <p class="top-v2-scene-lead top-v2-playroll-lead">遊びは20種類以上。体育館も校庭も、ぜんぶ遊び場。</p>
               <div class="top-v2-playroll">
                 <div class="top-v2-playroll-row top-v2-playroll-row--admire" role="img" aria-label="やってみたかったアレ: 夜の謎解き&amp;肝試し、学校で花火、教室でコスプレ、校内飲酒、屋上から告白、ドローンで記念撮影、本気の運動会、まくら投げ、学校探検（謎解き）など">
@@ -414,7 +417,7 @@ height: 78vw;
             <div class="l-section_inner py-5">
               <div class="container">
                 <div class="l-section_title--image text-center mb-5">
-                  <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark">あの頃の放課後が、<br>一晩中つづく。</span></h2>
+                  <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">あの頃の</span><span class="top-v2-kinsoku">放課後が、</span><br><span class="top-v2-kinsoku">一晩中つづく。</span></span></h2>
                 </div>
               </div>
 
@@ -478,33 +481,41 @@ height: 78vw;
             <div class="l-section_inner py-5">
               <div class="container">
                 <div class="l-section_title--image text-center mb-5">
-                  <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark">行くなら、誰と？</span></h2>
+                  <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">行くなら、</span><span class="top-v2-kinsoku">誰と？</span></span></h2>
                 </div>
               </div>
 
               <ul class="top-v2-doors list-unstyled">
-                <li><a href="/friends/">
-                  <span class="top-v2-scenecard-photo"><img src="/assets/img/friends-entrance-group.jpg" alt="校舎の前に集まった7人の友達グループ" loading="lazy"></span>
-                  <span class="top-v2-doors-label">大学の友達と<br>思い出作りに！</span>
-                  <span class="top-v2-doors-note">卒業旅行・同窓会に</span>
+                <li><a href="/friends/" data-event="top_doors_friends">
+                  <span class="top-v2-scenecard-photo">
+                    <span class="top-v2-scenecard-roletag top-v2-print-tab">友達と</span>
+                    <img src="/assets/img/friends-entrance-group.jpg" alt="校舎の前に集まった7人の友達グループ" loading="lazy">
+                  </span>
+                  <span class="top-v2-scenecard-caption"><span class="top-v2-kinsoku">友達と、</span><span class="top-v2-kinsoku">もう一回学校へ。</span></span>
                   <span class="top-v2-doors-more">くわしく →</span>
                 </a></li>
-                <li><a href="/family/">
-                  <span class="top-v2-scenecard-photo"><img src="/assets/img/families-gym-ball.jpg" alt="体育館でボール遊びをする2組の家族" loading="lazy"></span>
-                  <span class="top-v2-doors-label">家族で<br>思い出作りに！</span>
-                  <span class="top-v2-doors-note"><span class="top-v2-kinsoku">校庭も給食も、</span><span class="top-v2-kinsoku">家族の夏イベントに</span></span>
+                <li><a href="/family/" data-event="top_doors_family">
+                  <span class="top-v2-scenecard-photo">
+                    <span class="top-v2-scenecard-roletag top-v2-print-tab">家族で</span>
+                    <img src="/assets/img/families-gym-ball.jpg" alt="体育館でボール遊びをする2組の家族" loading="lazy">
+                  </span>
+                  <span class="top-v2-scenecard-caption"><span class="top-v2-kinsoku">子どもも大人も</span><span class="top-v2-kinsoku">全力で遊べる、</span><span class="top-v2-kinsoku">学校の一泊。</span></span>
                   <span class="top-v2-doors-more">くわしく →</span>
                 </a></li>
-                <li class="top-v2-doors-gasshuku"><a href="/gasshuku/">
-                  <span class="top-v2-scenecard-photo"><img src="/assets/wp/themes/katasho/image/university_friends.png" alt="校舎の前に集まったサークル合宿の集合写真" loading="lazy"></span>
-                  <span class="top-v2-doors-label">サークル・<br>ゼミ合宿に！</span>
-                  <span class="top-v2-doors-note">昼は練習、夜は交流会</span>
+                <li class="top-v2-doors-gasshuku"><a href="/gasshuku/" data-event="top_doors_gasshuku">
+                  <span class="top-v2-scenecard-photo">
+                    <span class="top-v2-scenecard-roletag top-v2-print-tab">合宿で</span>
+                    <img src="/assets/wp/themes/katasho/image/university_friends.png" alt="校舎の前に集まったサークル合宿の集合写真" loading="lazy">
+                  </span>
+                  <span class="top-v2-scenecard-caption"><span class="top-v2-kinsoku">遊びも、食事も、</span><span class="top-v2-kinsoku">夜の交流も。</span></span>
                   <span class="top-v2-doors-more">くわしく →</span>
                 </a></li>
-                <li><a href="/contact/">
-                  <span class="top-v2-scenecard-photo"><img src="/assets/img/training-room.jpg" alt="教室を会議室として使う企業研修" loading="lazy"></span>
-                  <span class="top-v2-doors-label">企業研修・<br>会議利用に！</span>
-                  <span class="top-v2-doors-note">教室が会議室に</span>
+                <li><a href="/kenshu/" data-event="top_doors_kenshu">
+                  <span class="top-v2-scenecard-photo">
+                    <span class="top-v2-scenecard-roletag top-v2-print-tab">研修で</span>
+                    <img src="/assets/img/training-room.jpg" alt="教室を会議室として使う企業研修" loading="lazy">
+                  </span>
+                  <span class="top-v2-scenecard-caption"><span class="top-v2-kinsoku">学ぶ時間も、</span><span class="top-v2-kinsoku">交流する時間も。</span></span>
                   <span class="top-v2-doors-more">くわしく →</span>
                 </a></li>
               </ul>
@@ -517,7 +528,7 @@ height: 78vw;
             <div class="l-section_inner pt-5">
               <div class="container">
                 <div class="text-center">
-                  <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">みんなで行くと、</span><span class="top-v2-kinsoku">いくら？</span></span></h2>
+                  <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">みんなで</span><span class="top-v2-kinsoku">行くと、</span><span class="top-v2-kinsoku">いくら？</span></span></h2>
                 </div>
                 <aside class="l-section l-banner" id="banner">
                   <div class="top-v2-price">
@@ -657,7 +668,7 @@ height: 78vw;
             <div class="l-section_inner py-5 pt-lg-0">
               <div class="container">
                 <div class="l-section_title text-center mb-5">
-                  <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark">カタショーの風景</span></h2>
+                  <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">カタショーの</span><span class="top-v2-kinsoku">風景</span></span></h2>
                 </div>
                 <ul class="l-album_list list-unstyled row row-cols-2 g-3 g-lg-0 mb-0 mb-lg-5">
                   <li class="l-album_listCard col">

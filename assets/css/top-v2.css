@@ -5546,3 +5546,449 @@ ul.top-v2-doors.list-unstyled {
   width: 72%;
   height: 72%;
 }
+
+/* ===================================================================
+   シーン誘導カード文法統一（TOP扉カード + 各シーンページの他シーン
+   誘導カード）: 紺プレート(.top-v2-doors-label/.top-v2-otherscenes-label)
+   ＋1行キャプション(.top-v2-doors-note/.top-v2-otherscenes-note)を廃止し、
+   「役割タグ＋行き先H1コピー＋くわしく→」構成に統一。旧クラスのCSSは
+   他箇所からの参照可能性を考慮しそのまま残置し、ここでは新クラスのみ追加する。
+   =================================================================== */
+
+/* 役割タグ: 写真左上角のクリーム小タブ（.top-v2-print-tabの見た目を流用し、
+   位置だけこのクラスで指定。.top-v2-scenecard-photoが position:relative
+   済みなのでそのまま基準にできる） */
+.top-v2-scenecard-roletag {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 3;
+  transform: rotate(-3deg);
+}
+
+/* H1コピー主文: teal太字・中央寄せ。文節は.top-v2-kinsoku(inline-block)で
+   区切り、単語内改行を防ぎながら幅に応じて行を折り返す */
+.top-v2-scenecard-caption {
+  display: block;
+  margin-top: 10px;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+}
+@media (min-width: 992px) {
+  .top-v2-scenecard-caption {
+    font-size: 17px;
+  }
+}
+
+/* 他シーン誘導カード(.top-v2-otherscenes-cards)は元々ラベル/注釈が
+   ブロックのまま自然に積み上がる構造だった。扉カード(.top-v2-doors)と
+   同じ「くわしく→をカード右下に固定し、同じ行のカード底辺を揃える」
+   挙動にするため、扉カードで実績のあるflex縦積み構造を適用する */
+.top-v2-otherscenes-cards a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+.top-v2-otherscenes-cards .top-v2-scenecard-photo {
+  width: 100%;
+}
+.top-v2-otherscenes-cards .top-v2-scenecard-caption,
+.top-v2-otherscenes-cards .top-v2-doors-more {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.top-v2-otherscenes-cards .top-v2-doors-more {
+  margin-top: auto;
+  align-self: flex-end;
+  padding-top: 10px;
+  padding-bottom: 4px;
+}
+.top-v2-otherscenes-cards a:hover .top-v2-doors-more {
+  text-decoration: underline;
+}
+
+/* ===================================================================
+   オーナーレビュー6点対応バッチ（タスク1）: SP見出しの増量
+   統一見出し.top-v2-hのSPサイズ 9.06667vw → 12vw。PC(min-width:992pxの
+   96px)とprice専用のmin(96px,7.4vw)は対象外のため、既存のPC境界
+   (min-width:992px)と競合しないmax-width:991pxにスコープして上書きする。
+   重要: 2775行のfriends向け救済「@media(max-width:767px)
+   .top-v2-scene-title-mark{font-size:21px}」が全ページのマーカーspanに
+   掛かっており、TOPの見出しはh2を12vwにしても可視テキストが21pxのまま
+   だった（実測: markFontSize=21px/padding 0.84px=0.04em×21px）。
+   .top-v2-h配下のマーカーだけ親サイズを継承させて是正する
+   （.top-v2-hはTOP index.htmlの8見出し専用クラス=grep確認済みで、
+   friends等の.top-v2-scene-title単独見出しには波及しない）。
+   マーカー余白(0.04em/0.18em)はem基準のため継承後は自動追従。
+   12vwは991pxで119pxとPCの96pxを逆転するため、800px以上はmin()で
+   96px上限に抑える（375pxでは45px=12vwそのまま） */
+@media (max-width: 991px) {
+  .top-v2-h {
+    font-size: min(12vw, 96px);
+  }
+  .top-v2-h .top-v2-scene-title-mark {
+    font-size: inherit;
+  }
+}
+
+/* ===================================================================
+   オーナーレビュー6点対応バッチ（タスク2）: TOP余白の正規化
+   目標スケール: セクション間の視覚ギャップ72〜96px／見出し→最初の
+   コンテンツ28〜40px（375px実測基準）。
+   前提是正: lp-style 3680行（@media max-width:576px）の
+   .l-section_title--image{height:32vw} が固定高さ120px(375px時)の
+   flexコンテナとして見出しをjustify-content:centerで抱えるため、
+   12vw化で3行になった見出しが上下にはみ出し、#usagescene では
+   見出しがコンテンツに-17px食い込み、#location では見出し下に
+   +69pxの過大な空きが出ていた。TOPの該当3セクションだけ固定高さを
+   解除して自然高に戻す（基底2751行はheight:auto。friends等の
+   他ページの同クラスには波及しないようTOP専用idでスコープ） */
+#usagescene .l-section_title--image,
+#stay .l-section_title--image,
+#location .l-section_title--image {
+  height: auto;
+}
+
+/* 境界の正規化（375px実測）。固定高さ解除後の実測:
+   playroll 80.8 / usagescene 84.2 / stay 90.0 = 既に72〜96に収まる。
+   残る詰まり3箇所と間延び2箇所を是正する。
+   py-sm-5系ユーティリティが効き始める576px以上とは干渉しないよう、
+   加算パディングはmax-width:575pxにスコープ（576〜991pxは既存の
+   py-sm-5=48pxで概ね近い値になる帯域のため現状維持） */
+
+/* オーナー指摘の核心: 「行くなら、誰と？」(#stay)と「みんなで行くと、
+   いくら？」(#price)の間が実測1px（stay側py-5の実効pbが1px＋price側は
+   py-sm-5がSPで無効＋pt-5は既存3423行で0化済み）。グレー帯の上端に
+   呼吸を持たせて72〜96pxに乗せる */
+@media (max-width: 575px) {
+  #price > .l-section_bg--gray {
+    padding-top: 79px;
+  }
+}
+
+/* flow: price末尾→見出しが45px。白セクション側に不足分を足す。
+   1423行の #flow.l-section{padding:48px 0}（詳細度1,0,1）が#flow単独
+   （1,0,0）に勝つため、同一セレクタで後勝ちさせる（下48pxは維持） */
+@media (max-width: 575px) {
+  #flow.l-section {
+    padding-top: 79px;
+  }
+}
+
+/* faq: landscape末尾→見出しが49px。同上 */
+@media (max-width: 575px) {
+  #faq {
+    padding-top: 27px;
+  }
+}
+
+/* location: faqボタン→見出しが47px。グレードーム開始前の白で確保 */
+@media (max-width: 575px) {
+  #location {
+    margin-top: 26px;
+  }
+}
+
+/* 見出し→コンテンツの正規化（目標28〜40px）。
+   h2自身のmargin-bottom(40px)は.l-section_title--image(flex)内では
+   相殺されず実寸で効くため、is指定より強いid付きセレクタで直接絞る。
+   （wrapperのmb-5はテーマ側が!important固定のため触らず、h2側で調整） */
+@media (max-width: 991px) {
+  /* stay: 40(h2)+20(wrapper)=56.9 → h2を20pxに絞って約37px */
+  #stay h2.top-v2-h {
+    margin-bottom: 20px;
+  }
+  /* flow/faq: 実効ギャップはwrapper(.text-center.mb-5/.l-section_title
+     .text-center.mb-5)のmb-5=3rem!importantが支配（h2のmbは48pxとの
+     相殺でmax()に吸われ無効）。!importantで殴り返す代わりに、後続
+     コンテンツ側の負マージンで45px→33pxへ詰める */
+  #flow .top-v2-flow {
+    margin-top: -12px;
+  }
+  #faq .l-faq_list {
+    margin-top: -12px;
+  }
+  /* location: 40(h2)+20(wrapper escape)=58.4 → h2を20pxに（wrapper分は
+     タスク3のflow-root封じ込めでグレー帯内の余白に変わる） */
+  #location h2.top-v2-h {
+    margin-bottom: 20px;
+  }
+}
+
+/* ===================================================================
+   オーナーレビュー6点対応バッチ（タスク3）: TOPアクセスの「白い線」
+   原因（実測特定）: #location はグレー帯が2枚のdiv
+   （上=.l-section_bg[ドームradius]／下=.l-section_bg--lightgray）に
+   分かれており、上divの中のタイトルwrapper
+   (.l-section_title--image.text-center.mb-5)のmargin-bottom
+   （lp-styleの!important指定: 基底3rem/≤768pxで55px/≤500pxで20px）が、
+   padding・borderを持たない祖先(.container→.l-section_inner→
+   .l-section_bg ※3430行で内側paddingは0化済み)をマージン相殺で
+   突き抜け、2枚のグレー帯の「間」に白い帯として現れていた。
+   実測根拠: 375pxで .l-section_bg の bottom=8393.42 /
+   .l-section_bg--lightgray の top=8413.42 → 差20px=≤500pxの
+   margin-bottom:20px!important と完全一致（bgはどちらも#ECEDF2、
+   bodyは#fff）。PC側は基底の3rem=48pxが同様に露出。
+   対策: 上divをdisplay:flow-root化してBFCを確立し、子孫の
+   margin-bottomをグレー帯の内側に封じ込める（!important合戦を回避、
+   両幅で構造的に白帯が消える） */
+#location > .l-section_bg {
+  display: flow-root;
+}
+
+/* ===================================================================
+   オーナーレビュー追加指示（タスク7）: TOP #playroll をPCで
+   「1画面に4じかんめまで」収める密度化。
+   方針: カードを小さくして1行に多くのカードを見せ、「たくさんある感」
+   を密度で出す（オーナー確定）。スコープは≥992pxのみで、SPの現行
+   サイズ・レイアウト（カード幅clamp(128px,34vw,136px)等）は不変。
+   目標: 1280×900で見出し上端→「あそびを全部見る」下端が概ね880px以内
+   （before実測1405.8px）。
+   既存の傾き（--pc-rot/--pc-ty）・テープ留め・マーキーの
+   animation-duration/direction・reduced-motion規則（4959行）は
+   一切変更しない。カード縮小に伴うトラック実幅の不足は index.html 側で
+   liを1〜2サイクル追加して補填（admire18/nostalgic20/nature24/
+   everyone18枚×2トラック）。 */
+@media (min-width: 992px) {
+  /* カード: 5309行の width:max(176px, (min(100vw,1920px)-60px)/5) を
+     後勝ちで固定幅110pxに（写真4:3は.aspect-ratio既定のまま維持）。
+     名前ラベルは11px: 最長9文字（ドローンで記念撮影等）が
+     内寸110-10=100px ≥ 9×11=99px で折返しなしに収まる検算 */
+  .top-v2-playcard {
+    width: 110px;
+    padding: 5px 5px 7px;
+  }
+  .top-v2-playcard-name {
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  /* 行内ピッチ: gap20(5111行)→14。カード110+gap14=ピッチ124px */
+  .top-v2-playroll-track {
+    gap: 14px;
+  }
+  /* 行間: グリッドgap22(4883行)→10 */
+  .top-v2-playroll {
+    gap: 10px;
+  }
+  /* 行ラベル: 22px(5329行)→16px・下線と余白も一段コンパクトに */
+  .top-v2-playroll-tab.top-v2-print-tab {
+    font-size: 16px;
+    padding: 0 6px 2px;
+  }
+  .top-v2-playroll-tab.top-v2-print-tab::after {
+    height: 7px;
+  }
+  .top-v2-playroll-period {
+    font-size: 11px;
+    margin-right: 5px;
+  }
+  .top-v2-playroll-rowhead {
+    margin-bottom: -4px;
+  }
+  .top-v2-playroll-doodle {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 4px;
+  }
+  /* 見出し(96px不変)まわり: タイトル上36px(4874行)/下40pxをPCだけ圧縮 */
+  .top-v2-playroll-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  #playroll .top-v2-scene-lead {
+    margin-bottom: 18px;
+  }
+  .top-v2-playroll-actions {
+    margin-top: 14px;
+  }
+}
+
+/* ===================================================================
+   オーナーレビュー6点対応バッチ（タスク4）: /play/option/ もくじの改装
+   丸スタンプ5個（白丸リング）→「ノートの小口に貼るインデックスふせん」へ。
+   ・上辺だけ角丸/下辺直線のふせん形・白とクリーム#fff8e8の交互
+   ・teal太字ラベル・±1〜2°の互い違い傾き（transform-origin=根元）
+   ・負マージンでわずかに重なる扇状・下に薄い紙影
+   ・hover/focusで-3px持ち上げ（reduced-motionでは無効）
+   「もくじ」タブ(<p>)はHTML側で廃止（ふせん自体が目次と自明のため）。
+   aria-label・href・リンク先は不変。
+   カスケード: 旧円形ルール（4472/4833行等・0,1,0〜0,2,0）と旧odd/even
+   回転（4842行・0,3,0）に対し、本ブロックは後方かつ同等以上の詳細度で
+   上書きする。持ち上げは--fusen-liftカスタムプロパティ経由にして、
+   (0,3,0)のtransform宣言と:hover(0,2,0)の優先度衝突を回避 */
+.top-v2-anchor-circles {
+  gap: 0;
+  align-items: flex-end;
+  padding-top: 6px; /* 傾き+持ち上げ分の余裕（上の要素と重ならない） */
+}
+.top-v2-anchor-circle-item {
+  position: relative;
+}
+/* 扇状の重なり: 左が上になるようz-indexを右肩下がりに */
+.top-v2-anchor-circle-item:nth-child(1) { z-index: 5; }
+.top-v2-anchor-circle-item:nth-child(2) { z-index: 4; }
+.top-v2-anchor-circle-item:nth-child(3) { z-index: 3; }
+.top-v2-anchor-circle-item:nth-child(4) { z-index: 2; }
+.top-v2-anchor-circle-item:nth-child(5) { z-index: 1; }
+.top-v2-anchor-circle-item + .top-v2-anchor-circle-item {
+  margin-left: -7px;
+}
+.top-v2-anchor-circle-item:hover,
+.top-v2-anchor-circle-item:focus-within {
+  z-index: 9;
+}
+.top-v2-anchor-circle {
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  width: auto;
+  height: auto;
+  padding: 12px 16px 10px;
+  border-radius: 10px 10px 0 0;
+  background: #fff;
+  border: 1.5px solid rgba(47, 120, 144, 0.3);
+  box-shadow: 0 3px 6px rgba(20, 50, 65, 0.12);
+  transform: translateY(var(--fusen-lift, 0px)) rotate(var(--fusen-rot, 0deg));
+  transform-origin: 50% 100%;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+/* 交互の地色と互い違いの傾き（0,3,0で旧回転・旧hover背景の両方に勝つ） */
+.top-v2-anchor-circle-item:nth-child(odd) .top-v2-anchor-circle {
+  --fusen-rot: -1.6deg;
+  background: #fff;
+  transform: translateY(var(--fusen-lift, 0px)) rotate(var(--fusen-rot, 0deg));
+}
+.top-v2-anchor-circle-item:nth-child(even) .top-v2-anchor-circle {
+  --fusen-rot: 1.4deg;
+  background: #fff8e8;
+  transform: translateY(var(--fusen-lift, 0px)) rotate(var(--fusen-rot, 0deg));
+}
+.top-v2-anchor-circle:hover,
+.top-v2-anchor-circle:focus-visible {
+  --fusen-lift: -3px;
+  box-shadow: 0 6px 12px rgba(20, 50, 65, 0.16);
+}
+.top-v2-anchor-circle:focus-visible {
+  outline: 2px solid #2f7890;
+  outline-offset: 2px;
+}
+.top-v2-anchor-circle-label {
+  font-size: 15px;
+  letter-spacing: 0.05em;
+}
+.top-v2-anchor-circle-arrow {
+  font-size: 8px;
+  opacity: 0.7;
+}
+/* タッチ端末: 旧「押し沈み」(4511行)を持ち上げ挙動へ差し替え */
+@media (hover: none) {
+  .top-v2-anchor-circle:active {
+    --fusen-lift: -3px;
+    transform: translateY(var(--fusen-lift, 0px)) rotate(var(--fusen-rot, 0deg));
+    box-shadow: 0 6px 12px rgba(20, 50, 65, 0.16);
+  }
+}
+/* SP: 5枚が1列に収まるよう少しコンパクトに。旧max-width:300px(4566行)は
+   ふせん列では折返しの原因になるだけなので解除 */
+@media (max-width: 575px) {
+  .top-v2-anchor-circles {
+    gap: 0;
+    max-width: none;
+  }
+  .top-v2-anchor-circle {
+    width: auto;
+    height: auto;
+    padding: 10px 11px 8px;
+  }
+  .top-v2-anchor-circle-label {
+    font-size: 13px;
+  }
+}
+/* reduced-motion: 持ち上げ・遷移を無効化（傾き等の静的装飾は維持） */
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-anchor-circle {
+    transition: none;
+  }
+  .top-v2-anchor-circle:hover,
+  .top-v2-anchor-circle:focus-visible,
+  .top-v2-anchor-circle:active {
+    --fusen-lift: 0px;
+  }
+}
+
+/* ===================================================================
+   オーナーレビュー6点対応バッチ（タスク5）: 役割タグの改装
+   クリームピル(.top-v2-print-tab流用)→「写真に貼ったマスキングテープに
+   手書き」へ。TOP扉4枚と各シーンページの他シーン誘導カードは
+   .top-v2-scenecard-roletag top-v2-print-tab のクラス組が完全共通
+   （grep確認: friends/family/gasshuku/kenshu 各3枚も同一マークアップ）
+   のためCSSのみで全16箇所に適用され、HTML変更は不要。
+   ・背景: tape素材をタグ寸法に引き伸ばし（クリーム地・枠線・ピル角丸は廃止）
+   ・文字: インク紺#2a4750の太字。テープごと-5°回転
+   ・カード側の飾りテープ(::before)は写真上辺の「中央」(left:50%/width104px)、
+     役割タグは「左上角」で位置が分離しており二重にならない（375/1280で
+     実測確認）ため飾りテープの非表示は不要 */
+.top-v2-scenecard-roletag {
+  top: 8px;
+  left: 6px;
+  background: url(/assets/img/tape-1.png) center / 100% 100% no-repeat;
+  border: none;
+  border-radius: 0;
+  padding: 7px 18px 8px;
+  color: #2a4750;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  transform: rotate(-5deg);
+  transform-origin: 40% 50%;
+}
+
+/* テープ柄はカードごとに変える。tape-4は平均luma128（canvas実測）で
+   インク紺#2a4750とのコントラスト約2.7:1しか取れず13px太字には不適の
+   ため、文字下に敷くのは tape-1(luma175・約4.5:1)/tape-2(237)/
+   tape-3(226) の3柄に限定する。他シーン誘導カードは写真中央の
+   飾りテープ(2797-2813行)が残るため同柄が並ばない組にする */
+.top-v2-doors li:nth-child(1) .top-v2-scenecard-roletag {
+  background-image: url(/assets/img/tape-3.png);
+  transform: rotate(-5deg);
+}
+.top-v2-doors li:nth-child(2) .top-v2-scenecard-roletag {
+  background-image: url(/assets/img/tape-2.png);
+  transform: rotate(-4deg);
+}
+.top-v2-doors li:nth-child(3) .top-v2-scenecard-roletag {
+  background-image: url(/assets/img/tape-1.png);
+  transform: rotate(-5.5deg);
+}
+.top-v2-doors li:nth-child(4) .top-v2-scenecard-roletag {
+  background-image: url(/assets/img/tape-3.png);
+  transform: rotate(-4.5deg);
+}
+.top-v2-otherscenes-cards li:nth-child(1) .top-v2-scenecard-roletag {
+  background-image: url(/assets/img/tape-2.png);
+  transform: rotate(-5deg);
+}
+.top-v2-otherscenes-cards li:nth-child(2) .top-v2-scenecard-roletag {
+  background-image: url(/assets/img/tape-1.png);
+  transform: rotate(-4deg);
+}
+.top-v2-otherscenes-cards li:nth-child(3) .top-v2-scenecard-roletag {
+  background-image: url(/assets/img/tape-3.png);
+  transform: rotate(-5.5deg);
+}
+
+/* 飾りテープとの二重貼り対策（実測）:
+   ・TOP扉4枚: SPの2カラムで写真幅160pxとなり、タグ(右端x=111)が中央
+     飾りテープ域(x∈[48,152])に重なる → 扉のみ飾りテープを全幅で非表示
+     （ブレークポイントで出たり消えたりする挙動を避け、タグのテープが
+     「写真に貼ったテープ」の役を一貫して担う）
+   ・他シーン誘導カード: 375px(タグ右端120 vs テープ左端136)・
+     1280px(86 vs 93)とも重ならないため飾りテープは維持 */
+.top-v2-doors .top-v2-scenecard-photo::before {
+  content: none;
+}
+
