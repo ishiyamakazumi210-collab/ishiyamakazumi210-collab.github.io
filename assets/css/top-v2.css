@@ -6147,3 +6147,11 @@ ul.top-v2-doors.list-unstyled {
 .top-v2-menu-pricetag {
   background: #fff;
 }
+
+/* オーナー指摘の真の本命: 選択中ボタン（平日/土日祝・食事オプション・
+   持ち込み調理等）の文字色がクリーム#fff8e8だった → 純白#fffに。
+   全ボード共通（chalk-tabのis-on状態） */
+.top-v2-chalk-tab.is-on,
+.top-v2-chalk-tab.is-on small {
+  color: #fff;
+}
