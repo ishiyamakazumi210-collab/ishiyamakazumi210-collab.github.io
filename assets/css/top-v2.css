@@ -6054,3 +6054,20 @@ ul.top-v2-doors.list-unstyled {
     font-size: min(11vw, 64px);
   }
 }
+
+/* PC見出しにも「折り返さない最大サイズ」規律を適用（オーナー指摘:
+   992〜1150px帯で96px固定が不慮の途中折れを起こす）。広い画面では96px、
+   狭いPCではvw側が効いて自動的に絞られる。設計2行（あの頃・予約4ステップ・
+   みんなで=kinsoku2行→PCは1行専用min済み）は行単位でフィット */
+@media (min-width: 992px) {
+  #playroll .top-v2-h {
+    font-size: min(96px, 8vw);
+  }
+  #usagescene .top-v2-h {
+    font-size: min(96px, 9.6vw);
+  }
+  #stay .top-v2-h,
+  #landscape .top-v2-h {
+    font-size: min(96px, 10.8vw);
+  }
+}
