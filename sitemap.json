@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T00:23:30.715Z",
+  "generatedAt": "2026-07-10T07:32:09.464Z",
   "source": "new-hp/src/pages",
   "policy": "WordPress-derived HTML/CSS is preserved; edit headings, copy, sections, and links in place.",
   "pages": [
@@ -38,6 +38,10 @@
     {
       "path": "/",
       "source": "src/pages/index.html"
+    },
+    {
+      "path": "/kenshu/",
+      "source": "src/pages/kenshu/index.html"
     },
     {
       "path": "/map/",
