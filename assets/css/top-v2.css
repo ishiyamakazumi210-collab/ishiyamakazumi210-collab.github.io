@@ -6136,3 +6136,14 @@ ul.top-v2-doors.list-unstyled {
     transform: translate(26%, -50%) rotate(7deg);
   }
 }
+
+/* オーナー指摘の本命対応（前回はふせんと誤解釈）:
+   ①食事オプション/お子さま人数を開いた時のパネル背景 クリーム→白
+   ②メニューカードの値札チップ（料金の字の背景） クリーム→白
+   どちらも既存のteal枠線が輪郭を保つため白化しても沈まない */
+.top-v2-chalk-mealrows {
+  background: #fff;
+}
+.top-v2-menu-pricetag {
+  background: #fff;
+}
