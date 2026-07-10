@@ -24,12 +24,32 @@
   // ユニーク構成はそのままに、トラックが必要幅（ビューポート+余裕、
   // PCは2100pxを下限の目安）を満たすまでサイクル単位で複製して埋める。
   // SPは1サイクルで既に必要幅を満たすため増えず、従来の見た目・速度のまま。
-  // アニメーションのduration/directionはCSSのまま一切変更しない。
+  // directionはCSSのまま。durationは充填後の実幅から速度基準で算出する
+  // （2026-07-10 オーナー指摘: PC密度化でトラックが伸び実速度が約78px/秒
+  //   =SPの1.6倍に。固定秒をやめ「幅÷目標速度」で常に読める速さを保つ）。
   function requiredTrackWidth(track) {
     var viewport = track.parentElement;
     var base = viewport ? viewport.clientWidth : 0;
     var pcFloor = window.matchMedia('(min-width: 992px)').matches ? 2100 : 0;
     return Math.max(base + 120, pcFloor);
+  }
+
+  // 行ごとの目標速度(px/秒)。行で微差をつけて機械的な同期を避ける
+  var ROW_SPEEDS = [46, 40, 44, 38];
+
+  function rowIndexOf(track) {
+    var rows = document.querySelectorAll('.top-v2-playroll-row');
+    var row = track.closest('.top-v2-playroll-row');
+    return Array.prototype.indexOf.call(rows, row);
+  }
+
+  function applyDuration(track) {
+    var idx = rowIndexOf(track);
+    var speed = ROW_SPEEDS[idx] || 42;
+    var width = track.offsetWidth;
+    if (width > 0) {
+      track.style.animationDuration = Math.round(width / speed) + 's';
+    }
   }
 
   function fillTrack(track, cycleCards) {
@@ -41,6 +61,7 @@
       });
       guard += 1;
     }
+    applyDuration(track);
   }
 
   // 回転などでビューポート幅が広がった時に不足分だけ追い足す（伸ばす一方
