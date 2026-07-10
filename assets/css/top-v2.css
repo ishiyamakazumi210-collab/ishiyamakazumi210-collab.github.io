@@ -6155,3 +6155,60 @@ ul.top-v2-doors.list-unstyled {
 .top-v2-chalk-tab.is-on small {
   color: #fff;
 }
+
+/* オーナー指示: 切り抜きと見出し文字は被らせない。
+   ≥576px: 画像は完全に文字の外側（テーマ本来のtranslate±100%）に置き、
+   その幅を前提に見出しサイズを絞る（playrollは11字なので特に）。
+   <576px: 横に並ぶ幅が無いため、画像は見出しの肩の上（左右角の上）へ
+   退避して被りゼロを維持 */
+@media (min-width: 576px) {
+  #playroll .top-v2-h .l-section_titleImage--left,
+  #stay .top-v2-h .l-section_titleImage--left,
+  #location .top-v2-h .l-section_titleImage--left {
+    transform: translate(-100%, -50%) rotate(-7deg);
+  }
+  #playroll .top-v2-h .l-section_titleImage--right,
+  #stay .top-v2-h .l-section_titleImage--right,
+  #location .top-v2-h .l-section_titleImage--right {
+    transform: translate(100%, -50%) rotate(7deg);
+  }
+}
+@media (min-width: 576px) and (max-width: 991px) {
+  #playroll .top-v2-h {
+    font-size: min(8vw, 42px);
+  }
+  #stay .top-v2-h {
+    font-size: min(11vw, 52px);
+  }
+}
+@media (min-width: 992px) {
+  #playroll .top-v2-h {
+    font-size: min(96px, 6vw);
+  }
+  #stay .top-v2-h {
+    font-size: min(96px, 8vw);
+  }
+}
+@media (max-width: 575px) {
+  #playroll .top-v2-h .l-section_titleImage--left,
+  #stay .top-v2-h .l-section_titleImage--left,
+  #location .top-v2-h .l-section_titleImage--left {
+    top: 0;
+    transform: translate(-30%, -78%) rotate(-7deg);
+  }
+  #playroll .top-v2-h .l-section_titleImage--right,
+  #stay .top-v2-h .l-section_titleImage--right,
+  #location .top-v2-h .l-section_titleImage--right {
+    top: 0;
+    transform: translate(30%, -78%) rotate(7deg);
+  }
+  #playroll .top-v2-h .l-section_titleImage--left img,
+  #playroll .top-v2-h .l-section_titleImage--right img,
+  #stay .top-v2-h .l-section_titleImage--left img,
+  #stay .top-v2-h .l-section_titleImage--right img,
+  #location .top-v2-h .l-section_titleImage--left img,
+  #location .top-v2-h .l-section_titleImage--right img {
+    max-height: 52px;
+    width: auto;
+  }
+}
