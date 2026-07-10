@@ -6315,3 +6315,35 @@ ul.top-v2-doors.list-unstyled {
     padding: 0 6px;
   }
 }
+
+/* 最終裁定（オーナー「不自然か？」→親の診断: 42pxの豆粒は賑やかしに
+   ならず、見出しを譲らせる価値がない）: SPでは切り抜きを出さない。
+   装飾は効く大きさで出すか出さないかの二択。SP見出しはのびのび復元し、
+   block化kinsoku・行スワイプのSP特例も撤回 */
+@media (max-width: 575px) {
+  #playroll .top-v2-h [class^="l-section_titleImage"],
+  #stay .top-v2-h [class^="l-section_titleImage"],
+  #location .top-v2-h [class^="l-section_titleImage"] {
+    display: none;
+  }
+  #playroll .top-v2-h .top-v2-kinsoku,
+  #stay .top-v2-h .top-v2-kinsoku {
+    display: inline-block;
+    background: none;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    width: auto;
+  }
+  #playroll .top-v2-h .top-v2-scene-title-mark,
+  #stay .top-v2-h .top-v2-scene-title-mark {
+    background: linear-gradient(transparent 58%, #fff8e8 58%);
+    padding: 0 6px;
+  }
+  #playroll .top-v2-h {
+    font-size: min(8vw, 34px);
+  }
+  #stay .top-v2-h {
+    font-size: min(11vw, 41px);
+  }
+}
