@@ -6071,3 +6071,68 @@ ul.top-v2-doors.list-unstyled {
     font-size: min(96px, 10.8vw);
   }
 }
+
+/* 見出し脇の切り抜き復活（オーナー: マーカーよりワイワイ感がある）:
+   時間割=ダーツ盤+ダーツ少年／誰と=卓球少年+バレーの子／アクセス=
+   指差し+道案内。テーマの絶対配置(translate ±100%)が効くよう、対象
+   見出しだけ中央シュリンクの表(display:table)にして基準箱を文字幅に */
+#playroll .top-v2-h,
+#stay .top-v2-h,
+#location .top-v2-h {
+  position: relative;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 切り抜きの配置調整: テーマ既定のtranslate(±100%)は「見出しの外側」
+   前提で、大型見出しでは画面外に切れる。端に少し重ねるタック配置に
+   変更（FAQ吹き出しと同じ重なり文法）。ついでに少し傾けて賑やかしに */
+#playroll .top-v2-h .l-section_titleImage--left,
+#stay .top-v2-h .l-section_titleImage--left,
+#location .top-v2-h .l-section_titleImage--left {
+  transform: translate(-48%, -50%) rotate(-7deg);
+  z-index: 2;
+}
+#playroll .top-v2-h .l-section_titleImage--right,
+#stay .top-v2-h .l-section_titleImage--right,
+#location .top-v2-h .l-section_titleImage--right {
+  transform: translate(48%, -50%) rotate(7deg);
+  z-index: 2;
+}
+
+/* playrollは見出し自体が広い(992pxで903px)ため、タック量を浅くして
+   狭いPCでも切り抜きが画面内に収まるように */
+#playroll .top-v2-h .l-section_titleImage--left {
+  transform: translate(-36%, -50%) rotate(-7deg);
+}
+#playroll .top-v2-h .l-section_titleImage--right {
+  transform: translate(36%, -50%) rotate(7deg);
+}
+
+/* 切り抜きは文字の後ろへ（ダーツ盤が「時」を隠していた）。
+   マーカー側を前面スタックにして、切り抜きは背後から覗く収まりに */
+#playroll .top-v2-h .l-section_titleImage--left,
+#playroll .top-v2-h .l-section_titleImage--right,
+#stay .top-v2-h .l-section_titleImage--left,
+#stay .top-v2-h .l-section_titleImage--right,
+#location .top-v2-h .l-section_titleImage--left,
+#location .top-v2-h .l-section_titleImage--right {
+  z-index: 0;
+}
+#playroll .top-v2-h .top-v2-scene-title-mark,
+#stay .top-v2-h .top-v2-scene-title-mark,
+#location .top-v2-h .top-v2-scene-title-mark {
+  position: relative;
+  z-index: 1;
+}
+
+/* SPでは誰と？の切り抜きが左右で数px切れるため、タックをさらに浅く */
+@media (max-width: 575px) {
+  #stay .top-v2-h .l-section_titleImage--left {
+    transform: translate(-26%, -50%) rotate(-7deg);
+  }
+  #stay .top-v2-h .l-section_titleImage--right {
+    transform: translate(26%, -50%) rotate(7deg);
+  }
+}
