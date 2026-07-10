@@ -6212,3 +6212,106 @@ ul.top-v2-doors.list-unstyled {
     width: auto;
   }
 }
+
+/* オーナー指示: スマホも肩の上でなく「横」に配置。幅捻出のため
+   playroll/stayはSPで文節2行にし、行単位で最大サイズを維持
+   （1行のままだと23px級に縮むため）。画像は横・被りゼロ */
+@media (max-width: 575px) {
+  #playroll .top-v2-h .l-section_titleImage--left,
+  #stay .top-v2-h .l-section_titleImage--left,
+  #location .top-v2-h .l-section_titleImage--left {
+    top: 50%;
+    transform: translate(-100%, -50%) rotate(-7deg);
+  }
+  #playroll .top-v2-h .l-section_titleImage--right,
+  #stay .top-v2-h .l-section_titleImage--right,
+  #location .top-v2-h .l-section_titleImage--right {
+    top: 50%;
+    transform: translate(100%, -50%) rotate(7deg);
+  }
+  #playroll .top-v2-h .l-section_titleImage--left img,
+  #playroll .top-v2-h .l-section_titleImage--right img,
+  #stay .top-v2-h .l-section_titleImage--left img,
+  #stay .top-v2-h .l-section_titleImage--right img,
+  #location .top-v2-h .l-section_titleImage--left img,
+  #location .top-v2-h .l-section_titleImage--right img {
+    max-height: 48px;
+    width: auto;
+  }
+  #playroll .top-v2-h {
+    font-size: min(10vw, 38px);
+  }
+  #stay .top-v2-h {
+    font-size: min(11vw, 41px);
+  }
+}
+
+/* SP横配置の追い込み: テーマ既定のspan余白2.66vwと画像高を絞り、
+   375pxで左右はみ出しゼロに収める */
+@media (max-width: 575px) {
+  #playroll .top-v2-h [class^="l-section_titleImage"],
+  #stay .top-v2-h [class^="l-section_titleImage"],
+  #location .top-v2-h [class^="l-section_titleImage"] {
+    padding: 0 2px;
+  }
+  #playroll .top-v2-h .l-section_titleImage--left img,
+  #playroll .top-v2-h .l-section_titleImage--right img,
+  #stay .top-v2-h .l-section_titleImage--left img,
+  #stay .top-v2-h .l-section_titleImage--right img,
+  #location .top-v2-h .l-section_titleImage--left img,
+  #location .top-v2-h .l-section_titleImage--right img {
+    max-height: 42px;
+  }
+  #playroll .top-v2-h {
+    font-size: min(9vw, 34px);
+  }
+}
+
+/* SP横配置の根治: display:tableは折返し後の行幅に縮まない（max-content
+   でコンテナ幅に張り付く）ため、kinsokuスパンをblock化して明示2行にし、
+   見出し箱を最長行幅まで縮めて画像の居場所を作る。locationは回転角の
+   矩形かすり対策で外側オフセットを2%追加 */
+@media (max-width: 575px) {
+  #playroll .top-v2-h .top-v2-kinsoku,
+  #stay .top-v2-h .top-v2-kinsoku {
+    display: block;
+  }
+  #playroll .top-v2-h {
+    font-size: min(10vw, 38px);
+  }
+  #location .top-v2-h .l-section_titleImage--left {
+    transform: translate(-106%, -50%) rotate(-7deg);
+  }
+  #location .top-v2-h .l-section_titleImage--right {
+    transform: translate(106%, -50%) rotate(7deg);
+  }
+}
+
+/* stayも回転矩形のかすり対策で2%外出し */
+@media (max-width: 575px) {
+  #stay .top-v2-h .l-section_titleImage--left {
+    transform: translate(-106%, -50%) rotate(-7deg);
+  }
+  #stay .top-v2-h .l-section_titleImage--right {
+    transform: translate(106%, -50%) rotate(7deg);
+  }
+}
+
+/* block化したkinsoku行のマーカー仕上げ: インラインのmark断片が上下に
+   クリーム片を残すため、SPではスワイプを行スパン側に移し、行ごとに
+   文字幅へフィットさせる */
+@media (max-width: 575px) {
+  #playroll .top-v2-h .top-v2-scene-title-mark,
+  #stay .top-v2-h .top-v2-scene-title-mark {
+    background: none;
+    padding: 0;
+  }
+  #playroll .top-v2-h .top-v2-kinsoku,
+  #stay .top-v2-h .top-v2-kinsoku {
+    background: linear-gradient(transparent 58%, #fff8e8 58%);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 6px;
+  }
+}
