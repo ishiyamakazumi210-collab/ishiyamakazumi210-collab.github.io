@@ -6347,3 +6347,163 @@ ul.top-v2-doors.list-unstyled {
     font-size: min(11vw, 41px);
   }
 }
+
+/* ===================================================================
+   オーナー「ダサいところ検査」確定5件バッチ
+   =================================================================== */
+
+/* -------------------------------------------------------------------
+   タスク1: PC(≥992px)の縦余白正規化
+   375px基準で行った既存のSP正規化（5638〜5720行）と同じ考え方を、
+   1280×900実測でPCスケール（境界80〜110px／見出し→コンテンツ32〜48px）
+   に適用する。見出しは全て.top-v2-h{transform:rotate(-1deg)}(4989行)が
+   掛かっており、getBoundingClientRectは回転後の外接矩形を返すため、
+   幅に応じて実測が名目パディングより6〜10px小さく出る（既知の誤差、
+   本バッチでは実測値ベースで数値を決定）。
+   ------------------------------------------------------------------- */
+
+@media (min-width: 992px) {
+  /* MV帯（実測: MV下端→帯120px、ボタン下端→#playroll見出し上端177px。
+     どちらも「帯の上下56〜72px」目標へ、帯自身のpadding/marginを圧縮） */
+  .cta-section01 {
+    margin-top: 24px;      /* 80pxから（lp-style基底） */
+    margin-bottom: 20px;   /* 80pxから */
+    padding-bottom: 26px;  /* 56pxから */
+  }
+  #playroll .l-section_inner {
+    padding-top: 24px !important; /* 48px(py-5の!important)から。
+                               padding-bottomは48pxのまま
+                               （playroll→usagescene境界には無関係） */
+  }
+
+  /* 境界（前セクション下端→次見出し上端）の底上げ。実測が届いていない
+     4箇所のみ、次セクションの見出し手前paddingを加算する。
+     #usagescene/#price はTOP専用idではなく他ページと共有だが、
+     .l-section_inner単体/.l-section_bg--grayはTOPの#price配下にしか
+     存在しない組み合わせのため安全にスコープできる（grep確認済み） */
+  #usagescene .l-section_inner {
+    padding-top: 100px !important; /* 48pxのpy-5(!important)を上書き。実測40→約92 */
+  }
+  #price .l-section_bg--gray {
+    padding-top: 100px !important; /* py-sm-5の48pxを上書き。実測38→約90 */
+  }
+  /* #flowはid・classとも friends/family/gasshuku/kenshu と同一構造で
+     共有されるため、bare #flowや.l-section_innerには触れない。
+     TOPだけが持つ見出しラッパー.text-center.mb-5（他ページのflowは
+     h2を素のままcontainer直下に置く）を追加のCSSフックにする */
+  #flow .text-center.mb-5 {
+    padding-top: 54px; /* 実測38→約92 */
+  }
+  /* #faqも他ページと共有idのため、TOPだけの組み合わせ
+     #faq.l-section_bg（class="l-section l-faq l-section_bg py-lg-5"は
+     TOP限定）で安全にスコープする */
+  #faq.l-section_bg .l-section_title {
+    padding-top: 56px; /* 実測36→約92 */
+  }
+  /* #locationはTOP専用idなのでそのままスコープ可。境界用の
+     padding-topと、見出し→コンテンツ短縮用のmargin-bottomを同時に置く */
+  #location .l-section_title--image {
+    padding-top: 47px;          /* 境界: 実測45→約92 */
+    margin-bottom: 4px !important; /* 見出し→コンテンツ: 48pxのmb-5を圧縮 */
+  }
+
+  /* 見出し→コンテンツ（見出し下端→次要素上端）の正規化。
+     実測が32〜48pxの範囲外だった5箇所のみ調整。flow/landscape/faqは
+     実測39/38/38pxで既に範囲内のため無変更 */
+  #playroll .top-v2-playroll-lead {
+    padding-top: 28px; /* 実測12→約40 */
+  }
+  #usagescene .memory-section01 {
+    margin-top: -41px; /* 実測81→約40 */
+  }
+  #stay .top-v2-doors {
+    margin-top: -41px; /* 実測81→約40 */
+  }
+  #price #banner {
+    padding-top: 10px; /* 実測30→約40 */
+  }
+  /* locationは上のブロックでmargin-bottom調整済み（84→約40） */
+}
+
+/* -------------------------------------------------------------------
+   タスク2: 「年間6,000名〜」セクション（.cta-section）〜footer間の
+   巨大な空白を圧縮し、登り棒の子(.l-main_bg)をfooter上端に接地させる。
+   実測: LINEリンク下端→footer上端290px
+   （.cta-section pb72+mb80 / .l-main_inner pb48 / .l-main pb90）。
+   .l-main_bgはposition:absolute; bottom:-70pxで.l-main(overflow:clip)
+   の下端基準に配置されており、視覚上の下端は常に.l-mainの下端
+   （=footer上端）でクリップされる＝既に「接地」はクリップ機構により
+   構造的に成立している（実測でも一致確認済み）。この関係は.l-mainの
+   paddingを縮めても保たれるため、bottom値自体の変更は不要。
+   .l-main_inner/.l-mainは全ページ共通クラスなので、bare指定は禁止。
+   TOP専用id(#playroll)を持つことをフックに:has()でTOPのみへ限定する
+   （1174行の.top-v2-scene-card-photo:has(...)で既に使用実績あり） */
+@media (min-width: 992px) {
+  .cta-section {
+    padding-bottom: 20px; /* 72pxから */
+    margin-bottom: 20px;  /* 80pxから */
+  }
+  .l-main_inner:has(#playroll) {
+    padding-bottom: 18px !important; /* 48px(.pb-lg-5の!important)から */
+  }
+  .l-main:has(#playroll) {
+    padding-bottom: 28px; /* 90pxから */
+  }
+}
+
+/* -------------------------------------------------------------------
+   タスク3: #price CTA行（空き状況を見る／料金の詳細を見る）の整列。
+   共通クラス.top-v2-price-actionsは他ページでは1要素しか持たないが、
+   TOPの#price #banner配下だけボタン+テキストリンクの2要素を横並び
+   flexで持ち、768px以上でボタン右にリンクが浮いて見える不整合が
+   あった。#price #banner（両id共存はTOPのみ＝既存5403/5406行と同じ
+   スコープ）で縦積み・中央揃えに変更。gapに一本化し、price-detail側の
+   個別margin-topは重複計上を避けるため0にする（SP/PC共通、幅で
+   分岐させない＝どちらも中央揃えの縦積みが正のため） */
+#price #banner .top-v2-price-actions {
+  flex-direction: column;
+  gap: 14px;
+}
+#price #banner .top-v2-price-detail {
+  margin: 0 0 48px; /* 20px 0 48pxから。上余白はgap 14pxに一本化 */
+}
+
+/* -------------------------------------------------------------------
+   タスク4: #playroll リード文（.top-v2-playroll-lead）がSPで左右
+   パディング0のため375px端に文字が接していた。他のTOP本文と同じ
+   左右余白を持たせる（中央揃えは.top-v2-playroll-lead{text-align:
+   center}が既存のまま効く） */
+@media (max-width: 575px) {
+  #playroll .top-v2-playroll-lead {
+    padding: 0 16px;
+  }
+}
+
+/* -------------------------------------------------------------------
+   タスク5: #price 黒板操作列（季節トグル／食事オプション／お子さま
+   人数／人数ステッパー）がPCで縦4段に間延び。「食事オプション」と
+   「お子さま人数」の2つの<details>だけを横2列にする。
+   .top-v2-priceは元々ただのブロック（max-width:860px;margin:0 auto）
+   で8個の直接の子がすべて縦積みだったため、CSS Gridに切り替えて
+   2要素以外を1/-1（全幅）指定に固定＝季節トグル/ステッパー/黒板/
+   価格カード/せんせいノート/CTA行は見た目上PC でも変化なし。
+   HTML変更は行わない（タスク5はCSSのみ許可）。
+   row-gapは0のまま（各要素の既存margin-bottomが縦間隔を維持）とし、
+   column-gapだけ16pxに。align-items:startで片方のdetailsだけ開いた
+   ときに隣列が引き伸ばされない（開いた側だけ行が伸びる）ようにする */
+@media (min-width: 992px) {
+  .top-v2-price {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    align-items: start;
+  }
+  .top-v2-price > .top-v2-chalk-season,
+  .top-v2-price > .top-v2-chalk-stepper,
+  .top-v2-price > .top-v2-chalkboard,
+  .top-v2-price > .top-v2-price-card,
+  .top-v2-price > .top-v2-teacher-note,
+  .top-v2-price > .top-v2-price-actions {
+    grid-column: 1 / -1;
+  }
+}
