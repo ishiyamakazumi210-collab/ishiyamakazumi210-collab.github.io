@@ -51,6 +51,9 @@
   var SCROLL_BOOST_COEF = 0.35;   // スクロール1pxあたりに加算する追加速度(px/秒)。体感調整はここ。
   var SCROLL_BOOST_DECAY = 0.9;   // 追加速度の毎フレーム減衰率(0-1)。小さいほど早く収まる
   var MAX_DELTA_TIME = 0.25;      // タブ復帰直後などの異常dtを丸める上限(秒)。ワープ防止
+  var DRAG_LOCK_PX = 8;           // この距離までは向き未確定。縦優勢ならページスクロールへ譲る
+  var DRAG_MOMENTUM_DECAY = 0.92; // 指を離した後の惰性の毎フレーム減衰率
+  var DRAG_MOMENTUM_MAX = 700;    // 惰性の上限(px/秒)。強フリックの吹っ飛び防止
 
   function rowIndexOf(track) {
     var rows = document.querySelectorAll('.top-v2-playroll-row');
@@ -162,7 +165,17 @@
         baseSpeed: ROW_SPEEDS[idx] || 42,
         offset: 0,
         scrollBoost: 0,
-        hovered: false
+        hovered: false,
+        // 手動ドラッグ用（2026-07-11 オーナー要望: 帯を自分でも横にスライドしたい）
+        pointerActive: false,
+        dragging: false,
+        pointerId: null,
+        startX: 0,
+        startY: 0,
+        lastX: 0,
+        lastT: 0,
+        velo: 0,
+        momentum: 0
       };
       states.push(state);
 
@@ -173,7 +186,80 @@
       row.addEventListener('pointerdown', function () { state.hovered = true; });
       row.addEventListener('pointerup', function () { state.hovered = false; });
       row.addEventListener('pointercancel', function () { state.hovered = false; });
+
+      attachDrag(state);
     });
+
+    // 帯の手動ドラッグ。縦スワイプはページスクロールに譲り（touch-action:
+    // pan-y + 向きロック）、横優勢と判断した時だけ帯を指に追従させる。
+    // 離すとフリック速度が惰性として残り、減衰しながら自走へ戻る。
+    // 無限ループ(modulo wrap)なので端は存在しない。
+    function attachDrag(state) {
+      var vp = state.tracks[0].parentElement;
+      if (!vp) { return; }
+      // reduced-motionではドライバごと不起動なのでここには来ない。
+      // 生CSSに書くとreduced-motionの素のoverflow-x:autoスワイプを
+      // 殺すため、touch-actionはドライバ有効時にJSで当てる
+      vp.style.touchAction = 'pan-y';
+      state.row.classList.add('is-draggable');
+
+      vp.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      vp.addEventListener('pointerdown', function (e) {
+        if (!e.isPrimary) { return; }
+        state.pointerActive = true;
+        state.dragging = false;
+        state.pointerId = e.pointerId;
+        state.startX = state.lastX = e.clientX;
+        state.startY = e.clientY;
+        state.lastT = e.timeStamp;
+        state.velo = 0;
+      });
+
+      vp.addEventListener('pointermove', function (e) {
+        if (!state.pointerActive || e.pointerId !== state.pointerId) { return; }
+        if (!state.dragging) {
+          var tx = e.clientX - state.startX;
+          var ty = e.clientY - state.startY;
+          if (Math.abs(ty) > DRAG_LOCK_PX && Math.abs(ty) > Math.abs(tx)) {
+            state.pointerActive = false; // 縦意図: ブラウザのスクロールに任せる
+            return;
+          }
+          if (!(Math.abs(tx) > DRAG_LOCK_PX && Math.abs(tx) > Math.abs(ty))) {
+            return; // まだ向き未確定
+          }
+          state.dragging = true;
+          state.row.classList.add('is-dragging');
+          try { vp.setPointerCapture(e.pointerId); } catch (err) { /* 合成イベント等 */ }
+          state.lastX = e.clientX;
+          state.lastT = e.timeStamp;
+          return;
+        }
+        var dx = e.clientX - state.lastX;
+        var dtMs = e.timeStamp - state.lastT;
+        state.lastX = e.clientX;
+        state.lastT = e.timeStamp;
+        state.offset -= dx; // 指の向きに追従（translateXは-offsetのため符号反転）
+        if (dtMs > 0) { state.velo = (dx / dtMs) * 1000; }
+        applyTransform(state);
+      });
+
+      function endDrag(e) {
+        if (e && state.pointerId !== null && e.pointerId !== state.pointerId) { return; }
+        state.pointerActive = false;
+        if (!state.dragging) { return; }
+        state.dragging = false;
+        state.row.classList.remove('is-dragging');
+        var m = -state.velo; // フリックの向きへ惰性継続（offset符号系に合わせ反転）
+        if (m > DRAG_MOMENTUM_MAX) { m = DRAG_MOMENTUM_MAX; }
+        if (m < -DRAG_MOMENTUM_MAX) { m = -DRAG_MOMENTUM_MAX; }
+        state.momentum = m;
+        state.velo = 0;
+        ensureLoop();
+      }
+      vp.addEventListener('pointerup', endDrag);
+      vp.addEventListener('pointercancel', endDrag);
+    }
 
     if (!states.length) { return; }
 
@@ -235,9 +321,16 @@
       lastFrameTime = now;
 
       states.forEach(function (state) {
+        if (state.dragging) { return; } // 指が触れている間はpointermoveが直接動かす
         var speed = state.scrollBoost;
         if (!state.hovered) { speed += state.baseSpeed; }
         state.offset += state.dir * speed * dt;
+        // ドラッグ解放後の惰性（方向つき）。減衰しながら自走に溶ける
+        if (state.momentum !== 0) {
+          state.offset += state.momentum * dt;
+          state.momentum *= DRAG_MOMENTUM_DECAY;
+          if (Math.abs(state.momentum) < 1) { state.momentum = 0; }
+        }
         // 慣性減衰: スクロール由来の追加速度だけを毎フレーム減衰させる
         state.scrollBoost *= SCROLL_BOOST_DECAY;
         if (state.scrollBoost < 0.02) { state.scrollBoost = 0; }

@@ -6742,3 +6742,15 @@ ul.top-v2-doors.list-unstyled {
     margin-top: 10px;
   }
 }
+
+/* --- 2026-07-11 マーキー手動ドラッグ対応 ---
+   is-draggable/is-dragging は playroll.js のドライバが付与する。
+   touch-action:pan-y はJS側でインライン付与（reduced-motionの素の
+   overflow-x:autoスワイプを殺さないため、CSSには書かない） */
+.top-v2-playroll-row.is-draggable .top-v2-playroll-viewport { cursor: grab; }
+.top-v2-playroll-row.is-dragging .top-v2-playroll-viewport { cursor: grabbing; }
+.top-v2-playroll-row.is-dragging {
+  user-select: none;
+  -webkit-user-select: none;
+}
+.top-v2-playroll-track img { -webkit-user-drag: none; }
