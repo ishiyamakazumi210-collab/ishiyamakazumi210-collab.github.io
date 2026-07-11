@@ -5542,19 +5542,6 @@ ul.top-v2-doors.list-unstyled {
   justify-content: center;
 }
 
-/* 生成待ちカードは差し替えリストの番号だけを表示する。 */
-.top-v2-playcard-photo--pending {
-  display: grid;
-  place-items: center;
-  background: #fff8e8;
-  border: 2px dashed rgba(47, 120, 144, 0.58);
-  color: #2f7890;
-  font-size: 30px;
-  font-weight: 900;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
 .top-v2-playcard-placeholder-art {
   width: 72%;
   height: 72%;
@@ -6767,3 +6754,858 @@ ul.top-v2-doors.list-unstyled {
   -webkit-user-select: none;
 }
 .top-v2-playroll-track img { -webkit-user-drag: none; }
+
+/* ===================================================================
+   2026-07-11 TOPファーストビュー痩身バッチ（オーナー承認済みプラン）
+   タスク1: MV黒覆い.5→.15 / タスク3: キャッチのフェードイン遅延 /
+   タスク5: バッジ3枚→信頼バー / タスク6: メディアリボン→#media帯 /
+   タスク7: ヘッダーSNS移動+テキストロゴ設置
+   =================================================================== */
+
+/* --- タスク1: MV黒覆いを.5→.15へ。lp-style.css:1399の
+   .l-mv_video::before{opacity:.5!important}に対し、#mv込みで詳細度を
+   積んで勝つ(!important同士は詳細度で決着。メディアクエリを掛けない
+   ため、SPにも同一に効く)。実測: 素の動画輝度131.4/255、覆い込み
+   表示輝度は.5時代65.7→.15適用後111.7(≥100を満たす) */
+#mv .l-mv_video::before {
+  opacity: 0.15 !important;
+}
+
+/* --- タスク3: キャッチ(top-v2-mv-key)を動画開始から約1.5秒後に
+   ふわっと表示。既存top-v2-pop(遅延なし即ポップ)を同一詳細度・
+   後勝ちで上書き。reduced-motionは本ファイル前方(58行目)に
+   「animation:none」があるが、末尾側に置く本ブロックの新アニメーションが
+   後勝ちしてしまうため、reduced-motion分もここで再度上書きし直す */
+.top-v2-mv-key {
+  animation: top-v2-key-fadein 0.9s 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes top-v2-key-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-mv-key {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* --- タスク5: バッジ3枚(年間6,000名/大学団体/最大120名)をMVから撤去し、
+   MV直後・cta-section01の前に細い信頼バーを新設。文言はバッジのalt文字を
+   流用(語尾の！は落として事実ベースの表記に統一)。背景#fff8e8は既存の
+   紙色トーン(§5配色基準)をそのまま踏襲 */
+.top-v2-trustbar {
+  background: #fff8e8;
+  padding: 14px 16px;
+}
+
+.top-v2-trustbar-text {
+  margin: 0;
+  color: #2a4750;
+  font-weight: 800;
+  font-size: clamp(12.5px, 1.6vw, 15px);
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .top-v2-trustbar-text {
+    line-height: 1.65;
+  }
+}
+
+/* --- タスク6: MV内の「掲載メディア一覧」リボン+ロゴ集を撤去し、
+   #faq手前に「メディア掲載」帯を新設。直前の#landscape(灰#ECEDF2)・
+   直後の#faq(白)という並びに対し、#landscapeと地続きの灰にして
+   #faq側の白い境界だけを保つ(既存の白/灰リズムを壊さない選択) */
+#media {
+  background: #ECEDF2;
+}
+
+.top-v2-media-logo {
+  margin: 0;
+  text-align: center;
+}
+
+.top-v2-media-logo img {
+  display: inline-block;
+  width: 90%;
+  height: auto;
+}
+
+@media (min-width: 992px) {
+  .top-v2-media-logo img {
+    width: 100%;
+    max-width: 720px;
+  }
+}
+
+.top-v2-media-caption {
+  margin: 18px 0 0;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: clamp(13px, 1.6vw, 15px);
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* --- タスク7: ヘッダー整理(TOPのみ。index.html限定のクラスなので
+   他ページへは波及しない)。左上のSNSアイコンを右側(予約ボタン/
+   ハンバーガーの隣)へ移動し、空いた左上にテキストロゴを設置。
+   中央の校章(.l-header_logo)は無改修 */
+.top-v2-header-textlogo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 1.25;
+  color: #2f7890; /* 2026-07-11 濃紺は名残色。見出しと同じ§5青緑へ(オーナー指摘) */
+  text-decoration: none;
+}
+
+/* 2026-07-11 ダサい対策: 素のゴシック2行→門柱の銘板+見出しマーカーの声へ。
+   上段は字間を大きく開けて銘板の読み仮名風、下段は見出しと同じ
+   クリームマーカーを敷いてサイトの声に揃える(書体はフォント許可待ちのため
+   装いで差を作る) */
+.top-v2-header-textlogo-sub {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+  opacity: 0.8;
+  padding-left: 3px;
+}
+
+.top-v2-header-textlogo-main {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding-left: 2px;
+  /* 2026-07-12 マーカー下地を除去: マーカーは本文/見出しの文法で、
+     ヘッダーのクローム領域では「強調された単語」に見えて浮く(オーナー
+     違和感の診断)。銘板はプレーンに、賑やかしは本文に任せる */
+}
+
+.top-v2-header-sns {
+  margin-right: 18px;
+}
+
+.top-v2-header-sns .l-header_snsList {
+  display: flex;
+  align-items: center;
+}
+
+.top-v2-header-sns .l-header_snsList li {
+  height: 22px;
+}
+
+@media screen and (max-width: 991px) {
+  .top-v2-header-textlogo-main {
+    font-size: 16px;
+  }
+
+  .top-v2-header-sns {
+    margin-right: 10px;
+  }
+
+  .top-v2-header-sns .l-header_snsList li {
+    height: 19px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .top-v2-header-textlogo-sub {
+    display: none;
+  }
+
+  .top-v2-header-textlogo-main {
+    font-size: 14px;
+  }
+
+  .top-v2-header-sns {
+    margin-right: 6px;
+  }
+
+  .top-v2-header-sns .l-header_snsList li {
+    height: 16px;
+  }
+
+  .top-v2-header-sns .l-header_snsList li + li {
+    margin-left: 6px;
+  }
+}
+
+/* --- 2026-07-11 FV最終形(オーナー確認後の修正) ---
+   1) 信頼バーはダサいとの判断で廃止→実績一行はメディア帯へ統合
+      (セクション名も実績・メディア掲載へ)。バー用CSSは未使用のまま残置
+   2) FVは動画+キャッチのみ(価格チップも撤去。数字は#priceの黒板が正)
+   3) キャッチは三分割の上ライン(上1/3)へ。動画中央の見せ場を塞がない
+      → 同日オーナー再調整: 四分割の最上段(上1/4)へさらに引き上げ */
+.top-v2-mv-stack { top: 29%; } /* PC: 2026-07-11 全体を少し上へ */
+@media (max-width: 767px) {
+  .top-v2-mv-stack { top: 26%; } /* SPは特に上げる(オーナー指示) */
+}
+.top-v2-media-facts {
+  text-align: center;
+  font-weight: 800;
+  color: #2a4750;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  margin: 0 0 18px;
+}
+@media (max-width: 767px) {
+  .top-v2-media-facts { font-size: 12.5px; }
+}
+
+/* --- 2026-07-11 FVスクロールキュー ---
+   キャッチ上1/4化で画面下側に受け皿がなくなり頭でっかちになった
+   (オーナー指摘の違和感)。メダル3枚復活案の代わりに、視覚重量の
+   小さい下向きシェブロンを下中央へ。クリックで#playrollへ */
+.top-v2-mv-scrollcue {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 14px;
+  animation: top-v2-cue-bob 2.2s ease-in-out infinite;
+}
+.top-v2-mv-scrollcue-chev {
+  width: 22px;
+  height: 22px;
+  border-right: 3.5px solid #fff;
+  border-bottom: 3.5px solid #fff;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  filter: drop-shadow(0 1px 4px rgba(20, 50, 65, 0.45));
+}
+.top-v2-mv-scrollcue-chev--2 {
+  margin-top: -14px;
+  opacity: 0.55;
+}
+@keyframes top-v2-cue-bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(7px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-mv-scrollcue { animation: none; }
+}
+@media (max-width: 767px) {
+  .top-v2-mv-scrollcue { bottom: 12px; }
+  .top-v2-mv-scrollcue-chev { width: 18px; height: 18px; border-width: 3px; }
+  .top-v2-mv-scrollcue-chev--2 { margin-top: -11px; }
+}
+
+/* --- 2026-07-11 FVローレル(メダル3連)復活: キャッチの真上に映画ポスター式 ---
+   下側に大きく置く案ではなく、受賞ローレルの文法で小さくタイトル上へ。
+   復活に伴いstackは30%へ少し下げ(オーナー指示)。キャッチと同時にフェード */
+.top-v2-mv-laurels {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(8px, 2.4vw, 14px);
+  margin: clamp(8px, 2vw, 14px) 0 0; /* 2026-07-11 オーナー指示でキャッチの下へ(上下逆転) */
+  padding: 0;
+  animation: top-v2-key-fadein 0.9s ease-out 1.5s both;
+}
+.top-v2-mv-laurels img {
+  width: clamp(78px, 21vw, 124px); /* 2026-07-11 小さいとのオーナー指摘で拡大 */
+  height: auto;
+  filter: drop-shadow(0 2px 6px rgba(20, 50, 65, 0.35));
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-mv-laurels { animation: none; opacity: 1; }
+}
+
+/* --- 2026-07-11 PCのFV文字群圧縮 ---
+   全体上げ(29%)だけではPCは上端に衝突(stack350px/動画680px)。
+   PCは位置でなくサイズを絞る: キャッチ660→560px・ローレル上限124→104px
+   で stack約290px・上端約8%・下端50%に収める。SPは変更なし */
+@media (min-width: 768px) {
+  /* 2026-07-11 メダルがstack外(動画真下の白帯)へ出たため560px制約は失効。
+     キャッチ単独ならもっと張れる(オーナー指示でPC拡大) */
+  .top-v2-mv-stack { width: min(780px, 64%); }
+  .top-v2-mv-laurels img { width: clamp(78px, 8.5vw, 104px); }
+}
+
+/* --- 2026-07-11 メダルはFV(動画内)から撤退→動画の真下の白帯へ ---
+   動画内では「読めるサイズ⇔映像を隠さない」が物理的に両立しない
+   (オーナー実見+忖度なし評価で確定)。枠外の真下なら両立する。
+   実績一行はメディア帯から撤去(重複回避)し、帯名もメディア掲載に復帰 */
+.top-v2-medalrow {
+  background: #fff;
+  /* 2026-07-11 品質監査: 14pxは窮屈(直後のCTA帯との外側間隔68pxと不釣合) */
+  padding: clamp(20px, 3.4vw, 28px) 12px;
+}
+.top-v2-medalrow-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(14px, 4vw, 46px); /* メダル拡大に追随 */
+  margin: 0;
+  padding: 0;
+}
+.top-v2-medalrow-list img {
+  width: clamp(96px, 26vw, 176px); /* 2026-07-11 PCが小さいとの指摘で上限132→176(SPは26vw支配で不変) */
+  height: auto;
+}
+
+/* --- 2026-07-11 メダル帯の「自然化」 ---
+   サイト全体は「紙に貼ってある」文法なのにメダルだけ宙に浮いていた
+   (オーナー: ただあるだけだと不自然)。処方2点:
+   1) ＼ おかげさまで ／ の前置き一言で「誇らしげな報告」の文脈を付与
+   2) 各メダルの上辺にマステ(既存tape素材)を貼り、わずかに個体差の傾き
+      →アルバムに貼られた勲章、というサイト共通の世界観に編入 */
+.top-v2-medalrow-lead {
+  text-align: center;
+  font-weight: 800;
+  color: #2f7890; /* 2026-07-11 §5パレットの青緑へ(見出しと同族の声に) */
+  font-size: clamp(16px, 4.4vw, 24px); /* 品質監査: PC21→24px(メダル132pxに対し弱かった) */
+  letter-spacing: 0.1em;
+  margin: 0 0 clamp(12px, 2.6vw, 18px);
+}
+/* 一行まるごとクリームマーカー(見出しマーカーのミニ版)+「どんとこい。」だけ橙 */
+.top-v2-medalrow-lead-in {
+  display: inline-block;
+  padding: 0 8px 2px;
+  background: linear-gradient(transparent 58%, #fff8e8 58%);
+}
+.top-v2-medalrow-lead-punch {
+  color: #f0831e;
+  font-weight: 800;
+}
+/* 2026-07-11 テープ+傾きはオーナー確認で違和感→撤去(素の整列に戻す)。
+   前置きも おかげさまで(下のCTA帯と同じ＼／芸の重複+120名と文法不整合)
+   → 受け入れ宣言「団体さん、どんとこい。」へ差し替え */
+
+/* --- 2026-07-11 キャッチのフェードイン廃止(最初から表示) ---
+   1.5秒遅延は「動画だけ案」との折衷だったが、メダル帯が動画外へ
+   確定した今はメッセージ空白1.5秒のコストだけが残る(速いスクロール
+   者はキャッチを見ずに通過)。オーナー判断で即時表示へ */
+.top-v2-mv-key {
+  animation: none;
+  opacity: 1;
+}
+
+/* --- 2026-07-11 早い者勝ち帯(cta-section01)撤去に伴う移設 ---
+   メダル帯直下に白地スローガン帯が2連発で間延び(オーナー指摘)。
+   ボタンは予約FAB+最下部CTAと重複のため帯ごと撤去し、焦り文句だけ
+   #priceのCTA直前へ(空き状況を見る決断の瞬間が最も効く位置) */
+/* 2026-07-11 修正: PNGコールアウトは基底.top-v2-calloutのmargin auto
+   センタリングを打ち消して左流れになった上、集金だよりカード内に
+   販促PNGが割り込むのは世界観違反(オーナー指摘: 位置がおかしい)。
+   カードの文法に合うテキスト注意書きへ置換(PNGはTOPから退役) */
+/* 2026-07-11 再修正: オーナー判断でPNG続投。左流れの真因は margin の
+   横auto打ち消しだけだったので、autoを残して中央寄せ+幅だけ絞る */
+.top-v2-price-callout {
+  width: min(340px, 86%);
+  margin: 18px auto 4px;
+}
+
+/* --- 2026-07-11 早い者勝ちコールアウトのPC位置修正 ---
+   .top-v2-priceはPCで2カラムgrid。全幅(1/-1)指定リストに未登録の
+   コールアウトが半幅セルへ自動流し込みされ「真上」からズレていた
+   (オーナー指摘)。全幅指定してactionsの直上=DOM順どおりに */
+@media (min-width: 992px) {
+  .top-v2-price > .top-v2-price-callout {
+    grid-column: 1 / -1;
+  }
+}
+
+/* --- 2026-07-11 あの頃3カードをリンク化 ---
+   遊んで=/play/、食べて=献立(#food)、泊まれる=宿泊(#stay-option)。
+   スマホでは主役写真はタップされるため無反応を解消し、誰とカードの
+   「写真+くわしく→」扉文法をここにも適用(物語性を壊さない最小の目印) */
+.top-v2-memory-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.top-v2-memory-link .top-v2-doors-more {
+  display: block;
+  text-align: center; /* 2026-07-11 左右カードごとに振ると視線が泳ぐ(オーナー違和感)→中央統一 */
+  margin-top: 10px;
+}
+.top-v2-memory-link:hover .top-v2-doors-more,
+.top-v2-memory-link:focus-visible .top-v2-doors-more {
+  text-decoration: underline;
+}
+
+/* (中央統一により左右振り分けルールは廃止。バブルは写真の「角」、
+   くわしくは「中央」なので幾何学的に衝突しない) */
+
+/* --- 2026-07-11 メダル帯の枠試作 ---
+   メダル帯(白)→時間割(白)が地続きで境界が曖昧(オーナー指摘)。
+   帯の中身を点線フレームで包む: 点線=このサイトの切り取り線/掲示物
+   文法(引き出し・部屋図と同族)。背景色は白のまま境界だけ生む */
+.top-v2-medalrow-frame {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 26px) 16px;
+  border: 2px dashed #9db8c4;
+  border-radius: 16px;
+}
+
+/* =====================================================================
+   TOP セクション間余白の正規化バッチ（オーナー指摘「空きすぎ・詰まりすぎで
+   バラバラ」への処方、2026-07-11）
+   計測法: 「次セクション最初のin-flow可視コンテンツtop − 前セクション
+   最後のin-flow可視コンテンツbottom」を375px/1280pxで全12ペア実測
+   （position:absolute/fixedの装飾は除外）。
+   目標: SP(375) 56px基準・44〜72px許容 / PC(1280) 96px基準・80〜120px許容。
+   #mv→medalrowはFV直結の例外で現状維持。基準内だった playroll→usagescene
+   (SP54/PC…)・landscape→media・faq→location(SP)・location→cta-section は
+   無変更。各ルールはTOP専用idか、他ページと共有するid+classの組み合わせで
+   スコープ（#price/#flow/#faqはfamily/friends/gasshuku/play/option等と
+   id共有のため単独#指定は使わない）。
+
+   実測 before→after（total, px）:
+   SP:  medalrow→playroll 119→71 / usagescene→stay 90→66 /
+        stay→price 87→58 / price→flow 125→60 / flow→landscape 115→51 /
+        media→faq 76→59 / cta-section→footer 456→356(下記注記)
+   PC:  medalrow→playroll 73→93 / playroll→usagescene 148→112 /
+        usagescene→stay 295→109 / stay→price 152→117 / price→flow 194→86 /
+        flow→landscape 159→103 / media→faq 209→113 / faq→location 189→91 /
+        cta-section→footer 134→116
+   ===================================================================== */
+
+/* --- SP(≤575px) --- */
+@media (max-width: 575px) {
+  /* medalrow→playroll 119→71: 見出し手前のpy-5(48px)を除去し、
+     h2自身のmargin-top(36px)のみに委ねる（親子とも0paddingで隣接section側へ
+     margin-collapseし、medalrow側の帯と合算されて71pxに落ち着く＝視覚上は
+     連続した白背景なのでどちらの区画が「所有」しても違いはない） */
+  #playroll .l-section_inner { padding-top: 0 !important; }
+  /* stay→price 87→58: 既存の79px(5680行)は現行コンテンツ量に対し過大 */
+  #price > .l-section_bg--gray { padding-top: 50px; }
+  /* price→flow 125→60: 既存の79px(5691行)を見出し側で縮小。
+     price側の詳細リンクmarginは下の共通ルールで対応 */
+  #flow.l-section { padding-top: 46px; padding-bottom: 8px; }
+  /* flow→landscape 115→51: flow自身の下48pxとlandscapeの見出し前48pxが
+     素通しで積み上がっていたのを両側から削る */
+  #landscape .l-section_inner.py-5 { padding-top: 24px !important; }
+  /* media→faq 76→59: 既存の27px(5698行)をわずかに縮小 */
+  #faq { padding-top: 10px; }
+  /* cta-section→footer 456→356: .l-main_bg（登り棒キャラ、WP基底CSSで
+     position:relative・margin-bottom:-15.46667vwのin-flow装飾＝375pxで
+     高さ272px＋負マージンでほぼ空白なくfooterに接地する仕様）が実測の
+     大半を占め、除外規定（position:absolute/fixedのみ除外）の対象外。
+     コンテンツ本体基準（キャラ手前16px・キャラ後32pxの余白）で見ると
+     適正なため、キャラ自体は動かさずCTA側/footer側の重複パディングのみ
+     圧縮（登り棒を挟まないコンテンツ間の実質ギャップは目視良好、
+     44〜72pxの機械的な数値には未到達だが装飾が意図的に境界を跨ぐ
+     ケースとして判定・様子見。詳細は作業報告を参照） */
+  .cta-section { padding-bottom: 12px; margin-bottom: 16px; }
+  .l-main_inner:has(#playroll) { padding-bottom: 0 !important; }
+  body:has(#playroll) footer#footer.l-footer { padding-top: 24px !important; }
+}
+
+/* --- PC(≥992px) --- */
+@media (min-width: 992px) {
+  /* medalrow→playroll 73→93: 6387行の24px !importantが現行コンテンツには
+     詰まりすぎ（許容80px未満）だったため再度上書き */
+  #playroll .l-section_inner { padding-top: 44px !important; padding-bottom: 12px !important; }
+  /* playroll→usagescene 148→112: playroll側のpy-5下48px＋actions分の
+     重複を圧縮（usagescene側の100px(6398行)は適正のため無変更） */
+  #usagescene .memory-section01 { padding-bottom: 0 !important; }
+  /* usagescene→stay 295→109: usagescene末尾(最終カードmargin-bottom78px＋
+     memory-section01のpb80px)とstay冒頭(l-section_bg+l-section_innerの
+     py-lg-5/py-5が二重に48px×2)の両側とも未整理だった重複を解消 */
+  #stay.l-option .l-section_bg { padding-top: 0 !important; }
+  /* stay→price 152→117: 既存の100px(6401行)は現行コンテンツに対し過大 */
+  #price .l-section_bg--gray { padding-top: 65px !important; padding-bottom: 16px !important; }
+  /* price→flow 194→86: price側は詳細リンクmargin(下の共通ルール)、
+     flow側は見出し前パディング(6408行の54px)とflow自身の基底48pxの
+     二重を圧縮 */
+  #flow .text-center.mb-5 { padding-top: 10px !important; }
+  #flow.l-section { padding-bottom: 20px !important; }
+  /* flow→landscape 159→103: flow自身の下48pxとlandscape側(l-album_bgの
+     py-lg-5 48px＋section自身48pxの二重)を両側から圧縮 */
+  #landscape { padding-top: 20px !important; }
+  /* media→faq 209→113: faq自身の基底48px＋l-section_innerのpy-5 48pxの
+     二重を圧縮（バルーン装飾の負マージンはそのまま） */
+  #faq.l-section_bg { padding-top: 0 !important; }
+  #faq.l-section_bg .l-section_inner { padding-top: 0 !important; }
+  /* faq→location 189→91: faq側の「その他のご質問はこちら」下48pxと、
+     location側の既存47px(6419行)を両側から圧縮 */
+  #faq.l-section_bg .l-section_link { margin-bottom: 12px !important; }
+  #location .l-section_title--image { padding-top: 15px !important; }
+  #location { padding-top: 18px !important; }
+  /* cta-section→footer 134→116: 6462行の28pxをさらに圧縮 */
+  .l-main:has(#playroll) { padding-bottom: 10px !important; }
+}
+
+/* --- 375px/1280px共通（両実測とも同値20px/16pxで許容域に収まるため
+   ブレークポイント分岐不要。576〜991pxは未実測だが中間的な値として妥当） --- */
+/* usagescene→stay: 最終カード（泊まれる）だけ末尾の余白を詰める。
+   カード間(1〜2枚目)のリズムは無変更 */
+#usagescene .memory-item1:last-child { margin-bottom: 20px; }
+/* price→flow: 「料金の詳細を見る」の下48pxマージンを圧縮 */
+#price #banner .top-v2-price-detail { margin-bottom: 16px; }
+
+/* =====================================================================
+   追加検証: あの頃3カードの「くわしく →」中央配置(7149行)後、
+   吹き出し(.top-v2-quip)との文字被りを解消（オーナー確認事項）。
+   767px以下では吹き出しが写真下角の外側へ張り出す配置(6588/6684行)で、
+   写真直下に来た「くわしく →」の行と実測で重なっていた
+   （例: playカード bubble b=396 / more t=346 → 24px被り、テキスト読めず）。
+   写真の外へは張り出させず写真下端の内側に収める形へ調整
+   （bottom値を写真下端手前に変更、吹き出し自体の見た目・位置ロジックは
+   維持。991px以下に統一適用、PC(992px以上)は上角配置のため無関係で無変更） */
+@media (max-width: 991px) {
+  #usagescene .top-v2-quip--play { bottom: 40px; }
+  #usagescene .top-v2-quip--eat { bottom: 40px; }
+  #usagescene .top-v2-quip--stay { bottom: 40px; }
+}
+
+/* --- 2026-07-12 料金セクション内の余白落差補正(オーナー違和感リストB-2) ---
+   黒板→ヒーローカード96px(黒板自身のmargin-bottomにセクション級の値が
+   混入) vs カード→せんせいより17px、同一セクション内で5.6倍の落差。
+   オブジェクト間の階層(セクション間>オブジェクト間>カード内)に揃える */
+#price .top-v2-chalkboard {
+  margin-bottom: clamp(44px, 5vw, 56px);
+}
+#price .top-v2-price-card {
+  margin-bottom: 26px;
+}
+
+/* --- 2026-07-12 アクセスの「区切り近すぎ」補正(実測に基づく最終版) ---
+   実測: 白側71px(=FAQ最終要素の残余44+locationのmargin-top26)、
+   グレー側の額は0でアクセス見出しが色替わり線に張り付いていた。
+   処方: FAQ最終要素の尻尾を0にし、その分をグレーの額へ付け替える。
+   合計は約67px(SP許容44-72内)を維持。inner系はpt-5等の!important
+   ユーティリティが勝つため、額は.l-section_bg側に!importantで確保 */
+#faq .l-section_inner > .container > :last-child {
+  margin-bottom: 0 !important;
+}
+section#location > .l-section_bg {
+  padding-top: clamp(40px, 5vw, 52px) !important;
+}
+
+/* --- 2026-07-12 Access同類の全数補正(SP): 帯の際への張り付き ---
+   余白正規化は「コンテンツ間の合計」を基準化したが、色替わり線の
+   どちら側に余白を割るかまでは制御していなかった。監査(額/顎の実測)で
+   4件が線に張り付き: media顎1px/price顎16px/usagescene顎21px/
+   landscape額21px。合計を保つため反対側から同量を差し引く */
+@media (max-width: 767px) {
+  /* メディア帯: 顎1→37px。FAQ側の額から同量を回収(総間隔59→68px) */
+  #media .l-section_inner { padding-bottom: 36px !important; }
+  #faq .l-section_inner { padding-top: 0 !important; }
+  /* 料金帯: 顎16→32px。4ステップ側から回収(総間隔60px維持) */
+  #price > .l-section_bg--gray { padding-bottom: 16px; }
+  section#flow { padding-top: 63px; }
+  /* あの頃帯: 顎21→37px。誰と側から回収 */
+  #usagescene > .l-section_bg { padding-bottom: 16px; }
+  #stay .l-section_inner { padding-top: 32px !important; }
+  /* 風景帯: 額21→37px(下流は同グレー連続のため回収不要・総間隔51→67px)。
+     landscapeはsection自身が.l-section_bg(塗り役) */
+  section#landscape.l-section_bg { padding-top: 16px; }
+}
+
+/* --- 2026-07-12 れんらくさきカード撤去(オーナー判断) ---
+   住所はフッターと地図が担い、営業時間9-21時は宿泊客の疑問
+   (チェックイン13時等)に答えずTOPでは誤読リスク。アクセスは
+   見出し+地図+詳細リンクへ縮退。リンクは地図直下で中央に */
+.top-v2-access-actions {
+  text-align: center;
+  margin-top: clamp(20px, 4vw, 28px);
+}
+
+/* --- 2026-07-12 孤児だった/map/(施設マップ)への配線 ---
+   TOPには置かない(実務資料)。空間を組み立てる瞬間の3箇所へ:
+   /play/泊まる末尾・/kenshu/幹事セクション・option席替え図の隣 */
+.top-v2-map-link {
+  text-align: center;
+  margin: 22px 0 10px;
+}
+
+/* ==========================================================================
+   /play/ 全面リニューアル（2026-07-12）
+   旧WordPress LP構成 → 学校プリント/スクラップブック文法の「遊びカタログ+
+   泊まる空間紹介」へ刷新。泊まる(#stay)・料金フック・FAQ・最終CTAは既存の
+   .top-v2-scene-*/.top-v2-banner-*/.faq/.top-v2-share系をそのまま流用のため
+   追補なし。ここではMV・遊びカタログ・一覧(#list)専用の新規分のみ追加する。
+   ========================================================================== */
+
+/* --- MV: 画像文字見出し(旧l-mv_title img)→HTMLテキスト化。
+   覆いは.l-mv_bg::beforeの黒0.4→0.15に減光（オーナー指定） --- */
+#mv.l-mv--under .l-mv_bg::before {
+  opacity: 0.15;
+}
+#mv .l-mv_bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.top-v2-play-mv-copy {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+  z-index: 2;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+.top-v2-play-mv-h1 {
+  margin: 0 0 14px;
+  color: #fff;
+  font-weight: 900;
+  font-size: clamp(30px, 5vw, 60px);
+  line-height: 1.35;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.42);
+}
+.top-v2-play-mv-lead {
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(14px, 1.9vw, 18px);
+  line-height: 1.85;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 767px) {
+  .top-v2-play-mv-copy { padding: 0 18px; }
+}
+
+/* --- 遊びカタログ #catalog: 分類ブロックの見出し行（nじかんめタブ+波下線） --- */
+.top-v2-catalog-group {
+  margin: 0 0 52px;
+}
+.top-v2-catalog-group:last-child {
+  margin-bottom: 0;
+}
+.top-v2-catalog-rowhead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 22px;
+}
+.top-v2-catalog-tab {
+  display: inline-block;
+  padding: 6px 18px;
+  background: #fff8e8;
+  border: 1px solid rgba(47, 120, 144, 0.3);
+  border-radius: 999px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 15px;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #f0831e;
+  text-underline-offset: 4px;
+}
+.top-v2-catalog-period {
+  margin-right: 0.35em;
+  font-size: 0.82em;
+  font-weight: 700;
+  opacity: 0.8;
+}
+@media (min-width: 992px) {
+  .top-v2-catalog-tab { font-size: 17px; padding: 7px 22px; }
+}
+
+/* --- 遊びカタログ: グリッド（ポラロイド写真＋チョークチップ混在） --- */
+.top-v2-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 576px) {
+  .top-v2-catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 18px; }
+}
+@media (min-width: 768px) {
+  .top-v2-catalog-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 22px; }
+}
+@media (min-width: 1200px) {
+  .top-v2-catalog-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+.top-v2-catalog-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ポラロイド写真（.top-v2-scenecard-photo文法の縮小版。白フチ+マステ+柔影） */
+.top-v2-catalog-photo {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 7px 7px 9px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px rgba(20, 50, 65, 0.16);
+}
+.top-v2-catalog-item:nth-child(4n+1) .top-v2-catalog-photo { transform: rotate(-1.6deg); }
+.top-v2-catalog-item:nth-child(4n+2) .top-v2-catalog-photo { transform: rotate(1.3deg); }
+.top-v2-catalog-item:nth-child(4n+3) .top-v2-catalog-photo { transform: rotate(-0.8deg); }
+.top-v2-catalog-item:nth-child(4n+4) .top-v2-catalog-photo { transform: rotate(1.5deg); }
+.top-v2-catalog-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 1px;
+}
+.top-v2-catalog-photo::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 56px;
+  height: 24px;
+  margin-left: -28px;
+  background: url(/assets/img/tape-1.png) no-repeat center/contain;
+  pointer-events: none;
+  z-index: 2;
+}
+.top-v2-catalog-item:nth-child(3n+2) .top-v2-catalog-photo::before { background-image: url(/assets/img/tape-3.png); }
+.top-v2-catalog-item:nth-child(3n+3) .top-v2-catalog-photo::before { background-image: url(/assets/img/tape-4.png); }
+
+/* チョーク風テキストチップ（写真が無い項目。黒板色地に白文字） */
+.top-v2-catalog-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 10px;
+  background: #2a4750;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  box-shadow: 0 6px 14px rgba(20, 50, 65, 0.18);
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+.top-v2-catalog-item:nth-child(odd) .top-v2-catalog-chip { transform: rotate(-1deg); }
+.top-v2-catalog-item:nth-child(even) .top-v2-catalog-chip { transform: rotate(1.1deg); }
+
+.top-v2-catalog-name {
+  display: block;
+  margin-top: 10px;
+  color: #2e2518;
+  font-weight: 800;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.top-v2-catalog-item--chip .top-v2-catalog-name {
+  display: none;
+}
+@media (min-width: 768px) {
+  .top-v2-catalog-name { font-size: 13.5px; }
+  .top-v2-catalog-chip { font-size: 14px; }
+}
+
+/* 有料バッジ（小面積の暖色使用のみ許可の規律に準拠） */
+.top-v2-catalog-photo .top-v2-catalog-paidtag {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  z-index: 3;
+  background: #f0831e;
+  color: #fff;
+  font-weight: 900;
+  font-size: 10.5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(20, 50, 65, 0.25);
+}
+.top-v2-catalog-chip .top-v2-catalog-paidtag {
+  display: block;
+  position: static;
+  width: fit-content;
+  margin: 6px auto 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: none;
+}
+
+/* 分類末尾の「有料の遊びは料金・オプションへ」一行 */
+.top-v2-catalog-note {
+  margin: 26px 0 0;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #665a4a;
+}
+
+/* --- 一覧 #list: 配布プリント風（白紙+ノート罫線）。
+   罫線は.top-v2-teacher-noteと同じrepeating-linear-gradient手法を流用 --- */
+.top-v2-worksheet-sheet {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(20, 50, 65, 0.12);
+  padding: 4px 22px 22px;
+}
+@media (min-width: 768px) {
+  .top-v2-worksheet-sheet {
+    padding: 4px 40px 30px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 48px;
+  }
+}
+.top-v2-worksheet-group {
+  padding-top: 26px;
+}
+.top-v2-worksheet-group-title {
+  margin: 0 0 4px;
+}
+.top-v2-worksheet-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 32px;
+  background-image: repeating-linear-gradient(
+    transparent 0,
+    transparent 31px,
+    rgba(47, 120, 144, 0.16) 31px,
+    rgba(47, 120, 144, 0.16) 32px
+  );
+}
+.top-v2-worksheet-group li {
+  font-weight: 700;
+  color: #2e2518;
+  font-size: 14px;
+}
+.top-v2-worksheet-group li::before {
+  content: "・";
+  color: #2f7890;
+  font-weight: 900;
+}
+.top-v2-worksheet-paid {
+  margin-left: 4px;
+  color: #f0831e;
+  font-weight: 900;
+  font-size: 12px;
+}
+
+/* --- 2026-07-12 /play/ MV高さ補正(QA) ---
+   mv.jpg(2652x881)は等比だとSPで125pxしかなく、コピーが写真外の
+   地色へ落ちて「灰色ベタ」に見えた。cover前提の高さを確保 */
+#mv.l-mv--under .l-mv_bg {
+  height: clamp(300px, 46vw, 460px);
+}
