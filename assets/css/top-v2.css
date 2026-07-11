@@ -6715,3 +6715,30 @@ ul.top-v2-doors.list-unstyled {
     display: none;
   }
 }
+
+/* --- 2026-07-11 誰と/他のシーンカード: テープ廃止、写真下ラベルへ ---
+   キャプション廃止(テープだけ構成)の直後、オーナー判断でさらに一歩:
+   写真上のマステをやめ、素の写真+下に「友達と」等のラベルだけを置く。
+   テープはラベルが写真上で二役やって重かったため。命名は既存の
+   .top-v2-doors-label(ホーロー札・現在未使用)と混ざらないよう別クラス */
+.top-v2-doors-who,
+.top-v2-otherscenes-cards .top-v2-doors-who {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 16.5px;
+  letter-spacing: 0.08em;
+  color: #2a4750;
+}
+.top-v2-doors a:hover .top-v2-doors-who,
+.top-v2-otherscenes-cards a:hover .top-v2-doors-who {
+  color: #2f7890;
+}
+@media (max-width: 767px) {
+  .top-v2-doors-who,
+  .top-v2-otherscenes-cards .top-v2-doors-who {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+}
