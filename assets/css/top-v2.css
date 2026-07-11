@@ -5542,6 +5542,19 @@ ul.top-v2-doors.list-unstyled {
   justify-content: center;
 }
 
+/* 生成待ちカードは差し替えリストの番号だけを表示する。 */
+.top-v2-playcard-photo--pending {
+  display: grid;
+  place-items: center;
+  background: #fff8e8;
+  border: 2px dashed rgba(47, 120, 144, 0.58);
+  color: #2f7890;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
 .top-v2-playcard-placeholder-art {
   width: 72%;
   height: 72%;
