@@ -3865,9 +3865,9 @@ ul.top-v2-doors.list-unstyled {
   bottom: auto;
   right: -10px;
 }
-/* 家族黒板は付箋2枚が下に垂れるため、せんせいよりカードとの間に余白を確保 */
+/* 料金黒板の付箋撤去後は、せんせいよりとの間隔を通常のセクション間隔へ戻す。 */
 #price .top-v2-chalkboard--art {
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 /* 合宿ページ #support: 幹事さんの負担を減らす4カード。top-v2-price-cardの色調・角丸を踏襲 */
@@ -4074,21 +4074,9 @@ ul.top-v2-doors.list-unstyled {
   letter-spacing: 0.04em;
 }
 
-/* 料金黒板の付箋: 本文の丈がトグルで伸縮するため、板の中の固定位置では
-   どこかの状態で必ず文字に被る。全シーン共通で「板の下端の外側」に固定し、
-   どの選択状態でも本文と干渉しない配置にする（オーナー指示: 全体的に下げる） */
-#price .top-v2-chalkboard--art .top-v2-sticky--1 {
-  top: auto;
-  bottom: -66px;
-  right: -6px;
-}
-#price .top-v2-chalkboard--art .top-v2-sticky--2 {
-  top: auto;
-  bottom: -66px;
-  left: -6px;
-}
+/* 料金黒板は計算だけに整理。付箋用の大きな余白を通常間隔へ戻す。 */
 #price .top-v2-chalkboard--art {
-  margin-bottom: 96px;
+  margin-bottom: 24px;
 }
 
 /* ===== 目的別入口カード: ポラロイド1枚化（オーナー指摘: 説明文とくわしく→が
@@ -7611,12 +7599,9 @@ ul.top-v2-doors.list-unstyled {
   #usagescene .top-v2-quip--stay { bottom: 40px; }
 }
 
-/* --- 2026-07-12 料金セクション内の余白落差補正(オーナー違和感リストB-2) ---
-   黒板→ヒーローカード96px(黒板自身のmargin-bottomにセクション級の値が
-   混入) vs カード→せんせいより17px、同一セクション内で5.6倍の落差。
-   オブジェクト間の階層(セクション間>オブジェクト間>カード内)に揃える */
+/* 料金黒板の付箋撤去後は、全モデルページで次の補足カードまで24pxに統一。 */
 #price .top-v2-chalkboard {
-  margin-bottom: clamp(44px, 5vw, 56px);
+  margin-bottom: 24px;
 }
 #price .top-v2-price-card {
   margin-bottom: 26px;
@@ -8608,7 +8593,7 @@ body.top-v2-playdialog-lock {
   }
 
   /* 食事名の途中で成り行き改行させず、料金だけを必ず2段目へ置く。 */
-  .top-v2-price-simulator-controls .top-v2-chalk-mealtime .top-v2-chalk-tab {
+  .top-v2-chalk-mealtime .top-v2-chalk-tab {
     display: flex;
     min-height: 54px;
     flex-direction: column;
@@ -8618,7 +8603,7 @@ body.top-v2-playdialog-lock {
     line-height: 1.25;
   }
 
-  .top-v2-price-simulator-controls .top-v2-chalk-mealtime .top-v2-chalk-tab small {
+  .top-v2-chalk-mealtime .top-v2-chalk-tab small {
     display: block;
     margin-top: 2px;
   }
@@ -8719,8 +8704,8 @@ body.top-v2-playdialog-lock {
   }
 }
 
-/* TOPの料金注記は、注記番号／記号だけを統一色、本文とリンクを同じ本文色に。 */
-.top-v2-teacher-note--top .top-v2-price-notes li::first-letter {
+/* 全料金ページの注記は、注記番号／記号だけを統一色、本文とリンクを同じ本文色に。 */
+.top-v2-teacher-note--unified .top-v2-price-notes li::first-letter {
   color: inherit;
   font-weight: inherit;
 }
@@ -8730,7 +8715,7 @@ body.top-v2-playdialog-lock {
   font-weight: 900;
 }
 
-.top-v2-teacher-note--top .top-v2-price-notes .top-v2-inline-link {
+.top-v2-teacher-note--unified .top-v2-price-notes .top-v2-inline-link {
   color: inherit;
   text-decoration-color: currentColor;
 }
