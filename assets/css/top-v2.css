@@ -2122,6 +2122,74 @@
 .top-v2-schedule-snap[data-band="night"].is-active { transform: scale(1) rotate(-1deg); }
 .top-v2-schedule-snap[data-band="morning"].is-active { transform: scale(1) rotate(2deg); }
 
+/* モデルコースSP: PCの連動スナップを、本文を隠さない小さなカードとして残す */
+@media (max-width: 767px) {
+  .top-v2-schedule-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .top-v2-schedule-grid .top-v2-timeline {
+    grid-row: 2;
+  }
+
+  .top-v2-schedule-snaps {
+    display: block;
+    grid-row: 1;
+    position: sticky;
+    top: 64px;
+    z-index: 6;
+    width: min(100%, 340px);
+    height: 96px;
+    margin: 0 auto 26px;
+    pointer-events: none;
+  }
+
+  .top-v2-schedule-snap {
+    inset: 0;
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 88px;
+    padding: 7px 12px 7px 7px;
+    box-shadow: 6px 7px 0 #cfe0e8;
+  }
+
+  .top-v2-schedule-snap img {
+    width: 112px;
+    height: 74px;
+  }
+
+  .top-v2-schedule-snap figcaption {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .top-v2-schedule-snap[data-band="day"] { transform: translateY(7px) scale(0.97) rotate(-1.4deg); }
+  .top-v2-schedule-snap[data-band="evening"] { transform: translateY(7px) scale(0.97) rotate(1deg); }
+  .top-v2-schedule-snap[data-band="night"] { transform: translateY(7px) scale(0.97) rotate(-0.7deg); }
+  .top-v2-schedule-snap[data-band="morning"] { transform: translateY(7px) scale(0.97) rotate(1.2deg); }
+  .top-v2-schedule-snap[data-band="day"].is-active { transform: translateY(0) scale(1) rotate(-1.4deg); }
+  .top-v2-schedule-snap[data-band="evening"].is-active { transform: translateY(0) scale(1) rotate(1deg); }
+  .top-v2-schedule-snap[data-band="night"].is-active { transform: translateY(0) scale(1) rotate(-0.7deg); }
+  .top-v2-schedule-snap[data-band="morning"].is-active { transform: translateY(0) scale(1) rotate(1.2deg); }
+}
+
+@media (max-width: 374px) {
+  .top-v2-schedule-snap {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 9px;
+    padding-right: 9px;
+  }
+
+  .top-v2-schedule-snap img {
+    width: 96px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .top-v2-schedule-snap {
     transition: none;
