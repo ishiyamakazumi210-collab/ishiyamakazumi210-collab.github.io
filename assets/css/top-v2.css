@@ -8548,6 +8548,22 @@ body.top-v2-playdialog-lock {
   .top-v2-price-simulator-controls > .top-v2-chalk-menu {
     width: auto;
   }
+
+  /* 食事名の途中で成り行き改行させず、料金だけを必ず2段目へ置く。 */
+  .top-v2-price-simulator-controls .top-v2-chalk-mealtime .top-v2-chalk-tab {
+    display: flex;
+    min-height: 54px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    line-height: 1.25;
+  }
+
+  .top-v2-price-simulator-controls .top-v2-chalk-mealtime .top-v2-chalk-tab small {
+    display: block;
+    margin-top: 2px;
+  }
 }
 
 @media (max-width: 767px) {
