@@ -280,7 +280,7 @@
   font-size: clamp(18px, 1.8vw, 21px);
   line-height: 1.25;
   font-weight: 800;
-  color: #2e2518;
+  color: #2f7890;
 }
 
 .top-v2-price-row dt small {
@@ -290,6 +290,52 @@
   line-height: 1.45;
   color: #665a4a;
   font-weight: 700;
+}
+
+/* 旧料金画像の階層をHTMLで再現: 条件・最低人数・シーズンを混ぜない */
+.top-v2-price-condition-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.top-v2-price-condition-main {
+  font-size: clamp(20px, 2vw, 24px);
+  font-weight: 900;
+}
+
+.top-v2-price-party {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: #2f7890;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.top-v2-price-condition-season {
+  display: block;
+  margin-top: 3px;
+  color: #2f7890;
+  font-size: 16px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.top-v2-price-condition-or {
+  margin-right: 4px;
+  color: #665a4a;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.top-v2-price-condition-season sup {
+  margin-left: 2px;
+  font-size: 10px;
 }
 
 .top-v2-price-row dd {
@@ -375,6 +421,24 @@
 
   .top-v2-price-row dt {
     font-size: 18px;
+  }
+
+  .top-v2-price-condition-head {
+    gap: 7px;
+  }
+
+  .top-v2-price-condition-main {
+    font-size: 19px;
+  }
+
+  .top-v2-price-party {
+    min-height: 25px;
+    padding: 2px 7px;
+    font-size: 11.5px;
+  }
+
+  .top-v2-price-condition-season {
+    font-size: 13px;
   }
 
   .top-v2-price-row dt small {
@@ -3951,7 +4015,7 @@ ul.top-v2-doors.list-unstyled {
 
 /* シーズントグル: 平日(2字)/土日祝(3字)の幅差で右重りに見えるのを、等幅化で解消 */
 .top-v2-chalk-season .top-v2-chalk-tab {
-  min-width: 96px;
+  min-width: 132px;
   text-align: center;
 }
 
