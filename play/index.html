@@ -274,7 +274,7 @@ height: 78vw;
   <div class="l-section_inner container pt-4 pb-3">
     <ul class="top-v2-anchor-circles list-unstyled">
       <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#catalog" aria-label="あそびセクションへ移動" data-event="play_mv_anchor_catalog"><span class="top-v2-anchor-circle-label">あそび</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
-      <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#list" aria-label="いちらんセクションへ移動" data-event="play_mv_anchor_list"><span class="top-v2-anchor-circle-label">いちらん</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
+      <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#eat" aria-label="たべるセクションへ移動" data-event="play_mv_anchor_eat"><span class="top-v2-anchor-circle-label">たべる</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
       <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#stay" aria-label="とまるセクションへ移動" data-event="play_mv_anchor_stay"><span class="top-v2-anchor-circle-label">とまる</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
       <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#faq" aria-label="FAQセクションへ移動" data-event="play_mv_anchor_faq"><span class="top-v2-anchor-circle-label">FAQ</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
     </ul>
@@ -285,162 +285,112 @@ height: 78vw;
   <span id="play" aria-hidden="true"></span>
   <div class="top-v2-scene-inner">
     <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">今日は、</span><span class="top-v2-kinsoku">なにして遊ぶ？</span></span></h2>
-    <p class="top-v2-scene-lead"><span class="top-v2-kinsoku">1じかんめから4じかんめまで、</span><span class="top-v2-kinsoku">すきな授業からどうぞ。</span></p>
+    <p class="top-v2-scene-lead"><span class="top-v2-kinsoku">気になる遊びから、</span><span class="top-v2-kinsoku">自由にどうぞ。</span><br><small>カードをタップすると、くわしい説明が出ます。</small></p>
 
     <div class="top-v2-catalog-group">
-      <div class="top-v2-catalog-rowhead">
-        <span class="top-v2-catalog-tab"><span class="top-v2-catalog-period">1じかんめ</span>やってみたかったアレ</span>
-      </div>
+      <h3 class="top-v2-catalog-heading"><span class="top-v2-catalog-heading-mark">やってみたかったアレ</span></h3>
       <ul class="top-v2-catalog-grid">
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/kimodameshi-2.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">夜の謎解き&amp;肝試し</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">教室でコスプレ</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/bar-drinks.jpg" alt="" width="480" height="360" loading="lazy"></span><span class="top-v2-catalog-name">校内飲酒</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/rooftop.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">屋上から告白</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/drone-circle.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">ドローンで記念撮影</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/pillow-fight.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">まくら投げ</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/tamaire-v2-catalog.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">玉入れ</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">大玉転がし</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">大画面カラオケ</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">先生になって授業</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">大画面ゲーム大会</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/nazotoki-poster.jpg" alt="" width="480" height="259" loading="lazy"></span><span class="top-v2-catalog-name">謎解き宝探し</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_01" data-desc="LINEに導かれて、消灯後の校舎から裏山へ。「さまよう霊魂を救い出せ」——肝試しと謎解きが一度に来ます（目安20〜30分）。" data-place="校舎・裏山" data-night="夜が本番" data-rain="OK" data-gear="LINE使用・無料"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/kimodameshi-2.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">夜の謎解き&amp;肝試し</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_02" data-desc="「学校で飲んでる」という背徳感が、最高のつまみです。" data-place="教室・大部屋" data-night="窓を閉めれば何時でも" data-rain="OK" data-gear="持ち込み（宿泊フロアに冷蔵庫あり）" data-note="お酒は20歳から"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/02-lodging-room-toast-catalog.jpg" alt="大部屋で乾杯するグループ" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">校内飲酒</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_03" data-desc="立入禁止だった場所は、大人になった今も少しドキドキします。" data-place="屋上" data-night="22:00まで" data-gear="不要" data-note="屋外は22:00まで"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/rooftop.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">屋上から告白</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_04" data-desc="空からの集合写真は、全員の「上を向いた顔」が撮れる唯一のアングル。撮影はスタッフにおまかせ（15分程度）。" data-place="校庭" data-night="昼" data-rain="雨天不可" data-gear="スタッフ撮影" data-note="実施時間は当日相談"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/drone-circle.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">ドローンで記念撮影</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_05" data-desc="先生の見回りは、もう来ません。心置きなくどうぞ。" data-place="大部屋" data-night="窓を閉めれば何時でも" data-rain="OK" data-gear="枕は人数分"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/pillow-fight.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">まくら投げ</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_06" data-desc="大人になって分かる、あのカゴの絶妙な高さ。" data-place="体育館" data-rain="OK" data-gear="貸出あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/tamaire-v2-catalog.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">玉入れ</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_07" data-desc="「カタショー十五不思議の謎」。ヒントなしなら1時間半、本気の頭脳戦です。" data-place="校舎全体" data-night="昼" data-rain="OK" data-gear="謎解きキット無料"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/nazotoki-poster.jpg" alt="" width="480" height="259" loading="lazy"></span><span class="top-v2-catalog-name">謎解き宝探し</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_08" data-desc="学生服に袖を通した瞬間、教室の空気が10年巻き戻ります。貸出衣装あり、持ち込みも自由。" data-place="教室" data-night="OK" data-rain="OK" data-gear="貸出衣装あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/01-classroom-cosplay-catalog.jpg" alt="教室でコスプレ撮影" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">教室でコスプレ</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_09" data-desc="自分より大きい玉を全力で追いかける。それだけで笑いが起きます。" data-place="校庭" data-gear="貸出あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/05-giant-ball-race-catalog.jpg" alt="校庭で大玉転がし" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">大玉転がし</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_10" data-desc="教壇に立つと、つい「はい、静かに」と言いたくなります。" data-place="教室" data-night="OK" data-rain="OK" data-gear="黒板・チョークあり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/07-teacher-class-catalog.jpg" alt="黒板の前で先生になって授業" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">先生になって授業</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_11" data-desc="優勝者は今夜の風呂一番乗り。ルールはお任せします。" data-place="大部屋" data-night="窓を閉めれば何時でも" data-rain="OK" data-gear="ゲーム機は持ち込み"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/08-big-screen-game-catalog.jpg" alt="スクリーンでゲーム大会" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">大画面ゲーム大会</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_12" data-desc="DAMの本格機材をプロジェクターの大画面で。教室サイズの声量制限はありません。" data-place="大部屋" data-night="窓を閉めれば何時でも" data-rain="OK" data-gear="DAM実機あり"><span class="top-v2-catalog-photo top-v2-catalog-numbox">01</span><span class="top-v2-catalog-name">大画面カラオケ</span></li>
       </ul>
     </div>
 
     <div class="top-v2-catalog-group">
-      <div class="top-v2-catalog-rowhead">
-        <span class="top-v2-catalog-tab"><span class="top-v2-catalog-period">2じかんめ</span>あの頃の続き</span>
-      </div>
+      <h3 class="top-v2-catalog-heading"><span class="top-v2-catalog-heading-mark">あの頃の続き</span></h3>
       <ul class="top-v2-catalog-grid">
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/kyushoku-tray.jpg" alt="" width="480" height="360" loading="lazy"></span><span class="top-v2-catalog-name">懐かしの給食</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/gym-ball-family.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">体育館で遊ぶ</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/blackboard-dino.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">黒板に落書き</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/music-piano.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">音楽室で合唱&amp;合奏</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">大縄跳び</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">家庭科室で調理</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">ドッジボール</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">バスケットボール</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">バレーボール</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">バドミントン</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">跳び箱</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">カタショーオリジナルテスト</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_13" data-desc="揚げパン、ソフト麺、瓶牛乳。メニューを読むだけで思い出す味があります（注文制）。" data-place="教室" data-night="昼" data-rain="OK" data-gear="注文制" data-note="有料" data-link-href="/play/option/#food" data-link-label="献立と料金"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/kyushoku-tray.jpg" alt="給食トレーの一例" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">懐かしの給食</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_14" data-desc="「せーの」の声が揃った瞬間だけ、全員が小学生に戻ります。" data-place="体育館" data-night="OK" data-rain="OK" data-gear="貸出あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/11-long-rope-gym-catalog.jpg" alt="体育館で大縄跳び" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">大縄跳び</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_15" data-desc="描くのは自由、消すのは惜しい。歴代の大作に挑んでください。" data-place="教室" data-night="OK" data-rain="OK" data-gear="チョークあり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/blackboard-dino.jpg" alt="黒板に描いた恐竜の落書き" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">黒板に落書き</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_16" data-desc="外野から狙うあの快感は、大人になっても色あせません。" data-place="体育館" data-night="OK" data-rain="OK" data-gear="貸出あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/13-dodgeball-gym-catalog.jpg" alt="体育館でドッジボール" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">ドッジボール</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_17" data-desc="ピアノひとつで、合唱コンクールの続きが始まります。楽器の持ち込みも歓迎。" data-place="音楽室" data-night="OK" data-rain="OK" data-gear="ピアノあり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/music-piano.jpg" alt="音楽室のピアノ" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">音楽室で合唱&amp;合奏</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_18" data-desc="ゴールの高さは本物。歓声の大きさは、あの頃以上です。" data-place="体育館" data-night="OK" data-rain="OK" data-gear="貸出あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/14-basketball-gym-catalog.jpg" alt="体育館でバスケットボール" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">バスケットボール</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_19" data-desc="3回で返す、あの緊張感。前腕の赤さは名誉の証です。" data-place="体育館" data-night="OK" data-rain="OK" data-gear="貸出あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/15-volleyball-gym-catalog.jpg" alt="体育館でバレーボール" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">バレーボール</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_20" data-desc="助走の足音だけで、ギャラリーが集まってきます。" data-place="体育館" data-night="OK" data-rain="OK" data-gear="貸出あり（マット付き）"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/17-vaulting-box-gym-catalog.jpg" alt="体育館で跳び箱" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">跳び箱</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_21" data-desc="体育館なら風はなし。つまり、言い訳もなしです。" data-place="体育館" data-night="OK" data-rain="OK" data-gear="貸出あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/16-badminton-gym-catalog.jpg" alt="体育館でバドミントン" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">バドミントン</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_22" data-desc="IH・調理器具・食器、大きな冷蔵庫まで完備。調理実習、今度は誰にも採点されません。" data-place="家庭科室" data-night="OK" data-rain="OK" data-gear="器具・食器・大型冷蔵庫"><span class="top-v2-catalog-photo top-v2-catalog-numbox">02</span><span class="top-v2-catalog-name">家庭科室で調理</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_23" data-desc="カタショー特製の問題用紙。隣の答案をのぞくのは、今日は自由です。" data-place="教室" data-night="OK" data-rain="OK" data-gear="用紙あり"><span class="top-v2-catalog-photo top-v2-catalog-numbox">03</span><span class="top-v2-catalog-name">カタショーオリジナルテスト</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_24" data-desc="貸出の学生服で、机に頬杖をついて一枚。卒業アルバムの続きが撮れます。" data-place="教室" data-night="OK" data-rain="OK" data-gear="貸出衣装あり"><span class="top-v2-catalog-photo top-v2-catalog-numbox">04</span><span class="top-v2-catalog-name">教室で記念撮影</span></li>
       </ul>
     </div>
 
     <div class="top-v2-catalog-group">
-      <div class="top-v2-catalog-rowhead">
-        <span class="top-v2-catalog-tab"><span class="top-v2-catalog-period">3じかんめ</span>自然と遊ぶ</span>
-      </div>
+      <h3 class="top-v2-catalog-heading"><span class="top-v2-catalog-heading-mark">自然と遊ぶ</span></h3>
       <ul class="top-v2-catalog-grid">
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/beach.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">海水浴</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/surf-beach.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">サーフィン</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/bonfire-night.jpg" alt="" width="480" height="259" loading="lazy"></span><span class="top-v2-catalog-name">焚き火</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/wp/themes/katasho/asset/image/play/point_image_tea04.jpg" alt="" width="770" height="415" loading="lazy"></span><span class="top-v2-catalog-name">茶畑の散歩</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/stargazing.jpg" alt="" width="319" height="480" loading="lazy"></span><span class="top-v2-catalog-name">星空観察</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--paid"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/sauna.jpg" alt="" width="480" height="360" loading="lazy"><span class="top-v2-catalog-paidtag">有料</span></span><span class="top-v2-catalog-name">貸切サウナ</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/bbq-night.jpg" alt="" width="480" height="360" loading="lazy"></span><span class="top-v2-catalog-name">校庭でBBQ</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">水鉄砲</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/hanabi-sparkler.jpg" alt="" width="360" height="480" loading="lazy"></span><span class="top-v2-catalog-name">学校で花火</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/lawn-grounds-catalog.jpg" alt="" width="480" height="259" loading="lazy"></span><span class="top-v2-catalog-name">芝生グラウンド</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">ボディボード</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/beach-aerial.jpg" alt="" width="770" height="415" loading="lazy"></span><span class="top-v2-catalog-name">海辺で朝散歩</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_25" data-desc="徒歩3分。「ちょっと海行こうか」が、本当に言えます。" data-place="海（徒歩3分）" data-night="昼"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/beach.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">海水浴</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_26" data-desc="ボードは3本。順番は、じゃんけんで。" data-place="海（徒歩3分）" data-night="昼" data-gear="レンタル3本"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/surf-beach.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">サーフィン</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_27" data-desc="薪の爆ぜる音は、会話のBGMとしてかなり優秀です。" data-place="校庭" data-night="22:00まで" data-rain="雨天不可" data-gear="焚き火台・薪20〜30分ぶん付き" data-note="追加薪は有償／屋外は22:00まで" data-link-href="/play/option/" data-link-label="料金・オプション"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/bonfire-night.jpg" alt="" width="480" height="259" loading="lazy"></span><span class="top-v2-catalog-name">焚き火</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_28" data-desc="裏山を15分。視界が開けた先は、一面の茶畑です。" data-place="裏山" data-night="昼" data-gear="不要"><span class="top-v2-catalog-photo"><img src="/assets/wp/themes/katasho/asset/image/play/point_image_tea04.jpg" alt="" width="770" height="415" loading="lazy"></span><span class="top-v2-catalog-name">茶畑の散歩</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_29" data-desc="屋上に寝転んだら、あとは上を見るだけ。" data-place="屋上" data-night="22:00まで" data-gear="不要" data-note="屋外は22:00まで"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/19-stargazing-catalog.jpg" alt="夜の校庭で星空を見上げる" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">星空観察</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--paid" role="button" tabindex="0" data-event="play_catalog_open_30" data-desc="屋上で整って、そのまま校庭を見下ろす。水風呂・温水シャワーつき。" data-place="屋上" data-note="有料・要事前予約" data-link-href="/play/option/" data-link-label="料金・オプション"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/sauna.jpg" alt="" width="480" height="360" loading="lazy"><span class="top-v2-catalog-paidtag">有料</span></span><span class="top-v2-catalog-name">貸切サウナ</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_31" data-desc="機材は貸出、炭は無料。あなたは焼くことに集中してください。" data-place="校庭" data-night="22:00まで" data-rain="雨天不可" data-gear="コンロ・網・トング貸出／炭無料" data-note="提供型コース／屋外は22:00まで" data-link-href="/play/option/#food" data-link-label="献立と料金"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/bbq-night.jpg" alt="" width="480" height="360" loading="lazy"></span><span class="top-v2-catalog-name">校庭でBBQ</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_32" data-desc="手持ち花火の灯りだと、夜の校舎がやさしく見えます。" data-place="校庭" data-night="22:00まで" data-rain="雨天不可" data-gear="花火は持ち込み" data-note="手持ちのみ・打ち上げ禁止／22:00まで"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/hanabi-sparkler.jpg" alt="" width="360" height="480" loading="lazy"></span><span class="top-v2-catalog-name">学校で花火</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_33" data-desc="靴を脱いだ人から、勝ちです。" data-place="校庭" data-night="昼" data-gear="不要"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/lawn-grounds-catalog.jpg" alt="" width="480" height="259" loading="lazy"></span><span class="top-v2-catalog-name">芝生グラウンド</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_34" data-desc="夜更かしした頭に、朝の海がいちばん効きます。" data-place="海（徒歩3分）" data-night="朝" data-gear="不要"><span class="top-v2-catalog-photo"><img src="/assets/img/beach-aerial.jpg" alt="" width="770" height="415" loading="lazy"></span><span class="top-v2-catalog-name">海辺で朝散歩</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_35" data-desc="貸出20丁。校庭ぜんぶが戦場になります。" data-place="校庭" data-night="昼" data-gear="貸出約20個" data-note="着替えを忘れずに"><span class="top-v2-catalog-photo top-v2-catalog-numbox">05</span><span class="top-v2-catalog-name">水鉄砲</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_36" data-desc="2枚あります。あとは波と相談してどうぞ。" data-place="海（徒歩3分）" data-night="昼" data-gear="レンタル2枚"><span class="top-v2-catalog-photo top-v2-catalog-numbox">06</span><span class="top-v2-catalog-name">ボディボード</span></li>
       </ul>
       <p class="top-v2-catalog-note">有料の遊び（貸切サウナ等）があります。くわしくは<a class="top-v2-inline-link" href="/play/option/" data-event="play_catalog_price_nature">料金・オプション</a>へ</p>
     </div>
 
     <div class="top-v2-catalog-group">
-      <div class="top-v2-catalog-rowhead">
-        <span class="top-v2-catalog-tab"><span class="top-v2-catalog-period">4じかんめ</span>全員参加のバカ騒ぎ</span>
-      </div>
+      <h3 class="top-v2-catalog-heading"><span class="top-v2-catalog-heading-mark">全員参加のバカ騒ぎ</span></h3>
       <ul class="top-v2-catalog-grid">
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">映画鑑賞</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/pingpong-game.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">卓球</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/darts.jpg" alt="" width="480" height="360" loading="lazy"></span><span class="top-v2-catalog-name">ダーツ</span></li>
-        <li class="top-v2-catalog-item"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/tug-of-war.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">全力で綱引き</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">大部屋で宴会</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip top-v2-catalog-item--paid"><span class="top-v2-catalog-chip">飲み放題<span class="top-v2-catalog-paidtag">有料</span></span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">ボクシンググローブ対決</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">黒ひげ危機一発</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">人狼ゲーム</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">はぁって言うゲーム</span></li>
-        <li class="top-v2-catalog-item top-v2-catalog-item--chip"><span class="top-v2-catalog-chip">ナンジャモンジャ</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_37" data-desc="宿泊フロアに常設。「あと1本」が朝まで続く、危険な台です。" data-place="宿泊フロア" data-night="何時でも" data-rain="OK" data-gear="台・ラケットあり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/pingpong-game.jpg" alt="" width="480" height="258" loading="lazy"></span><span class="top-v2-catalog-name">卓球</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_38" data-desc="「一回だけ」のつもりが、団体戦になりがちです。" data-place="宿泊フロア" data-night="何時でも" data-rain="OK" data-gear="あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/darts.jpg" alt="" width="480" height="360" loading="lazy"></span><span class="top-v2-catalog-name">ダーツ</span></li>
+        <li class="top-v2-catalog-item" role="button" tabindex="0" data-event="play_catalog_open_39" data-desc="明日の筋肉痛まで含めて、思い出です。" data-place="体育館" data-night="OK" data-rain="OK" data-gear="貸出あり"><span class="top-v2-catalog-photo"><img src="/assets/img/play-cards/tug-of-war.jpg" alt="" width="480" height="320" loading="lazy"></span><span class="top-v2-catalog-name">全力で綱引き</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_40" data-desc="端末をつなぐだけで、大部屋が映画館に。上映作品で揉めるところまでがセットです。" data-place="大部屋" data-night="窓を閉めれば何時でも" data-rain="OK" data-gear="端末は持ち込み"><span class="top-v2-catalog-photo top-v2-catalog-numbox">07</span><span class="top-v2-catalog-name">映画鑑賞</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_41" data-desc="窓を閉めたら、時間割はもうありません。" data-place="大部屋" data-night="窓を閉めれば何時でも" data-rain="OK" data-gear="持ち込み自由（宿泊フロアに冷蔵庫あり）"><span class="top-v2-catalog-photo top-v2-catalog-numbox">08</span><span class="top-v2-catalog-name">大部屋で宴会</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_42" data-desc="幹事の買い出しをゼロにする魔法です（注文制）。" data-place="家庭科室（調理室）" data-night="窓を閉めれば何時でも" data-rain="OK" data-gear="注文制" data-note="有料／20歳から" data-link-href="/play/option/#food" data-link-label="献立と料金"><span class="top-v2-catalog-photo top-v2-catalog-numbox">09</span><span class="top-v2-catalog-name">飲み放題<span class="top-v2-catalog-paidtag">有料</span></span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_43" data-desc="布団の上なら、負けても痛くありません。" data-place="大部屋" data-night="何時でも" data-rain="OK" data-gear="グローブあり" data-note="無理はしない約束で"><span class="top-v2-catalog-photo top-v2-catalog-numbox">10</span><span class="top-v2-catalog-name">ボクシンググローブ対決</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_44" data-desc="飛んだ瞬間の悲鳴が、夜の校舎によく響きます。" data-place="大部屋" data-night="何時でも" data-rain="OK" data-gear="あり"><span class="top-v2-catalog-photo top-v2-catalog-numbox">11</span><span class="top-v2-catalog-name">黒ひげ危機一発</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_45" data-desc="「はぁ」だけで、ここまで笑えるのかと驚くはずです。" data-place="大部屋" data-night="何時でも" data-rain="OK" data-gear="あり"><span class="top-v2-catalog-photo top-v2-catalog-numbox">12</span><span class="top-v2-catalog-name">はぁって言うゲーム</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_46" data-desc="変な名前をつけて、呼ぶだけ。なのに朝までいけます。" data-place="大部屋" data-night="何時でも" data-rain="OK" data-gear="あり"><span class="top-v2-catalog-photo top-v2-catalog-numbox">13</span><span class="top-v2-catalog-name">ナンジャモンジャ</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_47" data-desc="友達の頭の中の1〜3位を、三連単で予想する心理戦。「なんでそれが1位!?」から本音トークが始まります。" data-place="大部屋" data-night="何時でも" data-rain="OK" data-gear="あり"><span class="top-v2-catalog-photo top-v2-catalog-numbox">14</span><span class="top-v2-catalog-name">サンレンタン</span></li>
+        <li class="top-v2-catalog-item top-v2-catalog-item--numbered" role="button" tabindex="0" data-event="play_catalog_open_48" data-desc="足首を結んだ相手とは、今夜じゅう仲良くなれます。" data-place="体育館" data-night="OK" data-rain="OK" data-gear="貸出あり"><span class="top-v2-catalog-photo top-v2-catalog-numbox">15</span><span class="top-v2-catalog-name">二人三脚</span></li>
       </ul>
       <p class="top-v2-catalog-note">有料の遊び（飲み放題等）があります。くわしくは<a class="top-v2-inline-link" href="/play/option/" data-event="play_catalog_price_everyone">料金・オプション</a>へ</p>
     </div>
   </div>
 </section>
 
-<section class="top-v2-scene-section top-v2-scene-section--gray" id="list">
+<dialog class="top-v2-playdialog" aria-labelledby="playdialogTitle" aria-describedby="playdialogDesc">
+  <div class="top-v2-playdialog-sheet">
+    <img class="top-v2-playdialog-photo" alt="" hidden>
+        <h3 class="top-v2-playdialog-title" id="playdialogTitle"></h3>
+    <p class="top-v2-playdialog-desc" id="playdialogDesc"></p>
+    <ul class="top-v2-playdialog-chips"></ul>
+    <p class="top-v2-playdialog-note" hidden></p>
+    <a class="top-v2-playdialog-link top-v2-btn-outline top-v2-btn-outline--sm" hidden></a>
+    <button type="button" class="top-v2-playdialog-closebtn" data-dialog-close>とじる</button>
+  </div>
+</dialog>
+
+<section class="top-v2-scene-section top-v2-scene-section--gray" id="eat">
   <div class="top-v2-scene-inner">
-    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">ぜんぶ</span><span class="top-v2-kinsoku">書き出してみた</span></span></h2>
-    <p class="top-v2-scene-lead"><span class="top-v2-kinsoku">一覧でざっと見たい人は</span><span class="top-v2-kinsoku">こちらからどうぞ。</span></p>
-    <div class="top-v2-worksheet-sheet">
-      <div class="top-v2-worksheet-group">
-        <p class="top-v2-worksheet-group-title top-v2-print-tab">1じかんめ　やってみたかったアレ</p>
-        <ul>
-          <li>夜の謎解き&amp;肝試し</li>
-          <li>教室でコスプレ</li>
-          <li>校内飲酒</li>
-          <li>屋上から告白</li>
-          <li>ドローンで記念撮影</li>
-          <li>まくら投げ</li>
-          <li>玉入れ</li>
-          <li>大玉転がし</li>
-          <li>大画面カラオケ</li>
-          <li>先生になって授業</li>
-          <li>大画面ゲーム大会</li>
-          <li>謎解き宝探し</li>
-        </ul>
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark"><span class="top-v2-kinsoku">学校で、</span><span class="top-v2-kinsoku">食べよう。</span></span></h2>
+    <p class="top-v2-scene-lead"><span class="top-v2-kinsoku">食べ方は、</span><span class="top-v2-kinsoku">自由に選べます。</span></p>
+    <div class="top-v2-scene-cards">
+      <div class="top-v2-scene-card">
+        <div class="top-v2-scene-card-photo"><img src="/assets/img/drinks-lineup.jpg" alt="持ち込んだ飲み物いろいろ" width="1400" height="1050" loading="lazy"></div>
+        <div class="top-v2-scene-card-body"><h3>持ち込み自由</h3><p>食材・飲み物の持ち込みは自由です（無料）。買い出しして教室で、が基本スタイル。宿泊フロアに冷蔵庫、家庭科室に大きな冷蔵庫もあります。</p></div>
       </div>
-      <div class="top-v2-worksheet-group">
-        <p class="top-v2-worksheet-group-title top-v2-print-tab">2じかんめ　あの頃の続き</p>
-        <ul>
-          <li>懐かしの給食</li>
-          <li>体育館で遊ぶ</li>
-          <li>黒板に落書き</li>
-          <li>音楽室で合唱&amp;合奏</li>
-          <li>大縄跳び</li>
-          <li>家庭科室で調理</li>
-          <li>ドッジボール</li>
-          <li>バスケットボール</li>
-          <li>バレーボール</li>
-          <li>バドミントン</li>
-          <li>跳び箱</li>
-          <li>カタショーオリジナルテスト</li>
-        </ul>
+      <div class="top-v2-scene-card">
+        <div class="top-v2-scene-card-photo"><img src="/assets/wp/themes/katasho/asset/image/play/stay_food_home.jpg" alt="家庭科室での食事の様子" width="1149" height="823" loading="lazy"></div>
+        <div class="top-v2-scene-card-body"><h3>調理室が使える</h3><p>家庭科室で、調理実習気分の食事を。理科室のウッドデッキも使えます。</p></div>
       </div>
-      <div class="top-v2-worksheet-group">
-        <p class="top-v2-worksheet-group-title top-v2-print-tab">3じかんめ　自然と遊ぶ</p>
-        <ul>
-          <li>海水浴</li>
-          <li>サーフィン</li>
-          <li>焚き火</li>
-          <li>茶畑の散歩</li>
-          <li>星空観察</li>
-          <li>貸切サウナ<span class="top-v2-worksheet-paid">（有料）</span></li>
-          <li>校庭でBBQ</li>
-          <li>水鉄砲</li>
-          <li>学校で花火</li>
-          <li>芝生グラウンド</li>
-          <li>ボディボード</li>
-          <li>海辺で朝散歩</li>
-        </ul>
-      </div>
-      <div class="top-v2-worksheet-group">
-        <p class="top-v2-worksheet-group-title top-v2-print-tab">4じかんめ　全員参加のバカ騒ぎ</p>
-        <ul>
-          <li>映画鑑賞</li>
-          <li>卓球</li>
-          <li>ダーツ</li>
-          <li>全力で綱引き</li>
-          <li>大部屋で宴会</li>
-          <li>飲み放題<span class="top-v2-worksheet-paid">（有料）</span></li>
-          <li>ボクシンググローブ対決</li>
-          <li>黒ひげ危機一発</li>
-          <li>人狼ゲーム</li>
-          <li>はぁって言うゲーム</li>
-          <li>ナンジャモンジャ</li>
-        </ul>
+      <div class="top-v2-scene-card">
+        <div class="top-v2-scene-card-photo"><img src="/assets/img/bbq-platter.jpg" alt="提供型BBQの盛り合わせ" width="1200" height="900" loading="lazy"></div>
+        <div class="top-v2-scene-card-body"><h3>頼むこともできる</h3><p>給食・BBQ・朝食サンドの注文もできます（有料）。<a class="top-v2-inline-link" href="/play/option/#food" data-event="play_eat_option">献立と料金を見る</a></p></div>
       </div>
     </div>
   </div>
@@ -453,7 +403,7 @@ height: 78vw;
     <div class="top-v2-scene-cards">
       <div class="top-v2-scene-card">
         <div class="top-v2-scene-card-photo"><img src="/assets/img/room-futon-real.jpg" alt="教室に布団を並べた大部屋" width="1200" height="900" loading="lazy"></div>
-        <div class="top-v2-scene-card-body"><h3>大部屋</h3><p>布団・枕は人数分ご用意します。部屋分けのご相談もOK。</p></div>
+        <div class="top-v2-scene-card-body"><h3>大部屋</h3><p>布団・枕は人数分ご用意します。男女別・引率別など、部屋を分けることもできます。</p></div>
       </div>
       <div class="top-v2-scene-card">
         <div class="top-v2-scene-card-photo"><img src="/assets/img/shower-room.jpg" alt="シャワー室" width="900" height="675" loading="lazy"></div>
@@ -462,10 +412,6 @@ height: 78vw;
       <div class="top-v2-scene-card">
         <div class="top-v2-scene-card-photo"><img src="/assets/wp/themes/katasho/asset/image/play/stay_share_toilet.jpg" alt="トイレ" width="1149" height="823" loading="lazy"></div>
         <div class="top-v2-scene-card-body"><h3>トイレ</h3><p>小学校らしい、ちょっと小さめでかわいいトイレ。宿泊エリアはウォシュレット完備。</p></div>
-      </div>
-      <div class="top-v2-scene-card">
-        <div class="top-v2-scene-card-photo"><img src="/assets/wp/themes/katasho/asset/image/play/stay_food_home.jpg" alt="家庭科室での食事の様子" width="1149" height="823" loading="lazy"></div>
-        <div class="top-v2-scene-card-body"><h3>食事の場所</h3><p>家庭科室・理科室のウッドデッキで、調理実習気分の食事を。</p></div>
       </div>
     </div>
     <div class="top-v2-map-link"><a class="top-v2-btn-outline" href="/map/" data-event="play_stay_map">施設マップを見る</a></div>
@@ -521,6 +467,8 @@ height: 78vw;
     </div>
   </div>
 </section>
+
+<script src="/assets/js/play-catalog.js" defer></script>
                 </div>
             </main>
             <footer class="l-footer text-white py-5" id="footer">
@@ -620,8 +568,6 @@ height: 78vw;
     /></noscript><span class="wpml-ls-native">日本語</span></a>
 			</li></ul>
 </div>
-
-
 
 
 

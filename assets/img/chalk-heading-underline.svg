@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="160" viewBox="0 0 1600 160">
+  <defs>
+    <filter id="roughLine" x="-5%" y="-60%" width="110%" height="220%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.35" numOctaves="2" seed="39" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="4.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <mask id="crayonWear" maskUnits="userSpaceOnUse">
+      <rect width="1600" height="160" fill="white"/>
+      <g stroke="black" stroke-linecap="round" opacity="0.22">
+        <path d="M185 77c146-13 288 1 426-9" stroke-width="5"/>
+        <path d="M680 68c180 10 322-5 496 3" stroke-width="4"/>
+        <path d="M1020 101c130-12 262 3 392-5" stroke-width="3"/>
+      </g>
+      <g stroke="black" stroke-linecap="round" opacity="0.14">
+        <path d="M330 96c80-7 150 2 220-4" stroke-width="3"/>
+        <path d="M815 92c92-7 174 2 260-4" stroke-width="3"/>
+      </g>
+    </mask>
+    <style>
+      .line {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g filter="url(#roughLine)" mask="url(#crayonWear)">
+    <path class="line" d="M118 88 C 292 73, 458 80, 635 70 C 826 59, 1010 62, 1202 49 C 1318 42, 1420 40, 1490 34" stroke="#2F7890" stroke-width="30"/>
+    <path class="line" d="M482 113 C 604 105, 715 110, 834 101 C 941 93, 1044 91, 1162 83" stroke="#F0831E" stroke-width="20"/>
+    <path class="line" d="M138 96 C 338 82, 494 88, 690 78 C 866 69, 1058 72, 1240 58 C 1345 50, 1436 49, 1478 45" stroke="#2F7890" stroke-width="8" opacity="0.45"/>
+    <path class="line" d="M510 123 C 660 113, 810 115, 1044 96" stroke="#F0831E" stroke-width="6" opacity="0.42"/>
+  </g>
+</svg>

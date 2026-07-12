@@ -5542,6 +5542,19 @@ ul.top-v2-doors.list-unstyled {
   justify-content: center;
 }
 
+/* 生成待ちカードは差し替えリストの番号だけを表示する。 */
+.top-v2-playcard-photo--pending {
+  display: grid;
+  place-items: center;
+  background: #fff8e8;
+  border: 2px dashed rgba(47, 120, 144, 0.58);
+  color: #2f7890;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
 .top-v2-playcard-placeholder-art {
   width: 72%;
   height: 72%;
@@ -7608,4 +7621,305 @@ section#location > .l-section_bg {
    地色へ落ちて「灰色ベタ」に見えた。cover前提の高さを確保 */
 #mv.l-mv--under .l-mv_bg {
   height: clamp(300px, 46vw, 460px);
+}
+
+/* ===================================================================
+   /play/ オーナー指示バッチ（2026-07-12）: 「たべる」#eat セクション新設 +
+   カタログ分類見出しの刷新
+   =================================================================== */
+
+/* --- タスク2: #catalog 分類見出し（Nじかんめタブ+波線 → クリームマーカー中見出し）
+   オーナー指摘: (a)時間割の額縁がないページで「1じかんめ」表記は順序強制感が
+   出る (b)見た目がダサい。番号は全廃し分類名のみに。.top-v2-scene-title-markと
+   同じマーカー文法のミニ版（linear-gradient透明58%→#fff8e858%）を中央寄せで
+   使う。旧.top-v2-catalog-tab/period/rowheadはCSS末尾追記ルールのため削除せず
+   放置（HTML側で参照を外すのみ・実害なし） --- */
+.top-v2-catalog-heading {
+  margin: 0 0 24px;
+  text-align: center;
+}
+.top-v2-catalog-heading-mark {
+  display: inline-block;
+  background: linear-gradient(transparent 58%, #fff8e8 58%);
+  padding: 0 10px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(20px, 5.5vw, 30px);
+  line-height: 1.3;
+}
+/* 遊び心として分類ごとに±1〜2度の微回転（交互）。カタログ写真/チップと同じ
+   「揃いすぎない」文法に合わせる */
+.top-v2-catalog-group:nth-of-type(odd) .top-v2-catalog-heading-mark {
+  transform: rotate(-1.4deg);
+}
+.top-v2-catalog-group:nth-of-type(even) .top-v2-catalog-heading-mark {
+  transform: rotate(1.3deg);
+}
+
+/* --- タスク1: 「たべる」#eat セクション。#stayと同じ.top-v2-scene-card文法
+   （既存.top-v2-scene-cards / .top-v2-scene-cardをそのまま流用、新規クラス
+   不要）。背景は前後(#catalog/#stay)がともに白のため、新設セクションだけ
+   グレーにして白⇄グレーの交互リズムを作る（HTML側で.top-v2-scene-section
+   --grayを付与、CSSは既存の.top-v2-scene-section--grayをそのまま使う）。
+   3枚カードは既存.top-v2-scene-cards（768px以上で2列止まり）だと2+1の
+   欠け行になるため、#eatと#stay（4枚→3枚化）にだけ3列ブレークポイントを追加 --- */
+@media (min-width: 768px) {
+  #eat .top-v2-scene-cards,
+  #stay .top-v2-scene-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* --- 2026-07-12 カタログのチップ小型化(オーナーのSP縦長懸念への回答) ---
+   写真なしの遊び23個が写真と同じ153px角セルを占有し、SPでチップ行
+   だけで約1770px消費していた。写真ポラロイドは絵で売り、写真待ちの
+   遊びは名前ピルの雲として各分類末尾へ(カタログ約1300px短縮)。
+   チップの黒板質感(チョーク文字)は維持 */
+.top-v2-catalog-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 10px;
+  margin: 14px auto 0;
+  max-width: 720px;
+}
+.top-v2-catalog-chips .top-v2-catalog-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: auto;            /* 基底の width:100% を打ち消す */
+  aspect-ratio: auto;     /* 基底の 4/3 セル比を打ち消す */
+  transform: none;        /* セル用の交互回転も雲では不要 */
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  line-height: 1.2;
+}
+.top-v2-catalog-chips .top-v2-catalog-chip .top-v2-catalog-paidtag {
+  margin: 0;              /* 雲内はインラインで横に付く */
+}
+
+/* チップ雲の役割ラベル: 説明なしで浮くと「写真が無かった子」に見える
+   (オーナー指摘の中途半端感)。「付録の名簿」の声を与える。
+   カード画像生成(並行作業)完成時に雲ごと引退予定の過渡期部品 */
+.top-v2-catalog-chips-lead {
+  text-align: center;
+  margin: 16px 0 2px;
+  color: #2a4750;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+/* --- 2026-07-12 カタログの画像待ちをTOPと同じ数字ボックス文法へ ---
+   (オーナー指示: TOPは画像がないものを数字で対応している。カタログも
+   同様に)。名簿ピル雲は廃止し、待ちも写真と同格のグリッドセルに。
+   見た目はTOPマーキーの生成待ちカードと同族(クリーム地+点線+番号) */
+.top-v2-catalog-numbox {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #fff8e8;
+  border: 2px dashed rgba(47, 120, 144, 0.58);
+  border-radius: 10px;
+  color: #2f7890;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.top-v2-catalog-item--numbered .top-v2-catalog-name .top-v2-catalog-paidtag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border: 1px solid #f0831e;
+  border-radius: 6px;
+  color: #f0831e;
+  font-size: 10.5px;
+  vertical-align: 1px;
+}
+
+/* ===================================================================
+   /play/ #catalog カードポップアップ（2026-07-12 オーナー指示）
+   48枚のカード(写真34+番号14)をクリック/Enterで開く、単一<dialog>への
+   差し込み式。学級プリント風（白紙+上辺マステ+マーカー見出し+情景文+
+   チップ列+注意行+有料リンク+とじる）。開閉アニメは実装しない
+   （prefers-reduced-motion対応=アニメ自体を足さないことで一律に満たす）。
+   結線は assets/js/play-catalog.js。
+   =================================================================== */
+
+/* カード側: クリック可能であることの視覚合図。ホバー/フォーカスで
+   既存ポラロイド文法(#can-do/#roomsのrotate(0)+translateY(-6px))に合わせ、
+   傾きが起き上がって少し浮く。numbox(番号カード)も.top-v2-catalog-photoを
+   兼ねるため同じセレクタで揃って動く */
+.top-v2-catalog-item[role="button"] {
+  cursor: pointer;
+}
+.top-v2-catalog-photo {
+  transition: transform 0.25s ease;
+}
+.top-v2-catalog-item:hover .top-v2-catalog-photo,
+.top-v2-catalog-item[role="button"]:focus-visible .top-v2-catalog-photo {
+  transform: rotate(0deg) translateY(-6px);
+}
+.top-v2-catalog-item[role="button"]:focus-visible {
+  outline: 3px solid #f0831e;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-catalog-photo {
+    transition: none;
+  }
+}
+
+/* ダイアログ本体: 中身は空箱（余白のみ）。見た目は子の.top-v2-playdialog-sheet
+   が担う。showModal()のtop-layer描画によりFAB(.l-footer_reserve, z-index:1040)
+   より必ず上に乗るが、明示のz-indexも保険として付与 */
+.top-v2-playdialog {
+  width: min(92vw, 480px);
+  max-height: min(86vh, 640px);
+  margin: auto;
+  padding: 22px 0 4px;
+  border: 0;
+  background: transparent;
+  overflow-y: auto;
+  z-index: 1050;
+}
+.top-v2-playdialog::backdrop {
+  background: rgba(20, 32, 38, 0.55);
+}
+
+.top-v2-playdialog-sheet {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 22px 24px;
+  box-shadow: 0 14px 34px rgba(20, 40, 55, 0.28);
+  text-align: center;
+}
+/* 上辺マステ: .top-v2-catalog-photo::beforeと同じテープ画像を流用 */
+.top-v2-playdialog-sheet::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 104px;
+  height: 42px;
+  margin-left: -52px;
+  background: url(/assets/img/tape-1.png) no-repeat center/contain;
+  pointer-events: none;
+}
+
+/* 遊び名見出し: セクション見出しと同じクリームマーカー文法（.top-v2-scene-title-mark）のミニ版 */
+.top-v2-playdialog-title {
+  display: inline-block;
+  margin: 4px 0 14px;
+  background: linear-gradient(transparent 58%, #fff8e8 58%);
+  padding: 0 6px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(19px, 4.6vw, 23px);
+  line-height: 1.4;
+}
+
+.top-v2-playdialog-desc {
+  margin: 0 0 16px;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: clamp(14.5px, 2vw, 16px);
+  line-height: 1.85;
+}
+
+/* チップ列: 場所/夜/雨/道具。夜チップも含め値は原文そのまま表示する */
+.top-v2-playdialog-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-playdialog-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #fff8e8;
+  border: 1px solid rgba(47, 120, 144, 0.35);
+  border-radius: 999px;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.top-v2-playdialog-chip-label {
+  color: #2f7890;
+  font-weight: 900;
+}
+.top-v2-playdialog-chip-value {
+  color: #4a3f2f;
+  font-weight: 700;
+}
+
+/* 注意行: 小さめ・インク色。既存.top-v2-catalog-noteと同系色 */
+.top-v2-playdialog-note {
+  margin: 0 0 14px;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* 有料リンク（該当5件）: 既存.top-v2-btn-outline(オレンジ)を小型化して使う */
+.top-v2-playdialog-link {
+  display: inline-block;
+  margin: 0 0 4px;
+}
+.top-v2-btn-outline--sm {
+  padding: 8px 22px;
+  font-size: 13.5px;
+}
+
+/* とじるボタン: CTAのオレンジと混同しないよう、中立の青緑アウトラインで統一 */
+.top-v2-playdialog-closebtn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 30px;
+  border: 2px solid #2f7890;
+  border-radius: 999px;
+  background: #fff;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.top-v2-playdialog-closebtn:hover {
+  background: #eef6f8;
+}
+.top-v2-playdialog-closebtn:focus-visible {
+  outline: 3px solid #f0831e;
+  outline-offset: 3px;
+}
+
+/* dialogを開いている間はbodyのスクロールを止める（body固定によるロック） */
+body.top-v2-playdialog-lock {
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .top-v2-playdialog-sheet { padding: 26px 18px 20px; }
+}
+
+/* ポップアップ内の写真(オーナー要望)。カード画像を流用表示 */
+.top-v2-playdialog-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(20, 50, 65, 0.15);
+  margin: 4px 0 12px;
 }
