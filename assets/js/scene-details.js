@@ -11,12 +11,14 @@
     if (!openers.length || !dialogs.length) { return; }
 
     openers.forEach(function (opener) {
-      opener.addEventListener('click', function () {
+      function openDialog() {
         var dialog = document.getElementById(opener.getAttribute('data-scene-dialog-open'));
         if (!dialog || typeof dialog.showModal !== 'function') { return; }
         document.body.classList.add('top-v2-playdialog-lock');
         dialog.showModal();
-      });
+      }
+
+      opener.addEventListener('click', openDialog);
     });
 
     dialogs.forEach(function (dialog) {
