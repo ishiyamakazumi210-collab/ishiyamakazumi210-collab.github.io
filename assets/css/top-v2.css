@@ -257,11 +257,18 @@
   color: #665a4a;
 }
 
+.top-v2-price-rows {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
 .top-v2-price-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 10px 0;
+  display: grid;
+  grid-template-columns: 220px auto;
+  justify-content: center;
+  align-items: center;
+  column-gap: 72px;
+  padding: 14px 0;
   border-bottom: 1px solid #f2dfb6;
 }
 
@@ -270,29 +277,41 @@
 }
 
 .top-v2-price-row dt {
+  font-size: clamp(18px, 1.8vw, 21px);
+  line-height: 1.25;
   font-weight: 800;
   color: #2e2518;
 }
 
 .top-v2-price-row dt small {
   display: block;
-  font-size: 12px;
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.45;
   color: #665a4a;
   font-weight: 700;
 }
 
 .top-v2-price-row dd {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 5px;
   margin: 0;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .top-v2-price-row dd strong {
   color: #f0831e;
-  font-size: clamp(26px, 3.4vw, 38px);
+  font-size: clamp(32px, 3.4vw, 40px);
+  line-height: 1.1;
   font-weight: 900;
 }
 
 .top-v2-price-row dd span {
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.3;
   color: #665a4a;
   font-weight: 700;
 }
@@ -338,7 +357,45 @@
 
 @media (max-width: 767px) {
   .top-v2-price-card {
-    padding: 18px;
+    padding: 20px 16px;
+  }
+
+  .top-v2-price-title {
+    font-size: 21px;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .top-v2-price-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    justify-content: stretch;
+    column-gap: 12px;
+    padding: 14px 0;
+  }
+
+  .top-v2-price-row dt {
+    font-size: 18px;
+  }
+
+  .top-v2-price-row dt small {
+    margin-top: 3px;
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+
+  .top-v2-price-row dd {
+    display: grid;
+    justify-items: end;
+    align-content: center;
+    gap: 1px;
+  }
+
+  .top-v2-price-row dd strong {
+    font-size: 30px;
+  }
+
+  .top-v2-price-row dd span {
+    font-size: 11.5px;
   }
 
   .top-v2-price-actions {
@@ -347,6 +404,19 @@
 
   .top-v2-price-actions .top-v2-cta-big {
     width: 100%;
+  }
+}
+
+/* /play/ 宿泊時間案内は旧ホームページの装飾枠・文字組みをそのまま継承 */
+.top-v2-stay-info-wrap {
+  margin-top: 8px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-stay-info-wrap {
+    margin-top: 4px;
+    margin-bottom: 26px;
   }
 }
 
