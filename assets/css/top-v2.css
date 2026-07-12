@@ -420,6 +420,25 @@
   }
 }
 
+/* TOPでは「遊べる・食べられる・泊まれる」の直後に宿泊時間を提示する。 */
+.top-v2-home-staytime {
+  padding: 24px 0 44px;
+  background: #fff;
+}
+
+.top-v2-home-staytime .l-stay_infoTitle {
+  font-size: 28px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-home-staytime {
+    padding: 18px 0 34px;
+  }
+  .top-v2-home-staytime .l-stay_infoTitle {
+    font-size: 23px;
+  }
+}
+
 .top-v2-purpose-link {
   display: block;
   color: inherit;
@@ -1272,6 +1291,41 @@
   font-size: 15px;
   font-weight: 900;
 }
+
+.top-v2-scenedialog-equipment {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+}
+
+.top-v2-scenedialog-equipment > div {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px dotted rgba(47, 120, 144, 0.3);
+}
+
+.top-v2-scenedialog-equipment > div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.top-v2-scenedialog-equipment dt {
+  color: #2f7890;
+  font-weight: 900;
+}
+
+.top-v2-scenedialog-equipment dd {
+  margin: 0;
+}
+
+.top-v2-scenedialog-caption {
+  margin-top: 10px !important;
+  color: #665a4a;
+  font-size: 12px;
+  font-weight: 700;
+}
 .top-v2-scenedialog-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1293,6 +1347,10 @@
   }
   .top-v2-scenedialog-block {
     padding: 12px;
+  }
+  .top-v2-scenedialog-equipment > div {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 8px;
   }
   .top-v2-scenedialog-actions {
     display: grid;
@@ -8658,5 +8716,29 @@ body.top-v2-playdialog-lock {
 @media (min-width: 992px) {
   #playroll .top-v2-h {
     font-size: min(96px, 7.2vw);
+  }
+}
+
+/* TOPの料金注記は、注記番号／記号だけを統一色、本文とリンクを同じ本文色に。 */
+.top-v2-teacher-note--top .top-v2-price-notes li::first-letter {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.top-v2-note-mark {
+  color: #f0831e;
+  font-weight: 900;
+}
+
+.top-v2-teacher-note--top .top-v2-price-notes .top-v2-inline-link {
+  color: inherit;
+  text-decoration-color: currentColor;
+}
+
+/* スマホのアクセス地図は白い額縁を外し、地図面を横幅いっぱいに見せる。 */
+@media (max-width: 767px) {
+  #location .top-v2-map-frame {
+    padding: 0;
+    background: transparent;
   }
 }
