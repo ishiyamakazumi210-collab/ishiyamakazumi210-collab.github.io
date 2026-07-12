@@ -69,15 +69,20 @@
     fillChips(dialog, item);
 
     var noteEl = dialog.querySelector('.top-v2-playdialog-note');
-    if (item.dataset.note) {
-      noteEl.textContent = item.dataset.note;
+    var noteText = item.dataset.note || '';
+    if (item.dataset.place === '大部屋') {
+      var compactRoomNote = '「場所：大部屋」の遊びは通常プランでご利用いただけます。コンパクトプランの宴会・食事は併設の調理室をご利用ください。';
+      noteText = noteText ? noteText + ' ' + compactRoomNote : compactRoomNote;
+    }
+    if (noteText) {
+      noteEl.textContent = noteText;
       noteEl.hidden = false;
     } else {
       noteEl.textContent = '';
       noteEl.hidden = true;
     }
 
-    // 有料5種のみ: 献立と料金／料金・オプションへのリンクを表示
+    // 詳細リンクがあるカードのみ: 献立・料金・延長案内などへのリンクを表示
     var linkEl = dialog.querySelector('.top-v2-playdialog-link');
     if (item.dataset.linkHref && item.dataset.linkLabel) {
       linkEl.href = item.dataset.linkHref;

@@ -278,7 +278,7 @@ height: 78vw;
 <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
 <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">料金のご案内</span></h2>
 <div class="top-v2-price-card">
-<p class="top-v2-price-title">どれだけ遊んで泊まっても</p>
+<h3 class="top-v2-price-title">どれだけ遊んで泊まっても</h3>
 <dl class="top-v2-price-rows">
 <div class="top-v2-price-row">
 <dt>平日<small>オフシーズン※1・<span class="top-v2-kinsoku">5人〜</span></small></dt>
@@ -289,10 +289,21 @@ height: 78vw;
 <dd><strong>9,900円</strong><span>(税込)〜/人</span></dd>
 </div>
 </dl>
-<p class="top-v2-price-min">お部屋タイプによっては1人<strong>7,400円〜</strong>でもご利用いただけます</p>
+<details class="top-v2-formal-fold top-v2-plan-fold">
+<summary class="top-v2-formal-subtitle top-v2-formal-fold-summary">※ 調理室併設コンパクトプラン（20名くらいまで）なら、さらに大人料金1,000円引き</summary>
+<div class="top-v2-formal-fold-body">
+<p class="top-v2-plan-lead">調理室を含む1階のコンパクトなエリアを貸し切る、20名くらいまでのプランです。寝室は中部屋・小部屋の2部屋のみ。就寝中心で使う場合の目安は中部屋14名＋小部屋8名、手狭でもよければ最大16名＋9名です。宴会・食事は併設の調理室で行います。</p>
+<p class="top-v2-plan-price">大人料金1,000円引き ＝ 平日 <strong>7,400円〜</strong>／土日祝 <strong>8,900円〜</strong></p>
+<p class="top-v2-plan-note">※ お子さま料金は、割引後の大人料金に子ども割引率（小学生30%OFF・3〜5歳50%OFF）を適用します。<br>※ 最低利用金額は平日37,000円（大人5名分）・土日祝62,300円（大人7名分）です。<br>※ 寝室は中部屋・小部屋の2部屋のみで、大部屋・追加部屋は利用できません。<br>※ 宿泊エリアは1階のため、夜間のフロア貸切はありません（お部屋はグループごと専有です）。<br>※ 夕食のオプションはBBQのみ承ります。<br>※ ご予約時にプラン「調理室併設コンパクトプラン」をお選びください。</p>
 </div>
-<div class="top-v2-worksheet">
-<div class="top-v2-worksheet-head"><span class="top-v2-print-tab">もんだい</span><span class="top-v2-worksheet-hint">条件をえらんでね</span></div>
+</details>
+</div>
+<section class="top-v2-price-simulator" aria-labelledby="option-price-simulator-title">
+<div class="top-v2-price-simulator-head">
+<h3 class="top-v2-price-simulator-title" id="option-price-simulator-title">かんたん料金シミュレーター</h3>
+<p class="top-v2-price-simulator-hint">条件をえらぶと、その場で目安が変わります</p>
+</div>
+<div class="top-v2-price-simulator-controls">
 <div class="top-v2-chalk-season" role="group" aria-label="シーズンを選ぶ">
 <button type="button" class="top-v2-chalk-tab is-on" data-season="weekday" aria-pressed="true">平日<small>オフシーズン</small></button>
 <button type="button" class="top-v2-chalk-tab" data-season="holiday" aria-pressed="false">土日祝<small>ハイシーズン</small></button>
@@ -337,9 +348,20 @@ height: 78vw;
 <button type="button" class="top-v2-chalk-step" id="fam-pre-plus" aria-label="3〜5歳を1人増やす">＋</button>
 </div>
 </div>
+<p class="top-v2-chalk-menu-note">2歳以下の宿泊料金は無料です</p>
 </div>
 </details>
-<div class="top-v2-chalk-family" role="group" aria-label="人数を選ぶ">
+<details class="top-v2-chalk-menu top-v2-chalk-menu--plan">
+<summary class="top-v2-chalk-menu-summary">コンパクトプラン<span class="top-v2-chalk-menu-state">（なし）</span></summary>
+<div class="top-v2-chalk-mealrows">
+<label class="top-v2-chalk-plancheck">
+<input type="checkbox" id="plan-compact" data-plan="compact">
+<span>調理室併設コンパクトプラン（20名くらいまで）を適用する</span>
+</label>
+<p class="top-v2-chalk-menu-note">寝室は2部屋のみ（就寝中心の目安：中部屋14名＋小部屋8名／手狭でもよければ最大16名＋9名）<br>宴会・食事は併設の調理室／大部屋・追加部屋は利用不可／1階・夜間フロア貸切なし／夕食オプションはBBQのみ</p>
+</div>
+</details>
+<div class="top-v2-chalk-family" role="group" aria-label="おとな人数を選ぶ">
 <div class="top-v2-chalk-frow">
 <span class="top-v2-chalk-flabel">おとな</span>
 <button type="button" class="top-v2-chalk-step" id="fam-adult-minus" aria-label="おとなを1人減らす">−</button>
@@ -362,6 +384,7 @@ height: 78vw;
 <div class="top-v2-sticky top-v2-sticky--2">お風呂は提携の温泉も◎<br><a class="top-v2-inline-link" href="/play/option/#spa">温泉オプション →</a></div>
 </div>
 <p class="top-v2-formal-note">※ 最終的な正確な金額は、<a class="top-v2-inline-link" href="https://www.489pro-x.com/ja/s/katasho/search/">予約システム</a>に日付と人数を入れると、ご予約前にその場で確認できます</p>
+</section>
 <div class="top-v2-teacher-note">
 <p class="top-v2-teacher-note-label">せんせいより</p>
 <ul class="top-v2-price-notes top-v2-price-notes--center">
@@ -597,6 +620,14 @@ height: 78vw;
 </div>
 <ul class="top-v2-menu-grid list-unstyled">
 <li class="top-v2-menu-card">
+<figure class="top-v2-menu-photo"><img loading="lazy" src="/assets/img/play-cards/13-dodgeball-gym-catalog.jpg" alt="体育館での球技" width="480" height="320" decoding="async"></figure>
+<div class="top-v2-menu-body">
+<h4 class="top-v2-menu-name">体育館の延長利用</h4>
+<p class="top-v2-menu-tags"><span class="top-v2-menu-pricetag"><strong>2,000円</strong><small>/時間</small></span></p>
+<p class="top-v2-menu-desc">体育館は市営のため事前予約が必要です（先約があると利用できない場合があります）。無料枠は1時間半、延長は空きがあれば可能です。</p>
+</div>
+</li>
+<li class="top-v2-menu-card">
 <figure class="top-v2-menu-photo"><img src="/assets/wp/themes/katasho/asset/image/play/option/play_surfing.jpg" alt="" width="964" height="635" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/play_surfing.jpg" alt="" width="964" height="635" decoding="async"></noscript></figure>
 <div class="top-v2-menu-body">
 <h4 class="top-v2-menu-name">サーフィン体験</h4>
@@ -663,10 +694,10 @@ height: 78vw;
 <div class="top-v2-price-card top-v2-price-card--notice">
 <p class="top-v2-print-tab top-v2-notice-sublabel">席替えのお知らせ</p>
 <h3 class="top-v2-formal-subtitle">部屋分け</h3>
-<p>基本は大部屋にお布団を並べてのお泊まりです（お部屋はグループごと専有）。</p>
+<p>基本は大部屋（25名程度）にお布団を並べてのお泊まりです（お部屋はグループごと専有）。</p>
 <p>お部屋を分けたい場合、26名以上のご利用なら追加1部屋が無料です。さらにもう1部屋分ける場合は5,000円です。</p>
 <p>25名以下のご利用は追加1部屋につき5,000円（最大2部屋）です。</p>
-<p>お部屋は大部屋とあわせて<strong>合計最大3部屋</strong>（追加は2部屋まで）です。</p>
+<p>通常プランで部屋を分ける場合のゆったり目安は、大部屋25名程度・中部屋10名程度・小部屋5名程度の<strong>合計最大3部屋</strong>です。</p>
 <p class="top-v2-formal-note">ご希望は予約時またはお問い合わせでお知らせください。</p>
 <div class="top-v2-roomplan">
 <svg class="top-v2-roomplan-svg" viewBox="0 0 520 190" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -701,7 +732,7 @@ height: 78vw;
 <rect x="436" y="94" width="68" height="36" rx="9" fill="#fff" stroke="#2f7890" stroke-width="2.5" stroke-dasharray="6 5"/>
 </g>
 <g fill="#2f7890" font-size="14" font-weight="700" text-anchor="middle">
-<text x="470" y="53">部屋1</text><text x="470" y="117">部屋2</text>
+<text x="470" y="53">中部屋</text><text x="470" y="117">小部屋</text>
 </g>
 <text x="470" y="172" text-anchor="middle" font-size="18" font-weight="700" fill="#2f7890">＋2部屋まで</text>
 </svg>

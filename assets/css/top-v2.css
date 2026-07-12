@@ -1035,6 +1035,171 @@
   line-height: 1.8;
 }
 
+/* /play/ 食べる・泊まる: 表は要点、詳しい設備・運用はポップアップへ */
+.top-v2-scene-card-body h3 small {
+  display: inline-block;
+  margin-left: 4px;
+  color: #665a4a;
+  font-size: 0.68em;
+  font-weight: 800;
+}
+
+.top-v2-scene-detailbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  padding: 8px 15px;
+  border: 2px solid #2f7890;
+  border-radius: 999px;
+  background: #fff;
+  color: #2f7890;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.35;
+  text-decoration: none;
+  cursor: pointer;
+}
+.top-v2-scene-detailbtn:hover {
+  background: #eef6f8;
+  color: #2f7890;
+  text-decoration: none;
+}
+.top-v2-scene-detailbtn:focus-visible {
+  outline: 3px solid #f0831e;
+  outline-offset: 3px;
+}
+.top-v2-scene-detailbtn--link::after {
+  content: "→";
+  margin-left: 6px;
+}
+
+@media (max-width: 767px) {
+  #eat .top-v2-scene-card,
+  #stay .top-v2-scene-card {
+    display: grid;
+    grid-template-columns: 108px minmax(0, 1fr);
+    align-items: stretch;
+  }
+  #eat .top-v2-scene-card-photo,
+  #stay .top-v2-scene-card-photo {
+    min-height: 156px;
+    aspect-ratio: auto;
+  }
+  #eat .top-v2-scene-card-body,
+  #stay .top-v2-scene-card-body {
+    padding: 14px 14px 15px;
+  }
+  #eat .top-v2-scene-card-body h3,
+  #stay .top-v2-scene-card-body h3 {
+    margin-bottom: 6px;
+    font-size: 17px;
+  }
+  #eat .top-v2-scene-card-body p,
+  #stay .top-v2-scene-card-body p {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .top-v2-scene-detailbtn {
+    margin-top: 10px;
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+}
+
+.top-v2-scenedialog {
+  width: min(92vw, 600px);
+  max-height: calc(100vh - 20px);
+  max-height: calc(100dvh - 20px);
+  margin: auto;
+  padding: 16px 0 4px;
+  border: 0;
+  background: transparent;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 1050;
+}
+.top-v2-scenedialog::backdrop {
+  background: rgba(20, 32, 38, 0.55);
+}
+.top-v2-scenedialog .top-v2-playdialog-sheet {
+  padding: 28px 24px 24px;
+}
+.top-v2-scenedialog .top-v2-playdialog-title {
+  margin-bottom: 18px;
+}
+.top-v2-scenedialog-body {
+  color: #4a3f2f;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.75;
+  text-align: left;
+}
+.top-v2-scenedialog-body p {
+  margin: 0;
+}
+.top-v2-scenedialog-lead {
+  margin-bottom: 16px !important;
+  color: #2e2518;
+  font-weight: 800;
+}
+.top-v2-scenedialog-list {
+  margin: 0;
+  padding-left: 1.4em;
+}
+.top-v2-scenedialog-list li + li {
+  margin-top: 6px;
+}
+.top-v2-scenedialog-block {
+  padding: 14px 16px;
+  border: 1px dashed rgba(47, 120, 144, 0.45);
+  border-radius: 10px;
+  background: #fffdf6;
+}
+.top-v2-scenedialog-block + .top-v2-scenedialog-block {
+  margin-top: 12px;
+}
+.top-v2-scenedialog-block--compact {
+  background: #fff8e8;
+}
+.top-v2-scenedialog-block h4 {
+  margin: 0 0 6px;
+  color: #2f7890;
+  font-size: 15px;
+  font-weight: 900;
+}
+.top-v2-scenedialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+@media (max-width: 575px) {
+  .top-v2-scenedialog .top-v2-playdialog-sheet {
+    padding: 24px 16px 18px;
+  }
+  .top-v2-scenedialog .top-v2-playdialog-title {
+    margin-bottom: 14px;
+  }
+  .top-v2-scenedialog-body {
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .top-v2-scenedialog-block {
+    padding: 12px;
+  }
+  .top-v2-scenedialog-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .top-v2-scenedialog-actions .top-v2-btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 /* --- モデルコース タイムライン --- */
 .top-v2-timeline {
   list-style: none;
@@ -7743,7 +7908,7 @@ section#location > .l-section_bg {
 
 /* ===================================================================
    /play/ #catalog カードポップアップ（2026-07-12 オーナー指示）
-   48枚のカード(写真34+番号14)をクリック/Enterで開く、単一<dialog>への
+   48枚のカード(写真32+番号16)をクリック/Enterで開く、単一<dialog>への
    差し込み式。学級プリント風（白紙+上辺マステ+マーカー見出し+情景文+
    チップ列+注意行+有料リンク+とじる）。開閉アニメは実装しない
    （prefers-reduced-motion対応=アニメ自体を足さないことで一律に満たす）。
@@ -7779,13 +7944,16 @@ section#location > .l-section_bg {
    が担う。showModal()のtop-layer描画によりFAB(.l-footer_reserve, z-index:1040)
    より必ず上に乗るが、明示のz-indexも保険として付与 */
 .top-v2-playdialog {
-  width: min(92vw, 480px);
-  max-height: min(86vh, 640px);
+  width: min(94vw, 720px);
+  max-height: calc(100vh - 20px);
+  max-height: calc(100dvh - 20px);
   margin: auto;
-  padding: 22px 0 4px;
+  padding: 16px 0 4px;
   border: 0;
   background: transparent;
+  /* 通常画面では内容高に収まる。文字拡大・横向き・極端に低い画面だけの安全弁 */
   overflow-y: auto;
+  overscroll-behavior: contain;
   z-index: 1050;
 }
 .top-v2-playdialog::backdrop {
@@ -7796,7 +7964,7 @@ section#location > .l-section_bg {
   position: relative;
   background: #fff;
   border-radius: 16px;
-  padding: 28px 22px 24px;
+  padding: 28px 22px 22px;
   box-shadow: 0 14px 34px rgba(20, 40, 55, 0.28);
   text-align: center;
 }
@@ -7816,7 +7984,7 @@ section#location > .l-section_bg {
 /* 遊び名見出し: セクション見出しと同じクリームマーカー文法（.top-v2-scene-title-mark）のミニ版 */
 .top-v2-playdialog-title {
   display: inline-block;
-  margin: 4px 0 14px;
+  margin: 4px 40px 12px;
   background: linear-gradient(transparent 58%, #fff8e8 58%);
   padding: 0 6px;
   color: #2f7890;
@@ -7826,7 +7994,7 @@ section#location > .l-section_bg {
 }
 
 .top-v2-playdialog-desc {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   color: #2e2518;
   font-weight: 700;
   font-size: clamp(14.5px, 2vw, 16px);
@@ -7872,7 +8040,7 @@ section#location > .l-section_bg {
   line-height: 1.7;
 }
 
-/* 有料リンク（該当5件）: 既存.top-v2-btn-outline(オレンジ)を小型化して使う */
+/* 詳細リンク: 既存.top-v2-btn-outline(オレンジ)を小型化して使う */
 .top-v2-playdialog-link {
   display: inline-block;
   margin: 0 0 4px;
@@ -7882,19 +8050,26 @@ section#location > .l-section_bg {
   font-size: 13.5px;
 }
 
-/* とじるボタン: CTAのオレンジと混同しないよう、中立の青緑アウトラインで統一 */
+/* とじるボタン: 常に見える右上へ置き、本文の高さを使わない */
 .top-v2-playdialog-closebtn {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 10px 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  padding: 0 0 2px;
   border: 2px solid #2f7890;
-  border-radius: 999px;
+  border-radius: 50%;
   background: #fff;
   color: #2f7890;
   font-weight: 900;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 27px;
+  line-height: 1;
   cursor: pointer;
+  z-index: 1;
 }
 .top-v2-playdialog-closebtn:hover {
   background: #eef6f8;
@@ -7909,17 +8084,459 @@ body.top-v2-playdialog-lock {
   overflow: hidden;
 }
 
-@media (max-width: 767px) {
-  .top-v2-playdialog-sheet { padding: 26px 18px 20px; }
-}
-
 /* ポップアップ内の写真(オーナー要望)。カード画像を流用表示 */
 .top-v2-playdialog-photo {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 260px;
+  max-height: 340px;
+  object-fit: cover;
   border-radius: 10px;
   border: 3px solid #fff;
   box-shadow: 0 2px 10px rgba(20, 50, 65, 0.15);
-  margin: 4px 0 12px;
+  margin: 0;
+}
+
+/* PC: 写真と説明を横に並べ、縦写真でもポップアップを低く保つ */
+@media (min-width: 768px) {
+  .top-v2-playdialog:has(.top-v2-playdialog-photo[hidden]) {
+    width: min(92vw, 480px);
+  }
+  .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.9fr) minmax(280px, 1.1fr);
+    grid-template-areas:
+      "photo title"
+      "photo desc"
+      "photo chips"
+      "photo note"
+      "photo link";
+    column-gap: 24px;
+    align-items: start;
+    text-align: left;
+  }
+  .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) .top-v2-playdialog-photo {
+    grid-area: photo;
+    align-self: stretch;
+  }
+  .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) .top-v2-playdialog-title {
+    grid-area: title;
+    justify-self: start;
+    margin-left: 0;
+  }
+  .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) .top-v2-playdialog-desc {
+    grid-area: desc;
+  }
+  .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) .top-v2-playdialog-chips {
+    grid-area: chips;
+    justify-content: flex-start;
+  }
+  .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) .top-v2-playdialog-note {
+    grid-area: note;
+  }
+  .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) .top-v2-playdialog-link {
+    grid-area: link;
+    justify-self: start;
+  }
+}
+
+/* SP: カードで一度見た写真は短いサムネイルにし、詳細を一画面に収める */
+@media (max-width: 767px) {
+  .top-v2-playdialog {
+    width: min(94vw, 480px);
+  }
+  .top-v2-playdialog-sheet {
+    padding: 24px 16px 18px;
+  }
+  .top-v2-playdialog-photo {
+    height: clamp(112px, 20dvh, 132px);
+    min-height: 0;
+    max-height: none;
+    margin: 0 0 10px;
+  }
+  .top-v2-playdialog-title {
+    margin: 2px 38px 8px;
+    font-size: clamp(18px, 5.2vw, 21px);
+  }
+  .top-v2-playdialog-desc {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .top-v2-playdialog-chips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .top-v2-playdialog-chip {
+    justify-content: center;
+    gap: 3px;
+    padding: 5px 6px;
+    font-size: 11.5px;
+  }
+  .top-v2-playdialog-note {
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .top-v2-btn-outline--sm {
+    padding: 7px 18px;
+    font-size: 13px;
+  }
+  .top-v2-playdialog-closebtn {
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    font-size: 25px;
+  }
+}
+
+/* 2026-07-12 カタログのリード(+タップ案内)を中央寄せ(オーナー指示) */
+#catalog .top-v2-scene-lead {
+  text-align: center;
+}
+
+/* --- 2026-07-12 調理室併設コンパクトプラン枠(option) --- */
+.top-v2-plan-card { margin-top: 18px; }
+.top-v2-plan-lead { margin: 10px 0 12px; }
+.top-v2-plan-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.top-v2-plan-table th, .top-v2-plan-table td {
+  border: 1px solid rgba(47, 120, 144, 0.35);
+  padding: 7px 9px;
+  text-align: center;
+}
+.top-v2-plan-table thead th { background: #fff8e8; }
+.top-v2-plan-table tbody th { text-align: left; font-weight: 700; white-space: nowrap; }
+.top-v2-plan-table strong { color: #f0831e; }
+.top-v2-plan-note { margin: 10px 0 0; font-size: 12px; color: #665a4a; line-height: 1.7; }
+.top-v2-stay-plan-hook { text-align: center; margin: 18px 0 6px; }
+@media (max-width: 575px) {
+  .top-v2-plan-table { font-size: 12.5px; }
+  .top-v2-plan-table th, .top-v2-plan-table td { padding: 6px 5px; }
+}
+
+/* コンパクトプラン: 表を廃し一行価格へ(オーナー指示・表はでかすぎ) */
+.top-v2-plan-price {
+  margin: 8px 0 10px;
+  font-weight: 800;
+  font-size: 15.5px;
+}
+.top-v2-plan-price strong { color: #f0831e; }
+
+/* コンパクトプランの折りたたみ見出しだけ中央寄せ(オーナー指示) */
+.top-v2-plan-fold > .top-v2-formal-fold-summary {
+  text-align: center;
+}
+
+/* --- 2026-07-12 料金黒板: コンパクトプラン切替ドロワー（6ページ共通） -----
+   食事オプション／お子さま人数と同じ.top-v2-chalk-menu系の外枠を使うため、
+   ドロワー自体の見た目は追加CSS不要。新規なのはチェック行と定員注意行のみ --- */
+.top-v2-chalk-plancheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 2px;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+}
+.top-v2-chalk-plancheck input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  accent-color: #2f7890;
+  cursor: pointer;
+}
+
+/* 注意行: 小さめ・インク色（既存.top-v2-playdialog-noteと同系色）。
+   黒板(.top-v2-chalkboard--art)の直後にJSが差し込む。非ブロッキングなので
+   警告色にはしない。hidden属性で出し分け、既存#fam-minと同じ考え方 */
+.top-v2-chalk-capacity-notice {
+  margin: 0 0 20px;
+  text-align: center;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+/* --- 2026-07-12 コンパクトプラン欄の囲い(オーナー指示) ---
+   開いた中身が周囲の料金カードと地続きに見え「どこまでがプランの話か」
+   の境界が無かった。点線+薄クリーム地の補足プリント文法で1ブロック化 */
+.top-v2-plan-fold {
+  border: 2px dashed rgba(47, 120, 144, 0.45);
+  border-radius: 12px;
+  background: #fffdf6;
+  padding: 10px 14px;
+  margin-top: 14px;
+}
+.top-v2-plan-fold > .top-v2-formal-fold-body {
+  padding-top: 4px;
+}
+
+/* --- 2026-07-12 料金シミュレーターの共通化（TOP / 料金・オプション） ---
+   基本料金を先に理解し、その下で条件を変えて概算する順序へ統一する。
+   条件と結果の黒板を同じ白い「さんすうプリント」に収め、操作範囲を明示。 */
+.top-v2-price-simulator {
+  position: relative;
+  max-width: 860px;
+  margin: 26px auto 24px;
+  padding: 30px 28px 24px;
+  background: #fff;
+  border: 1px solid rgba(47, 120, 144, 0.14);
+  border-left: 3px solid rgba(47, 120, 144, 0.38);
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(20, 50, 65, 0.10);
+}
+
+.top-v2-price-simulator::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 104px;
+  height: 42px;
+  margin-left: -52px;
+  background: url(/assets/img/tape-2.png) no-repeat center/contain;
+  pointer-events: none;
+}
+
+.top-v2-price-simulator-head {
+  margin: 0 0 18px;
+  text-align: center;
+}
+
+.top-v2-price-simulator-title {
+  display: inline-block;
+  margin: 0;
+  padding: 0 4px 7px;
+  border-bottom: 2px dashed rgba(47, 120, 144, 0.45);
+  color: #2f7890;
+  font-size: clamp(20px, 2.4vw, 25px);
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.top-v2-price-simulator-hint {
+  margin: 8px 0 0;
+  color: #665a4a;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.top-v2-price-simulator-controls {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: 16px;
+  align-items: start;
+}
+
+.top-v2-price-simulator-controls > .top-v2-chalk-season,
+.top-v2-price-simulator-controls > .top-v2-chalk-stepper,
+.top-v2-price-simulator-controls > .top-v2-chalk-family {
+  grid-column: 1 / -1;
+}
+
+.top-v2-price-simulator-controls > .top-v2-chalk-menu {
+  grid-column: span 2;
+  width: 100%;
+  max-width: none;
+}
+
+.top-v2-price-simulator-controls > .top-v2-chalk-family {
+  margin: 2px 0 16px;
+}
+
+.top-v2-price-simulator .top-v2-chalkboard--art {
+  margin: 4px auto 0;
+}
+
+.top-v2-price > .top-v2-price-simulator {
+  grid-column: 1 / -1;
+}
+
+.top-v2-price > .top-v2-chalk-capacity-notice {
+  grid-column: 1 / -1;
+}
+
+/* 小さい状態文字と開閉ヒントも本文相当のコントラストを確保する。 */
+.top-v2-chalk-menu-state,
+.top-v2-chalk-menu-summary::after {
+  color: #456b78;
+}
+
+.top-v2-chalk-step:focus-visible,
+.top-v2-chalk-tab:focus-visible,
+.top-v2-chalk-menu-summary:focus-visible,
+.top-v2-chalk-plancheck input:focus-visible {
+  outline: 3px solid #f0831e;
+  outline-offset: 3px;
+}
+
+/* TOPには黒板付箋がないため、全ページ共通の付箋用下余白を外す。 */
+#price #banner .top-v2-price-simulator .top-v2-chalkboard--art {
+  margin-bottom: 0;
+}
+
+@media (min-width: 992px) {
+  /* 3列を開いても横溢れさせない専用組版。閉じたsummaryの「変更する」は
+     矢印だけに縮め、開いた中身のボタン・人数行も列幅内へ収める。 */
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu > .top-v2-chalk-menu-summary::after {
+    content: "▾";
+    margin-left: 4px;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu[open] > .top-v2-chalk-menu-summary::after {
+    content: "▴";
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-mealrows {
+    padding: 10px 8px;
+    gap: 8px;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-mealtime {
+    grid-template-columns: 22px minmax(0, 1fr) minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-mealtime .top-v2-chalk-tab {
+    padding: 7px 3px;
+    font-size: 11px;
+    white-space: normal;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-family .top-v2-chalk-frow {
+    grid-template-columns: 52px 38px 36px 38px;
+    column-gap: 6px;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-step {
+    width: 38px;
+    height: 38px;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-plancheck {
+    font-size: 12px;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-menu-note {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 991px) {
+  .top-v2-price-simulator-controls {
+    display: block;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu {
+    width: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .top-v2-price-simulator {
+    margin-top: 22px;
+    padding: 26px 14px 18px;
+  }
+
+  .top-v2-price-simulator-title {
+    font-size: 20px;
+  }
+
+  .top-v2-price-simulator-hint {
+    padding: 0 12px;
+  }
+
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-family .top-v2-chalk-frow {
+    grid-template-columns: 52px 44px 44px 44px;
+    column-gap: 6px;
+  }
+
+  .top-v2-price-simulator .top-v2-chalkboard--art .top-v2-chalk-answer {
+    font-size: 12.5px;
+  }
+
+  .top-v2-price-simulator .top-v2-chalkboard--art .top-v2-chalk-sub {
+    font-size: 10px;
+  }
+}
+
+/* --- 2026-07-12 オーナー指示3点 --- */
+/* 1) TOP料金ボード: ドロワー3列化(食事/お子さま/コンパクトプラン)。
+   .top-v2-priceの2列gridを6分割にし、全幅系(1/-1)は不変・
+   ドロワーだけspan2で3枚並びに */
+@media (min-width: 992px) {
+  .top-v2-price {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .top-v2-price > .top-v2-chalk-menu {
+    grid-column: span 2;
+  }
+}
+
+/* 2) 時間割カードのPC拡大 110→140px(実機で小さすぎるとの指摘)。
+   名前12px: 最長9文字x12=108 <= 内寸130で折返しなし。
+   4行合計は約660px+見出しで1080pクラスに引き続き収まる */
+@media (min-width: 992px) {
+  .top-v2-playcard {
+    width: 140px;
+  }
+  .top-v2-playcard-name {
+    font-size: 12px;
+  }
+  .top-v2-playroll-track {
+    gap: 16px;
+  }
+}
+
+/* 3) /play/カタログSP 3列化(ポップアップが詳細を担うため一覧は密に。
+   12項目=3列x4行でぴったり・縦長解消) */
+@media (max-width: 767px) {
+  .top-v2-catalog-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 8px;
+  }
+  .top-v2-catalog-name {
+    font-size: 10.5px;
+    margin-top: 6px;
+  }
+  .top-v2-catalog-numbox {
+    font-size: 22px;
+  }
+}
+
+/* --- 2026-07-12 時間割セクションPC改善2点(オーナー指示) --- */
+/* 1) マーキーの端をグラデーションで溶かす(硬いぶつ切りが事故に見える)。
+   マスクは各行のビューポートだけに掛け、行ラベルには影響させない */
+@media (min-width: 992px) {
+  .top-v2-playroll-viewport {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent);
+  }
+}
+@media (max-width: 991px) {
+  .top-v2-playroll-viewport {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+  }
+}
+/* 2) 見出しが全セクション最小の6vwキャップで目立たない→7.2vwへ。
+   両脇の切り抜きとの衝突は実測で確認(992/1280) */
+@media (min-width: 992px) {
+  #playroll .top-v2-h {
+    font-size: min(96px, 7.2vw);
+  }
 }

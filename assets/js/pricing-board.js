@@ -1,4 +1,4 @@
-// 料金黒板（TOP / friends / gasshuku / family 共通）
+// 料金黒板（TOP / friends / gasshuku / family / kenshu / option 共通）
 // DOMを見てボードタイプを自動判別し、季節トグル・食事引き出し・人数ステッパーを結線する。
 (function () {
   'use strict';
@@ -15,6 +15,34 @@
     sando: { adult: 1000, elem: 1000, pre: 1000 }
   };
   var MEAL_LABELS = { kyushoku: '給食', bbq: '提供型BBQ', sando: 'サンド' };
+  var MAX_PEOPLE = 100;
+  var COMPACT_COMFORT_MAX = 22;
+  var COMPACT_HARD_MAX = 25;
+
+  // 調理室併設コンパクトプラン（20名くらいまで）: 大人-1,000円、子どもは
+  // 割引後の大人料金へ既存の子ども割引率(小学生30%OFF/3〜5歳50%OFF)を掛け直す。
+  // floorは「最低人数(5/7)×割引後大人料金」と一致する値を差替で持つ（検算済み）。
+  var COMPACT = {
+    adultDelta: -1000,
+    elemRatio: 0.7,
+    preRatio: 0.5,
+    floor: { weekday: 37000, holiday: 62300 }
+  };
+
+  // 季節×コンパクトプランの単価をまとめて返す、料金定数の唯一の参照口。
+  // 通常時はSEASONS[season]をそのまま返す＝プラン分岐はここに一本化する。
+  function getRates(season, compact) {
+    var base = SEASONS[season];
+    if (!compact) { return base; }
+    var adult = base.adult + COMPACT.adultDelta;
+    return {
+      adult: adult,
+      elem: Math.round(adult * COMPACT.elemRatio),
+      pre: Math.round(adult * COMPACT.preRatio),
+      minPeople: base.minPeople,
+      floor: COMPACT.floor[season]
+    };
+  }
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -68,7 +96,7 @@
       Object.keys(choice).forEach(function (slot) {
         if (choice[slot] !== 'byo') { anyPaid = true; }
       });
-      mealStateEl.textContent = anyPaid ? '（有）' : '（無）';
+      mealStateEl.textContent = anyPaid ? '（あり）' : '（なし）';
     }
     function applyUI() {
       Object.keys(slots).forEach(function (slot) {
@@ -91,7 +119,62 @@
     return { slots: slots, choice: choice };
   }
 
-  // ---- グループボード（TOP / friends / gasshuku） ------------------------
+  // ---- コンパクトプラン切替（全ボード共通） --------------------------------
+  // [data-plan="compact"] のチェックボックス1個を見る。状態ラベル（適用中/なし）
+  // はsummary内の.top-v2-chalk-menu-stateに書き込む（食事オプション／お子さま
+  // 人数と同じ文法）。チェックボックス自体は6ページのHTMLに直書きしてある。
+  function setupPlanToggle(onChange) {
+    var input = document.querySelector('[data-plan="compact"]');
+    if (!input) {
+      return {
+        isCompact: function () { return false; },
+        setEligibility: function () {}
+      };
+    }
+    var details = input.closest('details');
+    var stateEl = details && details.querySelector('.top-v2-chalk-menu-state');
+    var eligible = true;
+    function applyState() {
+      if (!stateEl) { return; }
+      stateEl.textContent = input.checked ? (eligible ? '（適用中）' : '（対象外）') : '（なし）';
+    }
+    applyState();
+    input.addEventListener('change', function () {
+      applyState();
+      onChange(true);
+    });
+    return {
+      isCompact: function () { return input.checked; },
+      setEligibility: function (value) {
+        eligible = value;
+        applyState();
+      }
+    };
+  }
+
+  // ---- 定員注意行（コンパクトプラン専用・非ブロッキング） ------------------
+  // .top-v2-chalkboard--artの直後にJS側で1個だけ差し込む。食事状態spanと同じく
+  // 状態依存の生成物のため、6ページのHTMLは触らずJS側で完結させる。
+  function setupCapacityNotice() {
+    var board = document.querySelector('.top-v2-chalkboard--art');
+    if (!board) { return null; }
+    var notice = document.createElement('p');
+    notice.className = 'top-v2-chalk-capacity-notice';
+    notice.textContent = '※ 寝室2部屋の目安22名を超えます。手狭な配置になるため、ご相談ください';
+    notice.hidden = true;
+    board.insertAdjacentElement('afterend', notice);
+    return notice;
+  }
+  function updateCapacityNotice(notice, compact, totalPeople) {
+    if (!notice) { return; }
+    notice.hidden = !compact || totalPeople <= COMPACT_COMFORT_MAX;
+    if (notice.hidden) { return; }
+    notice.textContent = totalPeople <= COMPACT_HARD_MAX
+      ? '※ 寝室2部屋の目安22名を超えます。中部屋16名＋小部屋9名までの手狭な配置になるため、ご相談ください'
+      : '※ 寝室2部屋の上限25名を超えるため、通常プラン料金で計算しています';
+  }
+
+  // ---- グループボード（friends / gasshuku / kenshu） ---------------------
   function initGroupBoard() {
     var unitEl = document.getElementById('chalk-unit');
     var perEl = document.getElementById('chalk-per');
@@ -104,8 +187,10 @@
     var stepperEl = document.querySelector('.top-v2-chalk-stepper');
     var seasonBtns = document.querySelectorAll('.top-v2-chalk-season .top-v2-chalk-tab');
     if (!unitEl || !nEl || !totalEl || !countEl || !minus || !plus) { return; }
+    totalEl.setAttribute('aria-live', 'polite');
 
-    var MAX = (stepperEl && parseInt(stepperEl.dataset.max, 10)) || 30;
+    var requestedMax = stepperEl && parseInt(stepperEl.dataset.max, 10);
+    var MAX = Math.min(requestedMax || MAX_PEOPLE, MAX_PEOPLE);
     var initialSeasonBtn = Array.prototype.filter.call(seasonBtns, function (b) { return b.classList.contains('is-on'); })[0];
     var season = (initialSeasonBtn && initialSeasonBtn.dataset.season) || 'weekday';
     var n = parseInt(countEl.textContent, 10);
@@ -114,9 +199,13 @@
     var meal = setupMealSlots(render);
     var slots = meal.slots;
     var choice = meal.choice;
+    var plan = setupPlanToggle(render);
+    var capacityNotice = setupCapacityNotice();
 
     function render(animate) {
-      var cfg = SEASONS[season];
+      var compactEligible = n <= COMPACT_HARD_MAX;
+      plan.setEligibility(compactEligible);
+      var cfg = getRates(season, plan.isCompact() && compactEligible);
       if (n < cfg.minPeople) { n = cfg.minPeople; }
       var mealCost = 0;
       var bdParts = ['宿泊 ' + fmt(cfg.adult)];
@@ -137,6 +226,7 @@
       if (breakdownEl) { breakdownEl.textContent = '1人あたり: ' + bdParts.join(' ＋ '); }
       minus.disabled = n <= cfg.minPeople;
       plus.disabled = n >= MAX;
+      updateCapacityNotice(capacityNotice, plan.isCompact(), n);
       if (animate) { animateRewrite([unitEl, nEl, totalEl]); }
     }
 
@@ -156,9 +246,9 @@
     render(false);
   }
 
-  // ---- 家族ボード（family） ----------------------------------------------
+  // ---- 人数内訳ボード（TOP / family / option） ----------------------------
   function initFamilyBoard() {
-    var LIMITS = { adult: { min: 1, max: Infinity }, elem: { min: 0, max: 12 }, pre: { min: 0, max: 8 } };
+    var MINIMUMS = { adult: 1, elem: 0, pre: 0 };
     var lineEl = document.getElementById('fam-line');
     var totalEl = document.getElementById('fam-total');
     var unitsEl = document.getElementById('fam-units');
@@ -171,6 +261,7 @@
     var kidsMenuEl = document.querySelector('.top-v2-chalk-menu--kids');
     var kidsStateEl = kidsMenuEl ? kidsMenuEl.querySelector('.top-v2-chalk-menu-state') : null;
     if (!lineEl || !totalEl || !unitsEl || !minEl) { return; }
+    totalEl.setAttribute('aria-live', 'polite');
 
     var initialSeasonBtn = Array.prototype.filter.call(seasonBtns, function (b) { return b.classList.contains('is-on'); })[0];
     var season = (initialSeasonBtn && initialSeasonBtn.dataset.season) || 'weekday';
@@ -183,9 +274,14 @@
     var meal = setupMealSlots(render);
     var slots = meal.slots;
     var choice = meal.choice;
+    var plan = setupPlanToggle(render);
+    var capacityNotice = setupCapacityNotice();
 
     function render(animate) {
-      var cfg = SEASONS[season];
+      var totalPeople = counts.adult + counts.elem + counts.pre;
+      var compactEligible = totalPeople <= COMPACT_HARD_MAX;
+      plan.setEligibility(compactEligible);
+      var cfg = getRates(season, plan.isCompact() && compactEligible);
       var sum = counts.adult * cfg.adult + counts.elem * cfg.elem + counts.pre * cfg.pre;
       var lodging = Math.max(sum, cfg.floor);
       var mealTotal = 0;
@@ -213,19 +309,20 @@
       }
       Object.keys(counts).forEach(function (key) {
         if (countEls[key]) { countEls[key].textContent = counts[key]; }
-        if (minusBtns[key]) { minusBtns[key].disabled = counts[key] <= LIMITS[key].min; }
-        if (plusBtns[key]) { plusBtns[key].disabled = counts[key] >= LIMITS[key].max; }
+        if (minusBtns[key]) { minusBtns[key].disabled = counts[key] <= MINIMUMS[key]; }
+        if (plusBtns[key]) { plusBtns[key].disabled = totalPeople >= MAX_PEOPLE; }
       });
+      updateCapacityNotice(capacityNotice, plan.isCompact(), totalPeople);
       if (animate) { animateRewrite([lineEl, totalEl]); }
     }
 
     Object.keys(counts).forEach(function (key) {
       if (!minusBtns[key] || !plusBtns[key]) { return; }
       minusBtns[key].addEventListener('click', function () {
-        if (counts[key] > LIMITS[key].min) { counts[key] -= 1; render(true); }
+        if (counts[key] > MINIMUMS[key]) { counts[key] -= 1; render(true); }
       });
       plusBtns[key].addEventListener('click', function () {
-        if (counts[key] < LIMITS[key].max) { counts[key] += 1; render(true); }
+        if (counts.adult + counts.elem + counts.pre < MAX_PEOPLE) { counts[key] += 1; render(true); }
       });
     });
     seasonBtns.forEach(function (btn) {
@@ -242,7 +339,7 @@
     render(false);
   }
 
-  // ---- ハイブリッドボード（TOP: グループ人数＋お子さま人数） --------------
+  // ---- 旧ハイブリッドボード（現行ページでは未使用・互換用） ---------------
   // chalk-count（おとな人数のgroupステッパー）とfam-elem/fam-pre（お子さま
   // 人数のfamilyステッパー）が同居するボード専用。子ども0人のときは
   // initGroupBoardと1文字も変わらない表示を保ち、1人以上になったら
@@ -258,14 +355,15 @@
     var breakdownEl = document.getElementById('chalk-breakdown');
     if (!countEl || !minus || !plus || !formulaEl || !answerEl || !breakdownEl) { return; }
 
-    var KID_LIMITS = { elem: { min: 0, max: 12 }, pre: { min: 0, max: 8 } };
+    var KID_MINIMUMS = { elem: 0, pre: 0 };
     var countEls = { elem: document.getElementById('fam-elem'), pre: document.getElementById('fam-pre') };
     var minusBtns = { elem: document.getElementById('fam-elem-minus'), pre: document.getElementById('fam-pre-minus') };
     var plusBtns = { elem: document.getElementById('fam-elem-plus'), pre: document.getElementById('fam-pre-plus') };
     var kidsMenuEl = document.querySelector('.top-v2-chalk-menu--kids');
     var kidsStateEl = kidsMenuEl ? kidsMenuEl.querySelector('.top-v2-chalk-menu-state') : null;
 
-    var MAX = (stepperEl && parseInt(stepperEl.dataset.max, 10)) || 30;
+    var requestedMax = stepperEl && parseInt(stepperEl.dataset.max, 10);
+    var MAX = Math.min(requestedMax || MAX_PEOPLE, MAX_PEOPLE);
     var initialSeasonBtn = Array.prototype.filter.call(seasonBtns, function (b) { return b.classList.contains('is-on'); })[0];
     var season = (initialSeasonBtn && initialSeasonBtn.dataset.season) || 'weekday';
     var n = parseInt(countEl.textContent, 10);
@@ -278,10 +376,15 @@
     var meal = setupMealSlots(render);
     var slots = meal.slots;
     var choice = meal.choice;
+    var plan = setupPlanToggle(render);
+    var capacityNotice = setupCapacityNotice();
 
     function render(animate) {
-      var cfg = SEASONS[season];
-      if (n < cfg.minPeople) { n = cfg.minPeople; }
+      if (n < SEASONS[season].minPeople) { n = SEASONS[season].minPeople; }
+      var totalPeople = n + counts.elem + counts.pre;
+      var compactEligible = totalPeople <= COMPACT_HARD_MAX;
+      plan.setEligibility(compactEligible);
+      var cfg = getRates(season, plan.isCompact() && compactEligible);
 
       var mealCost = { adult: 0, elem: 0, pre: 0 };
       var bdParts = ['宿泊 ' + fmt(cfg.adult)];
@@ -302,18 +405,19 @@
       var elemUnit = cfg.elem + mealCost.elem;
       var preUnit = cfg.pre + mealCost.pre;
       var kidsCount = counts.elem + counts.pre;
-      // おとな最小人数ルールでn*adultUnitがfloor(42000/69300)を自動的に
+      // おとな最小人数ルールでn*adultUnitがcfg.floor（=minPeople×cfg.adult。
+      // 通常・コンパクトプランどちらも一致するよう定数を設計済み）を自動的に
       // 上回るため、家族ボードのようなfloor補正は不要。
       var total = n * adultUnit + counts.elem * elemUnit + counts.pre * preUnit;
 
       countEl.textContent = n + '人';
       minus.disabled = n <= cfg.minPeople;
-      plus.disabled = n >= MAX;
+      plus.disabled = totalPeople >= MAX;
 
       ['elem', 'pre'].forEach(function (key) {
         if (countEls[key]) { countEls[key].textContent = counts[key]; }
-        if (minusBtns[key]) { minusBtns[key].disabled = counts[key] <= KID_LIMITS[key].min; }
-        if (plusBtns[key]) { plusBtns[key].disabled = counts[key] >= KID_LIMITS[key].max; }
+        if (minusBtns[key]) { minusBtns[key].disabled = counts[key] <= KID_MINIMUMS[key]; }
+        if (plusBtns[key]) { plusBtns[key].disabled = totalPeople >= MAX; }
       });
       if (kidsStateEl) {
         kidsStateEl.textContent = kidsCount > 0 ? '（' + kidsCount + '人）' : '（なし）';
@@ -336,18 +440,19 @@
         breakdownEl.textContent = '1人あたり: おとな ' + fmt(adultUnit) + '・小学生 ' + fmt(elemUnit) + '・3〜5歳 ' + fmt(preUnit) + (anyPaid ? '（お食事込み）' : '');
         animateTargets = [formulaEl, answerEl];
       }
+      updateCapacityNotice(capacityNotice, plan.isCompact(), totalPeople);
       if (animate) { animateRewrite(animateTargets); }
     }
 
     minus.addEventListener('click', function () { if (n > SEASONS[season].minPeople) { n -= 1; render(true); } });
-    plus.addEventListener('click', function () { if (n < MAX) { n += 1; render(true); } });
+    plus.addEventListener('click', function () { if (n + counts.elem + counts.pre < MAX) { n += 1; render(true); } });
     ['elem', 'pre'].forEach(function (key) {
       if (!minusBtns[key] || !plusBtns[key]) { return; }
       minusBtns[key].addEventListener('click', function () {
-        if (counts[key] > KID_LIMITS[key].min) { counts[key] -= 1; render(true); }
+        if (counts[key] > KID_MINIMUMS[key]) { counts[key] -= 1; render(true); }
       });
       plusBtns[key].addEventListener('click', function () {
-        if (counts[key] < KID_LIMITS[key].max) { counts[key] += 1; render(true); }
+        if (n + counts.elem + counts.pre < MAX) { counts[key] += 1; render(true); }
       });
     });
     seasonBtns.forEach(function (btn) {
