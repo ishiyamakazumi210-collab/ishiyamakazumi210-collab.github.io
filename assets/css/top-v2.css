@@ -422,20 +422,102 @@
 
 /* TOPでは「遊べる・食べられる・泊まれる」の直後に宿泊時間を提示する。 */
 .top-v2-home-staytime {
-  padding: 24px 0 44px;
+  position: relative;
+  z-index: 2;
+  padding: 0 0 46px;
   background: #fff;
 }
 
+.top-v2-home-staytime .container {
+  position: relative;
+  top: -32px;
+  margin-bottom: -32px;
+}
+
+.top-v2-home-staytime .l-stay_info {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 34px 42px 25px !important;
+  background: #fff8e8;
+  border: 2px dashed #d7aa67;
+  border-image: none;
+  border-radius: 12px;
+  box-shadow: 0 12px 0 rgba(47, 120, 144, 0.12);
+}
+
+.top-v2-home-staytime .l-stay_info::before {
+  content: "ご利用時間";
+  position: absolute;
+  top: -17px;
+  left: 50%;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: #2f7890;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  transform: translateX(-50%) rotate(-1deg);
+}
+
+.top-v2-home-staytime .l-stay_infoInner {
+  margin: 0;
+}
+
 .top-v2-home-staytime .l-stay_infoTitle {
+  margin: 0;
   font-size: 28px;
+  line-height: 1.45;
+}
+
+.top-v2-home-staytime .l-stay_infoCaption {
+  margin-top: 12px;
+  color: #665a4a;
+}
+
+.top-v2-home-staytime .l-stay_infoCaption small {
+  display: inline-block;
+  padding: 5px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  font-weight: 800;
 }
 
 @media (max-width: 767px) {
   .top-v2-home-staytime {
-    padding: 18px 0 34px;
+    padding: 0 0 34px;
+  }
+  .top-v2-home-staytime .container {
+    top: -20px;
+    margin-bottom: -20px;
+  }
+  .top-v2-home-staytime .l-stay_info {
+    margin: 0 6px;
+    padding: 29px 14px 18px !important;
+    border-radius: 10px;
+    box-shadow: 0 8px 0 rgba(47, 120, 144, 0.12);
+  }
+  .top-v2-home-staytime .l-stay_info::before {
+    top: -15px;
+    padding: 5px 15px;
+    font-size: 12px;
   }
   .top-v2-home-staytime .l-stay_infoTitle {
-    font-size: 23px;
+    font-size: 20px;
+    line-height: 1.5;
+  }
+  .top-v2-home-staytime .l-stay_infoTitle span + span {
+    margin-top: 3px;
+  }
+  .top-v2-home-staytime .l-stay_infoCaption {
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  .top-v2-home-staytime .l-stay_infoCaption small {
+    padding: 5px 9px;
+    font-size: 12px;
   }
 }
 
