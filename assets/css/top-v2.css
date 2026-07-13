@@ -7846,9 +7846,13 @@ section#location > .l-section_bg {
   /* 料金帯: 顎16→32px。4ステップ側から回収(総間隔60px維持) */
   #price > .l-section_bg--gray { padding-bottom: 16px; }
   section#flow { padding-top: 63px; }
-  /* あの頃帯: 顎21→37px。誰と側から回収 */
+  /* あの頃帯: 顎21→37px。誰と側から回収。
+     誰と帯はカード下が1pxしか残らなかったため、PCと同じ48pxの顎を確保 */
   #usagescene > .l-section_bg { padding-bottom: 16px; }
-  #stay .l-section_inner { padding-top: 32px !important; }
+  #stay .l-section_inner {
+    padding-top: 32px !important;
+    padding-bottom: 48px !important;
+  }
   /* 風景帯: 額21→37px(下流は同グレー連続のため回収不要・総間隔51→67px)。
      landscapeはsection自身が.l-section_bg(塗り役) */
   section#landscape.l-section_bg { padding-top: 16px; }
