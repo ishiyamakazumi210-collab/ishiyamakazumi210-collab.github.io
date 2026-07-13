@@ -484,18 +484,20 @@
   }
 }
 
-/* TOPでは「遊べる・食べられる・泊まれる」の直後に宿泊時間を提示する。 */
+/* TOPでは「遊べる・食べられる・泊まれる」の締めとして宿泊時間を提示する。 */
 .top-v2-home-staytime {
   position: relative;
   z-index: 2;
-  padding: 0 0 46px;
-  background: #fff;
+  margin: 58px auto 0;
+  padding: 0 16px;
+  background: transparent;
 }
 
 .top-v2-home-staytime .container {
   position: relative;
-  top: -32px;
-  margin-bottom: -32px;
+  top: auto;
+  margin: 0 auto;
+  padding: 0;
 }
 
 .top-v2-home-staytime .l-stay_info {
@@ -551,11 +553,12 @@
 
 @media (max-width: 767px) {
   .top-v2-home-staytime {
-    padding: 0 0 34px;
+    margin-top: 42px;
+    padding: 0 10px 20px;
   }
   .top-v2-home-staytime .container {
-    top: -20px;
-    margin-bottom: -20px;
+    top: auto;
+    margin-bottom: 0;
   }
   .top-v2-home-staytime .l-stay_info {
     margin: 0 6px;
@@ -9132,4 +9135,20 @@ body.top-v2-playdialog-lock {
     margin-right: 0;
     margin-left: 0;
   }
+}
+
+/* 「カタショーの風景」右下の旧バスケGIFを、背景より手前・カードより奥へ戻す。
+   HTMLと素材は残っていたが、旧z-index:-1が現在の背景の裏へ潜らせていた。 */
+#landscape .l-album_bg {
+  isolation: isolate;
+}
+
+#landscape .l-album_bg > .l-section_inner {
+  position: relative;
+  z-index: 1;
+}
+
+#landscape .l-album_bgRightbtm {
+  z-index: 0;
+  pointer-events: none;
 }
