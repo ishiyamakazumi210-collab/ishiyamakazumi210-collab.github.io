@@ -9051,6 +9051,75 @@ body.top-v2-playdialog-lock {
   overflow: clip;
 }
 
+/* TOP「行くなら、誰と？」再設計: 写真と文字を一枚のカードに戻す。 */
+#stay .l-section_bg {
+  background-color: #fff;
+}
+
+#stay .top-v2-doors a {
+  padding: 10px 10px 14px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(47, 120, 144, 0.14);
+  border-top: 4px solid #2f7890;
+  border-radius: 16px;
+  box-shadow: 0 10px 26px rgba(20, 50, 65, 0.14);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+#stay .top-v2-doors li:nth-child(1) a,
+#stay .top-v2-doors li:nth-child(4) a {
+  transform: rotate(-0.45deg);
+}
+
+#stay .top-v2-doors li:nth-child(2) a,
+#stay .top-v2-doors li:nth-child(3) a {
+  border-top-color: #f0831e;
+  transform: rotate(0.45deg);
+}
+
+#stay .top-v2-doors a:hover {
+  transform: translateY(-6px) rotate(0);
+  box-shadow: 0 16px 34px rgba(20, 50, 65, 0.2);
+}
+
+#stay .top-v2-scenecard-photo {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 11px;
+  box-shadow: none;
+  transform: none;
+}
+
+#stay .top-v2-doors-who {
+  display: block;
+  min-width: 0;
+  margin-top: 13px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #2f7890;
+  font-size: 16.5px;
+  letter-spacing: 0.08em;
+}
+
+#stay .top-v2-doors a:hover .top-v2-doors-who {
+  color: #bd5b11;
+}
+
+#stay .top-v2-doors-more {
+  margin-top: 8px;
+  font-size: 12.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #stay .top-v2-doors a {
+    transition: none;
+  }
+}
+
 /* スマホのアクセス地図は白い額縁を外し、地図面を横幅いっぱいに見せる。 */
 @media (max-width: 767px) {
   #location .top-v2-map-frame {

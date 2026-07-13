@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260713i"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260713j"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -361,7 +361,7 @@ height: 78vw;
           <p>懐かしの給食で、最初のひとときを</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item">
+      <li class="top-v2-timeline-item" data-snap-band="day">
         <div class="top-v2-timeline-time">14:00</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">ゼミ</span>
@@ -377,7 +377,7 @@ height: 78vw;
           <p>発表の合間に体を動かして、頭を切り替える</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item">
+      <li class="top-v2-timeline-item" data-snap-band="evening">
         <div class="top-v2-timeline-time">17:30</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">放課後</span>
@@ -386,7 +386,7 @@ height: 78vw;
         </div>
       </li>
       <li class="top-v2-timeline-divider" aria-hidden="true"><span class="top-v2-moon"></span>ここから、夜の懇親会</li>
-      <li class="top-v2-timeline-item top-v2-timeline-item--night">
+      <li class="top-v2-timeline-item top-v2-timeline-item--night" data-snap-band="night">
         <div class="top-v2-timeline-time">19:30</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">懇親会</span>
@@ -403,7 +403,7 @@ height: 78vw;
         </div>
       </li>
       <li class="top-v2-timeline-divider" aria-hidden="true"><span class="top-v2-sun"></span>あっという間に、朝</li>
-      <li class="top-v2-timeline-item">
+      <li class="top-v2-timeline-item" data-snap-band="morning">
         <div class="top-v2-timeline-time">翌9:00</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">朝</span>
@@ -663,10 +663,18 @@ height: 78vw;
 
 <script>
 (function () {
-  var bandOf = function (i) { return i < 4 ? 'day' : i < 5 ? 'evening' : i < 7 ? 'night' : 'morning'; };
   var items = document.querySelectorAll('.top-v2-timeline-item');
   var snaps = document.querySelectorAll('.top-v2-schedule-snap');
   if (!items.length || !snaps.length || !('IntersectionObserver' in window)) { return; }
+  var anchors = [];
+  items.forEach(function (item, index) {
+    if (item.dataset.snapBand) { anchors.push({ index: index, band: item.dataset.snapBand }); }
+  });
+  var bandOf = function (i) {
+    var band = snaps[0].dataset.band;
+    anchors.forEach(function (anchor) { if (anchor.index <= i) { band = anchor.band; } });
+    return band;
+  };
   var visible = new Set();
   var setActive = function (band) {
     snaps.forEach(function (s) { s.classList.toggle('is-active', s.dataset.band === band); });
