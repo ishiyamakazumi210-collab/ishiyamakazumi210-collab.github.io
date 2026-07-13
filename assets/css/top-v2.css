@@ -9238,3 +9238,55 @@ body.top-v2-playdialog-lock {
     margin-bottom: 12px;
   }
 }
+.top-v2-map-bridge {
+  width: min(980px, 100%);
+  margin: clamp(46px, 7vw, 78px) auto 0;
+  padding: clamp(24px, 4vw, 42px);
+  display: grid;
+  grid-template-columns: .92fr 1.08fr;
+  gap: clamp(26px, 5vw, 58px);
+  align-items: center;
+  color: #253b3d;
+  background: #fffaf0;
+  border: 2px dashed rgba(40, 89, 91, .35);
+  box-shadow: 8px 10px 0 rgba(40, 89, 91, .12);
+}
+
+.top-v2-map-bridge-kicker {
+  margin: 0 0 8px;
+  color: #247f86;
+  font: 900 13px/1 sans-serif;
+  letter-spacing: .16em;
+}
+
+.top-v2-map-bridge h3 {
+  margin: 0;
+  color: #253b3d;
+  font-size: clamp(25px, 3vw, 38px);
+  line-height: 1.45;
+  font-weight: 900;
+}
+
+.top-v2-map-bridge-copy > p:not(.top-v2-map-bridge-kicker) {
+  margin: 16px 0 22px;
+  line-height: 1.8;
+}
+
+.top-v2-map-bridge-preview {
+  display: block;
+  padding: 9px;
+  background: #fff;
+  border: 1px solid rgba(37, 59, 61, .14);
+  box-shadow: 0 12px 30px rgba(37, 59, 61, .16);
+  transform: rotate(1.3deg);
+  transition: transform .2s ease;
+}
+
+.top-v2-map-bridge-preview:hover { transform: rotate(0) translateY(-3px); }
+.top-v2-map-bridge-preview img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center; }
+
+@media (max-width: 767px) {
+  .top-v2-map-bridge { grid-template-columns: 1fr; }
+  .top-v2-map-bridge-preview { order: -1; }
+  .top-v2-map-bridge h3 { font-size: 27px; }
+}
