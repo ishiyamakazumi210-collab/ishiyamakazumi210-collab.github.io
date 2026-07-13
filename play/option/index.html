@@ -10,7 +10,7 @@
 
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260713p"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260713q"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -689,57 +689,100 @@ height: 78vw;
 <div class="l-section_title text-center mb-5">
 <h2 class="l-section_titleText--sub">宿泊のオプション</h2>
 </div>
-<div class="top-v2-price-card top-v2-price-card--notice">
-<p class="top-v2-print-tab top-v2-notice-sublabel">席替えのお知らせ</p>
-<h3 class="top-v2-formal-subtitle">部屋分け</h3>
-<p>基本は大部屋（25名程度）にお布団を並べてのお泊まりです（お部屋はグループごと専有）。</p>
-<p>お部屋を分けたい場合、26名以上のご利用なら追加1部屋が無料です。さらにもう1部屋分ける場合は5,000円です。</p>
-<p>25名以下のご利用は追加1部屋につき5,000円（最大2部屋）です。</p>
-<p>通常プランで部屋を分ける場合のゆったり目安は、大部屋25名程度・中部屋10名程度・小部屋5名程度の<strong>合計最大3部屋</strong>です。</p>
-<p class="top-v2-formal-note">ご希望は予約時またはお問い合わせでお知らせください。</p>
+<p class="top-v2-stayoption-lead">人数や過ごし方に合わせて、寝る場所を選べます。</p>
+<ul class="top-v2-menu-grid top-v2-stayoption-grid list-unstyled">
+<li class="top-v2-menu-card top-v2-stayoption-card">
+<figure class="top-v2-menu-photo"><img src="/assets/img/room-futon-real.jpg" alt="布団を並べた大部屋" width="1200" height="900" decoding="async" loading="lazy"></figure>
+<div class="top-v2-menu-body">
+<h3 class="top-v2-menu-name">部屋分けオプション</h3>
+<p class="top-v2-menu-tags"><span class="top-v2-menu-pricetag"><strong>5,000円</strong><small>/追加1部屋</small></span><span class="top-v2-menu-condtag">26名以上は1部屋無料</span></p>
+<p class="top-v2-menu-desc">基本の大部屋に、中部屋・小部屋を追加できます。大部屋とあわせて最大3部屋です。</p>
+<button type="button" class="top-v2-scene-detailbtn top-v2-stayoption-detail" data-scene-dialog-open="stay-option-room-dialog" aria-controls="stay-option-room-dialog">部屋割りを詳しく見る</button>
+</div>
+</li>
+<li class="top-v2-menu-card top-v2-stayoption-card">
+<figure class="top-v2-menu-photo"><img src="/assets/wp/themes/katasho/asset/image/play/stay_food_science.jpg" alt="調理室として利用する理科室" width="1164" height="816" decoding="async" loading="lazy"></figure>
+<div class="top-v2-menu-body">
+<h3 class="top-v2-menu-name">調理室併設コンパクトプラン</h3>
+<p class="top-v2-menu-tags"><span class="top-v2-menu-pricetag"><strong>大人1,000円引き</strong></span><span class="top-v2-menu-condtag">20名くらいまで</span></p>
+<p class="top-v2-menu-desc">宴会・食事は併設の調理室。宿泊は中部屋＋小部屋の2部屋で、寝室は寝るためのスペースです。</p>
+<button type="button" class="top-v2-scene-detailbtn top-v2-stayoption-detail" data-scene-dialog-open="stay-option-compact-dialog" aria-controls="stay-option-compact-dialog">定員と条件を詳しく見る</button>
+</div>
+</li>
+</ul>
+</div>
+</section>
+
+<dialog class="top-v2-scenedialog top-v2-stayoption-dialog" id="stay-option-room-dialog" aria-labelledby="stayOptionRoomDialogTitle">
+<div class="top-v2-playdialog-sheet">
+<h3 class="top-v2-playdialog-title" id="stayOptionRoomDialogTitle">部屋分けオプション</h3>
+<div class="top-v2-scenedialog-body">
+<img class="top-v2-stayoption-dialog-photo" src="/assets/img/room-futon-real.jpg" alt="布団を並べた大部屋" width="1200" height="900" loading="lazy">
+<p class="top-v2-scenedialog-lead">基本は大部屋（目安25名）にお布団を並べます。お部屋はグループごとの専有です。</p>
+<div class="top-v2-scenedialog-block">
+<h4>追加料金と部屋数</h4>
+<ul class="top-v2-scenedialog-list">
+<li>26名以上：追加1部屋が無料。さらにもう1部屋は5,000円</li>
+<li>25名以下：追加1部屋につき5,000円（最大2部屋）</li>
+<li>ゆったり目安：大部屋25名・中部屋10名・小部屋5名</li>
+<li>大部屋とあわせて合計最大3部屋</li>
+</ul>
 <div class="top-v2-roomplan">
 <svg class="top-v2-roomplan-svg" viewBox="0 0 520 190" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
 <rect x="16" y="16" width="168" height="128" rx="14" fill="rgba(47,120,144,0.07)" stroke="#2f7890" stroke-width="3"/>
-<g fill="#fff" stroke="#2f7890" stroke-width="2.5">
-<rect x="34" y="34" width="50" height="20" rx="7"/>
-<rect x="104" y="34" width="50" height="20" rx="7"/>
-<rect x="34" y="70" width="50" height="20" rx="7"/>
-<rect x="104" y="70" width="50" height="20" rx="7"/>
-<rect x="34" y="106" width="50" height="20" rx="7"/>
-<rect x="104" y="106" width="50" height="20" rx="7"/>
-</g>
-<g fill="rgba(47,120,144,0.35)">
-<circle cx="43" cy="44" r="4"/><circle cx="113" cy="44" r="4"/>
-<circle cx="43" cy="80" r="4"/><circle cx="113" cy="80" r="4"/>
-<circle cx="43" cy="116" r="4"/><circle cx="113" cy="116" r="4"/>
-</g>
+<g fill="#fff" stroke="#2f7890" stroke-width="2.5"><rect x="34" y="34" width="50" height="20" rx="7"/><rect x="104" y="34" width="50" height="20" rx="7"/><rect x="34" y="70" width="50" height="20" rx="7"/><rect x="104" y="70" width="50" height="20" rx="7"/><rect x="34" y="106" width="50" height="20" rx="7"/><rect x="104" y="106" width="50" height="20" rx="7"/></g>
+<g fill="rgba(47,120,144,0.35)"><circle cx="43" cy="44" r="4"/><circle cx="113" cy="44" r="4"/><circle cx="43" cy="80" r="4"/><circle cx="113" cy="80" r="4"/><circle cx="43" cy="116" r="4"/><circle cx="113" cy="116" r="4"/></g>
 <text x="100" y="172" text-anchor="middle" font-size="20" font-weight="700" fill="#2f7890">大部屋</text>
-<line x1="204" y1="80" x2="258" y2="80" stroke="#2f7890" stroke-width="3" stroke-linecap="round"/>
-<polygon points="254,68 276,80 254,92" fill="#2f7890" stroke="#2f7890" stroke-width="2" stroke-linejoin="round"/>
+<line x1="204" y1="80" x2="258" y2="80" stroke="#2f7890" stroke-width="3" stroke-linecap="round"/><polygon points="254,68 276,80 254,92" fill="#2f7890" stroke="#2f7890" stroke-width="2" stroke-linejoin="round"/>
 <rect x="296" y="16" width="122" height="128" rx="14" fill="rgba(47,120,144,0.07)" stroke="#2f7890" stroke-width="3"/>
-<g fill="#fff" stroke="#2f7890" stroke-width="2.5">
-<rect x="312" y="42" width="44" height="18" rx="6"/>
-<rect x="312" y="88" width="44" height="18" rx="6"/>
-</g>
-<g fill="rgba(47,120,144,0.35)">
-<circle cx="320" cy="51" r="3.5"/><circle cx="320" cy="97" r="3.5"/>
-</g>
+<g fill="#fff" stroke="#2f7890" stroke-width="2.5"><rect x="312" y="42" width="44" height="18" rx="6"/><rect x="312" y="88" width="44" height="18" rx="6"/></g>
+<g fill="rgba(47,120,144,0.35)"><circle cx="320" cy="51" r="3.5"/><circle cx="320" cy="97" r="3.5"/></g>
 <text x="357" y="172" text-anchor="middle" font-size="20" font-weight="700" fill="#2f7890">大部屋</text>
-<g>
-<rect x="436" y="30" width="68" height="36" rx="9" fill="#fff" stroke="#2f7890" stroke-width="2.5" stroke-dasharray="6 5"/>
-<rect x="436" y="94" width="68" height="36" rx="9" fill="#fff" stroke="#2f7890" stroke-width="2.5" stroke-dasharray="6 5"/>
-</g>
-<g fill="#2f7890" font-size="14" font-weight="700" text-anchor="middle">
-<text x="470" y="53">中部屋</text><text x="470" y="117">小部屋</text>
-</g>
+<g><rect x="436" y="30" width="68" height="36" rx="9" fill="#fff" stroke="#2f7890" stroke-width="2.5" stroke-dasharray="6 5"/><rect x="436" y="94" width="68" height="36" rx="9" fill="#fff" stroke="#2f7890" stroke-width="2.5" stroke-dasharray="6 5"/></g>
+<g fill="#2f7890" font-size="14" font-weight="700" text-anchor="middle"><text x="470" y="53">中部屋</text><text x="470" y="117">小部屋</text></g>
 <text x="470" y="172" text-anchor="middle" font-size="18" font-weight="700" fill="#2f7890">＋2部屋まで</text>
 </svg>
 </div>
-<p class="top-v2-roomplan-caption"><span class="top-v2-kinsoku">26名以上は追加1部屋が無料・</span><span class="top-v2-kinsoku">さらに分ける場合や25名以下は</span><span class="top-v2-kinsoku">5,000円/部屋</span><span class="top-v2-kinsoku">（大部屋とあわせて合計最大3部屋）</span></p>
-<p class="top-v2-map-link"><a class="top-v2-btn-outline" href="/map/">施設マップで全体を見る</a></p>
 </div>
+<p class="top-v2-scenedialog-caption">ご希望は予約時またはお問い合わせでお知らせください。</p>
+<div class="top-v2-scenedialog-actions"><a class="top-v2-btn-outline top-v2-btn-outline--sm" href="/map/">施設マップで全体を見る</a></div>
 </div>
-</section>
+<button type="button" class="top-v2-playdialog-closebtn" data-scene-dialog-close aria-label="閉じる"><span aria-hidden="true">×</span></button>
+</div>
+</dialog>
+
+<dialog class="top-v2-scenedialog top-v2-stayoption-dialog" id="stay-option-compact-dialog" aria-labelledby="stayOptionCompactDialogTitle">
+<div class="top-v2-playdialog-sheet">
+<h3 class="top-v2-playdialog-title" id="stayOptionCompactDialogTitle">調理室併設コンパクトプラン</h3>
+<div class="top-v2-scenedialog-body">
+<img class="top-v2-stayoption-dialog-photo" src="/assets/wp/themes/katasho/asset/image/play/stay_food_science.jpg" alt="調理室として利用する理科室" width="1164" height="816" loading="lazy">
+<p class="top-v2-scenedialog-lead">調理室を含む1階のコンパクトなエリアを貸し切る、20名くらいまでの割引プランです。</p>
+<div class="top-v2-scenedialog-block top-v2-scenedialog-block--compact">
+<h4>寝る場所と定員</h4>
+<ul class="top-v2-scenedialog-list">
+<li>寝室は中部屋＋小部屋の2部屋のみ</li>
+<li>就寝中心の目安：中部屋14名＋小部屋8名</li>
+<li>手狭でもよければ最大16名＋9名</li>
+<li>宴会・食事は併設の調理室。寝室は基本的に寝るためのスペース</li>
+</ul>
+</div>
+<div class="top-v2-scenedialog-block">
+<h4>料金と利用条件</h4>
+<ul class="top-v2-scenedialog-list">
+<li>大人料金は通常プランから1,000円引き</li>
+<li>最低利用金額：平日／オフシーズン37,000円、土日祝／ハイシーズン62,300円</li>
+<li>大部屋・追加部屋は利用不可</li>
+<li>1階のため夜間のフロア貸切なし（お部屋はグループごと専有）</li>
+<li>夕食オプションはBBQのみ</li>
+</ul>
+</div>
+<p class="top-v2-scenedialog-caption">予約時に「調理室併設コンパクトプラン」をお選びください。</p>
+<div class="top-v2-scenedialog-actions"><a class="top-v2-btn-outline top-v2-btn-outline--sm" href="#price">料金を確認する</a></div>
+</div>
+<button type="button" class="top-v2-playdialog-closebtn" data-scene-dialog-close aria-label="閉じる"><span aria-hidden="true">×</span></button>
+</div>
+</dialog>
+<script src="/assets/js/scene-details.js?v=20260713b" defer></script>
 <section class="l-section l-faq" id="faq">
 <div class="l-faq_bg">
 <div class="l-faq_bgLeft"><img src="/assets/wp/themes/katasho/asset/image/faq_bg_left.png" alt="" decoding="async" ><noscript><img src="/assets/wp/themes/katasho/asset/image/faq_bg_left.png" alt="" decoding="async"></noscript></div>

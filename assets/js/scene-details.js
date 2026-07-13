@@ -22,18 +22,26 @@
     });
 
     dialogs.forEach(function (dialog) {
+      var unlockPage = function () {
+        document.body.classList.remove('top-v2-playdialog-lock');
+      };
       var closeBtn = dialog.querySelector('[data-scene-dialog-close]');
       if (closeBtn) {
-        closeBtn.addEventListener('click', function () { dialog.close(); });
+        closeBtn.addEventListener('click', function () {
+          dialog.close();
+          unlockPage();
+        });
       }
 
       dialog.addEventListener('click', function (event) {
-        if (event.target === dialog) { dialog.close(); }
+        if (event.target === dialog) {
+          dialog.close();
+          unlockPage();
+        }
       });
 
-      dialog.addEventListener('close', function () {
-        document.body.classList.remove('top-v2-playdialog-lock');
-      });
+      dialog.addEventListener('close', unlockPage);
+      dialog.addEventListener('cancel', unlockPage);
     });
   }
 
