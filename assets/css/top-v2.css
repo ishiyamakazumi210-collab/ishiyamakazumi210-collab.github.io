@@ -2260,6 +2260,7 @@
 .top-v2-schedule-snap[data-band="evening"] { transform: scale(0.96) rotate(1.5deg); }
 .top-v2-schedule-snap[data-band="night"] { transform: scale(0.96) rotate(-1deg); }
 .top-v2-schedule-snap[data-band="morning"] { transform: scale(0.96) rotate(2deg); }
+.top-v2-schedule-snap[data-band="preview"] { transform: scale(0.96) rotate(0.8deg); }
 
 .top-v2-schedule-snap.is-active {
   opacity: 1;
@@ -2270,6 +2271,7 @@
 .top-v2-schedule-snap[data-band="evening"].is-active { transform: scale(1) rotate(1.5deg); }
 .top-v2-schedule-snap[data-band="night"].is-active { transform: scale(1) rotate(-1deg); }
 .top-v2-schedule-snap[data-band="morning"].is-active { transform: scale(1) rotate(2deg); }
+.top-v2-schedule-snap[data-band="preview"].is-active { transform: scale(1) rotate(0.8deg); }
 
 /* モデルコースSP: PCの連動スナップを、本文を隠さない小さなカードとして残す */
 @media (max-width: 767px) {
@@ -2321,10 +2323,12 @@
   .top-v2-schedule-snap[data-band="evening"] { transform: translateY(7px) scale(0.97) rotate(1deg); }
   .top-v2-schedule-snap[data-band="night"] { transform: translateY(7px) scale(0.97) rotate(-0.7deg); }
   .top-v2-schedule-snap[data-band="morning"] { transform: translateY(7px) scale(0.97) rotate(1.2deg); }
+  .top-v2-schedule-snap[data-band="preview"] { transform: translateY(7px) scale(0.97) rotate(0.6deg); }
   .top-v2-schedule-snap[data-band="day"].is-active { transform: translateY(0) scale(1) rotate(-1.4deg); }
   .top-v2-schedule-snap[data-band="evening"].is-active { transform: translateY(0) scale(1) rotate(1deg); }
   .top-v2-schedule-snap[data-band="night"].is-active { transform: translateY(0) scale(1) rotate(-0.7deg); }
   .top-v2-schedule-snap[data-band="morning"].is-active { transform: translateY(0) scale(1) rotate(1.2deg); }
+  .top-v2-schedule-snap[data-band="preview"].is-active { transform: translateY(0) scale(1) rotate(0.6deg); }
 }
 
 @media (max-width: 374px) {
@@ -2783,6 +2787,11 @@
 .top-v2-schedule-snap:nth-child(4)::before {
   background-image: url(/assets/img/tape-3.png);
   transform: translateX(-50%) rotate(-3deg);
+}
+
+.top-v2-schedule-snap[data-band="preview"]::before {
+  background-image: url(/assets/img/tape-2.png);
+  transform: translateX(-50%) rotate(1deg);
 }
 
 @media (max-width: 767px) {

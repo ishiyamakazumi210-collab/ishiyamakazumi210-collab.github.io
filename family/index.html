@@ -11,7 +11,7 @@
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260713o"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260713p"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -451,6 +451,7 @@ height: 78vw;
       <figure class="top-v2-schedule-snap" data-band="evening"><img src="/assets/img/bbq-platter.jpg" alt="" loading="lazy"><figcaption>夕方、みんなでBBQ</figcaption></figure>
       <figure class="top-v2-schedule-snap" data-band="night"><img src="/assets/img/play-cards/science-skeleton-catalog.jpg" alt="" loading="lazy"><figcaption>夜の理科室で肝試し</figcaption></figure>
       <figure class="top-v2-schedule-snap" data-band="morning"><img src="/assets/img/room-futon-real.jpg" alt="" loading="lazy"><figcaption>あさ、大部屋で</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-band="preview"><img src="/assets/img/kyushoku-tray.jpg" alt="" loading="lazy"><figcaption>まずは、給食体験</figcaption></figure>
     </div>
     </div>
     <p class="top-v2-timeline-note">※時間は一例です。人数やプランに合わせてスタッフがご案内します。</p>
@@ -683,8 +684,16 @@ height: 78vw;
     return band;
   };
   var visible = new Set();
+  var snapWrap = document.querySelector('.top-v2-schedule-snaps');
+  var mobile = window.matchMedia('(max-width: 767px)');
+  var currentBand = snaps[0].dataset.band;
   var setActive = function (band) {
-    snaps.forEach(function (s) { s.classList.toggle('is-active', s.dataset.band === band); });
+    currentBand = band;
+    var displayBand = band;
+    if (mobile.matches && snapWrap && snapWrap.getBoundingClientRect().top > 65) {
+      displayBand = 'preview';
+    }
+    snaps.forEach(function (s) { s.classList.toggle('is-active', s.dataset.band === displayBand); });
   };
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
@@ -697,6 +706,18 @@ height: 78vw;
     }
   }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
   items.forEach(function (item) { observer.observe(item); });
+  var scheduled = false;
+  var syncStickyState = function () {
+    if (scheduled) { return; }
+    scheduled = true;
+    window.requestAnimationFrame(function () {
+      scheduled = false;
+      setActive(currentBand);
+    });
+  };
+  window.addEventListener('scroll', syncStickyState, { passive: true });
+  window.addEventListener('resize', syncStickyState);
+  setActive(currentBand);
 })();
 </script>
 
