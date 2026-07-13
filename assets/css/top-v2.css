@@ -8930,8 +8930,77 @@ body.top-v2-playdialog-lock {
 }
 
 .top-v2-teacher-note--unified .top-v2-price-notes .top-v2-inline-link {
-  color: inherit;
+  color: #1565c0;
   text-decoration-color: currentColor;
+  text-decoration-thickness: 1px;
+}
+
+.top-v2-teacher-note--unified .top-v2-price-notes .top-v2-inline-link:hover {
+  color: #0b4f9c;
+}
+
+/* 料金内訳は年齢区分ごとに折り返し、語句の途中では改行しない。 */
+.top-v2-chalk-unitline {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3px 14px;
+}
+
+.top-v2-chalk-unitpart,
+.top-v2-chalk-unitnote {
+  white-space: nowrap;
+}
+
+.top-v2-chalk-unitnote {
+  color: rgba(255, 248, 232, 0.82);
+}
+
+@media (max-width: 575px) {
+  .top-v2-chalk-unitline {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 2px 12px;
+  }
+
+  .top-v2-chalk-unitpart:nth-child(3),
+  .top-v2-chalk-unitnote {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
+/* TOP「行くなら、誰と？」: 白カードを一枚のセクションとして束ねる。 */
+#stay .l-section_bg {
+  background-color: #f8f4e9;
+}
+
+#stay .l-section_title--image {
+  margin-bottom: 18px !important;
+}
+
+.top-v2-doors-lead {
+  max-width: 560px;
+  margin: 0 auto 30px;
+  padding: 0 16px;
+  color: #665a4a;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+  text-align: center;
+}
+
+#stay .top-v2-doors {
+  margin-top: 0;
+}
+
+@media (max-width: 575px) {
+  .top-v2-doors-lead {
+    margin-bottom: 28px;
+    font-size: 13.5px;
+  }
 }
 
 /* スマホのアクセス地図は白い額縁を外し、地図面を横幅いっぱいに見せる。 */

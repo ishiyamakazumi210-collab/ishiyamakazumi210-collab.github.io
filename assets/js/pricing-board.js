@@ -48,6 +48,25 @@
 
   function fmt(v) { return v.toLocaleString('ja-JP') + '円'; }
 
+  function renderFamilyUnits(el, cfg) {
+    el.classList.add('top-v2-chalk-unitline');
+    el.textContent = '';
+    [
+      ['おとな', cfg.adult],
+      ['小学生', cfg.elem],
+      ['3〜5歳', cfg.pre]
+    ].forEach(function (item) {
+      var part = document.createElement('span');
+      part.className = 'top-v2-chalk-unitpart';
+      part.textContent = item[0] + ' ' + fmt(item[1]);
+      el.appendChild(part);
+    });
+    var note = document.createElement('span');
+    note.className = 'top-v2-chalk-unitnote';
+    note.textContent = '（1人あたり）';
+    el.appendChild(note);
+  }
+
   function animateRewrite(els) {
     if (reduceMotion) { return; }
     els.forEach(function (el) {
@@ -301,7 +320,7 @@
       if (counts.pre > 0) { parts.push('3〜5歳' + counts.pre + '人'); }
       lineEl.textContent = parts.join(' ＋ ');
       totalEl.textContent = fmt(total);
-      unitsEl.textContent = 'おとな ' + cfg.adult.toLocaleString('ja-JP') + '円・小学生 ' + cfg.elem.toLocaleString('ja-JP') + '円・3〜5歳 ' + cfg.pre.toLocaleString('ja-JP') + '円（1人あたり）';
+      renderFamilyUnits(unitsEl, cfg);
       minEl.hidden = !(sum < cfg.floor);
       if (kidsStateEl) {
         var kidsCount = counts.elem + counts.pre;
