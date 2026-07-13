@@ -9003,6 +9003,54 @@ body.top-v2-playdialog-lock {
   }
 }
 
+/* TOP「行くなら、誰と？」仕上げ: 二重カードを解消し、写真プリントを主役に。 */
+#stay .top-v2-h .top-v2-scene-title-mark {
+  background: linear-gradient(transparent 58%, #b9e4f0 58%);
+}
+
+#stay .top-v2-doors a {
+  padding: 12px 8px 6px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#stay .top-v2-doors-who {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  margin-top: -11px;
+  padding: 5px 14px;
+  border: 2px solid #9ed3e2;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(20, 50, 65, 0.12);
+  color: #2f7890;
+  font-weight: 900;
+}
+
+#stay .top-v2-doors a:hover .top-v2-doors-who {
+  border-color: #f4b271;
+  color: #bd5b11;
+}
+
+#stay .top-v2-doors-more {
+  align-self: center;
+  margin-top: 9px;
+  padding-top: 0;
+  color: #2f7890;
+  font-weight: 800;
+}
+
+/* テーマのoverflow:hiddenがSPのsticky写真カードを無効化していた。
+   clipなら横方向のはみ出しは抑えつつ、スクロールコンテナを作らない。 */
+.l-main.top-v2-model-main {
+  overflow: clip;
+}
+
 /* スマホのアクセス地図は白い額縁を外し、地図面を横幅いっぱいに見せる。 */
 @media (max-width: 767px) {
   #location .top-v2-map-frame {
