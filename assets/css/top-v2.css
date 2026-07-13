@@ -9004,10 +9004,6 @@ body.top-v2-playdialog-lock {
 }
 
 /* TOP「行くなら、誰と？」仕上げ: 二重カードを解消し、写真プリントを主役に。 */
-#stay .top-v2-h .top-v2-scene-title-mark {
-  background: linear-gradient(transparent 58%, #b9e4f0 58%);
-}
-
 #stay .top-v2-doors a {
   padding: 12px 8px 6px;
   background: transparent;
@@ -9035,14 +9031,6 @@ body.top-v2-playdialog-lock {
 #stay .top-v2-doors a:hover .top-v2-doors-who {
   border-color: #f4b271;
   color: #bd5b11;
-}
-
-#stay .top-v2-doors-more {
-  align-self: center;
-  margin-top: 9px;
-  padding-top: 0;
-  color: #2f7890;
-  font-weight: 800;
 }
 
 /* テーマのoverflow:hiddenがSPのsticky写真カードを無効化していた。
@@ -9105,13 +9093,20 @@ body.top-v2-playdialog-lock {
   letter-spacing: 0.08em;
 }
 
+#stay .top-v2-doors-who [aria-hidden="true"] {
+  display: inline-block;
+  margin-left: 0.18em;
+  color: #f0831e;
+  transition: transform 0.2s ease;
+}
+
 #stay .top-v2-doors a:hover .top-v2-doors-who {
   color: #bd5b11;
 }
 
-#stay .top-v2-doors-more {
-  margin-top: 8px;
-  font-size: 12.5px;
+#stay .top-v2-doors a:hover .top-v2-doors-who [aria-hidden="true"],
+#stay .top-v2-doors a:focus-visible .top-v2-doors-who [aria-hidden="true"] {
+  transform: translateX(4px);
 }
 
 @media (prefers-reduced-motion: reduce) {
