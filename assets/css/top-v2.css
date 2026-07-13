@@ -9119,10 +9119,17 @@ body.top-v2-playdialog-lock {
   }
 }
 
-/* スマホのアクセス地図は白い額縁を外し、地図面を横幅いっぱいに見せる。 */
+/* スマホのアクセス地図: テーマ由来の左右-12pxをカード内だけ解除し、
+   上下左右すべて同じ10px幅の白い額縁を見せる。 */
 @media (max-width: 767px) {
   #location .top-v2-map-frame {
-    padding: 0;
-    background: transparent;
+    padding: 10px;
+    background: #fff;
+  }
+
+  #location .top-v2-map-frame .l-address_map {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
   }
 }
