@@ -1164,11 +1164,16 @@
   font-size: clamp(13px, 1.6vw, 15px);
 }
 
+/* 上限52px: 2カラム時のテキスト列は約551px(1120px以上)・最小459px(992px)で、
+   姉妹ページ最長のkinsokuユニット「ここで終わらせない。」(10字)が56pxだと
+   560px>551pxとなり文節内で折り返すため。もとはabout追補の #hero h1 で
+   52pxに上書きしていたが、id="hero"は姉妹5ページ全部にあり実質共通値
+   だったので、ここへ正式統合(全ページ表示変化なし) */
 .top-v2-scene-hero h1 {
   margin: 0 0 18px;
   color: #2f7890;
   font-weight: 900;
-  font-size: clamp(30px, 4.6vw, 56px);
+  font-size: clamp(30px, 4.6vw, 52px);
   line-height: 1.3;
 }
 
@@ -9289,4 +9294,293 @@ body.top-v2-playdialog-lock {
   .top-v2-map-bridge { grid-template-columns: 1fr; }
   .top-v2-map-bridge-preview { order: -1; }
   .top-v2-map-bridge h3 { font-size: 27px; }
+}
+
+/* ===================================================================
+   about/index.html 全面再構成（top-v2文法での再構築）
+   既存部品を最大流用（.top-v2-scene-section/-inner/-title/-title-mark/
+   -h/-kinsoku/-scenecard-photo/-worksheet/-print-tab/-address-card/
+   -inline-link/-btn-outline/-scene-finalcta）。ここは流用できない
+   about専用の最小差分のみ。
+   =================================================================== */
+
+/* --- 1. MV: 姉妹ページ共通のヒーロー文法（.top-v2-scene-hero、白地テキスト＋
+   隣に写真）に統一。写真は2000x664のパノラマで、共通ルールのheight:autoの
+   ままだと薄いリボン状になるため、4:3にクロップして他ページの写真と同じ
+   塊感に揃える。#hero は姉妹ページ（family/friends/gasshuku/kenshu）でも
+   同じidを使うため、idではなくabout MV専用クラス .top-v2-about-hero で
+   スコープする（姉妹ページの天然比率3:2写真を巻き込みクロップしない） --- */
+.top-v2-about-hero .top-v2-scene-hero-photo img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 78% 45%;
+}
+
+/* --- 2. 物語カード（白カード/プリント文法。既存.top-v2-worksheetの白紙+
+   テープ+左罫線を土台に、2枚並びのグリッドへ拡張） --- */
+.top-v2-about-story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  margin-top: 8px;
+}
+@media (min-width: 900px) {
+  .top-v2-about-story-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+    align-items: start;
+  }
+}
+.top-v2-about-story-card {
+  background: #fff;
+  border-left: 3px solid rgba(47, 120, 144, 0.35);
+  border-radius: 12px;
+  padding: 28px 26px;
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.1);
+}
+.top-v2-about-story-grid .top-v2-about-story-card:nth-child(1) { transform: rotate(-0.35deg); }
+.top-v2-about-story-grid .top-v2-about-story-card:nth-child(2) { transform: rotate(0.35deg); }
+.top-v2-about-story-card h3 {
+  margin: 0 0 10px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.4;
+}
+.top-v2-about-story-card p {
+  margin: 0 0 16px;
+  color: #2e2518;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.top-v2-about-story-card p:last-child {
+  margin-bottom: 0;
+}
+.top-v2-about-story-emphasis {
+  padding-left: 16px;
+  border-left: 4px solid #f0831e;
+  color: #2f7890 !important;
+  font-weight: 800;
+  font-size: 16px !important;
+}
+.top-v2-about-story-photo {
+  width: 100%;
+  margin: 0 0 20px;
+}
+.top-v2-about-story-photo figcaption {
+  margin-top: 10px;
+  text-align: center;
+  color: #665a4a;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+/* --- 3. あゆみ（カタショーの歴史）: 既存.top-v2-worksheet（さんすうプリント文法）
+   を年表用に流用。行の折返しに強い破線区切りで罫線を表現。
+   旧HPで実写が付いていた6行分は「学級だよりに貼った写真」の趣で丸窓を右に添える
+   （テキスト列dt/ddは左端を揃えるため常にgrid列1、写真は列2でdt/dd行を縦にまたぐ。
+   写真なし行は列2の要素が存在しないためテキスト列がそのまま全幅になる） --- */
+.top-v2-about-history-sheet {
+  max-width: 720px;
+}
+.top-v2-about-history-list {
+  margin: 8px 0 0;
+  padding: 0;
+}
+.top-v2-about-history-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px 18px;
+  padding: 13px 0;
+  border-bottom: 1px dashed rgba(47, 120, 144, 0.28);
+}
+.top-v2-about-history-row:last-child {
+  border-bottom: 0;
+}
+.top-v2-about-history-row dt {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+.top-v2-about-history-row dd {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  color: #2e2518;
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+.top-v2-about-history-photo {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  width: clamp(72px, 19vw, 88px);
+  aspect-ratio: 1 / 1;
+}
+.top-v2-about-history-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@media (min-width: 768px) {
+  .top-v2-about-history-photo {
+    width: clamp(96px, 8vw, 110px);
+  }
+}
+
+/* --- 4. 迎える人たち（スタッフ紹介）: ポラロイド(.top-v2-scenecard-photo)
+   ＋白カードのグリッド。既存の写真カード回転リズムを流用 --- */
+.top-v2-about-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px 20px;
+  margin-top: 8px;
+}
+@media (min-width: 600px) {
+  .top-v2-about-team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 34px 26px;
+  }
+}
+@media (min-width: 992px) {
+  .top-v2-about-team-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.top-v2-about-team-card {
+  text-align: center;
+}
+.top-v2-about-team-grid .top-v2-about-team-card:nth-child(4n+1) .top-v2-scenecard-photo { transform: rotate(-1.4deg); }
+.top-v2-about-team-grid .top-v2-about-team-card:nth-child(4n+2) .top-v2-scenecard-photo { transform: rotate(1.1deg); }
+.top-v2-about-team-grid .top-v2-about-team-card:nth-child(4n+3) .top-v2-scenecard-photo { transform: rotate(-0.8deg); }
+.top-v2-about-team-grid .top-v2-about-team-card:nth-child(4n+4) .top-v2-scenecard-photo { transform: rotate(1.3deg); }
+.top-v2-about-team-card h3 {
+  margin: 14px 0 2px;
+  color: #2e2518;
+  font-weight: 900;
+  font-size: 15.5px;
+}
+.top-v2-about-team-title {
+  margin: 0 0 8px;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 12.5px;
+}
+.top-v2-about-team-comment {
+  margin: 0;
+  color: #665a4a;
+  font-size: 12.5px;
+  line-height: 1.7;
+  text-align: left;
+}
+.top-v2-about-team-operator {
+  margin: 36px 0 0;
+  text-align: center;
+  color: #665a4a;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* --- 5. 片浜小学校校歌: 音楽室らしい静かな白カード --- */
+.top-v2-about-song-card {
+  max-width: 720px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: 0 8px 22px rgba(20, 50, 65, 0.12);
+  text-align: center;
+}
+.top-v2-about-song-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 14px;
+  border-radius: 6px;
+}
+
+/* --- 6. がっこうのれんらくさき: TOPから引退した.top-v2-address-card系を
+   単独カードとして再利用（地図は/access/に譲り、リンク1行で誘導） --- */
+.top-v2-about-info-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+}
+.top-v2-about-info-wrap .top-v2-address-card {
+  width: 100%;
+}
+.top-v2-about-faqlink {
+  margin: 24px 0 0;
+  text-align: center;
+}
+
+/* --- 7. 最終CTA: 既存.top-v2-scene-finalctaのh2書式をそのまま使用し、
+   ボタン列だけ中央寄せに --- */
+.top-v2-about-cta-actions {
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* --- 見出しリード文の中央寄せヘルパー（.top-v2-scene-leadは既定で左寄せのため、
+   .top-v2-scene-title(中央)と対で使うセクションにのみ付与） --- */
+.top-v2-about-center {
+  text-align: center;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* about: 8文字ユニット見出し（「片浜小学校から、」「カタショーの歴史」）は
+   サイト標準の12vw（375pxで45px＝実質7文字上限）だと1行に収まらず、
+   kinsokuのinline-blockが幅制約で「か/ら」等の語中折返しを起こす。
+   TOP #playroll/#stay と同じセクションスコープのフィットで一段縮める
+   （10.8vw: 375pxで40.5px×8字=324px≦338px、320pxでも277px≦288px） */
+@media (max-width: 991px) {
+  #story .top-v2-h,
+  #history .top-v2-h {
+    font-size: min(10.8vw, 96px);
+  }
+}
+
+/* TOP末尾(アクセスと最終CTAの間)の「カタショーについて」導線。
+   初版の裸の丸写真+素テキストはサイトの紙もの文法に無い形で浮いた
+   (オーナー指摘)→ aboutの年表シートと同じ「おたよりプリント」の
+   切れ端カードに。worksheet(白紙+テープ+左罫+微回転)と
+   あゆみタブを共用し、丸窓写真は紙の上に貼られた状態で見せる */
+.top-v2-abouthook {
+  background: #fff;
+  padding: 56px 20px;
+}
+.top-v2-abouthook-card {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.top-v2-abouthook-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 18px;
+  align-items: center;
+  margin-top: 12px;
+}
+.top-v2-abouthook-photo {
+  width: clamp(84px, 22vw, 108px);
+  height: auto;
+}
+.top-v2-abouthook-line {
+  margin: 0 0 10px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(18px, 2.2vw, 22px);
+  line-height: 1.55;
+}
+@media (min-width: 992px) {
+  .top-v2-abouthook {
+    padding: 80px 20px;
+  }
 }
