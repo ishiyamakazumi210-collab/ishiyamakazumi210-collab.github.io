@@ -121,6 +121,17 @@
       btn.addEventListener('click', function () {
         openSpot(btn.dataset.spot, dialog);
       });
+      // 写真のあるスポットだけカメラバッジ(フロア図の部屋バッジと同じ約束=
+      // 「押すと写真が見られる」。写真なしスポットに付けると嘘になるため
+      // データ駆動で自動判定。2026-07-17オーナー要望)
+      var data = SPOT_DATA[btn.dataset.spot];
+      if (data && data.photo) {
+        var cam = document.createElement('span');
+        cam.className = 'top-v2-mapspot-camchip';
+        cam.setAttribute('aria-hidden', 'true');
+        cam.innerHTML = '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#2f7890" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M3 8.5h4l1.6-2.3h6.8L17 8.5h4v11H3z"/><circle cx="12" cy="13.7" r="3.4"/></svg>';
+        btn.appendChild(cam);
+      }
     });
 
     // backdropクリックで閉じる: クリックがdialog要素自身をターゲットにした時だけ

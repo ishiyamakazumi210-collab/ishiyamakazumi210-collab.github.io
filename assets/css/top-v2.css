@@ -10274,3 +10274,23 @@ body.top-v2-mapspot-dialog-lock {
   padding: 8px 0;
   border-bottom: 0;
 }
+
+/* 全体マップの番号ドット用カメラバッジ(写真のあるスポットのみJSが付与)。
+   フロア図の部屋バッジ(.top-v2-maproom-chip)の縮小版 */
+.top-v2-map-dot {
+  overflow: visible;
+}
+.top-v2-mapspot-camchip {
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #2f7890;
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+  box-shadow: 0 1px 3px rgba(20, 50, 65, 0.25);
+}
