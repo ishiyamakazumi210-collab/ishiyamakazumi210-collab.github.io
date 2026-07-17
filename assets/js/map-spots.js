@@ -16,12 +16,16 @@
     kita: {
       name: '北棟',
       body: '宿泊部屋・調理室・シャワー室・音楽室などがあります。',
-      link: FLOORS_LINK
+      link: FLOORS_LINK,
+      photo: '/assets/img/spots/spot-kita.jpg',
+      alt: '北棟のイラスト（赤い屋根の校舎）'
     },
     minami: {
       name: '南棟',
       body: '宿泊部屋・食堂・会議室・教室・職員室などがあります。',
-      link: FLOORS_LINK
+      link: FLOORS_LINK,
+      photo: '/assets/img/spots/spot-minami.jpg',
+      alt: '南棟のイラスト（3階建ての校舎）'
     },
     gym: {
       name: '体育館',
@@ -40,7 +44,7 @@
     // ドット3箇所(正門横・裏・南側)とも同じ内容
     parking: {
       name: '駐車場',
-      body: '乗用車27台。大型バスも2台まで停められます。',
+      body: '校舎側・体育館前・グラウンド側の3か所にあります。大型バスも停められます。',
       photo: '/assets/img/spots/spot-parking.jpg',
       alt: '駐車場入口の目印になる、カタショー・ワンラボの赤い看板'
     },

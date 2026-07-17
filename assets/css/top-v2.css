@@ -10284,9 +10284,10 @@ body.top-v2-mapspot-dialog-lock {
   overflow: visible;
 }
 .top-v2-mapspot-camchip {
+  /* ピンの丸に半掛かりは可、中央の数字には被らないよう外寄せ(オーナー指定2026-07-17) */
   position: absolute;
-  right: -7px;
-  top: -7px;
+  right: -11px;
+  top: -11px;
   display: grid;
   place-items: center;
   width: 18px;
