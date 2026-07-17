@@ -17,7 +17,8 @@
   var CLASSROOM_PHOTO = '/assets/img/about-story-classroom.jpg';
   var CLASSROOM_PHOTO_ALT = '机と黒板が残るカタショーの教室';
 
-  var COMMON_STAY_NOTE = 'お部屋の割り振りは、人数にあわせてご案内します。';
+  var STANDARD_STAY_NOTE = '通常プランの宿泊棟・お部屋は施設側で決定し、宿泊日の10日前を目安にご案内します。';
+  var COMPACT_STAY_NOTE = '調理室併設コンパクトプランで使用する寝室です。';
   var COMMON_BEDDING = ['寝具5点（マットレス・敷布団・掛け布団・枕・シーツ）', 'エアコン', 'ドライヤー'];
   var CLASSROOM_BODY = '机も黒板も、当時のまま残っています。集まりや宴会にも使えます。';
   var BBQ_BODY = 'ビニール屋根つきなので、雨の日でもBBQができます。①②は調理室の前、③は南棟側です。';
@@ -67,7 +68,7 @@
       sub: 'コンパクトプランの中部屋',
       capacity: '目安16名（手狭でよければ最大18名）',
       chips: stayChips('二段ベッド8台'),
-      note: COMMON_STAY_NOTE,
+      note: COMPACT_STAY_NOTE,
       photo: STAY_PHOTO
     },
     s1f2: {
@@ -75,7 +76,7 @@
       sub: 'コンパクトプランの小部屋',
       capacity: '目安8名（手狭でよければ最大10名）',
       chips: stayChips('二段ベッド4台'),
-      note: COMMON_STAY_NOTE,
+      note: COMPACT_STAY_NOTE,
       photo: STAY_PHOTO
     },
     bbq1: { name: 'BBQ場①', body: BBQ_BODY, link: BBQ_LINK, photo: '/assets/img/rooms/room-bbq1.jpg', alt: 'ビニール屋根の下にグリル付きテーブルが並ぶBBQスペース' },
@@ -98,7 +99,7 @@
       sub: '児童会室',
       capacity: '目安12名（手狭でよければ最大14名）',
       chips: stayChips('二段ベッド6台'),
-      note: COMMON_STAY_NOTE,
+      note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
     },
 
@@ -108,7 +109,7 @@
       sub: '多目的室',
       capacity: '目安25名（手狭でよければ最大40名）',
       chips: stayChips('布団で就寝'),
-      note: COMMON_STAY_NOTE,
+      note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
     },
     s3f3: {
@@ -116,7 +117,7 @@
       sub: '放送室',
       capacity: '目安4名（手狭でよければ最大6名）',
       chips: stayChips('布団で就寝'),
-      note: COMMON_STAY_NOTE,
+      note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
     },
     s3f2: {
@@ -124,7 +125,7 @@
       sub: '3年教室',
       capacity: '目安10名（手狭でよければ最大16名）',
       chips: stayChips('二段ベッド5台'),
-      note: COMMON_STAY_NOTE,
+      note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
     },
     kyoshitsu1: { name: '教室①',
@@ -135,7 +136,7 @@
       sub: '前室つき・音楽準備室',
       capacity: '8名（手狭でも8名まで）',
       chips: stayChips('二段ベッド4台'),
-      note: COMMON_STAY_NOTE,
+      note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
     },
     n3f1: {
@@ -143,7 +144,7 @@
       sub: 'パソコン室',
       capacity: '目安25名（手狭でよければ最大40名）',
       chips: stayChips('布団で就寝'),
-      note: COMMON_STAY_NOTE,
+      note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
     }
   };
