@@ -10062,3 +10062,13 @@ body.top-v2-maproom-dialog-lock {
     font-size: min(10.8vw, 96px);
   }
 }
+
+/* 場所写真は体育館1枚に縮退(教室・宿泊部屋はポップアップと重複のため撤去)。
+   3列グリッド前提だったspotsを単独カードの中央寄せへ */
+.top-v2-map-spots {
+  display: block;
+}
+.top-v2-map-spots .top-v2-map-spot {
+  max-width: 520px;
+  margin: 0 auto;
+}
