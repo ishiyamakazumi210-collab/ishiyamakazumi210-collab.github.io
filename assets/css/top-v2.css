@@ -10030,20 +10030,35 @@ body.top-v2-maproom-dialog-lock {
   }
 }
 
-/* TOP #price 6列グリッド内で校内マップ橋(map-bridge再利用)を全幅に
-   (calloutのPC手当 grid-column:1/-1 と同じパターン) */
-.top-v2-price > .top-v2-map-bridge {
-  margin-top: 28px;
-}
-@media (min-width: 992px) {
-  .top-v2-price > .top-v2-map-bridge {
-    grid-column: 1 / -1;
-  }
-}
 
-/* 予約4ステップ節の削除で price(灰)→landscape(灰)→media(灰) の灰3連が
-   発生(オーナー指摘)。風景セクションを白に反転して交互リズムを復旧
-   (#landscapeはTOP専用id・背景厳密化ブロックと同じスコープ流儀) */
-#landscape.l-section_bg {
-  background-color: #fff;
+
+/* TOP校内マップ独立セクション(旧・予約4ステップ跡地の白席)。
+   料金(灰)と風景(灰)の間の白帯。見出しは8文字ユニットのため
+   #story/#historyと同じフィット(12vwだと語中折返しする) */
+.top-v2-mapsec {
+  background: #fff;
+}
+.top-v2-mapsec-lead {
+  text-align: center;
+}
+.top-v2-mapsec-photo {
+  display: block;
+  width: min(680px, 92%);
+  margin: 10px auto 22px;
+}
+.top-v2-mapsec-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 6px solid #fff;
+  box-shadow: 0 10px 26px rgba(20, 50, 65, 0.16);
+}
+.top-v2-mapsec-actions {
+  text-align: center;
+}
+@media (max-width: 991px) {
+  #mapsec .top-v2-h {
+    font-size: min(10.8vw, 96px);
+  }
 }
