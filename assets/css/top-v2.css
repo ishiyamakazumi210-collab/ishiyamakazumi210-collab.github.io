@@ -9631,17 +9631,20 @@ body.top-v2-playdialog-lock {
   height: auto;
 }
 .top-v2-map-dot {
+  /* 白丸+tealだとカメラバッジと兄弟に見えて混同する(オーナー指摘2026-07-17)。
+     番号=場所の印はtealベタ+白数字+白フチ(地図ピンの定番)に反転し、
+     白いカメラ=写真の合図と役割を色で分離する。カメラ側はフロア図と共通のまま */
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   transform: translate(-50%, -50%);
-  background: #fff;
-  border: 2px solid #2f7890;
+  background: #2f7890;
+  border: 2px solid #fff;
   border-radius: 50%;
-  color: #2f7890;
+  color: #fff;
   font-weight: 900;
   font-size: 12px;
   line-height: 1;
