@@ -274,6 +274,7 @@
   }
 
   function boot() {
+    initSwipeCues();
     var hotspots = window.FLOORMAP_HOTSPOTS;
     var dialog = document.querySelector('.top-v2-maproom-dialog');
     if (!hotspots || !dialog || typeof dialog.showModal !== 'function') { return; }
@@ -297,6 +298,27 @@
 
     dialog.addEventListener('close', function () {
       document.body.classList.remove('top-v2-maproom-dialog-lock');
+    });
+  }
+
+  // スワイプ方向キュー: テキスト注記の代替(オーナー判断2026-07-17)。
+  // SPのみCSS表示、最初のスワイプでフェードアウト
+  function initSwipeCues() {
+    document.querySelectorAll('.top-v2-floormap-scroll').forEach(function (sc) {
+      var wrap = document.createElement('div');
+      wrap.className = 'top-v2-floormap-scrollwrap';
+      sc.parentNode.insertBefore(wrap, sc);
+      wrap.appendChild(sc);
+      var cue = document.createElement('span');
+      cue.className = 'top-v2-floormap-swipecue';
+      cue.setAttribute('aria-hidden', 'true');
+      cue.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2f7890" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l7 7-7 7"/><path d="M13 5l7 7-7 7"/></svg>';
+      wrap.appendChild(cue);
+      var hide = function () { if (sc.scrollLeft > 12) { cue.classList.add('is-done'); } };
+      sc.addEventListener('scroll', hide, { passive: true });
+      // scrollイベントを取りこぼす環境の保険: 指を触れた時点で用済みにする
+      sc.addEventListener('pointerdown', function () { cue.classList.add('is-done'); }, { passive: true });
+      sc.addEventListener('touchstart', function () { cue.classList.add('is-done'); }, { passive: true });
     });
   }
 

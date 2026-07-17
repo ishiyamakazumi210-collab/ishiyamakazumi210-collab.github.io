@@ -10072,3 +10072,33 @@ body.top-v2-maproom-dialog-lock {
   max-width: 520px;
   margin: 0 auto;
 }
+
+/* スワイプ方向キュー(「※横にスワイプできます」テキストの代替)。
+   SPのみ表示、最初のスワイプでフェードアウト */
+.top-v2-floormap-scrollwrap {
+  position: relative;
+}
+.top-v2-floormap-swipecue {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  display: none;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1.5px solid #2f7890;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(20, 50, 65, 0.22);
+  pointer-events: none;
+  transition: opacity 0.45s;
+}
+.top-v2-floormap-swipecue.is-done {
+  opacity: 0;
+}
+@media (max-width: 767px) {
+  .top-v2-floormap-swipecue {
+    display: grid;
+  }
+}
