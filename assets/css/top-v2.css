@@ -10040,3 +10040,10 @@ body.top-v2-maproom-dialog-lock {
     grid-column: 1 / -1;
   }
 }
+
+/* 予約4ステップ節の削除で price(灰)→landscape(灰)→media(灰) の灰3連が
+   発生(オーナー指摘)。風景セクションを白に反転して交互リズムを復旧
+   (#landscapeはTOP専用id・背景厳密化ブロックと同じスコープ流儀) */
+#landscape.l-section_bg {
+  background-color: #fff;
+}
