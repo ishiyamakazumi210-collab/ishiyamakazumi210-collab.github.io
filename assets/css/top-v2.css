@@ -10102,3 +10102,175 @@ body.top-v2-maproom-dialog-lock {
     display: grid;
   }
 }
+
+/* ===== map/index.html 全体マップ番号ドット→詳細ポップアップ + 凡例の索引化。
+   ドットは既存.top-v2-map-dot(丸バッジの見た目・%座標)をそのまま流用し、
+   装飾のみの<span aria-hidden>だった要素を<button>化してクリック/Enter/Spaceで
+   開けるようにする。ダイアログは.top-v2-maproom-dialog系と見た目・開閉・
+   backdrop・ESC・bodyロックの流儀を揃えた独立実装（新規セレクタは
+   .top-v2-mapspot-*のみで既存部品は無変更、map-rooms.jsとは別ダイアログ） ===== */
+
+/* ドットのbutton化: 既定のpointer-events:noneとbutton要素の初期スタイルを打ち消す。
+   button.top-v2-map-dotは.top-v2-map-dot単体より詳細度が高いため、
+   ソース順に関係なく確実に上書きされる（他ページに.top-v2-map-dotは無い） */
+button.top-v2-map-dot,
+.top-v2-mapspot-trigger {
+  appearance: none;
+  -webkit-appearance: none;
+  pointer-events: auto;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.top-v2-mapspot-trigger:focus-visible {
+  outline: 3px solid #2f7890;
+  outline-offset: 3px;
+}
+
+/* ダイアログ本体: .top-v2-maproom-dialog-*と同じ寸法・カード・タイトル・
+   写真4:3・本文・注記・リンク・閉じるボタンの見た目を独立クラスで再現
+   （定員・チップ相当の情報は7スポットのどれも持たないため要素ごと省略） */
+.top-v2-mapspot-dialog {
+  width: min(94vw, 640px);
+  max-height: calc(100vh - 20px);
+  max-height: calc(100dvh - 20px);
+  margin: auto;
+  padding: 16px 0 4px;
+  border: 0;
+  background: transparent;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 1050;
+}
+.top-v2-mapspot-dialog::backdrop {
+  background: rgba(20, 32, 38, 0.55);
+}
+.top-v2-mapspot-dialog-sheet {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 22px 22px;
+  box-shadow: 0 14px 34px rgba(20, 40, 55, 0.28);
+  text-align: center;
+}
+.top-v2-mapspot-dialog-title {
+  display: inline-block;
+  margin: 4px 40px 12px;
+  background: linear-gradient(transparent 58%, #fff8e8 58%);
+  padding: 0 6px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(19px, 4.6vw, 23px);
+  line-height: 1.4;
+}
+.top-v2-mapspot-dialog-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(20, 50, 65, 0.15);
+  margin: 0 0 14px;
+}
+.top-v2-mapspot-dialog-desc {
+  margin: 0 0 14px;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: clamp(14.5px, 2vw, 16px);
+  line-height: 1.85;
+}
+.top-v2-mapspot-dialog-note {
+  margin: 0 0 14px;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.top-v2-mapspot-dialog-link {
+  display: inline-block;
+  margin: 0 0 4px;
+}
+.top-v2-mapspot-dialog-closebtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  padding: 0 0 2px;
+  border: 2px solid #2f7890;
+  border-radius: 50%;
+  background: #fff;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+}
+.top-v2-mapspot-dialog-closebtn:hover {
+  background: #eef6f8;
+}
+.top-v2-mapspot-dialog-closebtn:focus-visible {
+  outline: 3px solid #f0831e;
+  outline-offset: 3px;
+}
+
+/* dialogを開いている間はbodyのスクロールを止める */
+body.top-v2-mapspot-dialog-lock {
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .top-v2-mapspot-dialog {
+    width: min(94vw, 480px);
+  }
+  .top-v2-mapspot-dialog-sheet {
+    padding: 24px 16px 18px;
+  }
+  .top-v2-mapspot-dialog-photo {
+    margin: 0 0 10px;
+  }
+  .top-v2-mapspot-dialog-title {
+    margin: 2px 38px 8px;
+    font-size: clamp(18px, 5.2vw, 21px);
+  }
+  .top-v2-mapspot-dialog-desc {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .top-v2-mapspot-dialog-note {
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .top-v2-mapspot-dialog-closebtn {
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    font-size: 25px;
+  }
+}
+
+/* 凡例の索引化: dd(説明文)を全撤去し名前だけの短い行になったため、
+   2列で詰めて組む(375pxでも「④ グラウンド」が折り返さない実測幅) */
+.top-v2-mapspot-legend-hint {
+  margin-top: 10px;
+}
+.top-v2-mapspot-legend-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 24px;
+}
+.top-v2-mapspot-legend-list .top-v2-map-legend-row {
+  padding: 8px 0;
+  border-bottom: 0;
+}

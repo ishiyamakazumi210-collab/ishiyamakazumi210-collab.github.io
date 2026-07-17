@@ -11,7 +11,7 @@
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260715b"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260717a"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -283,26 +283,27 @@ height: 78vw;
       <div class="top-v2-scenecard-photo top-v2-map-photo">
         <div class="top-v2-map-photo-frame">
           <img src="/assets/img/campus-map-illust.jpg" alt="カタショー校内マップのイラスト。北棟・南棟・体育館・グラウンド・駐車場・茶畑・海の位置に番号がふられています。" width="1536" height="1024" loading="eager">
-          <span class="top-v2-map-dot" style="left:56%;top:22%" aria-hidden="true">1</span>
-          <span class="top-v2-map-dot" style="left:46%;top:55%" aria-hidden="true">2</span>
-          <span class="top-v2-map-dot" style="left:71%;top:56%" aria-hidden="true">3</span>
-          <span class="top-v2-map-dot" style="left:54%;top:84%" aria-hidden="true">4</span>
-          <span class="top-v2-map-dot" style="left:37%;top:11%" aria-hidden="true">5</span>
-          <span class="top-v2-map-dot" style="left:83%;top:24%" aria-hidden="true">5</span>
-          <span class="top-v2-map-dot" style="left:41%;top:72%" aria-hidden="true">5</span>
-          <span class="top-v2-map-dot" style="left:21%;top:34%" aria-hidden="true">6</span>
-          <span class="top-v2-map-dot" style="left:93%;top:83%" aria-hidden="true">7</span>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:56%;top:22%" data-spot="kita" aria-label="北棟の詳細">1</button>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:46%;top:55%" data-spot="minami" aria-label="南棟の詳細">2</button>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:71%;top:56%" data-spot="gym" aria-label="体育館の詳細">3</button>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:54%;top:84%" data-spot="grounds" aria-label="グラウンドの詳細">4</button>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:37%;top:11%" data-spot="parking" aria-label="駐車場の詳細">5</button>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:83%;top:24%" data-spot="parking" aria-label="駐車場の詳細">5</button>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:41%;top:72%" data-spot="parking" aria-label="駐車場の詳細">5</button>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:21%;top:34%" data-spot="tea" aria-label="茶畑の詳細">6</button>
+          <button type="button" class="top-v2-map-dot top-v2-mapspot-trigger" style="left:93%;top:83%" data-spot="sea" aria-label="海の詳細">7</button>
         </div>
       </div>
     </div>
 
     <div class="top-v2-worksheet top-v2-map-legend">
       <p class="top-v2-print-tab">ばしょのあんない</p>
-      <dl class="top-v2-map-legend-list">
-        <div class="top-v2-map-legend-row"><dt>① 北棟</dt><dd>— 宿泊部屋・調理室・シャワー室・音楽室 など</dd></div>
-        <div class="top-v2-map-legend-row"><dt>② 南棟</dt><dd>— 宿泊部屋・食堂・会議室・教室・職員室 など</dd></div>
-        <div class="top-v2-map-legend-row"><dt>③ 体育館</dt><dd>— 市営のため、利用は要予約です</dd></div>
-        <div class="top-v2-map-legend-row"><dt>④ グラウンド</dt><dd>— すべり台・ブランコ・うんてい・登り棒・鉄棒</dd></div>
+      <p class="top-v2-timeline-note top-v2-mapspot-legend-hint">番号をタップすると、くわしい説明が出ます。</p>
+      <dl class="top-v2-map-legend-list top-v2-mapspot-legend-list">
+        <div class="top-v2-map-legend-row"><dt>① 北棟</dt></div>
+        <div class="top-v2-map-legend-row"><dt>② 南棟</dt></div>
+        <div class="top-v2-map-legend-row"><dt>③ 体育館</dt></div>
+        <div class="top-v2-map-legend-row"><dt>④ グラウンド</dt></div>
         <div class="top-v2-map-legend-row"><dt>⑤ 駐車場</dt></div>
         <div class="top-v2-map-legend-row"><dt>⑥ 茶畑</dt></div>
         <div class="top-v2-map-legend-row"><dt>⑦ 海</dt></div>
@@ -350,6 +351,17 @@ height: 78vw;
   </div>
 </section>
 
+<dialog class="top-v2-mapspot-dialog" aria-labelledby="mapspotDialogTitle" aria-describedby="mapspotDialogDesc">
+  <div class="top-v2-mapspot-dialog-sheet">
+    <h3 class="top-v2-mapspot-dialog-title" id="mapspotDialogTitle"></h3>
+    <img class="top-v2-mapspot-dialog-photo" alt="" hidden>
+    <p class="top-v2-mapspot-dialog-desc" id="mapspotDialogDesc" hidden></p>
+    <p class="top-v2-mapspot-dialog-note" hidden></p>
+    <a class="top-v2-mapspot-dialog-link top-v2-btn-outline top-v2-btn-outline--sm" hidden></a>
+    <button type="button" class="top-v2-mapspot-dialog-closebtn" data-dialog-close aria-label="閉じる"><span aria-hidden="true">×</span></button>
+  </div>
+</dialog>
+
 <dialog class="top-v2-maproom-dialog" aria-labelledby="maproomDialogTitle" aria-describedby="maproomDialogDesc">
   <div class="top-v2-maproom-dialog-sheet">
     <h3 class="top-v2-maproom-dialog-title" id="maproomDialogTitle"></h3>
@@ -388,6 +400,7 @@ height: 78vw;
 
 <script src="/assets/js/floormap-hotspots.js?v=20260716a" defer></script>
 <script src="/assets/js/map-rooms.js?v=20260716a" defer></script>
+<script src="/assets/js/map-spots.js?v=20260717a" defer></script>
 
                 </div>
             </main>
