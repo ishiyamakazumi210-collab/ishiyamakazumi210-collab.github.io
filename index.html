@@ -301,6 +301,9 @@ height: 78vw;
               </ul>
             </li>
             <li class="nav-item ">
+              <a class="l-nav_menuLink nav-link" href="/map/">校内マップ</a>
+            </li>
+            <li class="nav-item ">
               <a class="l-nav_menuLink nav-link" href="/album/">クチコミ＆SNS</a>
             </li>
             <li class="nav-item ">
@@ -722,7 +725,7 @@ height: 78vw;
           <input type="checkbox" id="plan-compact" data-plan="compact">
           <span>調理室併設コンパクトプラン（20名くらいまで）を適用する</span>
         </label>
-        <p class="top-v2-chalk-menu-note">寝室は2部屋のみ（就寝中心の目安：中部屋14名＋小部屋8名／手狭でもよければ最大16名＋9名）<br>宴会・食事は併設の調理室／大部屋・追加部屋は利用不可／1階・夜間フロア貸切なし／夕食オプションはBBQのみ</p>
+        <p class="top-v2-chalk-menu-note">寝室は2部屋のみ（就寝中心の目安：中部屋16名＋小部屋8名／手狭でもよければ最大18名＋10名）<br>宴会・食事は併設の調理室／大部屋・追加部屋は利用不可／1階・夜間フロア貸切なし／夕食オプションはBBQのみ</p>
       </div>
     </details>
     <div class="top-v2-chalk-family" role="group" aria-label="おとな人数を選ぶ">
@@ -762,6 +765,18 @@ height: 78vw;
                       <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big">空き状況を見る</a>
                       <a href="/play/option/#price" class="top-v2-price-detail">料金の詳細を見る</a>
                     </div>
+                    <!-- 校内マップへの橋: 人数を入れた直後の「その人数、どの部屋で寝る?」に答える位置。部品は/play/のmap-bridgeを再利用 -->
+                    <aside class="top-v2-map-bridge" aria-labelledby="topMapTitle">
+                      <div class="top-v2-map-bridge-copy">
+                        <p class="top-v2-map-bridge-kicker">校内MAP</p>
+                        <h3 id="topMapTitle">その人数、どの部屋で寝る？</h3>
+                        <p>宿泊部屋ごとの定員めやす、調理室やシャワーの場所。校舎まるごと、間取りで見られます。</p>
+                        <a class="top-v2-btn-outline" href="/map/" data-event="top_map_bridge">校内マップを見る</a>
+                      </div>
+                      <a class="top-v2-map-bridge-preview" href="/map/" aria-label="校内マップを見る" data-event="top_map_bridge_image">
+                        <img src="/assets/img/campus-map-illust.jpg" alt="カタショー校内マップのイラスト" width="1536" height="1024" loading="lazy">
+                      </a>
+                    </aside>
                   </div>
                 </div>
               </div>

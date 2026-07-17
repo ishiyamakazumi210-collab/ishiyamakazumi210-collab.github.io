@@ -5532,7 +5532,9 @@ ul.top-v2-doors.list-unstyled {
 .top-v2-h {
   font-size: 26px;
   line-height: 1.35;
-  transform: rotate(-1deg);
+  /* 旧テーマ由来の「元気回転」rotate(-1deg)は2026-07-16オーナー判断で廃止。
+     文字の傾きは大サイズでは歪みに見える。傾きはテープ・ポラロイド等の
+     「物」だけに残す(遊び心を残して洗練の方針) */
 }
 
 @media (min-width: 992px) {
@@ -8466,13 +8468,14 @@ body.top-v2-playdialog-lock {
   overflow: hidden;
 }
 
-/* ポップアップ内の写真(オーナー要望)。カード画像を流用表示 */
+/* ポップアップ内の写真(オーナー要望)。カード画像(.top-v2-catalog-photo img:
+   width:100%; aspect-ratio:4/3; object-fit:cover)と同じ切り抜きを、
+   ダイアログ幅まで拡大して表示する(絵はカードと同一、サイズだけ大きい) */
 .top-v2-playdialog-photo {
   display: block;
   width: 100%;
-  height: 100%;
-  min-height: 260px;
-  max-height: 340px;
+  height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 10px;
   border: 3px solid #fff;
@@ -8500,7 +8503,7 @@ body.top-v2-playdialog-lock {
   }
   .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) .top-v2-playdialog-photo {
     grid-area: photo;
-    align-self: stretch;
+    align-self: start;
   }
   .top-v2-playdialog-sheet:has(.top-v2-playdialog-photo:not([hidden])) .top-v2-playdialog-title {
     grid-area: title;
@@ -8523,7 +8526,8 @@ body.top-v2-playdialog-lock {
   }
 }
 
-/* SP: カードで一度見た写真は短いサムネイルにし、詳細を一画面に収める */
+/* SP: 写真はベースのwidth:100%・aspect-ratio:4/3をそのまま使う。
+   ここでは下余白だけ調整する */
 @media (max-width: 767px) {
   .top-v2-playdialog {
     width: min(94vw, 480px);
@@ -8532,9 +8536,6 @@ body.top-v2-playdialog-lock {
     padding: 24px 16px 18px;
   }
   .top-v2-playdialog-photo {
-    height: clamp(112px, 20dvh, 132px);
-    min-height: 0;
-    max-height: none;
     margin: 0 0 10px;
   }
   .top-v2-playdialog-title {
@@ -9582,5 +9583,460 @@ body.top-v2-playdialog-lock {
 @media (min-width: 992px) {
   .top-v2-abouthook {
     padding: 80px 20px;
+  }
+}
+
+/* ===================================================================
+   map/index.html 全面再構築（top-v2文法での再構築）
+   既存部品を最大流用（.top-v2-scene-section/-inner/-hero/-title-mark/
+   -kinsoku/-scenecard-photo/-worksheet/-print-tab/-inline-link/
+   -actions/-timeline-note/-cta-big）。ここは流用できないmap専用の
+   最小差分のみ。id="hero"等は姉妹ページと共有し既存#hero.top-v2-scene-
+   sectionの上余白調整をそのまま受けるが、新規CSSは全て.top-v2-map-*
+   でスコープし他ページへ波及しないようにする。
+   =================================================================== */
+
+/* --- 1. ヒーロー: 写真を持たないH1+リードのみ。姉妹ページ共通の
+   .top-v2-scene-hero（テキスト+写真の2カラム）を流用しつつ、写真列が
+   無いためPCも1カラム中央寄せに強制する（.top-v2-map-hero-gridでのみ
+   上書きするため他ページの.top-v2-scene-heroには影響しない） --- */
+.top-v2-map-hero-grid {
+  text-align: center;
+}
+.top-v2-map-hero-grid > div {
+  max-width: 720px;
+  margin: 0 auto;
+}
+@media (min-width: 992px) {
+  .top-v2-map-hero-grid.top-v2-scene-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --- 2. 全体MAP: ポラロイド大判カード(.top-v2-scenecard-photo)の中に
+   写真と等寸のフレームdivを重ね、番号ドットを%座標で絶対配置する。
+   画像は1536x1024=3:2で、.top-v2-scenecard-photo imgのaspect-ratio:
+   3/2 object-fit:coverと完全一致するためクロップされず、フレームdiv
+   がそのまま画像の実表示範囲になり%座標を直接使える --- */
+.top-v2-map-photo-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.top-v2-map-photo-frame {
+  position: relative;
+}
+.top-v2-map-photo-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.top-v2-map-dot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 2px solid #2f7890;
+  border-radius: 50%;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 12px;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(20, 50, 65, 0.3);
+  pointer-events: none;
+}
+@media (min-width: 768px) {
+  .top-v2-map-dot {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+}
+
+/* --- 3. 凡例: おたよりプリント(.top-v2-worksheet)を流用。dt/ddは
+   横並びにせずブロック既定表示のまま縦積みにし、SP375pxでも
+   横スクロールを起こさないようにする --- */
+.top-v2-map-legend {
+  margin: 40px auto 0;
+}
+.top-v2-map-legend-list {
+  margin: 8px 0 0;
+  padding: 0;
+}
+.top-v2-map-legend-row {
+  padding: 12px 0;
+  border-bottom: 1px dashed rgba(47, 120, 144, 0.28);
+}
+.top-v2-map-legend-row:last-child {
+  border-bottom: 0;
+}
+.top-v2-map-legend-row dt {
+  margin: 0;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+.top-v2-map-legend-row dd {
+  margin: 2px 0 0;
+  color: #2e2518;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* --- 4. 場所の写真3枚: 料金・遊び解説なしの薄い案内板。写真は
+   .top-v2-scenecard-photoを流用しキャプション1行を添えるのみ。
+   カード単体へのリンクは持たず、リンクはカード群の下に1本
+   (.top-v2-actionsを流用) --- */
+.top-v2-map-spots {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  max-width: 900px;
+  margin: 8px auto 0;
+}
+@media (min-width: 700px) {
+  .top-v2-map-spots {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+.top-v2-map-spot-photo {
+  max-width: 340px;
+  margin: 0 auto;
+}
+.top-v2-map-spot-caption {
+  margin: 14px 0 0;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: 14.5px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* --- 5. 締め: アクセスへのブリッジ1行(.top-v2-actionsを流用)+CTA --- */
+.top-v2-map-closing-cta {
+  margin: 20px 0 0;
+  text-align: center;
+}
+
+/* 3333行の応急ルール（h2「まずは、定番の〜」のSP一行維持のための
+   .top-v2-scene-title-mark{font-size:21px}）が、素のマークspanを使う
+   シーンページのヒーローH1(.top-v2-scene-h1text)まで巻き込み、
+   SPの主見出しが設計値clamp(30px〜)の7割で出ていた（/map/構築時に発覚、
+   about/family/gasshuku/kenshuも同罪）。H1側は親のクランプへ復帰させる。
+   全H1がkinsoku/br文節化済みのため30pxでも語中折返しは起きない（実測済） */
+@media (max-width: 767px) {
+  .top-v2-scene-h1text .top-v2-scene-title-mark {
+    font-size: inherit;
+  }
+}
+
+/* ===== map/index.html #floors 追補: フロアごとの案内図
+   （南棟・北棟・中庭を1枚に収めたlandscape SVGを1階/2階/3階ごとに表示。
+   横長のためSPは.top-v2-floormap-scrollで横スクロール、PCは全体表示。
+   セレクタは.top-v2-floormap-*のみで新規スコープ、既存部品は無変更） ===== */
+.top-v2-floormap-level {
+  margin: 0 0 44px;
+}
+.top-v2-floormap-level:last-of-type {
+  margin-bottom: 0;
+}
+.top-v2-floormap-level-title {
+  margin: 0 0 16px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(18px, 2.2vw, 22px);
+  text-align: center;
+}
+.top-v2-floormap-swipehint {
+  display: block;
+  margin: 0 0 8px;
+  color: #5a7a88;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .top-v2-floormap-swipehint {
+    display: none;
+  }
+}
+.top-v2-floormap-scroll {
+  max-width: 1080px;
+  margin: 0 auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.top-v2-floormap-scroll img {
+  display: block;
+  min-width: 640px;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding: 14px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(20, 50, 65, 0.10);
+}
+@media (min-width: 768px) {
+  .top-v2-floormap-scroll img {
+    min-width: 0;
+  }
+}
+
+/* ===== map/index.html #floors 追補2: 部屋タップ→詳細ポップアップ
+   （gen-floormaps.mjsが出力するfloormap-hotspots.jsの%座標を、
+   map-rooms.jsが.top-v2-maproom-stage内へ絶対配置ボタンとして描画する。
+   stageは.top-v2-floormap-scroll imgと同じwidth/min-width規則をミラーし、
+   常にimgの実描画幅と一致させる（imgのpadding:14pxぶんの補正は
+   map-rooms.js側のcalc()で行うため、ここでは触れない）。
+   セレクタは.top-v2-maproom-*のみで新規スコープ、既存部品は無変更） ===== */
+.top-v2-maproom-stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 640px;
+}
+@media (min-width: 768px) {
+  .top-v2-maproom-stage {
+    min-width: 0;
+  }
+}
+
+/* ホットスポット本体: 既定は透明。タップ可能に見せるのは右上の+チップのみで、
+   ボタン自体の縁はfocus/active時だけ薄teal */
+.top-v2-maproom-hotspot {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.top-v2-maproom-hotspot:focus-visible,
+.top-v2-maproom-hotspot:active {
+  border-color: rgba(47, 120, 144, 0.6);
+  background: rgba(47, 120, 144, 0.1);
+  outline: none;
+}
+
+/* 常時見えるタップ案内チップ(+)。ボタン右上にはみ出させて置く */
+.top-v2-maproom-chip {
+  /* 内側配置は短い部屋で部屋名に被った→通知バッジの定石=右上角に半掛け。
+     角バッジは所属が直感で読め、中央寄せのラベルとは構造的に被らない(2026-07-16) */
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid #2f7890;
+  border-radius: 50%;
+  background: #fff;
+  line-height: 1;
+  pointer-events: none;
+  box-shadow: 0 1px 3px rgba(20, 50, 65, 0.25);
+}
+
+/* --- 部屋詳細ダイアログ: play-catalog.js/.top-v2-playdialog系と同じ
+   開閉・backdrop・ESC・bodyロックの流儀を踏襲した独立実装 --- */
+.top-v2-maproom-dialog {
+  width: min(94vw, 640px);
+  max-height: calc(100vh - 20px);
+  max-height: calc(100dvh - 20px);
+  margin: auto;
+  padding: 16px 0 4px;
+  border: 0;
+  background: transparent;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 1050;
+}
+.top-v2-maproom-dialog::backdrop {
+  background: rgba(20, 32, 38, 0.55);
+}
+.top-v2-maproom-dialog-sheet {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 22px 22px;
+  box-shadow: 0 14px 34px rgba(20, 40, 55, 0.28);
+  text-align: center;
+}
+.top-v2-maproom-dialog-title {
+  display: inline-block;
+  margin: 4px 40px 12px;
+  background: linear-gradient(transparent 58%, #fff8e8 58%);
+  padding: 0 6px;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: clamp(19px, 4.6vw, 23px);
+  line-height: 1.4;
+}
+/* .top-v2-playdialog-photoと同じ: width:100%; aspect-ratio:4/3; object-fit:cover
+   でダイアログ幅いっぱいに表示(引き伸ばし・崩れなし) */
+.top-v2-maproom-dialog-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(20, 50, 65, 0.15);
+  margin: 0 0 14px;
+}
+.top-v2-maproom-dialog-capacity {
+  margin: 0 0 12px;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.top-v2-maproom-dialog-capacity-label {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #fff8e8;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 12px;
+}
+.top-v2-maproom-dialog-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-maproom-dialog-chip {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #fff8e8;
+  border: 1px solid rgba(47, 120, 144, 0.35);
+  border-radius: 999px;
+  color: #4a3f2f;
+  font-weight: 700;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.top-v2-maproom-dialog-desc {
+  margin: 0 0 14px;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: clamp(14.5px, 2vw, 16px);
+  line-height: 1.85;
+}
+.top-v2-maproom-dialog-note {
+  margin: 0 0 14px;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.top-v2-maproom-dialog-link {
+  display: inline-block;
+  margin: 0 0 4px;
+}
+.top-v2-maproom-dialog-closebtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  padding: 0 0 2px;
+  border: 2px solid #2f7890;
+  border-radius: 50%;
+  background: #fff;
+  color: #2f7890;
+  font-weight: 900;
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+}
+.top-v2-maproom-dialog-closebtn:hover {
+  background: #eef6f8;
+}
+.top-v2-maproom-dialog-closebtn:focus-visible {
+  outline: 3px solid #f0831e;
+  outline-offset: 3px;
+}
+
+/* dialogを開いている間はbodyのスクロールを止める */
+body.top-v2-maproom-dialog-lock {
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .top-v2-maproom-dialog {
+    width: min(94vw, 480px);
+  }
+  .top-v2-maproom-dialog-sheet {
+    padding: 24px 16px 18px;
+  }
+  .top-v2-maproom-dialog-photo {
+    margin: 0 0 10px;
+  }
+  .top-v2-maproom-dialog-title {
+    margin: 2px 38px 8px;
+    font-size: clamp(18px, 5.2vw, 21px);
+  }
+  .top-v2-maproom-dialog-capacity {
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .top-v2-maproom-dialog-chips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .top-v2-maproom-dialog-chip {
+    padding: 5px 6px;
+    text-align: center;
+    font-size: 11.5px;
+  }
+  .top-v2-maproom-dialog-desc {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .top-v2-maproom-dialog-note {
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .top-v2-maproom-dialog-closebtn {
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    font-size: 25px;
+  }
+}
+
+/* TOP #price 6列グリッド内で校内マップ橋(map-bridge再利用)を全幅に
+   (calloutのPC手当 grid-column:1/-1 と同じパターン) */
+.top-v2-price > .top-v2-map-bridge {
+  margin-top: 28px;
+}
+@media (min-width: 992px) {
+  .top-v2-price > .top-v2-map-bridge {
+    grid-column: 1 / -1;
   }
 }

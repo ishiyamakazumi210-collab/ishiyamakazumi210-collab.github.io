@@ -16,7 +16,7 @@
   };
   var MEAL_LABELS = { kyushoku: '給食', bbq: '提供型BBQ', sando: 'サンド' };
   var MAX_PEOPLE = 100;
-  var COMPACT_COMFORT_MAX = 22;
+  var COMPACT_COMFORT_MAX = 24;
   var COMPACT_HARD_MAX = 25;
 
   // 調理室併設コンパクトプラン（20名くらいまで）: 大人-1,000円、子どもは
@@ -179,7 +179,7 @@
     if (!board) { return null; }
     var notice = document.createElement('p');
     notice.className = 'top-v2-chalk-capacity-notice';
-    notice.textContent = '※ 寝室2部屋の目安22名を超えます。手狭な配置になるため、ご相談ください';
+    notice.textContent = '※ 寝室2部屋の目安24名を超えます。手狭な配置になるため、ご相談ください';
     notice.hidden = true;
     board.insertAdjacentElement('afterend', notice);
     return notice;
@@ -189,7 +189,7 @@
     notice.hidden = !compact || totalPeople <= COMPACT_COMFORT_MAX;
     if (notice.hidden) { return; }
     notice.textContent = totalPeople <= COMPACT_HARD_MAX
-      ? '※ 寝室2部屋の目安22名を超えます。中部屋16名＋小部屋9名までの手狭な配置になるため、ご相談ください'
+      ? '※ 寝室2部屋の目安24名を超えます。中部屋18名＋小部屋10名までの手狭な配置になるため、ご相談ください'
       : '※ 寝室2部屋の上限25名を超えるため、通常プラン料金で計算しています';
   }
 
