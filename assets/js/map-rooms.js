@@ -24,6 +24,21 @@
   var KAIGI_BODY = window.KATASHO_DATA.text.kaigiRoom.body;
   var BBQ_PHOTO = window.KATASHO_DATA.images.bbqArea.src;
   var BBQ_ALT = window.KATASHO_DATA.images.bbqArea.alt;
+  var ROOMS = window.KATASHO_DATA.rooms;
+
+  // 部屋別定員(目安/最大)も site.json(rooms.<roomId>.typical/max)が単一データソース。
+  // 表記は2パターンのみ(全部屋で確認済み): 目安と最大が異なる部屋は
+  // 「目安N名（手狭でよければ最大M名）」、一致する部屋(n3f2)は
+  // 「N名（手狭でもN名まで）」。
+  function capacityText(roomId) {
+    var room = ROOMS[roomId];
+    var typical = room.typical;
+    var max = room.max;
+    if (typical === max) {
+      return typical + '名（手狭でも' + max + '名まで）';
+    }
+    return '目安' + typical + '名（手狭でよければ最大' + max + '名）';
+  }
 
   var STANDARD_STAY_NOTE = '通常プランの宿泊棟・お部屋は施設側で決定し、宿泊日の10日前を目安にご案内します。';
   var COMPACT_STAY_NOTE = '調理室併設コンパクトプランで使用する寝室です。';
@@ -74,7 +89,7 @@
     s1f1: {
       name: '南棟一階宿泊部屋①',
       sub: 'コンパクトプランの中部屋',
-      capacity: '目安16名（手狭でよければ最大18名）',
+      capacity: capacityText('s1f1'),
       chips: stayChips('二段ベッド8台'),
       note: COMPACT_STAY_NOTE,
       photo: STAY_PHOTO
@@ -82,7 +97,7 @@
     s1f2: {
       name: '南棟一階宿泊部屋②',
       sub: 'コンパクトプランの小部屋',
-      capacity: '目安8名（手狭でよければ最大10名）',
+      capacity: capacityText('s1f2'),
       chips: stayChips('二段ベッド4台'),
       note: COMPACT_STAY_NOTE,
       photo: STAY_PHOTO
@@ -105,7 +120,7 @@
     n2f3: {
       name: '北棟宿泊部屋③',
       sub: '児童会室',
-      capacity: '目安12名（手狭でよければ最大14名）',
+      capacity: capacityText('n2f3'),
       chips: stayChips('二段ベッド6台'),
       note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
@@ -115,7 +130,7 @@
     s3f1: {
       name: '南棟宿泊部屋①',
       sub: '多目的室',
-      capacity: '目安25名（手狭でよければ最大40名）',
+      capacity: capacityText('s3f1'),
       chips: stayChips('布団で就寝'),
       note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
@@ -123,7 +138,7 @@
     s3f3: {
       name: '南棟宿泊部屋③',
       sub: '放送室',
-      capacity: '目安4名（手狭でよければ最大6名）',
+      capacity: capacityText('s3f3'),
       chips: stayChips('布団で就寝'),
       note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
@@ -131,7 +146,7 @@
     s3f2: {
       name: '南棟宿泊部屋②',
       sub: '3年教室',
-      capacity: '目安10名（手狭でよければ最大16名）',
+      capacity: capacityText('s3f2'),
       chips: stayChips('二段ベッド5台'),
       note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
@@ -142,7 +157,7 @@
     n3f2: {
       name: '北棟宿泊部屋②',
       sub: '前室つき・音楽準備室',
-      capacity: '8名（手狭でも8名まで）',
+      capacity: capacityText('n3f2'),
       chips: stayChips('二段ベッド4台'),
       note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO
@@ -150,7 +165,7 @@
     n3f1: {
       name: '北棟宿泊部屋①',
       sub: 'パソコン室',
-      capacity: '目安25名（手狭でよければ最大40名）',
+      capacity: capacityText('n3f1'),
       chips: stayChips('布団で就寝'),
       note: STANDARD_STAY_NOTE,
       photo: STAY_PHOTO

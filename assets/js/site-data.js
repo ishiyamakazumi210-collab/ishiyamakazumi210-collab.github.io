@@ -14,7 +14,43 @@ window.KATASHO_DATA = {
   },
   "minSpend": {
     "weekday": "42,000円(大人5名分)",
-    "holiday": "69,300円(大人7名分)"
+    "holiday": "69,300円(大人7名分)",
+    "compactWeekday": "37,000円",
+    "compactHoliday": "62,300円"
+  },
+  "rooms": {
+    "s1f1": {
+      "typical": "16",
+      "max": "18"
+    },
+    "s1f2": {
+      "typical": "8",
+      "max": "10"
+    },
+    "n2f3": {
+      "typical": "12",
+      "max": "14"
+    },
+    "s3f1": {
+      "typical": "25",
+      "max": "40"
+    },
+    "s3f3": {
+      "typical": "4",
+      "max": "6"
+    },
+    "s3f2": {
+      "typical": "10",
+      "max": "16"
+    },
+    "n3f2": {
+      "typical": "8",
+      "max": "8"
+    },
+    "n3f1": {
+      "typical": "25",
+      "max": "40"
+    }
   },
   "kids": {
     "note": "2歳以下の宿泊料金は無料です"
@@ -142,6 +178,9 @@ window.KATASHO_DATA = {
     }
   },
   "text": {
+    "cta": {
+      "availability": "空き状況を見る"
+    },
     "roomAssign": {
       "note": "通常プランの宿泊棟は、人数と予約状況に応じて施設側で決定し、宿泊日の10日前を目安にご案内します。調理室併設コンパクトプランは南棟1階です。"
     },
@@ -181,7 +220,6 @@ window.KATASHO_DATA = {
     },
     "bookingSteps": {
       "heading": "予約はかんたん4ステップ",
-      "step1Label": "空き状況を見る",
       "step1Body": "予約システムで日程をチェック",
       "step2Label": "予約する",
       "step2Body": "代表者がネットで予約。この時点で人数は概算でOK",

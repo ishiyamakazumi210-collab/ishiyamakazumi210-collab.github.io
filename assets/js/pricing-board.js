@@ -4,9 +4,16 @@
   'use strict';
 
   // ---- 料金定数（唯一の定義元。数値を変更しないこと） -------------------
+  // 最低利用金額(floor)と総定員は site.json (minSpend.* / capacity.total) が
+  // 唯一の元数字。表示用文字列から「12,345円」の金額部分を抽出して使う。
+  var MIN_SPEND = (window.KATASHO_DATA && window.KATASHO_DATA.minSpend) || {};
+  function yenOf(str) {
+    var m = String(str || '').match(/([\d,]+)円/);
+    return m ? Number(m[1].replace(/,/g, '')) : 0;
+  }
   var SEASONS = {
-    weekday: { adult: 8400, elem: 5880, pre: 4200, minPeople: 5, floor: 42000 },
-    holiday: { adult: 9900, elem: 6930, pre: 4950, minPeople: 7, floor: 69300 }
+    weekday: { adult: 8400, elem: 5880, pre: 4200, minPeople: 5, floor: yenOf(MIN_SPEND.weekday) },
+    holiday: { adult: 9900, elem: 6930, pre: 4950, minPeople: 7, floor: yenOf(MIN_SPEND.holiday) }
   };
   var MEALS = {
     byo: { adult: 0, elem: 0, pre: 0 },
@@ -15,18 +22,31 @@
     sando: { adult: 1000, elem: 1000, pre: 1000 }
   };
   var MEAL_LABELS = { kyushoku: '給食', bbq: '提供型BBQ', sando: 'サンド' };
-  var MAX_PEOPLE = 100;
-  var COMPACT_COMFORT_MAX = 24;
+  var MAX_PEOPLE = parseInt(window.KATASHO_DATA && window.KATASHO_DATA.capacity && window.KATASHO_DATA.capacity.total, 10) || 100;
+
+  // コンパクトプランの寝室2部屋(中部屋s1f1・小部屋s1f2)の定員は site.json
+  // (rooms.s1f1/rooms.s1f2、map-rooms.jsの部屋データと同じ単一データソース)
+  // が唯一の元数字。COMPACT_COMFORT_MAX(=目安の合計)はここで計算するだけで、
+  // 数字そのものは持たない。
+  var ROOMS_DATA = (window.KATASHO_DATA && window.KATASHO_DATA.rooms) || {};
+  function roomCapacityNum(roomId, field) {
+    return parseInt((ROOMS_DATA[roomId] || {})[field], 10) || 0;
+  }
+  var COMPACT_MID_TYPICAL = roomCapacityNum('s1f1', 'typical'); // 中部屋(目安)
+  var COMPACT_MID_MAX = roomCapacityNum('s1f1', 'max'); // 中部屋(手狭最大)
+  var COMPACT_SMALL_TYPICAL = roomCapacityNum('s1f2', 'typical'); // 小部屋(目安)
+  var COMPACT_SMALL_MAX = roomCapacityNum('s1f2', 'max'); // 小部屋(手狭最大)
+  var COMPACT_COMFORT_MAX = COMPACT_MID_TYPICAL + COMPACT_SMALL_TYPICAL;
   var COMPACT_HARD_MAX = 25;
 
   // 調理室併設コンパクトプラン（20名くらいまで）: 大人-1,000円、子どもは
   // 割引後の大人料金へ既存の子ども割引率(小学生30%OFF/3〜5歳50%OFF)を掛け直す。
-  // floorは「最低人数(5/7)×割引後大人料金」と一致する値を差替で持つ（検算済み）。
+  // floorは「最低人数(5/7)×割引後大人料金」と一致する値（検算済み）。site.json由来。
   var COMPACT = {
     adultDelta: -1000,
     elemRatio: 0.7,
     preRatio: 0.5,
-    floor: { weekday: 37000, holiday: 62300 }
+    floor: { weekday: yenOf(MIN_SPEND.compactWeekday), holiday: yenOf(MIN_SPEND.compactHoliday) }
   };
 
   // 季節×コンパクトプランの単価をまとめて返す、料金定数の唯一の参照口。
@@ -179,7 +199,7 @@
     if (!board) { return null; }
     var notice = document.createElement('p');
     notice.className = 'top-v2-chalk-capacity-notice';
-    notice.textContent = '※ 寝室2部屋の目安24名を超えます。手狭な配置になるため、ご相談ください';
+    notice.textContent = '※ 寝室2部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。手狭な配置になるため、ご相談ください';
     notice.hidden = true;
     board.insertAdjacentElement('afterend', notice);
     return notice;
@@ -189,8 +209,8 @@
     notice.hidden = !compact || totalPeople <= COMPACT_COMFORT_MAX;
     if (notice.hidden) { return; }
     notice.textContent = totalPeople <= COMPACT_HARD_MAX
-      ? '※ 寝室2部屋の目安24名を超えます。中部屋18名＋小部屋10名までの手狭な配置になるため、ご相談ください'
-      : '※ 寝室2部屋の上限25名を超えるため、通常プラン料金で計算しています';
+      ? '※ 寝室2部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。中部屋' + COMPACT_MID_MAX + '名＋小部屋' + COMPACT_SMALL_MAX + '名までの手狭な配置になるため、ご相談ください'
+      : '※ 寝室2部屋の上限' + COMPACT_HARD_MAX + '名を超えるため、通常プラン料金で計算しています';
   }
 
   // ---- グループボード（friends / gasshuku / kenshu） ---------------------
