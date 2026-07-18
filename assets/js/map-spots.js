@@ -49,16 +49,18 @@
       alt: '駐車場入口の目印になる、カタショー・ワンラボの赤い看板'
     },
     // 番号は⑥。「7」ではないので取り違えに注意(⑦は海=sea)
+    // photo/altは site.json → window.KATASHO_DATA (site-data.js) の単一データソース
+    // (茶畑写真はTOP playroll・play カタログとも共有。海写真はplay カタログと共有)
     tea: {
       name: '茶畑',
-      photo: '/assets/wp/themes/katasho/asset/image/play/point_image_tea04.jpg',
-      alt: '学校のまわりに広がる一面の茶畑',
+      photo: window.KATASHO_DATA.images.teaField.src,
+      alt: window.KATASHO_DATA.images.teaField.alt,
       body: '学校のまわりは一面の茶畑。牧之原ならではの景色です。'
     },
     sea: {
       name: '海',
-      photo: '/assets/img/play-cards/beach.jpg',
-      alt: '徒歩すぐの海岸',
+      photo: window.KATASHO_DATA.images.beach.src,
+      alt: window.KATASHO_DATA.images.beach.alt,
       body: '歩いてすぐに海。散歩や海水浴にどうぞ。'
     }
   };

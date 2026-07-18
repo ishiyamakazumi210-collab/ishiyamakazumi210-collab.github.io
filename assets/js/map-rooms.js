@@ -12,10 +12,18 @@
 (function () {
   'use strict';
 
-  var STAY_PHOTO = '/assets/img/room-futon-real.jpg';
-  var STAY_PHOTO_ALT = '教室に布団を並べた大部屋';
-  var CLASSROOM_PHOTO = '/assets/img/about-story-classroom.jpg';
-  var CLASSROOM_PHOTO_ALT = '机と黒板が残るカタショーの教室';
+  // 画像パス・alt・文言は site.json → (ビルド時) dist/assets/js/site-data.js の
+  // window.KATASHO_DATA を単一データソースとする。このファイルより先に
+  // site-data.js を読み込むこと(map/index.html の<script>順を参照)。
+  var STAY_PHOTO = window.KATASHO_DATA.images.stayRoom.src;
+  var STAY_PHOTO_ALT = window.KATASHO_DATA.images.stayRoom.alt;
+  var CLASSROOM_PHOTO = window.KATASHO_DATA.images.classroomStory.src;
+  var CLASSROOM_PHOTO_ALT = window.KATASHO_DATA.images.classroomStory.alt;
+  var KAIGI_PHOTO = window.KATASHO_DATA.images.kaigiRoom.src;
+  var KAIGI_ALT = window.KATASHO_DATA.images.kaigiRoom.alt;
+  var KAIGI_BODY = window.KATASHO_DATA.text.kaigiRoom.body;
+  var BBQ_PHOTO = window.KATASHO_DATA.images.bbqArea.src;
+  var BBQ_ALT = window.KATASHO_DATA.images.bbqArea.alt;
 
   var STANDARD_STAY_NOTE = '通常プランの宿泊棟・お部屋は施設側で決定し、宿泊日の10日前を目安にご案内します。';
   var COMPACT_STAY_NOTE = '調理室併設コンパクトプランで使用する寝室です。';
@@ -79,17 +87,17 @@
       note: COMPACT_STAY_NOTE,
       photo: STAY_PHOTO
     },
-    bbq1: { name: 'BBQ場①', body: BBQ_BODY, link: BBQ_LINK, photo: '/assets/img/rooms/room-bbq1.jpg', alt: 'ビニール屋根の下にグリル付きテーブルが並ぶBBQスペース' },
-    bbq2: { name: 'BBQ場②', body: BBQ_BODY, link: BBQ_LINK, photo: '/assets/img/rooms/room-bbq1.jpg', alt: 'ビニール屋根の下にグリル付きテーブルが並ぶBBQスペース' },
-    bbq3: { name: 'BBQ場③', body: BBQ_BODY, link: BBQ_LINK, photo: '/assets/img/rooms/room-bbq1.jpg', alt: 'ビニール屋根の下にグリル付きテーブルが並ぶBBQスペース' },
+    bbq1: { name: 'BBQ場①', body: BBQ_BODY, link: BBQ_LINK, photo: BBQ_PHOTO, alt: BBQ_ALT },
+    bbq2: { name: 'BBQ場②', body: BBQ_BODY, link: BBQ_LINK, photo: BBQ_PHOTO, alt: BBQ_ALT },
+    bbq3: { name: 'BBQ場③', body: BBQ_BODY, link: BBQ_LINK, photo: BBQ_PHOTO, alt: BBQ_ALT },
 
     // --- 2F ---
     kaigi3: { name: '会議室③',
-      sub: 'もとから会議室', chips: ['Wi-Fi'], body: '研修・ゼミのワークタイムに。', photo: '/assets/img/rooms/room-kaigi1.jpg', alt: '黒板とモニターを備えた会議室' },
+      sub: 'もとから会議室', chips: ['Wi-Fi'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
     kaigi2: { name: '会議室②',
-      sub: '相談室', chips: ['Wi-Fi'], body: '研修・ゼミのワークタイムに。', photo: '/assets/img/rooms/room-kaigi1.jpg', alt: '黒板とモニターを備えた会議室' },
+      sub: '相談室', chips: ['Wi-Fi'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
     kaigi1: { name: '会議室①',
-      sub: '1年教室', chips: ['Wi-Fi'], body: '研修・ゼミのワークタイムに。', photo: '/assets/img/rooms/room-kaigi1.jpg', alt: '黒板とモニターを備えた会議室' },
+      sub: '1年教室', chips: ['Wi-Fi'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
     cowork: { name: 'コワークスペース',
       sub: '2年教室', chips: ['Wi-Fi'], photo: '/assets/img/rooms/room-cowork.jpg', alt: '木製フレームのデスクが並ぶコワークスペース' },
     kyoshitsu2: { name: '教室②',
