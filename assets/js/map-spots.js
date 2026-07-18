@@ -32,7 +32,7 @@
       photo: '/assets/img/spots/spot-gym.jpg',
       alt: 'バスケットゴールと磨かれた木床が広がる体育館の内観',
       body: 'バスケ・バレー・ドッジボールなどができます。',
-      note: '市営のため利用は要予約です（先約時は使えないことがあります）。無料の利用枠は1時間半、延長は空いていれば可能です。',
+      note: window.KATASHO_DATA.gym.noteMid,
       link: { href: '/play/option/#play', label: '延長の料金はオプションへ →' }
     },
     grounds: {
