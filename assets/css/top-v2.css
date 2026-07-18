@@ -10298,3 +10298,28 @@ body.top-v2-mapspot-dialog-lock {
   pointer-events: none;
   box-shadow: 0 1px 3px rgba(20, 50, 65, 0.25);
 }
+
+/* ハンバーガーメニュー「シーン別の過ごし方」グループ見出し(オーナー承認 2026-07-18)。
+   nav.html では <span class="l-nav_menuLink nav-link l-nav_menuGroupLabel"> として
+   l-nav_menuLink をそのまま流用し、メニュー本体と同じ文字サイズ・色にしている。
+   ただしリンクではないため、テーマCSS(app.min.css .l-nav_menuLink まわり
+   7054-7141行・11851-11875行・15004-15037行)が持つhover/focus/active時の
+   色変化と::beforeスライドバーを全て無効化してクリック不可を明示する。 */
+.l-nav_menuGroupLabel {
+  cursor: default !important;
+}
+.l-nav_menuGroupLabel::before,
+.l-nav_menuGroupLabel:hover::before,
+.l-nav_menuGroupLabel:focus::before,
+.l-nav_menuGroupLabel.active::before {
+  content: none !important;
+}
+.l-nav_menuGroupLabel,
+.l-nav_menuGroupLabel:hover,
+.l-nav_menuGroupLabel:focus,
+.l-nav_menuGroupLabel.active,
+.l-nav_menuGroupLabel.active:hover {
+  color: #006d88 !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+}
