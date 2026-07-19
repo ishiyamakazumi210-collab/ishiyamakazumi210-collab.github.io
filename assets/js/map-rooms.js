@@ -153,7 +153,7 @@
     },
     kyoshitsu1: { name: '教室①',
       sub: '4年教室', body: CLASSROOM_BODY, photo: CLASSROOM_PHOTO },
-    ongaku: { name: '音楽室', chips: ['グランドピアノ'], body: '合唱やバンド練習はこちらで。', photo: '/assets/img/rooms/room-ongaku.jpg', alt: '板張りの広い部屋にグランドピアノを置いた音楽室' },
+    ongaku: { name: '音楽室', chips: ['グランドピアノ'], body: '合唱やバンド練習はこちらで。', note: '大きな音が出る楽器は、基本的に21:00までです。', photo: '/assets/img/rooms/room-ongaku.jpg', alt: '板張りの広い部屋にグランドピアノを置いた音楽室' },
     n3f2: {
       name: '北棟宿泊部屋②',
       sub: '前室つき・音楽準備室',
