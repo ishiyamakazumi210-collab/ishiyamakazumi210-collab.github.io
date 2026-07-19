@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-19T12:18:20.178Z",
+  "generatedAt": "2026-07-19T22:42:24.679Z",
   "source": "new-hp/src/pages",
   "policy": "WordPress-derived HTML/CSS is preserved; edit headings, copy, sections, and links in place.",
   "pages": [
@@ -54,6 +54,10 @@
     {
       "path": "/play/option/",
       "source": "src/pages/play/option/index.html"
+    },
+    {
+      "path": "/privacy/",
+      "source": "src/pages/privacy/index.html"
     }
   ]
 }

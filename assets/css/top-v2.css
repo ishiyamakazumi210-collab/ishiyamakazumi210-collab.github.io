@@ -10323,3 +10323,132 @@ body.top-v2-mapspot-dialog-lock {
   opacity: 1 !important;
   text-decoration: none !important;
 }
+
+/* ==========================================================================
+   /contact/・/access/・/privacy/ 新設（2026-07-20）
+   §5基準を踏襲: 色は#2f7890/#f0831e/#fff8e8/白のみ、セクション上下 PC96px/SP56px。
+   既存 .top-v2-scene-card / .top-v2-timeline / .top-v2-address-card 等を
+   そのまま流用し、足りない箇所のみ最小追加する。
+   ========================================================================== */
+
+/* 数字強調（所要時間の合計など）。要素自身への直接指定は継承より常に優先される
+   ため、親(.top-v2-scene-card-body p 等)の文字色とカスケード競合が起きない */
+.top-v2-figure-accent {
+  color: #a5540e;
+  font-weight: 900;
+}
+
+/* .top-v2-address-card を top-v2-address-layout の外で単体使用する場合の中央寄せ
+   （/contact/ 電話カード・/access/ 周辺情報ミニカード） */
+.top-v2-address-card--standalone {
+  margin: 0 auto;
+}
+
+/* /access/ 車でのアクセス: 3枚カードは既存.top-v2-scene-cards
+   （768px以上で2列止まり）だと2+1の欠け行になるため、#eat/#stayと同じ
+   3列ブレークポイントをこのセクションにも追加（新規クラス不要、2026-07-12の
+   先例を踏襲） */
+@media (min-width: 768px) {
+  #drive .top-v2-scene-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* /privacy/ ポリシー本文: 既存 .top-v2-scene-card 文法を単列スタックで使う */
+.top-v2-policy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* /contact/ お問い合わせフォーム: 既存の色規律(#2f7890/#f0831e/生成り)を
+   フォーム部品へ適用。サイト初のフォームUIのため最小限のみ新設 */
+.top-v2-contact-form {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.top-v2-form-row {
+  margin: 0 0 24px;
+}
+
+.top-v2-form-row label {
+  display: block;
+  margin: 0 0 8px;
+  color: #2f7890;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.top-v2-form-required {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: #fff4e6;
+  color: #a5540e;
+  font-size: 11px;
+  font-weight: 900;
+  vertical-align: middle;
+}
+
+.top-v2-form-row input[type="text"],
+.top-v2-form-row input[type="email"],
+.top-v2-form-row input[type="tel"],
+.top-v2-form-row textarea {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid rgba(47, 120, 144, 0.3);
+  border-radius: 10px;
+  background: #fff;
+  color: #2e2518;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+.top-v2-form-row textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+.top-v2-form-row input:focus-visible,
+.top-v2-form-row textarea:focus-visible {
+  outline: 3px solid #f0831e;
+  outline-offset: 1px;
+  border-color: #2f7890;
+}
+
+.top-v2-form-consent label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #2e2518;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.top-v2-form-consent input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: #2f7890;
+  flex-shrink: 0;
+}
+
+.top-v2-form-consent a {
+  color: #2f7890;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.top-v2-form-submit {
+  text-align: center;
+  margin-top: 12px;
+}

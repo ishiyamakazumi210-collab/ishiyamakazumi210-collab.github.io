@@ -1,5 +1,14 @@
 window.KATASHO_DATA = {
   "reserveUrl": "https://www.489pro-x.com/ja/s/katasho/search/",
+  "contact": {
+    "tel": "080-7890-0388",
+    "telLabel": "総合受付",
+    "postal": "〒421-0511",
+    "address": "静岡県牧之原市片浜1216-1",
+    "building": "カタショー・ワンラボ内",
+    "hours": "9:00〜21:00",
+    "hoursNote": "施設利用状況により閉館時間が変わる場合があります"
+  },
   "checkin": {
     "normal": "13:00",
     "kyushoku": "12:30",
