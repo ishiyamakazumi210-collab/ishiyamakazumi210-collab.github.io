@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260720a"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20260720c"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -232,6 +232,9 @@ height: 78vw;
                                 <a class="l-nav_menuLink nav-link" href="/map/">校内マップ</a>
                             </li>
                             <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/album/">クチコミ＆SNS</a>
+                            </li>
+                            <li class="nav-item ">
                                 <a class="l-nav_menuLink nav-link active" href="/access/">アクセス</a>
                             </li>
                             <li class="nav-item ">
@@ -310,21 +313,48 @@ height: 78vw;
         <div class="top-v2-scene-card-body">
           <h3>東京方面から</h3>
           <p><strong class="top-v2-figure-accent">合計 約2時間50分</strong></p>
-          <p>東名高速道路 約2時間30分 → 吉田IC → 約20分 → カタショー</p>
+          <div class="top-v2-route">
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_drive.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">東名高速道路</span><span class="top-v2-figure-accent">約2時間30分</span></div>
+          </div>
+          <div class="top-v2-route-node">吉田IC</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_drive.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-figure-accent">約20分</span></div>
+          </div>
+          <div class="top-v2-route-node top-v2-route-node--goal">カタショー<small>遊んで泊まれる小学校</small></div>
+          </div>
         </div>
       </div>
       <div class="top-v2-scene-card">
         <div class="top-v2-scene-card-body">
           <h3>名古屋方面から</h3>
           <p><strong class="top-v2-figure-accent">合計 約2時間10分</strong></p>
-          <p>東名高速道路 約1時間50分 → 牧之原IC → 約20分 → カタショー</p>
+          <div class="top-v2-route">
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_drive.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">東名高速道路</span><span class="top-v2-figure-accent">約1時間50分</span></div>
+          </div>
+          <div class="top-v2-route-node">牧之原IC</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_drive.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-figure-accent">約20分</span></div>
+          </div>
+          <div class="top-v2-route-node top-v2-route-node--goal">カタショー<small>遊んで泊まれる小学校</small></div>
+          </div>
         </div>
       </div>
       <div class="top-v2-scene-card">
         <div class="top-v2-scene-card-body">
           <h3>大阪方面から</h3>
           <p><strong class="top-v2-figure-accent">合計 約3時間50分</strong></p>
-          <p>東名高速道路 約3時間30分 → 牧之原IC → 約20分 → カタショー</p>
+          <div class="top-v2-route">
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_drive.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">東名高速道路</span><span class="top-v2-figure-accent">約3時間30分</span></div>
+          </div>
+          <div class="top-v2-route-node">牧之原IC</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_drive.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-figure-accent">約20分</span></div>
+          </div>
+          <div class="top-v2-route-node top-v2-route-node--goal">カタショー<small>遊んで泊まれる小学校</small></div>
+          </div>
         </div>
       </div>
     </div>
@@ -340,96 +370,72 @@ height: 78vw;
         <div class="top-v2-scene-card-body">
           <h3>東京方面から</h3>
           <p><strong class="top-v2-figure-accent">合計 約2時間10分</strong></p>
-          <ul class="top-v2-timeline top-v2-timeline--incard">
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約60分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">新幹線</span>
-              <h4>東海道新幹線</h4>
-              <p>静岡駅まで</p>
-            </div>
-          </li>
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約60分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">バス</span>
-              <h4>特急静岡相良線※1</h4>
-              <p>静波海岸入口まで</p>
-            </div>
-          </li>
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約10分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">バス+徒歩</span>
-              <h4>藤枝相良線バス※2 → 片浜バス停・徒歩</h4>
-              <p>バス7分+徒歩3分。カタショーに到着</p>
-            </div>
-          </li>
-          </ul>
+          <div class="top-v2-route">
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_shinkansen.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">東海道新幹線</span><span class="top-v2-figure-accent">約60分</span></div>
+          </div>
+          <div class="top-v2-route-node">静岡駅</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_bus.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">特急静岡相良線※1</span><span class="top-v2-figure-accent">約60分</span></div>
+          </div>
+          <div class="top-v2-route-node">静波海岸入口</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_bus.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">藤枝相良線バス※2</span><span class="top-v2-figure-accent">約7分</span></div>
+          </div>
+          <div class="top-v2-route-node">片浜バス停</div>
+          <div class="top-v2-route-leg top-v2-route-leg--noicon">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">徒歩</span><span class="top-v2-figure-accent">約3分</span></div>
+          </div>
+          <div class="top-v2-route-node top-v2-route-node--goal">カタショー<small>遊んで泊まれる小学校</small></div>
+          </div>
         </div>
       </div>
       <div class="top-v2-scene-card">
         <div class="top-v2-scene-card-body">
           <h3>名古屋方面から</h3>
           <p><strong class="top-v2-figure-accent">合計 約1時間50分</strong></p>
-          <ul class="top-v2-timeline top-v2-timeline--incard">
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約40分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">新幹線</span>
-              <h4>東海道新幹線</h4>
-              <p>静岡駅まで</p>
-            </div>
-          </li>
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約60分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">バス</span>
-              <h4>特急静岡相良線※1</h4>
-              <p>静波海岸入口まで</p>
-            </div>
-          </li>
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約10分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">バス+徒歩</span>
-              <h4>藤枝相良線バス※2 → 片浜バス停・徒歩</h4>
-              <p>バス7分+徒歩3分。カタショーに到着</p>
-            </div>
-          </li>
-          </ul>
+          <div class="top-v2-route">
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_shinkansen.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">東海道新幹線</span><span class="top-v2-figure-accent">約40分</span></div>
+          </div>
+          <div class="top-v2-route-node">静岡駅</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_bus.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">特急静岡相良線※1</span><span class="top-v2-figure-accent">約60分</span></div>
+          </div>
+          <div class="top-v2-route-node">静波海岸入口</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_bus.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">藤枝相良線バス※2</span><span class="top-v2-figure-accent">約7分</span></div>
+          </div>
+          <div class="top-v2-route-node">片浜バス停</div>
+          <div class="top-v2-route-leg top-v2-route-leg--noicon">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">徒歩</span><span class="top-v2-figure-accent">約3分</span></div>
+          </div>
+          <div class="top-v2-route-node top-v2-route-node--goal">カタショー<small>遊んで泊まれる小学校</small></div>
+          </div>
         </div>
       </div>
       <div class="top-v2-scene-card">
         <div class="top-v2-scene-card-body">
           <h3>大阪方面から</h3>
           <p><strong class="top-v2-figure-accent">合計 約2時間58分</strong></p>
-          <ul class="top-v2-timeline top-v2-timeline--incard">
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約1時間48分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">新幹線</span>
-              <h4>東海道新幹線</h4>
-              <p>静岡駅まで</p>
-            </div>
-          </li>
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約60分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">バス</span>
-              <h4>特急静岡相良線※1</h4>
-              <p>静波海岸入口まで</p>
-            </div>
-          </li>
-          <li class="top-v2-timeline-item">
-            <div class="top-v2-timeline-time">約10分</div>
-            <div class="top-v2-timeline-body">
-              <span class="top-v2-timeline-label">バス+徒歩</span>
-              <h4>藤枝相良線バス※2 → 片浜バス停・徒歩</h4>
-              <p>バス7分+徒歩3分。カタショーに到着</p>
-            </div>
-          </li>
-          </ul>
+          <div class="top-v2-route">
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_shinkansen.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">東海道新幹線</span><span class="top-v2-figure-accent">約1時間48分</span></div>
+          </div>
+          <div class="top-v2-route-node">静岡駅</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_bus.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">特急静岡相良線※1</span><span class="top-v2-figure-accent">約60分</span></div>
+          </div>
+          <div class="top-v2-route-node">静波海岸入口</div>
+          <div class="top-v2-route-leg"><img class="top-v2-route-ico" src="/assets/wp/themes/katasho/asset/image/access/access_icon_public_bus.svg" alt="" width="25" height="25" loading="lazy">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">藤枝相良線バス※2</span><span class="top-v2-figure-accent">約7分</span></div>
+          </div>
+          <div class="top-v2-route-node">片浜バス停</div>
+          <div class="top-v2-route-leg top-v2-route-leg--noicon">
+            <div class="top-v2-route-leginfo"><span class="top-v2-route-legname">徒歩</span><span class="top-v2-figure-accent">約3分</span></div>
+          </div>
+          <div class="top-v2-route-node top-v2-route-node--goal">カタショー<small>遊んで泊まれる小学校</small></div>
+          </div>
         </div>
       </div>
     </div>
