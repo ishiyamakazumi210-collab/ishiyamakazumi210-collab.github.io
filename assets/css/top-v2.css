@@ -10577,37 +10577,4 @@ body.top-v2-mapspot-dialog-lock {
    (.top-v2-btn-outline)は使わず、色規律どおりページ内ナビは青緑にする。
    アコーディオン本体は新規CSSを足さず、既存の #faq .faq_title / #faq .top-v2-faq-q
    （TOP/friendsのFAQで確立済み）をそのまま流用する。id="faq"の親divで囲むだけ。 */
-.top-v2-faqjump {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-.top-v2-faqjump-link {
-  display: inline-block;
-  padding: 10px 24px;
-  border: 2px solid #2f7890;
-  border-radius: 999px;
-  background: #fff;
-  color: #2f7890;
-  font-weight: 800;
-  font-size: 14px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.top-v2-faqjump-link:hover {
-  background: #eaf3f5;
-}
-.top-v2-faqjump-link:focus-visible {
-  outline: 3px solid #f0831e;
-  outline-offset: 3px;
-}
-@media (max-width: 767px) {
-  .top-v2-faqjump {
-    gap: 10px;
-  }
-  .top-v2-faqjump-link {
-    padding: 9px 18px;
-    font-size: 13.5px;
-  }
-}
+
