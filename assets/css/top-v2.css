@@ -10578,3 +10578,28 @@ body.top-v2-mapspot-dialog-lock {
    アコーディオン本体は新規CSSを足さず、既存の #faq .faq_title / #faq .top-v2-faq-q
    （TOP/friendsのFAQで確立済み）をそのまま流用する。id="faq"の親divで囲むだけ。 */
 
+
+/* ===== ハンバーガーメニューの可読性改善 2026-07-20
+   診断: 全行が同色同太字で階層がない/ブロック区切りがない/サブの行間が広い。
+   処方: グループ見出しのキャプション化・区切り線2本・サブ行間の圧縮 ===== */
+#headerNav .l-nav_menuGroupLabel {
+  font-size: 13px !important;
+  letter-spacing: 0.18em;
+  color: rgba(47, 120, 144, 0.62) !important;
+  margin-bottom: -4px;
+  display: inline-block;
+}
+#headerNav .l-nav_menuDivider {
+  border-top: 1.5px dashed rgba(47, 120, 144, 0.22);
+  margin: 14px 0 14px;
+}
+#headerNav .l-nav_menuSublist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  margin: 2px 0 6px 26px;
+  padding: 0;
+}
+#headerNav .l-nav_menuSublist .nav-item { margin: 0; }
+#headerNav .l-nav_menuSublink { padding: 4px 0; }
+#headerNav .l-nav_menuSublink::before { content: none; }
