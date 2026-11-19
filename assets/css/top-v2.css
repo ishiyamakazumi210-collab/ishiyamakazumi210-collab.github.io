@@ -12358,3 +12358,46 @@ main small {
     font-size: 12px;
   }
 }
+
+/* 2026-11-19 メディア掲載: ロゴ寄せ集め画像のセクション(#media)を廃止し、
+   実績欄の下に一行の紹介実績として置く(オーナー判断)。#media用の旧ルールは参照なし */
+.top-v2-statrow-media {
+  margin: 12px auto 0;
+  padding-top: 12px;
+  border-top: 1px dashed #cfe0e8;
+  color: #2a4750;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.7;
+  text-align: center;
+}
+.top-v2-statrow-media span {
+  display: inline-block;
+}
+.top-v2-statrow-media strong {
+  color: #2f7890;
+  font-weight: 900;
+}
+@media (max-width: 575px) {
+  .top-v2-statrow-media {
+    font-size: 13px;
+  }
+}
+/* #media廃止で#landscapeと#faqが隣接し、右下のバスケの男と右上の教壇の男が
+   くっついて見えるため、TOPのFAQ右の切り抜きだけ下げて間を空ける。
+   992〜1279pxは教壇の男が見出し、机の少年が1問目に重なる(以前から)ため、
+   教壇の男を出さず少年を縮める */
+@media (min-width: 1280px) {
+  #faq.l-section_bg .l-faq_bgRight {
+    transform: translateY(96px);
+  }
+}
+@media (min-width: 992px) and (max-width: 1279px) {
+  #faq.l-section_bg .l-faq_bgRight {
+    display: none;
+  }
+  #faq.l-section_bg .l-faq_bgLeft {
+    transform: scale(0.8);
+    transform-origin: top left;
+  }
+}
