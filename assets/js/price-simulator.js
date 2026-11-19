@@ -31,15 +31,17 @@
     { id: 'kyushoku', label: '懐かしの給食', mealKey: 'kyushoku' },
     { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250 }
   ];
-  // 夕食: BBQ は MEALS.bbq（子ども割引あり）。それ以外は子ども料金の記載がないため全員同額で計算。
+  // 夕食: 子ども料金は夕食のみ（小学生30%OFF・3〜5歳50%OFF、FAQ記載・2026-11-19オーナー確認）。
+  // BBQ は MEALS.bbq、それ以外は大人料金 × KID_RATIO で計算（kidRates）。
   // コンパクトプランは「夕食オプションはBBQのみ」。
   var DINNERS = [
     { id: 'byo', label: '持ち込み調理', compactOk: true },
     { id: 'bbq', label: 'BBQ（満腹コース）', mealKey: 'bbq', compactOk: true },
-    { id: 'sukiyaki', label: '【冬季限定】すき焼き', flat: 5000, months: [11, 12, 1, 2, 3], seasonNote: '11月から3月までの期間限定メニューです' },
-    { id: 'curry', label: '林間学校式カレー', flat: 2000, note: 'お客様自身で調理していただきます' },
-    { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250 }
+    { id: 'sukiyaki', label: '【冬季限定】すき焼き', flat: 5000, kidRates: true, months: [11, 12, 1, 2, 3], seasonNote: '11月から3月までの期間限定メニューです' },
+    { id: 'curry', label: '林間学校式カレー', flat: 2000, kidRates: true, note: 'お客様自身で調理していただきます' },
+    { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250, kidRates: true }
   ];
+  var KID_RATIO = { elem: 0.7, pre: 0.5 };
   var BREAKFAST = { label: 'サンドウィッチ朝食', mealKey: 'sando' };
 
   // オプション（価格・単位は /play/option/ の記載）。
@@ -51,7 +53,7 @@
     },
     {
       id: 'surf', name: 'サーフィン教室', price: 8000, from: true, unit: '/人（税込）',
-      note: 'チェックアウト後に、地元のサーフショップの方からサーフィンとボディボードのレクチャーを受けます。「〜」の料金のため、合計は目安になります。',
+      note: 'チェックアウト後に、地元のサーフショップの方からサーフィンとボディボードのレクチャーを受けます。料金は受け入れてくださるサーフショップによって変わるため、合計は目安になります。',
       fields: [{ key: 'people', label: '参加人数', unit: '人', max: 'payers' }]
     },
     {
@@ -147,6 +149,9 @@
   }
   function mealPrices(def) {
     if (def.mealKey) { return P.MEALS[def.mealKey]; }
+    if (def.kidRates) {
+      return { adult: def.flat, elem: Math.round(def.flat * KID_RATIO.elem), pre: Math.round(def.flat * KID_RATIO.pre) };
+    }
     return { adult: def.flat, elem: def.flat, pre: def.flat };
   }
   function isFlat(pr) { return pr.adult === pr.elem && pr.elem === pr.pre; }
@@ -237,7 +242,7 @@
         if (dinner.id !== 'byo') {
           var extra = '';
           var d = d0 ? addDays(d0, n) : null;
-          if (dinner.flat && !dinner.mealKey && kids > 0) {
+          if (dinner.flat && !dinner.mealKey && !dinner.kidRates && kids > 0) {
             extra = 'お子さま料金の記載がないため全員同額で計算';
             res.approx = true;
             note('お子さま料金の記載がない夕食（すき焼き・カレー・弁当）は、全員同額で計算しています（目安）');
@@ -727,7 +732,7 @@
       } else if (dinnerDef.seasonNote) {
         caption += (caption ? '。' : '') + dinnerDef.seasonNote;
       }
-      if (dinnerDef.flat && !dinnerDef.mealKey && dinnerDef.id !== 'byo' && (p.elem + p.pre) > 0) {
+      if (dinnerDef.flat && !dinnerDef.mealKey && !dinnerDef.kidRates && dinnerDef.id !== 'byo' && (p.elem + p.pre) > 0) {
         caption += '。お子さま料金の記載がないため、全員同額で計算します（目安）';
       }
       mr.note.textContent = caption;
