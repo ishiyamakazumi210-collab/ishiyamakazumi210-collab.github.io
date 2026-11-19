@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-21T03:39:54.101Z",
+  "generatedAt": "2026-11-19T02:17:13.518Z",
   "source": "new-hp/src/pages",
   "policy": "WordPress-derived HTML/CSS is preserved; edit headings, copy, sections, and links in place.",
   "pages": [
@@ -54,6 +54,10 @@
     {
       "path": "/play/option/",
       "source": "src/pages/play/option/index.html"
+    },
+    {
+      "path": "/price-simulator/",
+      "source": "src/pages/price-simulator/index.html"
     },
     {
       "path": "/privacy/",

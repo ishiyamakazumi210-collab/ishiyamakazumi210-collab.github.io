@@ -19,18 +19,18 @@ window.KATASHO_DATA = {
   },
   "compact": {
     "label": "調理室併設コンパクトプラン",
-    "roomsNote": "寝室は2部屋のみ（就寝中心の目安：中部屋16名＋小部屋8名／手狭でもよければ最大18名＋10名）"
+    "roomsNote": "寝室は2部屋のみ（就寝中心の目安：中部屋16名＋小部屋8名／手狭でもよければ最大20名＋10名）"
   },
   "minSpend": {
-    "weekday": "42,000円(大人5名分)",
+    "weekday": "44,500円(大人5名分)",
     "holiday": "69,300円(大人7名分)",
-    "compactWeekday": "37,000円",
+    "compactWeekday": "39,500円",
     "compactHoliday": "62,300円"
   },
   "rooms": {
     "s1f1": {
       "typical": "16",
-      "max": "18"
+      "max": "20"
     },
     "s1f2": {
       "typical": "8",
@@ -232,8 +232,8 @@ window.KATASHO_DATA = {
       "step1Body": "予約システムで日程をチェック",
       "step2Label": "予約する",
       "step2Body": "代表者がネットで予約。この時点で人数は概算でOK",
-      "step3Label": "人数・食事を確定",
-      "step3Body": "10日前までに人数・食事を確定。通常プランは宿泊棟もこの頃にご案内"
+      "step3Label": "メールで打ち合わせ",
+      "step3Body": "予約後は施設とメールでやりとり。人数・食事は10日前までに確定し、通常プランは宿泊棟もこの頃にご案内"
     },
     "kaigiRoom": {
       "body": "研修・ゼミのワークタイムに。"

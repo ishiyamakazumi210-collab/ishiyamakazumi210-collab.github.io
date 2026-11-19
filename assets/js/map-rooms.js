@@ -42,7 +42,7 @@
 
   var STANDARD_STAY_NOTE = '通常プランの宿泊棟・お部屋は施設側で決定し、宿泊日の10日前を目安にご案内します。';
   var COMPACT_STAY_NOTE = '調理室併設コンパクトプランで使用する寝室です。';
-  var COMMON_BEDDING = ['寝具5点（マットレス・敷布団・掛け布団・枕・シーツ）', 'エアコン', 'ドライヤー'];
+  var COMMON_BEDDING = ['寝具一式', 'エアコン', 'ドライヤー'];
   var CLASSROOM_BODY = '机も黒板も、当時のまま残っています。集まりや宴会にも使えます。';
   var BBQ_BODY = 'ビニール屋根つきなので、雨の日でもBBQができます。①②は調理室の前、③は南棟側です。';
   var BBQ_LINK = { href: '/play/option/#food', label: 'BBQメニューは品書きへ →' };
@@ -108,11 +108,11 @@
 
     // --- 2F ---
     kaigi3: { name: '会議室③',
-      sub: 'もとから会議室', chips: ['Wi-Fi'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
+      sub: 'もとから会議室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
     kaigi2: { name: '会議室②',
-      sub: '相談室', chips: ['Wi-Fi'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
+      sub: '相談室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
     kaigi1: { name: '会議室①',
-      sub: '1年教室', chips: ['Wi-Fi'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
+      sub: '1年教室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
     cowork: { name: 'コワークスペース',
       sub: '2年教室', chips: ['Wi-Fi'], photo: '/assets/img/rooms/room-cowork.jpg', alt: '木製フレームのデスクが並ぶコワークスペース' },
     kyoshitsu2: { name: '教室②',

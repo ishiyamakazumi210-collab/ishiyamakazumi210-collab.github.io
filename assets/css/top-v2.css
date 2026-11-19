@@ -537,8 +537,16 @@
   line-height: 1.45;
 }
 
+.top-v2-home-staytime .l-stay_infoTitle > span {
+  display: block;
+}
+
+.top-v2-home-staytime .l-stay_infoTitle > span + span::before {
+  content: none;
+}
+
 .top-v2-home-staytime .l-stay_infoCaption {
-  margin-top: 12px;
+  margin-top: 3px;
   color: #665a4a;
 }
 
@@ -579,13 +587,17 @@
     margin-top: 3px;
   }
   .top-v2-home-staytime .l-stay_infoCaption {
-    margin-top: 10px;
+    margin-top: 3px;
     line-height: 1.5;
   }
   .top-v2-home-staytime .l-stay_infoCaption small {
     padding: 5px 9px;
     font-size: 12px;
   }
+}
+
+.top-v2-home-staytime .l-stay_infoTitle > span + span + span {
+  margin-top: 10px;
 }
 
 .top-v2-purpose-link {
@@ -1444,6 +1456,80 @@
   color: #2f7890;
   font-size: 15px;
   font-weight: 900;
+}
+
+/* 泊まるダイアログの部屋割りを、目安と手狭時で見比べやすいカードにする。 */
+#stay-room-dialog .top-v2-stay-room-intro {
+  margin: 0 0 10px;
+  color: #4a3f2f;
+  font-weight: 700;
+}
+
+#stay-room-dialog .top-v2-stay-room-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#stay-room-dialog .top-v2-stay-room-grid--standard > :first-child {
+  grid-column: 1 / -1;
+}
+
+#stay-room-dialog .top-v2-stay-room-card {
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(47, 120, 144, 0.3);
+  border-radius: 9px;
+  background: #fff;
+}
+
+#stay-room-dialog .top-v2-stay-room-card h5 {
+  margin: 0;
+  color: #2f7890;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+#stay-room-dialog .top-v2-stay-room-capacity,
+#stay-room-dialog .top-v2-stay-room-max {
+  margin: 0;
+}
+
+#stay-room-dialog .top-v2-stay-room-capacity {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+#stay-room-dialog .top-v2-stay-room-capacity strong {
+  color: #a5540e;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+#stay-room-dialog .top-v2-stay-room-capacity span,
+#stay-room-dialog .top-v2-stay-room-max {
+  color: #665a4a;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+#stay-room-dialog .top-v2-stay-room-max {
+  overflow-wrap: anywhere;
+}
+
+#stay-room-dialog .top-v2-stay-room-note {
+  margin: 8px 0 0 !important;
+  color: #665a4a;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 .top-v2-scenedialog-equipment {
@@ -7886,6 +7972,48 @@ section#location > .l-section_bg {
   margin-top: clamp(20px, 4vw, 28px);
 }
 
+/* TOPのアクセス案内: 地図を横幅いっぱいに置き、詳細リンクを直下へまとめる。 */
+.top-v2-home-location .top-v2-location-access {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.top-v2-home-location .top-v2-map-frame {
+  box-sizing: border-box;
+}
+
+.top-v2-home-location .top-v2-map-frame .l-address_map iframe {
+  width: 100%;
+  height: clamp(250px, 32vw, 390px);
+  border: 0;
+}
+
+.top-v2-home-location .top-v2-access-actions {
+  margin-top: clamp(16px, 2.5vw, 24px);
+}
+
+.top-v2-home-location .top-v2-access-actions .top-v2-btn-outline {
+  display: inline-flex;
+  min-height: 48px;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-inline: 24px;
+}
+
+@media (max-width: 767px) {
+  .top-v2-home-location .top-v2-map-frame .l-address_map iframe {
+    height: clamp(230px, 64vw, 320px);
+  }
+
+  .top-v2-home-location .top-v2-access-actions .top-v2-btn-outline {
+    width: 100%;
+    margin-inline: 0;
+  }
+}
+
 /* --- 2026-07-12 孤児だった/map/(施設マップ)への配線 ---
    TOPには置かない(実務資料)。空間を組み立てる瞬間の3箇所へ:
    /play/泊まる末尾・/kenshu/幹事セクション・option席替え図の隣 */
@@ -10572,3 +10700,1319 @@ body.top-v2-mapspot-dialog-lock {
 #headerNav .l-nav_menuSublist .nav-item { margin: 0; }
 #headerNav .l-nav_menuSublink { padding: 4px 0; }
 #headerNav .l-nav_menuSublink::before { content: none; }
+
+/* ==========================================================================
+   2026-11-19 デザイン微修正まとめ (オーナー指摘7件)
+   ========================================================================== */
+
+/* [2] トップFAQ: 「よくある質問をすべて見る」大ボタン */
+.top-v2-faq-all {
+  margin: 8px 0 40px;
+  text-align: center;
+}
+
+/* [3] friends: 泊まる場所カードのダイアログ入口。温泉リンクは押下を優先 */
+.top-v2-scene-card--action .top-v2-scene-card-body .top-v2-inline-link {
+  position: relative;
+  z-index: 4;
+}
+
+/* [4] せんせいより(統一版): 飾りをやめ、静かな罫線ノートに */
+.top-v2-teacher-note.top-v2-teacher-note--unified {
+  transform: none;
+  background: transparent;
+  border: 1px solid rgba(47, 120, 144, 0.28);
+  border-left-width: 1px;
+  border-radius: 8px;
+  box-shadow: none;
+  max-width: 560px;
+  padding: 12px 18px;
+}
+.top-v2-teacher-note--unified::before,
+.top-v2-teacher-note--unified::after {
+  content: none;
+  display: none;
+}
+.top-v2-teacher-note--unified .top-v2-teacher-note-label {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7a82;
+  text-align: left;
+}
+.top-v2-teacher-note--unified .top-v2-price-notes,
+.top-v2-price-scope .top-v2-teacher-note--unified .top-v2-price-notes {
+  background-image: none;
+  line-height: 1.7;
+  font-size: 13px;
+  color: #5a666d;
+  text-align: left;
+}
+.top-v2-teacher-note--unified .top-v2-price-notes li,
+.top-v2-price-scope .top-v2-teacher-note--unified .top-v2-price-notes li {
+  line-height: 1.7;
+  margin: 0 0 2px;
+}
+.top-v2-teacher-note--unified .top-v2-note-mark {
+  color: inherit;
+  font-weight: 400;
+}
+
+/* [5] play/option 温泉カード1枚: 中央寄せ + PCは写真|本文の横並び */
+.top-v2-menu-grid.top-v2-menu-grid--single {
+  display: block;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.top-v2-menu-grid--single > .top-v2-menu-card {
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 992px) {
+  .top-v2-menu-grid.top-v2-menu-grid--single { max-width: 900px; }
+  .top-v2-menu-grid--single > .top-v2-menu-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+  }
+  .top-v2-menu-grid--single > .top-v2-menu-card .top-v2-menu-photo { margin: 0; }
+}
+
+/* [6] フッター言語スイッチャー: 国旗を同サイズに固定しラベルと揃える */
+.wpml-ls-legacy-list-horizontal .wpml-ls-flag,
+.wpml-ls-statics-footer .wpml-ls-flag {
+  display: inline-block;
+  width: 18px;
+  height: 12px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* [7] FAQ「解決しないときは」: 装飾なしのコンパクトな問い合わせブロック */
+.top-v2-morehelp {
+  text-align: center;
+}
+.top-v2-morehelp-title {
+  margin: 0 0 8px;
+  font-size: clamp(18px, 2.4vw, 22px);
+  font-weight: 900;
+}
+.top-v2-morehelp-text {
+  margin: 0 0 18px;
+  font-size: 15px;
+}
+.top-v2-morehelp-btn { margin: 0 0 14px; }
+.top-v2-morehelp-tel { margin: 0; font-size: 14px; }
+.top-v2-morehelp-tel a { color: #444; text-decoration: underline; }
+
+/* ===================================================================
+   2026-11-19 シャワー詳細ダイアログ: 実写2枚（Drive R17）を並べる
+   =================================================================== */
+.top-v2-shower-photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 4px 0 14px;
+}
+.top-v2-shower-photos figure { margin: 0; }
+.top-v2-shower-photos img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.top-v2-shower-photos figcaption {
+  margin-top: 4px;
+  color: #6b6150;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* --- 2026-11-19 モバイル/タブレットのヘッダー予約ボタン ---
+   PC専用(.u-pc)だった#headerBtnReserveを992px未満でも表示し、
+   ハンバーガーの左隣に置く。マークアップは無改修(予約+（空き状況）の
+   既存テキストのまま)。767px以下は2行の小型ピル、768〜991pxは1行。
+   下部固定の丸バッジ#footerBtnReserveは別件でそのまま残す */
+@media screen and (max-width: 991px) {
+  #header #headerBtnReserve.l-header_btnReserve {
+    display: inline-flex !important;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin: 0 14px 0 0 !important;
+    padding: 6px 15px;
+    font-size: 15px;
+    line-height: 1.3;
+    letter-spacing: 0;
+    white-space: nowrap;
+    border-width: 3px;
+    border-radius: 22px;
+    font-feature-settings: "palt";
+  }
+
+  #header #headerBtnReserve.l-header_btnReserve .u-sm {
+    font-size: 80%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #header #headerBtnReserve.l-header_btnReserve {
+    flex-direction: column;
+    margin-right: 8px !important;
+    padding: 4px 9px 5px;
+    font-size: 14px;
+    line-height: 1.2;
+    border-width: 2px;
+    border-radius: 18px;
+  }
+
+  #header #headerBtnReserve.l-header_btnReserve .u-sm {
+    font-size: 10px;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  /* TOPのみ: 右側にSNS+予約+メニューが並ぶと中央の校章に触れるため、
+     SNSはスマホ幅で隠す(フッターとメニュー内に同じSNSリンクあり) */
+  .top-v2-header-sns {
+    display: none;
+  }
+}
+
+/* ===== 部屋イラスト（泊まるダイアログの部屋割り / 部屋分けオプション）=====
+   インラインSVG。文字は実テキスト（font-family継承）。配色はサイトのティール・クリーム・オレンジ。
+   クラス接頭辞 rf- はこの図専用。 */
+.top-v2-roomfig {
+  margin: 6px 0 0;
+}
+.top-v2-roomfig-svg {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin: 0 auto;
+  font-family: inherit;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.top-v2-roomfig-svg .rf-body {
+  fill: rgba(47, 120, 144, 0.07);
+  stroke: #2f7890;
+  stroke-width: 2.5;
+}
+.top-v2-roomfig-svg .rf-tab {
+  fill: #2f7890;
+}
+.top-v2-roomfig-svg .rf-tab-text {
+  fill: #fff;
+  font-size: 14px;
+}
+.top-v2-roomfig-svg .rf-tab-cap {
+  font-size: 13px;
+}
+.top-v2-roomfig-svg .rf-big {
+  font-size: 16px;
+}
+.top-v2-roomfig-svg .rf-futons rect {
+  fill: #fff;
+  stroke: #2f7890;
+  stroke-width: 2;
+}
+.top-v2-roomfig-svg .rf-futons circle {
+  fill: rgba(47, 120, 144, 0.35);
+}
+.top-v2-roomfig-svg .rf-futons--ghost rect {
+  fill: none;
+  stroke-opacity: 0.55;
+  stroke-dasharray: 4 3;
+}
+.top-v2-roomfig-svg .rf-futons--ghost circle {
+  fill: rgba(47, 120, 144, 0.25);
+}
+.top-v2-roomfig-svg .rf-opt {
+  fill: #fff;
+  stroke: #2f7890;
+  stroke-width: 2.5;
+  stroke-dasharray: 6 5;
+}
+.top-v2-roomfig-svg .rf-opt-name {
+  fill: #2f7890;
+  font-size: 14px;
+}
+.top-v2-roomfig-svg .rf-cap {
+  fill: #a5540e;
+  font-size: 14px;
+}
+.top-v2-roomfig-svg .rf-sub {
+  fill: #665a4a;
+  font-size: 12.5px;
+}
+.top-v2-roomfig-svg .rf-hint {
+  fill: #2e2518;
+  font-size: 13px;
+}
+.top-v2-roomfig-svg .rf-hint--mid {
+  fill: #2f7890;
+}
+.top-v2-roomfig-svg .rf-plus-dot {
+  fill: #f0831e;
+}
+.top-v2-roomfig-svg .rf-plus-mark {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.top-v2-roomfig-svg .rf-plus {
+  fill: #f0831e;
+  font-size: 18px;
+}
+.top-v2-roomfig-svg .rf-bracket {
+  fill: none;
+  stroke: #2f7890;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.top-v2-roomfig-svg .rf-kit-body {
+  fill: #fff8e8;
+  stroke: #f0831e;
+  stroke-width: 2.5;
+}
+.top-v2-roomfig-svg .rf-kit-tab {
+  fill: #f0831e;
+}
+.top-v2-roomfig-svg .rf-kit-tab-text {
+  fill: #2e2518;
+  font-size: 14px;
+}
+.top-v2-roomfig-svg .rf-steam {
+  fill: none;
+  stroke: #f0831e;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.top-v2-roomfig-svg .rf-pot-body,
+.top-v2-roomfig-svg .rf-pot-lid,
+.top-v2-roomfig-svg .rf-pot-handle {
+  fill: #f0831e;
+}
+.top-v2-roomfig-svg .rf-pot-lid {
+  fill: #d4690a;
+}
+.top-v2-roomfig-svg .rf-guide {
+  fill: none;
+  stroke: rgba(47, 120, 144, 0.4);
+  stroke-width: 2;
+  stroke-dasharray: 2 5;
+  stroke-linecap: round;
+}
+.top-v2-roomfig-svg .rf-chip {
+  fill: #2f7890;
+}
+.top-v2-roomfig-svg .rf-chip-text {
+  fill: #fff;
+  font-size: 14px;
+}
+.top-v2-roomfig-svg .rf-tag {
+  fill: #fff;
+  stroke: #f0831e;
+  stroke-width: 2.5;
+}
+.top-v2-roomfig-svg .rf-tag--free {
+  fill: #f0831e;
+}
+.top-v2-roomfig-svg .rf-tag-text {
+  fill: #a5540e;
+  font-size: 14px;
+}
+.top-v2-roomfig-svg .rf-tag-text--free {
+  fill: #2e2518;
+}
+
+/* 通常プラン／コンパクトプラン: 図が情報を担うので、紹介文と注記は短いキャプションに */
+#stay-room-dialog .top-v2-scenedialog-block {
+  display: flex;
+  flex-direction: column;
+}
+#stay-room-dialog .top-v2-stay-room-intro {
+  margin: 0 0 4px;
+}
+#stay-room-dialog .top-v2-stay-room-note {
+  margin: auto 0 0 !important;
+  padding-top: 8px;
+}
+@media (min-width: 768px) {
+  #stay-room-dialog {
+    width: min(94vw, 780px);
+  }
+  #stay-room-dialog .top-v2-scenedialog-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: stretch;
+  }
+  #stay-room-dialog .top-v2-scenedialog-block + .top-v2-scenedialog-block {
+    margin-top: 0;
+  }
+  #stay-room-dialog .top-v2-scenedialog-actions {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+  }
+}
+
+/* 部屋分けオプション: 図の下の補足キャプション */
+#stay-option-room-dialog .top-v2-roomfig {
+  margin-top: 4px;
+}
+#stay-option-room-dialog .top-v2-roomfig-note {
+  margin: 8px 0 0 !important;
+  color: #665a4a;
+  font-size: 12.5px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* スマホ幅でダイアログ下部のボタンが右にはみ出す(width:100% + 左右margin16px)のを、この2つのダイアログだけ是正 */
+#stay-room-dialog .top-v2-scenedialog-actions .top-v2-btn-outline,
+#stay-option-room-dialog .top-v2-scenedialog-actions .top-v2-btn-outline {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* 部屋イラストまわりのキャプション: 文ごとに1行、目安の列挙は項目の途中で折り返さない */
+.top-v2-roomfig-line {
+  display: block;
+}
+.top-v2-roomfig-nb {
+  display: inline-block;
+  white-space: nowrap;
+}
+#stay-option-room-dialog .top-v2-roomfig-note .top-v2-roomfig-line {
+  display: inline;
+}
+#stay-option-room-dialog .top-v2-roomfig-note .top-v2-roomfig-line {
+  display: block;
+}
+
+/* --- 2026-11-19 /access/ 駐車場: 4か所を3カードで紹介(第1/第2/第3・第4) ---
+   既存の.top-v2-scene-card文法(#driveと同じ3列ブレークポイント)に写真を載せる。
+   台数は未確認のため載せない。写真は元の3:2比のまま(看板が切れないように) */
+.top-v2-parking-lead {
+  max-width: 640px;
+  margin: 0 auto 32px;
+}
+
+.top-v2-parking-cards {
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  #parking .top-v2-parking-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.top-v2-parking-card .top-v2-scene-card-photo {
+  aspect-ratio: 3 / 2;
+}
+
+.top-v2-parking-card .top-v2-scene-card-body p + p {
+  margin-top: 6px;
+}
+
+.top-v2-parking-card .top-v2-scene-card-body h3 small {
+  margin-left: 2px;
+}
+
+.top-v2-parking-maplink {
+  margin-top: 32px;
+}
+
+.top-v2-parking-maplink span {
+  display: block;
+  margin-bottom: 14px;
+  color: #665a4a;
+  font-weight: 700;
+  font-size: clamp(14px, 1.6vw, 15px);
+}
+
+/* ==========================================================================
+   くわしい料金シミュレーター (/price-simulator/)  接頭辞 top-v2-sim-
+   既存の黒板ボード(.top-v2-chalk-*)・料金表(.top-v2-formal-table)の文法を踏襲。
+   ========================================================================== */
+.top-v2-sim-hero { padding: 0 0 8px; }
+.top-v2-sim { padding: 8px 0 72px; }
+.top-v2-sim-sr {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.top-v2-sim-error {
+  margin: 0 0 16px; padding: 12px 16px; border: 2px solid #c0392b; border-radius: 10px;
+  background: #fdecea; color: #8a2a1f; font-weight: 800; font-size: 14px;
+}
+.top-v2-sim-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
+.top-v2-sim-form { min-width: 0; }
+
+/* ステップカード */
+.top-v2-sim-step {
+  margin: 0 0 18px; padding: 20px 18px 18px; background: #fff;
+  border: 2px solid #f2dfb6; border-radius: 16px;
+}
+.top-v2-sim-step-title {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 14px;
+  color: #2f7890; font-size: 20px; font-weight: 900; line-height: 1.35;
+}
+.top-v2-sim-step-no {
+  flex: 0 0 32px; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: #2f7890; color: #fff8e8; font-size: 16px; font-weight: 900; line-height: 1;
+}
+.top-v2-sim-sub { margin: 0 0 10px; color: #2e2518; font-size: 16px; font-weight: 900; line-height: 1.4; }
+.top-v2-sim-sub small { display: block; margin-top: 2px; color: #665a4a; font-size: 12px; font-weight: 700; }
+
+/* ラベル・入力 */
+.top-v2-sim-fieldset { min-width: 0; margin: 0 0 14px; padding: 0; border: 0; }
+.top-v2-sim-field { margin: 0 0 12px; }
+.top-v2-sim-label {
+  display: block; float: none; width: auto; margin: 0 0 6px; padding: 0;
+  color: #2e2518; font-size: 14px; font-weight: 800; line-height: 1.5;
+}
+.top-v2-sim-input,
+.top-v2-sim-select {
+  display: block; width: 100%; max-width: 100%; min-height: 48px; padding: 10px 12px; box-sizing: border-box;
+  border: 2px solid rgba(47, 120, 144, 0.5); border-radius: 10px; background: #fff;
+  color: #2e2518; font: inherit; font-size: 16px; font-weight: 700; line-height: 1.4;
+}
+.top-v2-sim-input:focus-visible,
+.top-v2-sim-select:focus-visible,
+.top-v2-sim-num:focus-visible { outline: 3px solid #f0831e; outline-offset: 2px; }
+.top-v2-sim-select:disabled { opacity: 0.5; background: #f4f1ea; }
+@media (min-width: 640px) {
+  .top-v2-sim-input { max-width: 260px; }
+}
+
+/* プランカード・泊数チップ(ラジオを見た目だけチョーク風に) */
+.top-v2-sim-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+@media (min-width: 640px) { .top-v2-sim-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.top-v2-sim-card, .top-v2-sim-chip { position: relative; display: block; margin: 0; cursor: pointer; }
+.top-v2-sim-card input, .top-v2-sim-chip input {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer;
+}
+.top-v2-sim-card-body {
+  display: block; height: 100%; padding: 14px 16px; box-sizing: border-box;
+  border: 2px dashed rgba(47, 120, 144, 0.55); border-radius: 12px; color: #2f7890;
+}
+.top-v2-sim-card-body strong { display: block; font-size: 16px; font-weight: 900; line-height: 1.4; }
+.top-v2-sim-card-body small { display: block; margin-top: 4px; color: #665a4a; font-size: 12.5px; font-weight: 700; line-height: 1.5; }
+.top-v2-sim-card input:checked + .top-v2-sim-card-body { border-style: solid; background: #2f7890; color: #fff8e8; }
+.top-v2-sim-card input:checked + .top-v2-sim-card-body small { color: #e3f0f4; }
+.top-v2-sim-card.is-disabled, .top-v2-sim-card.is-disabled input { cursor: not-allowed; }
+.top-v2-sim-card.is-disabled .top-v2-sim-card-body { opacity: 0.45; }
+.top-v2-sim-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.top-v2-sim-chip span {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 64px; min-height: 48px; padding: 0 14px; box-sizing: border-box;
+  border: 2px dashed rgba(47, 120, 144, 0.55); border-radius: 10px; color: #2f7890; font-size: 16px; font-weight: 900;
+}
+.top-v2-sim-chip input:checked + span { border-style: solid; background: #2f7890; color: #fff8e8; }
+.top-v2-sim-card input:focus-visible + .top-v2-sim-card-body,
+.top-v2-sim-chip input:focus-visible + span { outline: 3px solid #f0831e; outline-offset: 2px; }
+
+/* 泊ごとの料金区分 */
+.top-v2-sim-nights { margin: 4px 0 8px; padding: 0; list-style: none; display: grid; gap: 10px; }
+.top-v2-sim-night { margin: 0; padding: 12px 14px; border: 2px solid #f2dfb6; border-radius: 12px; background: #fff8e8; }
+.top-v2-sim-night[hidden] { display: none; }
+.top-v2-sim-night-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 8px; }
+.top-v2-sim-night-no { color: #2f7890; font-size: 15px; font-weight: 900; }
+.top-v2-sim-night-date { color: #2e2518; font-size: 17px; font-weight: 900; }
+.top-v2-sim-night .top-v2-sim-field { margin-bottom: 6px; }
+.top-v2-sim-hint { margin: 0; color: #665a4a; font-size: 12.5px; font-weight: 700; line-height: 1.6; }
+
+/* 注記 */
+.top-v2-sim-note { margin: 8px 0 0; color: #665a4a; font-size: 12.5px; line-height: 1.7; }
+.top-v2-sim-note[hidden] { display: none; }
+.top-v2-sim-note--strong { color: #a5540e; font-weight: 800; }
+.top-v2-sim-note--warn { color: #a5540e; font-weight: 800; }
+.top-v2-sim-fold { margin: 12px 0 0; }
+.top-v2-sim-fold > summary {
+  display: block; padding: 10px 16px; border: 2px dashed rgba(47, 120, 144, 0.5); border-radius: 10px; cursor: pointer;
+  color: #2f7890; font-size: 14px; font-weight: 800; text-align: center; list-style: none; touch-action: manipulation;
+}
+.top-v2-sim-fold > summary::-webkit-details-marker { display: none; }
+.top-v2-sim-fold > summary::after { content: "▾"; margin-left: 8px; font-size: 12px; }
+.top-v2-sim-fold[open] > summary::after { content: "▴"; }
+.top-v2-sim-fold[open] > summary { border-style: solid; }
+.top-v2-sim-fold .top-v2-formal-tablewrap { margin-top: 10px; }
+
+/* ステッパー行 */
+.top-v2-sim-rows { display: grid; gap: 4px; }
+.top-v2-sim-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; padding: 6px 0; }
+.top-v2-sim-rowlabel { flex: 1 1 140px; min-width: 0; margin: 0; color: #2e2518; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.top-v2-sim-rowlabel small { display: block; margin-top: 1px; color: #665a4a; font-size: 11.5px; font-weight: 700; }
+.top-v2-sim-stepper { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.top-v2-sim-num {
+  width: 64px; height: 44px; padding: 0 4px; box-sizing: border-box; text-align: center;
+  border: 2px solid rgba(47, 120, 144, 0.35); border-radius: 10px; background: #fff;
+  color: #2f7890; font: inherit; font-size: 20px; font-weight: 900; -moz-appearance: textfield; appearance: textfield;
+}
+.top-v2-sim-num::-webkit-outer-spin-button,
+.top-v2-sim-num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.top-v2-sim-num:disabled { opacity: 0.4; }
+.top-v2-sim-unit { color: #665a4a; font-size: 13px; font-weight: 800; }
+.top-v2-sim-peoplesum { margin: 8px 0 0; padding: 8px 12px; border-radius: 8px; background: #fff8e8; color: #2f7890; font-size: 13.5px; font-weight: 800; }
+
+/* 食事・オプション */
+.top-v2-sim-mealblock { margin: 0 0 14px; padding: 14px; border: 2px solid #f2dfb6; border-radius: 12px; background: #fff8e8; }
+.top-v2-sim-mealblock[hidden] { display: none; }
+.top-v2-sim-mealblock .top-v2-sim-row { padding-top: 10px; }
+.top-v2-sim-opts { display: grid; gap: 12px; }
+.top-v2-sim-opt { padding: 14px; border: 2px solid #f2dfb6; border-radius: 12px; background: #fff8e8; }
+.top-v2-sim-opt.is-disabled { opacity: 0.55; }
+.top-v2-sim-opt-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+.top-v2-sim-opt-name { margin: 0; color: #2e2518; font-size: 16px; font-weight: 900; }
+.top-v2-sim-opt-price { margin: 0; color: #a5540e; font-weight: 900; }
+.top-v2-sim-opt-price strong { font-size: 17px; }
+.top-v2-sim-opt-price small { margin-left: 2px; color: #665a4a; font-size: 12px; font-weight: 700; }
+
+/* 割引 */
+.top-v2-sim-discline { display: flex; flex-wrap: wrap; gap: 2px 12px; margin: 0 0 10px; padding: 12px 14px; border-radius: 10px; background: #fff8e8; color: #2e2518; font-size: 14px; line-height: 1.6; }
+.top-v2-sim-discline strong { color: #2f7890; font-weight: 900; }
+.top-v2-sim-check {
+  display: flex; align-items: flex-start; gap: 12px; margin: 0; padding: 12px 14px; min-height: 48px; box-sizing: border-box;
+  border: 2px dashed rgba(47, 120, 144, 0.55); border-radius: 10px; color: #2e2518; font-size: 14px; line-height: 1.6; cursor: pointer;
+}
+.top-v2-sim-check input { flex: 0 0 24px; width: 24px; height: 24px; margin: 1px 0 0; accent-color: #2f7890; cursor: pointer; }
+.top-v2-sim-check:has(input:checked) { border-style: solid; background: #eef6f8; }
+.top-v2-sim-check:has(input:disabled) { opacity: 0.5; cursor: not-allowed; }
+.top-v2-sim-check strong { color: #2f7890; font-weight: 900; }
+.top-v2-sim-mealblock .top-v2-sim-check { margin-top: 10px; background: #fff; }
+
+/* 合計パネル */
+.top-v2-sim-summary {
+  min-width: 0; overflow: hidden; background: #fff; border: 3px solid #2f7890; border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(20, 50, 65, 0.14);
+}
+.top-v2-sim-sum-top { padding: 16px 18px 12px; background: #fff8e8; }
+.top-v2-sim-sum-title { margin: 0 0 4px; color: #2f7890; font-size: 15px; font-weight: 900; }
+.top-v2-sim-sum-total { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0; }
+.top-v2-sim-sum-totallabel { color: #665a4a; font-size: 13px; font-weight: 800; }
+.top-v2-sim-sum-total strong { color: #a5540e; font-size: 34px; font-weight: 900; line-height: 1.15; letter-spacing: 0.01em; }
+.top-v2-sim-sum-per { margin: 4px 0 0; color: #2e2518; font-size: 13px; font-weight: 800; }
+.top-v2-sim-sum-approx { margin: 6px 0 0; color: #a5540e; font-size: 12px; font-weight: 800; line-height: 1.5; }
+.top-v2-sim-sum-approx[hidden] { display: none; }
+.top-v2-sim-sum-toggle {
+  display: none; min-height: 40px; padding: 0 14px; border: 2px dashed rgba(47, 120, 144, 0.55); border-radius: 10px; background: transparent;
+  color: #2f7890; font: inherit; font-size: 13px; font-weight: 900; cursor: pointer; touch-action: manipulation;
+}
+.top-v2-sim-sum-body { padding: 10px 18px 4px; }
+.top-v2-sim-bd { margin: 0 0 12px; }
+.top-v2-sim-bd-title { margin: 0 0 4px; padding: 0 0 4px; border-bottom: 2px dashed rgba(47, 120, 144, 0.35); color: #2f7890; font-size: 13px; font-weight: 900; }
+.top-v2-sim-bd-list { margin: 0; padding: 0; list-style: none; }
+.top-v2-sim-line { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid #f2dfb6; }
+.top-v2-sim-line-main { flex: 1 1 auto; min-width: 0; }
+.top-v2-sim-line-label { display: block; color: #2e2518; font-size: 14px; font-weight: 800; line-height: 1.4; }
+.top-v2-sim-line-detail { display: block; margin-top: 1px; color: #665a4a; font-size: 12px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.top-v2-sim-line-amount { flex: 0 0 auto; color: #a5540e; font-size: 14px; font-weight: 900; white-space: nowrap; }
+.top-v2-sim-line.is-discount .top-v2-sim-line-amount { color: #2f7890; }
+.top-v2-sim-line.is-quote .top-v2-sim-line-amount { color: #665a4a; }
+.top-v2-sim-line-note { margin: 0; padding: 2px 0 8px; color: #a5540e; font-size: 12px; font-weight: 800; line-height: 1.5; list-style: none; }
+.top-v2-sim-bd-total { display: flex; align-items: baseline; justify-content: space-between; margin: 4px 0 8px; padding: 8px 0 0; border-top: 2px solid #2f7890; color: #2e2518; font-weight: 900; }
+.top-v2-sim-bd-total b { color: #a5540e; font-size: 20px; }
+.top-v2-sim-sum-notes { margin: 0 0 8px; padding-left: 1.2em; color: #665a4a; font-size: 12px; line-height: 1.65; }
+.top-v2-sim-sum-notes li { margin: 0 0 4px; }
+.top-v2-sim-sum-actions { display: grid; gap: 10px; padding: 10px 18px 18px; }
+.top-v2-sim-cta.top-v2-cta-big {
+  display: block; width: 100%; min-height: 52px; margin: 0; padding: 14px 16px; box-sizing: border-box;
+  font-size: 18px; text-align: center; white-space: normal;
+}
+.top-v2-sim-backlink { display: block; padding: 8px; color: #2f7890; font-size: 13.5px; font-weight: 800; text-align: center; text-decoration: underline; }
+
+@media (min-width: 992px) {
+  .top-v2-sim-layout { grid-template-columns: minmax(0, 1fr) 380px; gap: 32px; }
+  .top-v2-sim-summary { position: sticky; top: 20px; display: flex; flex-direction: column; max-height: calc(100vh - 40px); }
+  .top-v2-sim-sum-body { flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; }
+}
+
+/* スマホ: 合計を画面下に固定。タップで内訳を開く */
+@media (max-width: 991.98px) {
+  body.top-v2-sim-page { padding-bottom: 116px; }
+  .top-v2-sim-summary {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 900;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "top actions" "body body";
+    align-items: center; max-height: 86vh; border-width: 3px 0 0; border-radius: 18px 18px 0 0;
+    box-shadow: 0 -6px 20px rgba(20, 50, 65, 0.2);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .top-v2-sim-sum-top { grid-area: top; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 8px; padding: 10px 6px 10px 16px; background: #fff; }
+  .top-v2-sim-sum-title {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .top-v2-sim-sum-total { grid-column: 1 / -1; justify-content: flex-start; gap: 8px; }
+  .top-v2-sim-sum-total strong { font-size: 26px; }
+  .top-v2-sim-sum-per { grid-column: 1; margin: 0; font-size: 11.5px; line-height: 1.4; }
+  .top-v2-sim-sum-approx { grid-column: 1 / -1; margin: 2px 0 0; font-size: 11px; }
+  .top-v2-sim-sum-toggle { display: inline-flex; align-items: center; justify-content: center; grid-column: 2; grid-row: 2; }
+  .top-v2-sim-sum-actions { grid-area: actions; padding: 10px 14px 10px 6px; align-self: center; }
+  .top-v2-sim-cta.top-v2-cta-big { min-height: 48px; padding: 10px 14px; font-size: 15px; line-height: 1.3; width: auto; }
+  .top-v2-sim-backlink { display: none; }
+  .top-v2-sim-summary.is-open .top-v2-sim-backlink { display: block; padding: 4px; font-size: 12px; }
+  .top-v2-sim-sum-body { grid-area: body; display: none; max-height: 52vh; overflow-y: auto; border-top: 2px solid #f2dfb6; padding: 10px 16px 4px; }
+  .top-v2-sim-summary.is-open .top-v2-sim-sum-body { display: block; }
+}
+@media (max-width: 400px) {
+  .top-v2-sim-step { padding: 16px 14px 14px; }
+  .top-v2-sim-step-title { font-size: 18px; }
+  .top-v2-sim-cta.top-v2-cta-big { padding: 10px 10px; font-size: 14px; }
+}
+
+/* くわしい料金シミュレーター 追補(実機確認後の調整): ヒーロー文字量・サイト共通FAB・1人あたり表示 */
+.top-v2-sim-hero .top-v2-scene-hero { padding-top: 32px; gap: 12px; }
+@media (min-width: 768px) { .top-v2-sim-hero .top-v2-scene-hero { padding-top: 48px; } }
+.top-v2-sim-hero .top-v2-scene-h1text { font-size: clamp(22px, 6.6vw, 52px); }
+.top-v2-sim-hero .top-v2-scene-lead { text-wrap: balance; }
+/* このページは合計パネル内に独自の「空き状況を見る」があるため、サイト共通の右下FABは隠す(重なり防止) */
+body.top-v2-sim-page .l-footer_reserve { display: none; }
+.top-v2-sim-bd-per { margin: 0 0 8px; color: #2e2518; font-size: 12.5px; font-weight: 800; text-align: right; }
+@media (min-width: 992px) { .top-v2-sim-bd-per { display: none; } }
+@media (max-width: 991.98px) {
+  .top-v2-sim-per-note { display: none; }
+}
+@media (max-width: 991.98px) {
+  /* スマホの下部固定バーでは、ボタン内の矢印(.btn-orange::after)が文字に重なるため外す */
+  .top-v2-sim-cta.btn-orange::after { display: none; }
+  .top-v2-sim-sum-per { white-space: nowrap; font-size: 11.5px; }
+  .top-v2-sim-sum-toggle { min-height: 36px; padding: 0 10px; font-size: 12px; }
+  .top-v2-sim-cta.top-v2-cta-big { text-align: center; }
+}
+.top-v2-sim-backlink--m { display: none; }
+@media (max-width: 991.98px) {
+  /* 下部バー: 合計は「ラベル→金額」の縦積み(6桁でも折り返さない)、CTA列は幅固定 */
+  .top-v2-sim-summary { grid-template-columns: minmax(0, 1fr) 138px; }
+  .top-v2-sim-sum-total { flex-direction: column; align-items: flex-start; gap: 0; }
+  .top-v2-sim-sum-totallabel { font-size: 11px; line-height: 1.3; white-space: nowrap; }
+  .top-v2-sim-sum-total strong { font-size: 24px; line-height: 1.2; white-space: nowrap; }
+  .top-v2-sim-sum-top { padding: 8px 4px 8px 14px; }
+  .top-v2-sim-sum-actions { padding: 8px 14px 8px 4px; }
+  .top-v2-sim-cta.top-v2-cta-big { width: 100%; padding: 10px 6px; font-size: 14.5px; }
+  .top-v2-sim-sum-approx { font-size: 10.5px; }
+  .top-v2-sim-backlink--m { display: block; margin: 6px 0 10px; }
+  .top-v2-sim-summary.is-open .top-v2-sim-backlink { display: none; }
+  .top-v2-sim-summary.is-open .top-v2-sim-backlink--m { display: block; }
+}
+
+/* ===================================================================
+   2026-11 polish fix1: 「画像生成待ち」の数字タイルを黒板タイルへ
+   (旧: クリーム地+点線+大きな番号 → 未完成に見える)。
+   - 活動名をタイル内に白チョーク風の太字で中央配置(HTML内の
+     .top-v2-playcard-chalk / .top-v2-catalog-chalk)。番号は右下に
+     「No.01」と小さく残し、画像差し替えリストと突き合わせられる。
+   - 木枠(ベージュ系の薄い木目グラデ)+濃緑の黒板+チョークの粉(複数の
+     radial/linear gradient)。ポラロイドと同じ小さな角丸・柔影で並べる。
+   - 重複する下キャプションは .top-v2-playcard-name / .top-v2-catalog-name
+     をdisplay:noneにする(DOMには残す: playroll.jsの重複除去キーと
+     play-catalog.jsのダイアログ見出しが参照するため)。画像が入って
+     --pending / .top-v2-catalog-numbox が外れればキャプションは自動復活。
+   =================================================================== */
+.top-v2-playcard-photo--pending,
+.top-v2-catalog-numbox .top-v2-catalog-chalk {
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border: 3px solid transparent;
+  border-radius: 2px;
+  background:
+    radial-gradient(120% 80% at 16% 0%, rgba(255, 255, 255, 0.14), transparent 62%) padding-box,
+    radial-gradient(90% 60% at 90% 100%, rgba(255, 255, 255, 0.09), transparent 66%) padding-box,
+    linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.05) 47%, transparent 58%) padding-box,
+    repeating-linear-gradient(104deg, rgba(255, 255, 255, 0.03) 0 2px, transparent 2px 11px) padding-box,
+    linear-gradient(160deg, #365b50, #2b4b42) padding-box,
+    linear-gradient(135deg, #cdb185, #a98763) border-box;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16), inset 0 3px 9px rgba(0, 0, 0, 0.42);
+  color: #fffef6;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.3;
+  text-align: center;
+  letter-spacing: 0.03em;
+  font-variant-numeric: normal;
+}
+/* 右下の小さな管理番号 */
+.top-v2-playcard-photo--pending::after,
+.top-v2-catalog-numbox .top-v2-catalog-chalk::after {
+  content: "No." attr(data-no);
+  content: "No." attr(data-no) / "";
+  position: absolute;
+  right: 5px;
+  bottom: 3px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: none;
+  pointer-events: none;
+}
+.top-v2-playcard-chalk {
+  display: block;
+  padding: 0 2px 6px;
+  text-wrap: balance;
+  text-shadow: 0 0 1.5px rgba(255, 255, 255, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.25);
+}
+.top-v2-catalog-numbox .top-v2-catalog-chalk {
+  text-wrap: balance;
+  text-shadow: 0 0 1.5px rgba(255, 255, 255, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.25);
+}
+/* TOPマーキー: キャプションを隠した分だけ背を高くし、隣の写真カード(写真+名前1行)と下端を揃える */
+.top-v2-playcard-photo--pending {
+  aspect-ratio: 1.08 / 1;
+  padding: 6px 4px;
+  border-radius: 2px;
+}
+.top-v2-playcard-photo--pending + .top-v2-playcard-name {
+  display: none;
+}
+@media (min-width: 992px) {
+  .top-v2-playcard-photo--pending { font-size: 14.5px; aspect-ratio: 1.1 / 1; }
+}
+
+/* /play/ カタログ: 数字ボックスを「白フチ+マステ+黒板」のポラロイドへ。
+   外枠は写真カードと同じ(.top-v2-catalog-photo基準)に戻し、写真の代わりに
+   4:3の黒板(.top-v2-catalog-chalk)を入れる → 写真カードと高さが完全一致 */
+.top-v2-catalog-item--numbered .top-v2-catalog-numbox {
+  display: block;
+  width: 100%;
+  aspect-ratio: auto;
+  background: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-size: inherit;
+  line-height: normal;
+}
+.top-v2-catalog-numbox .top-v2-catalog-chalk {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 6px 6px 14px;
+  font-size: 16px;
+}
+.top-v2-catalog-numbox + .top-v2-catalog-name {
+  display: none;
+}
+@media (max-width: 767px) {
+  .top-v2-catalog-item--numbered .top-v2-catalog-numbox { font-size: inherit; }
+  .top-v2-catalog-numbox .top-v2-catalog-chalk {
+    padding: 4px 3px 11px;
+    font-size: 11.5px;
+    line-height: 1.3;
+  }
+  .top-v2-catalog-numbox .top-v2-catalog-chalk::after { right: 3px; bottom: 2px; font-size: 8px; }
+}
+/* fix1 調整: 太字+影の二重がかすれて見えるため影は粉っぽい微光だけに */
+.top-v2-playcard-chalk,
+.top-v2-catalog-numbox .top-v2-catalog-chalk {
+  font-weight: 800;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+  -webkit-font-smoothing: antialiased;
+}
+@media (max-width: 767px) {
+  .top-v2-catalog-numbox .top-v2-catalog-chalk {
+    padding: 4px 1px 11px;
+    font-size: 11px;
+    letter-spacing: 0.01em;
+  }
+}
+/* くわしい料金シミュレーター 追補2: 小画面で1行に収める調整 */
+.top-v2-sim-chips { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; max-width: 420px; }
+.top-v2-sim-chip span { min-width: 0; width: 100%; padding: 0 4px; }
+.top-v2-sim-rowlabel { flex-basis: 90px; }
+.top-v2-sim-row { gap: 6px 10px; }
+.top-v2-sim-stepper { gap: 6px; margin-left: auto; }
+.top-v2-sim-num { width: 56px; }
+.top-v2-sim-note .top-v2-inline-link { white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 400px) {
+  .top-v2-sim-select { font-size: 15px; padding: 10px 8px; }
+}
+.top-v2-playcard-chalk,
+.top-v2-catalog-numbox .top-v2-catalog-chalk {
+  word-break: auto-phrase;
+}
+@media (min-width: 992px) {
+  /* サイト共通の固定メニューボタン(右上・高さ約90px)と重ならないよう、追従位置を下げる */
+  .top-v2-sim-summary { top: 104px; max-height: calc(100vh - 124px); }
+}
+@media (max-width: 991.98px) {
+  body.top-v2-sim-page { padding-bottom: 140px; }
+}
+
+/* ===================================================================
+   2026-11 polish fix2: FAQ周りの切り抜き過多を是正(装飾予算 1画面2個まで)
+   TOP #faq と /play/option/ #faq は、1枚のスプライトPNGに複数の切り抜きが
+   縦に並んでいる(左: 机の少年→「浜っ子」アルバム→ウミガメ / 右: 教壇の男→
+   万国旗→メロディカ)。個別にdisplay:noneできないため、スプライトの箱を
+   「上の人物だけ」の比率にして下を切り捨てる(アルバム・ウミガメ・万国旗・
+   メロディカを全幅で非表示)。残すのは 少年+吹き出し(1組)と 教壇の男。
+   SP(≤991px)は左スプライトがもともと非表示・右はSP専用の少年画像のため
+   「少年+吹き出し」の1組のみ(=SPは1つ)。 */
+.l-faq_bgLeft {
+  aspect-ratio: 614 / 704;
+  overflow: hidden;
+}
+@media (min-width: 992px) {
+  .l-faq_bgRight {
+    aspect-ratio: 1049 / 832;
+    overflow: hidden;
+  }
+  /* TOPのFAQ見出しは96px級の大見出しで、既定left:-180pxだと吹き出しが
+     画面左端で見切れる(1280pxで x=-98)。少年の頭の右(x=172px)に固定する。
+     相対配置のleftは見出し幅基準なので (100vw-100%)/2 を引いて
+     ビューポート左端からの絶対位置に直している。 */
+  #faq.l-section_bg .l-section_titleBalloon--faq {
+    left: calc(172px - (100vw - 100%) / 2);
+  }
+}
+
+/* ===================================================================
+   2026-11 polish fix3: TOP「カタショーの風景」(#landscape) の装飾過多を是正
+   - ≤767px: 写真の下に溜まる小物の山(.l-album_activity: 人体模型・ドクロ・
+     卓球ラケット・スツール・帽子・万国旗・分度器…)と、左右の落書きスプライト
+     (はさみ・サッカーボール線画)を非表示。残すのはバスケの男(.l-album_bgRightbtm)のみ。
+   - ≥992px: 左右のスプライトは1枚PNG内に小物が縦に並ぶため、個別に消せない分は
+     clip-pathで必要な部分だけ見せる。残すのは「ヘルメットのドクロ」「左のランナーGIF」
+     「右の水鉄砲の子GIF」「バスケの男+ゴール」の4点(左右・上下に散る)。
+     卓球ラケット/はさみ/分度器/2+2=4/サッカーボール線画/放送中札は非表示。 */
+@media (max-width: 767px) {
+  #landscape .l-album_bgLeft,
+  #landscape .l-album_bgRight,
+  #landscape .l-album_activity {
+    display: none;
+  }
+}
+@media (min-width: 992px) {
+  #landscape .l-album_bgRight {
+    display: none;
+  }
+  #landscape .l-album_bgLeft img {
+    /* 左スプライトの上部のうち右側(ドクロ)だけ残し、ラケット・はさみ・分度器・数式を切る */
+    clip-path: inset(3.5% 0 83.5% 50%);
+  }
+}
+/* fix3 追補: スマホではバスケの男を絶対配置(z-index:-1で写真の裏に潜り込みCTAと重なる)
+   から通常フローへ。ボタンの下・右寄せで立たせ、他の切り抜きと重ならないようにする。
+   右端の見切れ(元デザインの-36.8vw)は踏襲 */
+@media (max-width: 767px) {
+  #landscape .l-album_bgRightbtm {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    z-index: 0;
+    width: 58vw;
+    margin: 4px -26vw -2vw auto;
+    pointer-events: none;
+  }
+  #landscape .l-album_bgRightbtm img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+@media (min-width: 992px) {
+  #landscape .l-album_bgLeft img {
+    clip-path: inset(3.5% 0 83.5% 57%);
+  }
+}
+/* fix3 追補2: タブレット帯(768-991px)でも同じ小物の山が出るため同様に畳む。
+   バスケの男は幅を上限300pxに抑え、画像上部の透明余白ぶんをネガティブマージンで詰める */
+@media (min-width: 768px) and (max-width: 991px) {
+  #landscape .l-album_bgLeft,
+  #landscape .l-album_bgRight,
+  #landscape .l-album_activity {
+    display: none;
+  }
+}
+@media (max-width: 991px) {
+  #landscape .l-album_bgRightbtm {
+    --w: min(58vw, 300px);
+    position: relative;
+    right: auto;
+    bottom: auto;
+    z-index: 0;
+    width: var(--w);
+    margin: calc(var(--w) * -0.34) calc(var(--w) * -0.45) -2vw auto;
+    pointer-events: none;
+  }
+  #landscape .l-album_bgRightbtm img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+@media (max-width: 991px) {
+  #landscape .l-album_bgRightbtm {
+    margin-top: calc(var(--w) * -0.34 - 40px);
+  }
+}
+
+/* ===================================================================
+   2026-11 polish fix4: TOPの王冠・月桂冠バッジ3枚(広告バナー調=§4診断で
+   廃止対象)を、HTMLテキストの実績行(.top-v2-statrow)へ置換。
+   [小さい前置き][大きい数字/キーワード(橙)][小さい単位] + 下に青緑のラベル。
+   画像(badge-*-sm.png)はディスクに残し参照のみ外した。
+   PC: 3カラム+縦の細い区切り / SP(<576px): 1行ずつ横並びの3段+横区切り */
+.top-v2-medalrow-frame {
+  max-width: 880px;
+}
+.top-v2-statrow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-statrow > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  text-align: center;
+}
+.top-v2-statrow > li + li {
+  border-left: 1px solid #dde6ea;
+}
+.top-v2-statrow-value {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  color: #f0831e;
+  font-weight: 900;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.top-v2-statrow-value strong {
+  font-size: clamp(30px, 3.6vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+.top-v2-statrow-value small {
+  font-size: clamp(14px, 1.6vw, 18px);
+  font-weight: 900;
+}
+.top-v2-statrow-label {
+  color: #2f7890;
+  font-size: clamp(13px, 1.5vw, 15px);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+@media (max-width: 575px) {
+  .top-v2-statrow {
+    grid-template-columns: 1fr;
+  }
+  .top-v2-statrow > li {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 2px 12px;
+    padding: 9px 4px;
+  }
+  .top-v2-statrow > li + li {
+    border-left: 0;
+    border-top: 1px solid #dde6ea;
+  }
+  .top-v2-statrow-value strong { font-size: 28px; }
+  .top-v2-statrow-value small { font-size: 14px; }
+  .top-v2-statrow-label { font-size: 13px; }
+}
+@media (max-width: 575px) {
+  /* SP: 値は右寄せ・ラベルは左寄せの2列に揃え、3段の縦の軸を通す */
+  .top-v2-statrow > li {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    column-gap: 12px;
+    justify-content: stretch;
+    text-align: left;
+  }
+  .top-v2-statrow-value { justify-content: flex-end; }
+}
+
+/* ===================================================================
+   2026-11 polish fix5a: /play/option/ のセクションH2を1システムに統一
+   旧: 料金のご案内40px / 食事・遊び・温泉・FAQ 96px / 宿泊66px とバラバラ
+   (96pxは旧WPテーマの画像文字時代の名残)。サイトの .top-v2-scene-title 文法
+   (青緑#2f7890・太字・クリームのマーカー)に揃え、PC44px / SP28px
+   (clamp: 28px→44px)で統一。ヒーローH1(旧40px/27.6px)がH2に負けないよう
+   H1も48px/32pxへ(このページのhは本クラスで限定)。
+   これらのクラス(.l-section_titleText--foodoption等)は /play/option/ 専用 */
+h1.l-mv_title.top-v2-opt-h1 {
+  font-size: clamp(32px, 2.2vw + 22px, 48px);
+  line-height: 1.3;
+}
+h2.l-section_titleText--foodoption,
+h2.l-section_titleText--playoption,
+h2.l-section_titleText--spaoption,
+h2.l-section_titleText--sub,
+h2.l-section_titleText--faq {
+  display: inline-block;
+  margin: 0 !important;
+  padding: 0 6px;
+  color: #2f7890;
+  font-family: inherit;
+  font-size: clamp(28px, 2.4vw + 18px, 44px) !important;
+  font-weight: 900;
+  line-height: 1.4;
+  letter-spacing: 0;
+  background: linear-gradient(transparent 58%, #fff8e8 58%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* 料金のご案内も同サイズへ(元は clamp(24px,3.6vw,40px)) */
+.top-v2-price-scope h2.top-v2-scene-title {
+  font-size: clamp(28px, 2.4vw + 18px, 44px);
+}
+/* 文字が小さくなったので SP用の強制改行は不要(「食事の/オプション」→1行) */
+h2.l-section_titleText--foodoption br.u-sp,
+h2.l-section_titleText--playoption br.u-sp,
+h2.l-section_titleText--spaoption br.u-sp {
+  display: none;
+}
+/* 見出し左右の切り抜き(食事=食器/給食のおばさん、遊び=…)は文字サイズに追随して縮小 */
+h2.l-section_titleText--foodoption .l-section_titleImage--left,
+h2.l-section_titleText--foodoption .l-section_titleImage--right,
+h2.l-section_titleText--playoption .l-section_titleImage--left,
+h2.l-section_titleText--playoption .l-section_titleImage--right {
+  height: clamp(52px, 8vw, 104px);
+  padding: 0 clamp(6px, 1.4vw, 18px);
+}
+/* 見出しラッパーの固定高(PC200px/SP32vw: 切り抜き画像用)を外し、
+   見出し→本文は PC約40px / SP約28px に正規化。温泉・宿泊・FAQの上下の空洞を解消 */
+.l-section_title--image.text-center.mb-5:has(> h2.l-section_titleText--foodoption),
+.l-section_title--image.text-center.mb-5:has(> h2.l-section_titleText--playoption),
+.l-section_title--image.text-center.mb-5:has(> h2.l-section_titleText--spaoption),
+.l-section_title.text-center.mb-5:has(> h2.l-section_titleText--sub),
+.l-section_title.text-center.mb-5:has(> h2.l-section_titleText--faq) {
+  height: auto !important;
+  min-height: 0;
+  margin-bottom: clamp(28px, 3.2vw, 40px) !important;
+}
+@media (min-width: 992px) {
+  /* FAQ見出しが小さくなった分、吹き出しは少年の頭の右(x=172px)に固定 */
+  h2.l-section_titleText--faq .l-section_titleBalloon--faq {
+    left: calc(172px - (100vw - 100%) / 2);
+  }
+}
+/* fix5a 追補: FAQ見出しは吹き出しブロックを内包してh2が背高になるため、
+   マーカーはh2ではなく文字span(.top-v2-scene-title-mark)に掛ける */
+h2.l-section_titleText--faq {
+  background: none;
+}
+h2.l-section_titleText--faq .top-v2-scene-title-mark {
+  display: inline;
+  padding: 0 6px;
+  background: linear-gradient(transparent 58%, #fff8e8 58%);
+}
+h2.l-section_titleText--foodoption br.u-sp,
+h2.l-section_titleText--playoption br.u-sp,
+h2.l-section_titleText--spaoption br.u-sp {
+  display: none !important;
+}
+/* fix5a 追補: 旧救済 .top-v2-scene-title-mark{font-size:21px}(≤767px)が
+   料金・FAQの見出し文字だけ21pxに潰していたため、親h2のサイズを継承させる */
+.top-v2-price-scope h2.top-v2-scene-title .top-v2-scene-title-mark,
+h2.l-section_titleText--faq .top-v2-scene-title-mark {
+  font-size: inherit;
+}
+
+/* ===================================================================
+   2026-11 polish fix5b: /about/ のセクションH2がH1(PC52px/SP30px)より大きい(96px)
+   という見出し階層の逆転を是正。TOP用 .top-v2-h(96px級)がそのまま載っていた。
+   about専用id(#story/#history/#team/#song。他ページには存在しない)でスコープし
+   H2を PC48px / SP30px(clamp(30px,4.2vw,48px))へ。H1の
+   clamp(30px,4.6vw,52px)を全幅で上回らない値にしてある。 */
+#story .top-v2-h,
+#history .top-v2-h,
+#team .top-v2-h,
+#song .top-v2-h {
+  font-size: clamp(30px, 4.2vw, 48px);
+  line-height: 1.4;
+}
+#story .top-v2-h .top-v2-scene-title-mark,
+#history .top-v2-h .top-v2-scene-title-mark,
+#team .top-v2-h .top-v2-scene-title-mark,
+#song .top-v2-h .top-v2-scene-title-mark {
+  font-size: inherit;
+}
+
+/* ===================================================================
+   2026-11 polish fix7: 2列グリッドで最後に1枚だけ余るカード
+   (/play/option/ の「プライベート貸切サウナ」「地元で大人気サンドウィッチ」)が
+   左に寄って右半分が空く → 2列幅いっぱいの行に置いて中央へ(PCのみ。
+   1列になるタブレット以下は元から全幅)。幅は1カラム分(gap28pxを考慮)。
+   温泉の --single は別レイアウトのため除外 */
+@media (min-width: 992px) {
+  .top-v2-menu-grid:not(.top-v2-menu-grid--single) > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 28px) / 2);
+  }
+}
+
+/* ===================================================================
+   2026-11 polish fix10: 「飲み放題2時間」カード写真の右端に写るビールジョッキ・
+   生ビールのグラス(※ビールは含まれておりません)を見せない。元画像は1183x886
+   でジョッキは x>=890(右25%)。3:2枠はobject-positionでは横が切れない
+   (画像の方が縦長のため縦だけcoverで切れる)ので、写真を1.38倍に拡大して
+   左端基準で表示 → 見える範囲は元画像の x:0-857 / y:約170-740。
+   タテ・ヨコのはみ出しを切るため、img を角丸+細枠のラッパー span で包んだ
+   (figureにoverflow:hiddenを掛けるとマステ::beforeが切れるため) */
+.top-v2-menu-photo-crop {
+  display: block;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid rgba(42, 71, 80, 0.12);
+}
+.top-v2-menu-grid .top-v2-menu-photo-crop > img {
+  border: 0;
+  border-radius: 0;
+}
+.top-v2-menu-photo-crop--nobeer > img {
+  transform: scale(1.38);
+  transform-origin: 0 55%;
+}
+
+/* fix8: 新しいシャワー写真(EXIFで縦向き表示)をカード枠(横長cover)に入れるため、
+   蛇口とシャンプー類が収まる位置に寄せる */
+.top-v2-scene-card-photo img[src*="shower-booth-2026"] {
+  object-position: 50% 68%;
+}
+
+/* ===================================================================
+   2026-11 polish fix9: /faq/ カテゴリジャンプ(施設/食事/予約/利用)
+   旧: 約240pxの灰帯(#ECEDF2)の真ん中に極小のふせんタブ4枚だけ → 空洞。
+   新: 導入文の直下に、タップ領域48px以上のピルボタン4個を並べ、灰帯は廃止
+   (白地・上のヒーロー余白を負マージンで詰める)。#jumpはfaqページ専用id。
+   アンカー(#facility/#meal/#reservation/#usage)・data-event・aria-labelは不変 */
+#jump.top-v2-scene-section {
+  margin-top: -64px;
+  padding: 0;
+  background: #fff;
+}
+#jump + #faq > .top-v2-scene-section:first-child {
+  padding-top: 56px;
+}
+#jump .top-v2-anchor-circles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0;
+  align-items: stretch;
+}
+#jump .top-v2-anchor-circle-item,
+#jump .top-v2-anchor-circle-item + .top-v2-anchor-circle-item {
+  margin: 0;
+  z-index: auto;
+}
+#jump .top-v2-anchor-circle {
+  justify-content: center;
+  gap: 6px;
+  height: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 2px solid #2f7890;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 3px 0 rgba(47, 120, 144, 0.22);
+  color: #2f7890;
+  transform: none;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+#jump .top-v2-anchor-circle:hover,
+#jump .top-v2-anchor-circle:focus-visible {
+  background: #2f7890;
+  color: #fff;
+  box-shadow: 0 3px 0 rgba(20, 50, 65, 0.28);
+}
+#jump .top-v2-anchor-circle-label {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+#jump .top-v2-anchor-circle-arrow {
+  font-size: 10px;
+  opacity: 0.8;
+}
+@media (max-width: 575px) {
+  #jump .top-v2-anchor-circles { gap: 8px; }
+  #jump .top-v2-anchor-circle { padding: 0 6px; gap: 4px; }
+  #jump .top-v2-anchor-circle-label { font-size: 15px; letter-spacing: 0.03em; }
+  #jump + #faq > .top-v2-scene-section:first-child { padding-top: 44px; }
+}
+
+/* ===================================================================
+   2026-11 polish fix11: /play/ 末尾(FAQ→最終CTA→footer)の余白正規化
+   原因: ①FAQは#faq.top-v2-scene-section(灰)・最終CTAも灰で地続きなのに、
+   FAQ下96px+CTA上96px+ボタンmargin8pxの約200pxが連続して空洞に見えた。
+   ②CTA灰帯の下に、.l-main_inner(pb-lg-5=48px)と.l-main(pb90px)の白帯が残り、
+   灰帯とfooterの間に約140px(SPは90px)の白い隙間。
+   処方: ①FAQ下余白を0にして、FAQ最後のボタン→CTA見出しを CTA上余白
+   (PC96px/SP56px)だけにする。②/play/(#catalogを持つ=このページ専用の
+   フック)に限り main の下余白を0にして、CTA灰帯をfooter上端まで届かせる。
+   .l-main_bg(登り棒の子)はmainの下端基準のクリップなので接地関係は不変。
+   ※friends/family/gasshuku/kenshuも同じ構造(灰FAQ+灰CTA)。必要なら
+   :has(#catalog)の限定を外せば同じ規則で揃えられる */
+main:has(#catalog) #faq.top-v2-scene-section {
+  padding-bottom: 0;
+}
+main:has(#catalog) #faq .top-v2-actions {
+  margin-bottom: 0;
+}
+main:has(#catalog) .l-main_inner,
+.l-main:has(#catalog) .l-main_inner {
+  padding-bottom: 0 !important;
+}
+.l-main:has(#catalog) {
+  padding-bottom: 0;
+}
+
+/* 2026-11-19 黒板タイル: 長い活動名（カタショーオリジナルテスト・ボクシンググローブ対決・
+   ナンジャモンジャ等）が word-break:auto-phrase で1語扱いになり枠外で切れるため、
+   語中でも折り返せるようにする（2行まで収まるサイズ） */
+.top-v2-playcard-chalk,
+.top-v2-catalog-numbox .top-v2-catalog-chalk {
+  word-break: normal;
+  overflow-wrap: anywhere;
+  line-break: strict;
+  max-width: 100%;
+}
+.top-v2-catalog-numbox .top-v2-catalog-chalk {
+  font-size: 15px;
+}
+@media (max-width: 767px) {
+  .top-v2-catalog-numbox .top-v2-catalog-chalk { font-size: 11px; }
+}
+
+/* 2026-11-19 料金ページ: くわしい料金シミュレーター(/price-simulator/)への入口 */
+.top-v2-sim-entry {
+  margin: 20px 0 8px;
+  text-align: center;
+}
+
+/* 2026-11-19 シーン4ページ(friends/family/gasshuku/kenshu)も最終CTA(灰)の下に
+   main由来の白帯(約140px)が残るため、/play/ と同じく main の下余白を0にして
+   灰帯をfooter上端まで届かせる（最終CTAで終わるページ限定） */
+.l-main:has(.top-v2-scene-finalcta) {
+  padding-bottom: 0;
+}
+.l-main:has(.top-v2-scene-finalcta) .l-main_inner {
+  padding-bottom: 0 !important;
+}

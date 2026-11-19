@@ -12,13 +12,13 @@
     return m ? Number(m[1].replace(/,/g, '')) : 0;
   }
   var SEASONS = {
-    weekday: { adult: 8400, elem: 5880, pre: 4200, minPeople: 5, floor: yenOf(MIN_SPEND.weekday) },
+    weekday: { adult: 8900, elem: 6230, pre: 4450, minPeople: 5, floor: yenOf(MIN_SPEND.weekday) },
     holiday: { adult: 9900, elem: 6930, pre: 4950, minPeople: 7, floor: yenOf(MIN_SPEND.holiday) }
   };
   var MEALS = {
     byo: { adult: 0, elem: 0, pre: 0 },
     kyushoku: { adult: 1250, elem: 1250, pre: 1250 },
-    bbq: { adult: 3500, elem: 2450, pre: 1750 },
+    bbq: { adult: 3800, elem: 2660, pre: 1900 },
     sando: { adult: 1000, elem: 1000, pre: 1000 }
   };
   var MEAL_LABELS = { kyushoku: '給食', bbq: '提供型BBQ', sando: 'サンド' };
@@ -63,6 +63,32 @@
       floor: COMPACT.floor[season]
     };
   }
+
+  // 料金定数の読み取り専用公開口。くわしい料金シミュレーター(/price-simulator/)が
+  // ここを参照するため、料金の数字は引き続きこのファイル(+site.json)だけに存在する。
+  // 公開するのは凍結したコピーなので、ボード側の挙動・定数には一切影響しない。
+  function frozenCopy(obj) {
+    var copy = JSON.parse(JSON.stringify(obj));
+    (function freezeDeep(o) {
+      Object.keys(o).forEach(function (key) {
+        if (o[key] && typeof o[key] === 'object') { freezeDeep(o[key]); }
+      });
+      Object.freeze(o);
+    })(copy);
+    return copy;
+  }
+  window.KATASHO_PRICING = Object.freeze({
+    SEASONS: frozenCopy(SEASONS),
+    MEALS: frozenCopy(MEALS),
+    MEAL_LABELS: frozenCopy(MEAL_LABELS),
+    COMPACT: frozenCopy(COMPACT),
+    COMPACT_HARD_MAX: COMPACT_HARD_MAX,
+    COMPACT_COMFORT_MAX: COMPACT_COMFORT_MAX,
+    MAX_PEOPLE: MAX_PEOPLE,
+    getRates: function (season, compact) {
+      return frozenCopy(getRates(season, compact));
+    }
+  });
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
