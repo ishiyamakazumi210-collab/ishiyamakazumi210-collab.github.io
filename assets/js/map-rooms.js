@@ -57,8 +57,8 @@
       name: '食堂',
       sub: '給食室・調理設備つき',
       body: 'コンパクトプランの専有スペース内にある、調理設備つきの食堂です。コンパクトプランの宴会・食事は、ここで行います。',
-      photo: '/assets/img/rooms/room-shokudo.jpg',
-      alt: '長机とテレビ、給湯コーナーが並ぶ食堂スペース'
+      photo: '/assets/img/rooms-2026/shokudo.jpg',
+      alt: '長机と大型テレビ、卓球台が並ぶ食堂'
     },
     kitchen1: {
       name: '調理室①',
@@ -66,8 +66,8 @@
       chips: ['IH', '調理器具', '食器', '大型冷蔵庫', 'ウッドデッキつき'],
       body: '持ち込み食材の調理はこちらで。',
       note: '利用グループごとに割り振ってご案内します。',
-      photo: '/assets/img/rooms/room-kitchen1.jpg',
-      alt: '冷蔵庫と長机が並ぶ調理室'
+      photo: '/assets/img/rooms-2026/kitchen1.jpg',
+      alt: '木の作業台と椅子が並ぶ調理室'
     },
     kitchen2: {
       name: '調理室②',
@@ -83,8 +83,8 @@
       chips: ['個室ブース3', '脱衣所共有ブース4', 'リンスインシャンプー', 'ボディーソープ'],
       body: 'バスタオル1人1枚と歯ブラシ付き。',
       note: '団体ごとに優先時間を設けています。',
-      photo: '/assets/img/rooms/room-shower.jpg',
-      alt: 'カーテンで仕切った個室が並ぶ脱衣スペース'
+      photo: '/assets/img/shower-changing-2026.jpg',
+      alt: 'カーテンで仕切られた脱衣スペースと、扉のある個室'
     },
     s1f1: {
       name: '南棟一階宿泊部屋①',
@@ -92,7 +92,8 @@
       capacity: capacityText('s1f1'),
       chips: stayChips('二段ベッド8台'),
       note: COMPACT_STAY_NOTE,
-      photo: STAY_PHOTO
+      photo: '/assets/img/rooms-2026/s1f1.jpg',
+      alt: '黒い二段ベッドが並ぶ南棟一階の宿泊部屋'
     },
     s1f2: {
       name: '南棟一階宿泊部屋②',
@@ -100,30 +101,32 @@
       capacity: capacityText('s1f2'),
       chips: stayChips('二段ベッド4台'),
       note: COMPACT_STAY_NOTE,
-      photo: STAY_PHOTO
+      photo: '/assets/img/rooms-2026/s1f2.jpg',
+      alt: '木の二段ベッドが並ぶ南棟一階の小部屋'
     },
-    bbq1: { name: 'BBQ場①', body: BBQ_BODY, link: BBQ_LINK, photo: BBQ_PHOTO, alt: BBQ_ALT },
-    bbq2: { name: 'BBQ場②', body: BBQ_BODY, link: BBQ_LINK, photo: BBQ_PHOTO, alt: BBQ_ALT },
-    bbq3: { name: 'BBQ場③', body: BBQ_BODY, link: BBQ_LINK, photo: BBQ_PHOTO, alt: BBQ_ALT },
+    bbq1: { name: 'BBQ場①', body: BBQ_BODY, link: BBQ_LINK, photo: '/assets/img/rooms-2026/bbq1.jpg', alt: '屋根つきのウッドデッキに長いBBQテーブルが並ぶBBQ場' },
+    bbq2: { name: 'BBQ場②', body: BBQ_BODY, link: BBQ_LINK, photo: '/assets/img/rooms-2026/bbq2.jpg', alt: 'ウッドデッキ沿いに網つきテーブルが続くBBQ場' },
+    bbq3: { name: 'BBQ場③', body: BBQ_BODY, link: BBQ_LINK, photo: '/assets/img/rooms-2026/bbq3.jpg', alt: '屋外のタイル敷きにBBQテーブルとスツールが並ぶBBQ場' },
 
     // --- 2F ---
     kaigi3: { name: '会議室③',
-      sub: 'もとから会議室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
+      sub: 'もとから会議室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: '/assets/img/rooms-2026/kaigi3.jpg', alt: 'フローリングに長机とホワイトボードがある会議室' },
     kaigi2: { name: '会議室②',
-      sub: '相談室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
+      sub: '相談室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: '/assets/img/rooms-2026/kaigi2.jpg', alt: '長机と椅子を置いた小さめの会議室' },
     kaigi1: { name: '会議室①',
-      sub: '1年教室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: KAIGI_PHOTO, alt: KAIGI_ALT },
+      sub: '1年教室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: '/assets/img/rooms-2026/kaigi1.jpg', alt: '長机が並び、モニターと黒板のある会議室' },
     cowork: { name: 'コワークスペース',
-      sub: '2年教室', chips: ['Wi-Fi'], photo: '/assets/img/rooms/room-cowork.jpg', alt: '木製フレームのデスクが並ぶコワークスペース' },
+      sub: '2年教室', chips: ['Wi-Fi'], photo: '/assets/img/rooms-2026/cowork.jpg', alt: '家型の木枠の下にデスクとモニターが並ぶコワークスペース' },
     kyoshitsu2: { name: '教室②',
-      sub: '5年教室', body: CLASSROOM_BODY, photo: CLASSROOM_PHOTO },
+      sub: '5年教室', body: CLASSROOM_BODY, photo: '/assets/img/rooms-2026/kyoshitsu2.jpg', alt: '木の机と椅子が並ぶ教室' },
     n2f3: {
       name: '北棟宿泊部屋③',
       sub: '児童会室',
       capacity: capacityText('n2f3'),
       chips: stayChips('二段ベッド6台'),
       note: STANDARD_STAY_NOTE,
-      photo: STAY_PHOTO
+      photo: '/assets/img/rooms-2026/n2f3.jpg',
+      alt: '黒い二段ベッドが並ぶ北棟の宿泊部屋'
     },
 
     // --- 3F ---
@@ -141,7 +144,8 @@
       capacity: capacityText('s3f3'),
       chips: stayChips('布団で就寝'),
       note: STANDARD_STAY_NOTE,
-      photo: STAY_PHOTO
+      photo: '/assets/img/rooms-2026/s3f3.jpg',
+      alt: '市松模様の床に黒板が残る、布団で寝る宿泊部屋'
     },
     s3f2: {
       name: '南棟宿泊部屋②',
@@ -149,18 +153,20 @@
       capacity: capacityText('s3f2'),
       chips: stayChips('二段ベッド5台'),
       note: STANDARD_STAY_NOTE,
-      photo: STAY_PHOTO
+      photo: '/assets/img/rooms-2026/s3f2.jpg',
+      alt: '木の二段ベッドが並ぶ、もと3年教室の宿泊部屋'
     },
     kyoshitsu1: { name: '教室①',
-      sub: '4年教室', body: CLASSROOM_BODY, photo: CLASSROOM_PHOTO },
-    ongaku: { name: '音楽室', chips: ['グランドピアノ'], body: '合唱やバンド練習はこちらで。', note: '大きな音が出る楽器は、基本的に21:00までです。', photo: '/assets/img/rooms/room-ongaku.jpg', alt: '板張りの広い部屋にグランドピアノを置いた音楽室' },
+      sub: '4年教室', body: CLASSROOM_BODY, photo: '/assets/img/rooms-2026/kyoshitsu1.jpg', alt: '黒板と木の机が並ぶ教室' },
+    ongaku: { name: '音楽室', chips: ['グランドピアノ'], body: '合唱やバンド練習はこちらで。', note: '大きな音が出る楽器は、基本的に21:00までです。', photo: '/assets/img/rooms-2026/ongaku.jpg', alt: '板張りの広い部屋にグランドピアノと黒板がある音楽室' },
     n3f2: {
       name: '北棟宿泊部屋②',
       sub: '前室つき・音楽準備室',
       capacity: capacityText('n3f2'),
       chips: stayChips('二段ベッド4台'),
       note: STANDARD_STAY_NOTE,
-      photo: STAY_PHOTO
+      photo: '/assets/img/rooms-2026/n3f2.jpg',
+      alt: '木の二段ベッドが並ぶ北棟の宿泊部屋'
     },
     n3f1: {
       name: '北棟宿泊部屋①',
@@ -168,7 +174,8 @@
       capacity: capacityText('n3f1'),
       chips: stayChips('布団で就寝'),
       note: STANDARD_STAY_NOTE,
-      photo: STAY_PHOTO
+      photo: '/assets/img/rooms-2026/n3f1.jpg',
+      alt: 'スクリーンのある広い宿泊部屋。布団を並べて寝る'
     }
   };
 

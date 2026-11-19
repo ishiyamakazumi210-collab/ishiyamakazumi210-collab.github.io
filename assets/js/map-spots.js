@@ -17,15 +17,15 @@
       name: '北棟',
       body: '宿泊部屋・調理室・シャワー室・音楽室などがあります。',
       link: FLOORS_LINK,
-      photo: '/assets/img/spots/spot-kita.jpg',
-      alt: '北棟のイラスト（赤い屋根の校舎）'
+      photo: '/assets/img/spots-2026/kita.jpg',
+      alt: '「カタショー・ワンラボ」の垂れ幕がかかる北棟の外観'
     },
     minami: {
       name: '南棟',
       body: '宿泊部屋・食堂・会議室・教室・職員室などがあります。',
       link: FLOORS_LINK,
-      photo: '/assets/img/spots/spot-minami.jpg',
-      alt: '南棟のイラスト（3階建ての校舎）'
+      photo: '/assets/img/spots-2026/minami.jpg',
+      alt: '3階建ての南棟の外観'
     },
     gym: {
       name: '体育館',
@@ -37,8 +37,8 @@
     },
     grounds: {
       name: 'グラウンド',
-      photo: '/assets/img/spots/spot-grounds.jpg',
-      alt: '芝生の校庭とすべり台などの遊具',
+      photo: '/assets/img/spots-2026/grounds.jpg',
+      alt: '広い芝生のグラウンド',
       body: 'すべり台・ブランコ・うんてい・登り棒・鉄棒があります。'
     },
     // ドット3箇所(正門横・裏・南側)とも同じ内容

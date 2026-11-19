@@ -126,7 +126,7 @@ window.KATASHO_DATA = {
       "alt": "木造校舎の白黒写真"
     },
     "kyushokuTray": {
-      "src": "/assets/img/kyushoku-tray.jpg",
+      "src": "/assets/img/option-2026/kyushoku.jpg",
       "alt": "昔なつかしの給食トレー"
     },
     "fireworksSparkler": {
@@ -142,7 +142,7 @@ window.KATASHO_DATA = {
       "alt": "夜の校庭BBQを楽しむ友達グループ"
     },
     "lunchNostalgy": {
-      "src": "/assets/wp/uploads/2022/08/food_lunch_nostalgy.jpeg",
+      "src": "/assets/img/option-2026/kyushoku.jpg",
       "alt": ""
     },
     "scienceSkeletonCatalog": {
