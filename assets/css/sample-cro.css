@@ -1,0 +1,373 @@
+/* 改良案の見本ページ（/sample/ と /sample/gasshuku/）専用の差分。
+   見た目は top-v2.css をそのまま使い、ここでは「予約に必要な情報とボタンの位置」に
+   関わる部品だけを足す。色はサイト既存の値（ティール#2f7890・オレンジ#f0831e・
+   予約赤#e6471a・こげ茶#a5540e・クリーム#fff8e8）に揃える。 */
+
+/* ---- 見本であることを示す細い帯 ---------------------------------------- */
+.sample-strip {
+  margin: 0;
+  padding: 5px 12px;
+  background: #fff8e8;
+  border-bottom: 1px dashed rgba(165, 84, 14, 0.35);
+  color: #665a4a;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+.sample-strip a {
+  color: #2f7890;
+  font-weight: 900;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.sample-strip-sep { margin: 0 6px; color: rgba(102, 90, 74, 0.6); }
+
+/* ---- 予約ボタン直下の「安心の一言」 ------------------------------------ */
+.sample-cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+.sample-reassure {
+  margin: 10px 0 0;
+  color: #665a4a;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.7;
+  text-align: center;
+}
+.sample-reassure span { display: inline-block; }
+.sample-reassure span + span::before {
+  content: "／";
+  margin: 0 4px;
+  color: rgba(102, 90, 74, 0.55);
+}
+@media (max-width: 767px) {
+  .sample-cta-group { width: 100%; }
+  .sample-cta-group .top-v2-cta-big { width: 100%; box-sizing: border-box; }
+  .sample-reassure { font-size: 12px; }
+}
+
+/* ---- トップ見本: ヒーロー（動画をやめて写真＋事実3点＋ボタン） ----------- */
+.sample-hero {
+  position: relative;
+  background: #fff8e8;
+  padding-bottom: 20px;
+}
+.sample-hero-photo {
+  position: relative;
+  height: clamp(150px, 23vh, 230px);
+  overflow: hidden;
+}
+.sample-hero-photo picture,
+.sample-hero-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.sample-hero-photo img {
+  object-fit: cover;
+  object-position: 62% 42%;
+}
+.sample-hero-body {
+  position: relative;
+  margin: -22px 12px 0;
+  padding: 10px 16px 16px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(20, 50, 65, 0.14);
+  text-align: center;
+}
+.sample-hero-key {
+  max-width: 340px;
+  margin: 0 auto 2px;
+  line-height: 0;
+}
+.sample-hero-key img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sample-hero-lead {
+  margin: 0 0 10px;
+  color: #2e2518;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+.sample-hero-facts {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 14px;
+  text-align: left;
+}
+.sample-hero-facts li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: #fff8e8;
+  border-radius: 10px;
+}
+.sample-hero-fact-key {
+  flex: 0 0 auto;
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: #2f7890;
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 900;
+  line-height: 1.6;
+}
+.sample-hero-fact-val { line-height: 1.4; }
+.sample-hero-fact-val strong {
+  color: #2e2518;
+  font-size: 16px;
+  font-weight: 900;
+}
+.sample-hero-fact-val small {
+  color: #665a4a;
+  font-size: 12px;
+  font-weight: 700;
+}
+.sample-hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.sample-btn-sub {
+  display: block;
+  padding: 8px;
+  color: #2f7890;
+  font-size: 15px;
+  font-weight: 900;
+  text-decoration: underline;
+}
+.sample-btn-sub:hover { color: #245e71; }
+.sample-hero .sample-reassure { margin-top: 4px; }
+.sample-br-sp { display: inline; }
+
+@media (min-width: 600px) and (max-width: 991.98px) {
+  .sample-hero-photo { height: 240px; }
+  .sample-hero-body { max-width: 640px; margin: -40px auto 0; padding: 16px 28px 20px; }
+}
+
+@media (min-width: 992px) {
+  .sample-hero {
+    display: flex;
+    align-items: center;
+    min-height: 600px;
+    padding: 48px 0;
+  }
+  .sample-hero-photo {
+    position: absolute;
+    inset: 0;
+    height: auto;
+  }
+  .sample-hero-photo img { object-position: 70% 50%; }
+  .sample-hero-body {
+    width: 540px;
+    margin: 0 0 0 max(40px, calc((100% - 1200px) / 2));
+    padding: 26px 34px 22px;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 22px;
+  }
+  .sample-hero-key { max-width: 440px; }
+  .sample-hero-lead { font-size: 17px; margin-bottom: 14px; }
+  .sample-br-sp { display: none; }
+  .sample-hero-facts li { padding: 8px 14px; }
+  .sample-hero-fact-val strong { font-size: 18px; }
+  .sample-hero-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+  .sample-hero-actions .top-v2-cta-big { padding: 16px 92px 16px 32px; font-size: 20px; }
+}
+
+/* ---- トップ見本: 泊まった人の声（クチコミ） ------------------------------ */
+.sample-voices { background: #fff8e8; }
+.sample-rating {
+  margin: -8px 0 28px;
+  color: #2e2518;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+}
+.sample-rating-star { color: #f0a500; font-size: 18px; }
+.sample-tbd {
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px dashed #a5540e;
+  border-radius: 4px;
+  background: #fff3c4;
+  color: #a5540e;
+  font-size: 12px;
+  font-weight: 800;
+}
+.sample-review-grid { max-width: 1080px; margin-left: auto; margin-right: auto; align-items: start; }
+@media (min-width: 992px) {
+  .sample-review-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.sample-voices-actions { margin-top: 32px; }
+
+/* ---- トップ見本: アクセス欄の文字情報 ------------------------------------ */
+.sample-access-line {
+  margin: 0 0 18px;
+  color: #2e2518;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.7;
+  text-align: center;
+}
+.sample-access-line span { display: inline-block; }
+.sample-access-sep { margin: 0 6px; color: rgba(102, 90, 74, 0.55); }
+@media (max-width: 767px) {
+  .sample-access-line { font-size: 14px; }
+  .sample-access-line span { display: block; }
+  .sample-access-sep { display: none !important; }
+}
+
+/* ---- 合宿見本: ヒーローの金額と条件 ------------------------------------- */
+.sample-g-facts { margin: -8px 0 22px; }
+.sample-g-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 8px;
+  margin: 0 0 10px;
+  padding: 10px 16px 12px;
+  border: 2px solid #f0831e;
+  border-radius: 14px;
+  background: #fff8e8;
+  color: #2e2518;
+  font-weight: 800;
+}
+.sample-g-price-n { font-size: 15px; }
+.sample-g-price-main { font-size: 16px; }
+.sample-g-price strong {
+  color: #e6471a;
+  font-size: clamp(26px, 3.4vw, 32px);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+.sample-g-price small {
+  flex: 1 0 100%;
+  color: #665a4a;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.sample-g-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+.sample-g-tags li {
+  padding: 3px 12px;
+  border: 2px solid #2f7890;
+  border-radius: 999px;
+  background: #fff;
+  color: #2f7890;
+  font-size: 14px;
+  font-weight: 900;
+}
+.sample-cro--gasshuku .top-v2-scene-hero-actions { align-items: flex-start; }
+@media (min-width: 768px) {
+  .sample-cro--gasshuku #hero .sample-cta-group { align-items: flex-start; }
+  .sample-cro--gasshuku #hero .sample-reassure { text-align: left; }
+}
+@media (max-width: 767px) {
+  .sample-cro--gasshuku .top-v2-scene-hero-actions { align-items: stretch; }
+}
+
+/* ---- 合宿見本: 時間割の後・料金計算の下の予約ボタン ---------------------- */
+.sample-inline-cta { margin: 32px 0 0; }
+.sample-price-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0 28px;
+}
+.sample-price-cta .top-v2-btn-line { margin: 0; }
+@media (max-width: 767px) {
+  .sample-price-cta { align-items: stretch; }
+  .sample-price-cta .top-v2-btn-line { margin: 0; }
+}
+.sample-voices--compact {
+  margin: 44px 0 0;
+  background: transparent;
+}
+.sample-voices-title {
+  margin: 0 0 30px;
+  color: #2f7890;
+  font-size: clamp(20px, 2.6vw, 24px);
+  font-weight: 900;
+  text-align: center;
+}
+
+/* ---- スマホ: 画面下いっぱいの固定予約バー -------------------------------- */
+.sample-bar { display: none; }
+@media (max-width: 991.98px) {
+  body.sample-cro { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
+  body.sample-cro #reserveFixed { display: none !important; }
+  .sample-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1030;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 12px calc(9px + env(safe-area-inset-bottom, 0px)) 16px;
+    background: #fff;
+    border-top: 2px solid #f2dfb6;
+    box-shadow: 0 -6px 18px rgba(20, 50, 65, 0.16);
+  }
+  .sample-bar-price {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 0;
+    line-height: 1.25;
+  }
+  .sample-bar-label {
+    color: #665a4a;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sample-bar-price strong {
+    color: #a5540e;
+    font-size: 18px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+  .sample-cro--gasshuku .sample-bar-price strong { font-size: 16px; }
+  .sample-bar .sample-bar-cta {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 48px;
+    margin: 0;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-size: 16px;
+    line-height: 1.3;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .sample-bar .sample-bar-cta::after { display: none; }
+}
+@media (max-width: 359px) {
+  .sample-bar .sample-bar-cta { padding: 12px 14px; font-size: 15px; }
+  .sample-bar-price strong { font-size: 16px; }
+}
