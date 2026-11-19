@@ -371,3 +371,456 @@
   .sample-bar .sample-bar-cta { padding: 12px 14px; font-size: 15px; }
   .sample-bar-price strong { font-size: 16px; }
 }
+
+/* =====================================================================
+   トップ見本 A・B（/sample/a/・/sample/b/）: 最初の画面を「楽しそう」優先に。
+   C（/sample/）とはヒーローだけが違う。
+   ===================================================================== */
+
+/* ---- 見本の切り替え帯（A・B・C共通） ---------------------------------- */
+.sample-switch { padding: 5px 8px; font-size: 12px; }
+.sample-switch-label { color: #665a4a; }
+.sample-switch .sample-strip-sep { margin: 0 3px; }
+.sample-switch a.is-current {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #2f7890;
+  color: #fff;
+  text-decoration: none;
+}
+.sample-switch .sample-switch-now { color: #a5540e; }
+@media (max-width: 420px) {
+  .sample-switch { font-size: 11px; letter-spacing: -0.02em; }
+  .sample-switch-label { display: none; }
+  .sample-switch .sample-strip-sep { margin: 0 1px; }
+  .sample-switch a.is-current { padding: 1px 5px; }
+}
+
+/* ---- 写真いっぱいのヒーロー -------------------------------------------- */
+/* 高さ = 画面の高さ − (切り替え帯＋ヘッダー＋下部固定バー)。A は実績の帯の頭を覗かせるため少し低い */
+.sample-fun {
+  --sample-chrome: 182px;
+  position: relative;
+  overflow: hidden;
+  height: calc(100vh - var(--sample-chrome));
+  height: calc(100svh - var(--sample-chrome));
+  min-height: 420px;
+  background: #3a2e20;
+}
+.sample-fun--a { --sample-chrome: 252px; }
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .sample-fun { --sample-chrome: 224px; }
+  .sample-fun--a { --sample-chrome: 294px; }
+}
+@media (min-width: 992px) {
+  .sample-fun,
+  .sample-fun--a {
+    height: clamp(560px, calc(100vh - 156px), 780px);
+    min-height: 0;
+  }
+}
+
+.sample-fun-slides,
+.sample-fun-slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+/* 写真の層は z-index を明示して重なり順を固定（1枚目が下、3枚目が上） */
+.sample-fun-slides { z-index: 0; }
+.sample-fun-slide--1 { z-index: 0; }
+.sample-fun-slide--2 { z-index: 1; }
+.sample-fun-slide--3 { z-index: 2; }
+.sample-fun-slide picture,
+.sample-fun-slide picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.sample-fun-slide picture img { object-fit: cover; }
+.sample-fun img:not([src]) { visibility: hidden; }
+
+/* 縦長スマホで横長写真を切り抜くため、顔が収まる位置を写真ごとに指定 */
+.sample-fun-slide--1 picture img { object-position: 84% 50%; }
+.sample-fun-slide--2 picture img { object-position: 54% 50%; }
+.sample-fun-slide--3 picture img { object-position: 59% 50%; }
+@media (min-width: 992px) {
+  .sample-fun-slide--1 picture img { object-position: 50% 45%; }
+  .sample-fun-slide--2 picture img { object-position: 50% 35%; }
+  .sample-fun-slide--3 picture img { object-position: 50% 40%; }
+}
+
+/* クロスフェード: 1枚目は常に下敷き、2・3枚目が上に重なって入れ替わる（1周16.5秒・各約5.5秒） */
+.sample-fun-slide--2,
+.sample-fun-slide--3 {
+  opacity: 0;
+  animation: 16.5s linear infinite;
+}
+.sample-fun-slide--2 { animation-name: sampleFunSlide2; }
+.sample-fun-slide--3 { animation-name: sampleFunSlide3; }
+@keyframes sampleFunSlide2 {
+  0%, 26% { opacity: 0; }
+  33.3%, 66.7% { opacity: 1; }
+  67.5%, 100% { opacity: 0; }
+}
+@keyframes sampleFunSlide3 {
+  0%, 59.4% { opacity: 0; }
+  66.7%, 92.7% { opacity: 1; }
+  100% { opacity: 0; }
+}
+/* 手書きタイトル: 写真とは別の層で、写真のフェードの中ほどで「消える→出る」を0.2秒ずつ順に行う。
+   同じ16.5秒周期なので写真とずれない。2つのタイトルが同時に見える時間はない。
+   写真2の切替中点 29.6%（4.9秒）、写真3の中点 63%（10.4秒）、写真1へ戻る中点 96.4%（15.9秒） */
+.sample-fun-tag--1 { animation: sampleFunTag1 16.5s linear infinite; }
+.sample-fun-tag--2 { opacity: 0; animation: sampleFunTag2 16.5s linear infinite; }
+.sample-fun-tag--3 { opacity: 0; animation: sampleFunTag3 16.5s linear infinite; }
+@keyframes sampleFunTag1 {
+  0%, 28.4% { opacity: 1; }
+  29.6%, 96.4% { opacity: 0; }
+  97.6%, 100% { opacity: 1; }
+}
+@keyframes sampleFunTag2 {
+  0%, 29.6% { opacity: 0; }
+  30.8%, 61.8% { opacity: 1; }
+  63%, 100% { opacity: 0; }
+}
+@keyframes sampleFunTag3 {
+  0%, 63% { opacity: 0; }
+  64.2%, 95.2% { opacity: 1; }
+  96.4%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sample-fun-slide--2,
+  .sample-fun-slide--3,
+  .sample-fun-tag--2,
+  .sample-fun-tag--3 { animation: none; opacity: 0; }
+  .sample-fun-tag--1 { animation: none; opacity: 1; }
+}
+
+/* 写真ごとの手書きタイトル（現行トップ「遊んで/食べて/泊まれる！」の画像） */
+.sample-fun-tag {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  width: 104px;
+  height: auto;
+  transform: rotate(-5deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.28));
+}
+.sample-fun-tag--stay { width: 116px; }
+@media (min-width: 992px) {
+  .sample-fun-tag { top: 28px; right: max(32px, calc((100% - 1280px) / 2)); width: 170px; }
+  .sample-fun-tag--stay { width: 190px; }
+}
+
+/* 見出しの後ろだけ、ごく薄い暗めのグラデーション */
+.sample-fun::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 46%;
+  background: linear-gradient(to top, rgba(28, 20, 10, 0.42), rgba(28, 20, 10, 0));
+  pointer-events: none;
+}
+.sample-fun-tags {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.sample-fun-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  z-index: 3;
+  padding: 0 12px;
+  text-align: center;
+}
+.sample-fun-key {
+  margin: 0 auto;
+  max-width: 380px;
+  line-height: 0;
+}
+.sample-fun-key img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sample-fun-facts {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 4px 0 0;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  color: #2e2518;
+  font-size: 13.5px;
+  font-weight: 900;
+  line-height: 1.5;
+}
+.sample-fun-facts span { white-space: nowrap; }
+.sample-fun-facts span + span::before {
+  content: "｜";
+  margin: 0 4px;
+  color: #2f7890;
+  font-weight: 700;
+}
+.sample-fun-cta { display: none; }
+
+@media (min-width: 992px) {
+  .sample-fun::after {
+    height: 60%;
+    background: linear-gradient(to top, rgba(28, 20, 10, 0.42), rgba(28, 20, 10, 0) 100%),
+                linear-gradient(to right, rgba(28, 20, 10, 0.18), rgba(28, 20, 10, 0) 45%);
+  }
+  .sample-fun-copy {
+    left: max(48px, calc((100% - 1200px) / 2));
+    right: auto;
+    bottom: 44px;
+    width: 540px;
+    padding: 0;
+    text-align: left;
+  }
+  .sample-fun-key { max-width: none; margin: 0; }
+  .sample-fun-facts { margin-top: 6px; font-size: 16px; padding: 6px 18px; }
+  .sample-fun-cta.top-v2-cta-big {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 16px 92px 16px 32px;
+    font-size: 20px;
+  }
+}
+
+/* ---- A案: 実績の帯の先頭に事実を1行 ---------------------------------- */
+.sample-medal-facts {
+  margin: 0 0 12px;
+  color: #2f7890;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.6;
+  text-align: center;
+}
+.sample-medal-facts span { display: inline-block; }
+.sample-medal-facts span + span::before {
+  content: "｜";
+  margin: 0 4px;
+  color: rgba(102, 90, 74, 0.6);
+  font-weight: 700;
+}
+@media (max-width: 575.98px) {
+  .sample-medal-facts { margin-bottom: 8px; font-size: 13px; }
+  .sample-medal-facts span + span::before { margin: 0 2px; }
+}
+@media (min-width: 992px) {
+  .sample-medal-facts { font-size: 18px; }
+}
+
+/* ---- 切り替え帯: A〜D＋今。狭い画面では短いラベル ------------------------ */
+.sample-switch-short { display: none; }
+@media (max-width: 767px) {
+  .sample-switch-long { display: none; }
+  .sample-switch-short { display: inline; }
+}
+
+/* =====================================================================
+   トップ見本 D（/sample/d/）: 現行トップの見た目と並びのまま、裏側を軽く。
+   ヒーロー(#mv)は top-v2.css をそのまま使う（高さ・切り抜きも現行どおり）。
+   スマホの固定バーは最初の画面では出さず、ヒーローを過ぎたら下から出す
+   （出し入れは sample-cro.js が .is-visible を付け外し）
+   ===================================================================== */
+@media (max-width: 991.98px) {
+  .sample-cro--var-d .sample-bar {
+    transform: translateY(110%);
+    visibility: hidden;
+    transition: transform 0.32s ease, visibility 0s linear 0.32s;
+  }
+  .sample-cro--var-d .sample-bar.is-visible {
+    transform: translateY(0);
+    visibility: visible;
+    transition: transform 0.32s ease, visibility 0s linear 0s;
+  }
+}
+@media (max-width: 991.98px) and (prefers-reduced-motion: reduce) {
+  .sample-cro--var-d .sample-bar,
+  .sample-cro--var-d .sample-bar.is-visible { transition: none; }
+}
+
+/* =====================================================================
+   トップ見本 A・D: 実績の帯を3段に絞る
+   1) 事実の札3つ（横1列）→ 2) 決め文句「何人でも、どんとこい。」→ 3) 小さな実績1行
+   数字の見せ方は既存の .top-v2-statrow（オレンジ太字＋小さな単位）に合わせる
+   ===================================================================== */
+.sample-medalrow-slim .top-v2-medalrow-frame {
+  padding-top: clamp(10px, 2.4vw, 22px);
+  padding-bottom: clamp(12px, 2.4vw, 20px);
+}
+.sample-medal-chips {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0 0 clamp(8px, 1.6vw, 14px);
+}
+.sample-medal-chips > li {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  padding: 2px clamp(8px, 2.6vw, 28px);
+  white-space: nowrap;
+}
+.sample-medal-chips > li + li { border-left: 1px solid #dde6ea; }
+.sample-medal-chip-text {
+  align-self: center;
+  color: #2f7890;
+  font-size: clamp(14px, 1.7vw, 19px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+.sample-medal-chip-num {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  color: #f0831e;
+  font-weight: 900;
+  line-height: 1.15;
+}
+.sample-medal-chip-num strong {
+  font-size: clamp(21px, 3vw, 34px);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+.sample-medal-chip-num small {
+  font-size: clamp(12px, 1.5vw, 16px);
+  font-weight: 900;
+}
+.sample-medal-chip-sub {
+  align-self: center;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #fff8e8;
+  border: 1px solid #f2c48d;
+  color: #a5540e;
+  font-size: clamp(10.5px, 1.2vw, 12.5px);
+  font-weight: 800;
+  line-height: 1.6;
+}
+.sample-medalrow-slim .top-v2-medalrow-lead { margin-bottom: clamp(6px, 1.4vw, 12px); }
+.sample-medal-note {
+  margin: 0;
+  color: #2a4750;
+  font-size: clamp(12px, 1.3vw, 14px);
+  font-weight: 700;
+  line-height: 1.7;
+  text-align: center;
+}
+.sample-medal-note span { display: inline-block; }
+.sample-medal-note strong { color: #2f7890; font-weight: 900; }
+.sample-medal-note-sep { margin: 0 4px; color: rgba(102, 90, 74, 0.6); }
+@media (max-width: 575px) {
+  /* 1行に収まらない幅では「｜」の位置で2行に折る */
+  .sample-medal-note span:not(.sample-medal-note-sep) { display: block; }
+  .sample-medal-note-sep { display: none !important; }
+  .sample-medal-chips > li { padding: 2px 6px; gap: 2px; }
+  .sample-medalrow-slim .top-v2-medalrow-frame { padding-left: 8px; padding-right: 8px; }
+  .sample-medal-chip-text { font-size: 13px; letter-spacing: 0; }
+  .sample-medal-chip-num strong { font-size: 20px; }
+  .sample-medal-chip-num small { font-size: 11.5px; }
+  .sample-medal-chip-sub { padding: 0 4px; font-size: 10px; }
+}
+@media (max-width: 374px) {
+  .sample-medal-chips > li { padding: 2px 4px; }
+  .sample-medal-chip-text { font-size: 12px; }
+  .sample-medal-chip-num strong { font-size: 18px; }
+}
+
+/* ===== トップ見本D: 校章のオープニング（2026-11-19） =====
+   読み込み直後: 白い校章（遊んで泊まれる小学校 カタショー）と「静岡・牧之原」を動画の真ん中にフェードイン
+   動画が白く飛ぶところ（約4.3秒〜）: 校章をフェードアウト → 教室の場面（約5.6秒）: 見出しと左下の丸い校章をフェードイン
+   切り替えの合図は sample-cro.js が動画の再生位置で出す。<head>の短いスクリプトが html に .sample-opening-on を付ける。
+   動きを減らす設定の人・JSが動かない場合は .sample-opening-on が付かないので、最初から最後の状態（見出し＋左下の校章）になる */
+.sample-opening, .sample-bug { display: none; }
+.sample-cro--var-d .sample-opening {
+  display: block; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  opacity: 0; visibility: hidden;
+}
+.sample-cro--var-d .sample-opening-veil {
+  position: absolute; inset: 0;
+  /* 校章の後ろだけ少し暗くして、明るい空や校舎の上でも読めるように */
+  background: linear-gradient(to bottom, rgba(14, 32, 40, 0) 30%, rgba(14, 32, 40, 0.38) 100%);
+}
+/* 校章は、見出しの下端と動画の下端（スマホは矢印の上）のあいだに置く。位置と大きさは sample-cro.js が測って入れる */
+.sample-cro--var-d .sample-opening-card {
+  position: absolute; left: 0; right: 0; top: var(--open-top, 0); bottom: var(--open-bottom, 0);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.sample-cro--var-d .sample-opening-logo {
+  display: block; height: var(--open-logo-h, 44%); width: auto; max-width: 92%; object-fit: contain;
+  filter: drop-shadow(0 4px 16px rgba(10, 30, 40, 0.5));
+}
+.sample-cro--var-d .sample-opening-place {
+  margin: 0; display: flex; align-items: center; gap: 0.7em;
+  color: #fff; font-weight: 800; font-size: clamp(14px, 1.5vw, 21px); line-height: 1;
+  letter-spacing: 0.28em; text-indent: 0.28em; text-shadow: 0 1px 8px rgba(10, 30, 40, 0.65);
+}
+.sample-cro--var-d .sample-opening-place::before,
+.sample-cro--var-d .sample-opening-place::after {
+  content: ''; width: 1.8em; height: 2px; border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9); box-shadow: 0 1px 6px rgba(10, 30, 40, 0.5);
+}
+.sample-cro--var-d .sample-opening-place::after { margin-left: -0.28em; }
+html.sample-opening-on .sample-cro--var-d .sample-opening {
+  visibility: visible;
+  /* JSが動かなくても8.5秒で消える（JSが動けば、動画の再生位置に合わせて .sample-opening-out で先に消す） */
+  animation: sample-open-in 1s 0.15s ease-out both, sample-open-out 0.6s 8.5s ease-in forwards;
+}
+/* 名前を変えておく（同じ名前だと、読み込み時から数えた続きとして扱われ、フェードせずに一瞬で消えるため） */
+html.sample-opening-on.sample-opening-out .sample-cro--var-d .sample-opening { animation: sample-open-fade 0.6s ease-in both; }
+@keyframes sample-open-in { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: none; } }
+@keyframes sample-open-out { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+@keyframes sample-open-fade { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+/* 見出しは最初から最後まで出しておく（2026-11-19 ユーザー案）。
+   オープニング中は、左下の校章と下の矢印だけ隠す（大きな校章とぶつからないように。JSが動かなくても9.5秒で出る） */
+.sample-cro--var-d .sample-bug,
+.sample-cro--var-d .top-v2-mv-scrollcue { transition: opacity 0.9s ease; }
+html.sample-opening-on .sample-cro--var-d .sample-bug,
+html.sample-opening-on .sample-cro--var-d .top-v2-mv-scrollcue { opacity: 0; }
+html.sample-opening-on .sample-cro--var-d .sample-bug { animation: sample-reveal-late 0.8s 9.5s forwards; }
+@keyframes sample-reveal-late { to { opacity: 1; } }
+
+/* 左下の丸い校章（テレビの局ロゴのように常に小さく出しておく） */
+.sample-cro--var-d .sample-bug {
+  display: flex; position: absolute; left: 26px; z-index: 4; pointer-events: none;
+  align-items: center; gap: 10px;
+  /* 動画の下端が画面の外にはみ出す画面（ノートPCなど）でも、最初の画面の中に収まる高さに置く。
+     160px ≒ 動画の上端（ヘッダーの下）＋余白 */
+  bottom: 24px;
+  bottom: max(24px, calc(100% - 100vh + 160px));
+  bottom: max(24px, calc(100% - 100svh + 160px));
+}
+.sample-cro--var-d .sample-bug-crest {
+  display: block; width: 60px; height: 60px; border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(10, 30, 40, 0.35);
+}
+.sample-cro--var-d .sample-bug-text {
+  display: flex; flex-direction: column; color: #fff; font-weight: 800; font-size: 13px; line-height: 1.4;
+  letter-spacing: 0.06em; text-shadow: 0 1px 6px rgba(10, 30, 40, 0.75);
+}
+@media (max-width: 991px) {
+  .sample-cro--var-d .sample-bug { left: 14px; gap: 8px; bottom: 14px; bottom: max(14px, calc(100% - 100vh + 128px)); bottom: max(14px, calc(100% - 100svh + 128px)); }
+  .sample-cro--var-d .sample-bug-crest { width: 42px; height: 42px; }
+  .sample-cro--var-d .sample-bug-text { font-size: 11px; }
+}
+/* スマホでは下中央の矢印とぶつからないよう「静岡・牧之原」だけにする */
+@media (max-width: 480px) {
+  .sample-cro--var-d .sample-bug-text span:first-child { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sample-cro--var-d .sample-bug,
+  .sample-cro--var-d .top-v2-mv-scrollcue { transition: none; }
+}

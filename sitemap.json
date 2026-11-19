@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T09:49:22.463Z",
+  "generatedAt": "2026-11-19T15:18:05.895Z",
   "source": "new-hp/src/pages",
   "policy": "WordPress-derived HTML/CSS is preserved; edit headings, copy, sections, and links in place.",
   "pages": [
@@ -62,6 +62,18 @@
     {
       "path": "/privacy/",
       "source": "src/pages/privacy/index.html"
+    },
+    {
+      "path": "/sample/a/",
+      "source": "src/pages/sample/a/index.html"
+    },
+    {
+      "path": "/sample/b/",
+      "source": "src/pages/sample/b/index.html"
+    },
+    {
+      "path": "/sample/d/",
+      "source": "src/pages/sample/d/index.html"
     },
     {
       "path": "/sample/gasshuku/",

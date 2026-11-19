@@ -103,4 +103,136 @@
   }
   var compactInput = document.getElementById('plan-compact');
   if (compactInput) { compactInput.addEventListener('change', schedule); }
+
+  // ---- トップ見本A・B: ヒーロー写真の2・3枚目は、ページの読み込みが終わってから読む ----
+  // 切り替え(クロスフェード)自体はCSSだけ。動きを減らす設定の人には1枚目だけで静止するので読まない。
+  function loadDeferredSlides() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { return; }
+    var els = document.querySelectorAll('.sample-fun [data-src], .sample-fun [data-srcset]');
+    Array.prototype.forEach.call(els, function (el) {
+      if (el.dataset.srcset) { el.srcset = el.dataset.srcset; el.removeAttribute('data-srcset'); }
+      if (el.dataset.src) { el.src = el.dataset.src; el.removeAttribute('data-src'); }
+    });
+  }
+  if (document.querySelector('.sample-fun')) {
+    if (document.readyState === 'complete') { loadDeferredSlides(); } else { window.addEventListener('load', loadDeferredSlides); }
+  }
+
+  // ---- トップ見本D: 動画は画面に出ている側（PC/スマホ）の1本だけを読み込んで再生 ----
+  // 現行トップは .u-pc / .u-tab の2本に src+autoplay があり、非表示側も読み込まれる。
+  // 見本では両方 data-src にしておき、既存CSSの切替幅（max-width: 991px で .u-tab）と
+  // 同じ条件で表示側だけ src を入れる。画面幅が変わって表示側が入れ替わったら、その時点で読み込む。
+  var lazyVideos = document.querySelectorAll('video.sample-lazy-video');
+  if (lazyVideos.length && window.matchMedia) {
+    var tabMq = window.matchMedia('(max-width: 991px)');
+    var activateVideo = function () {
+      var want = tabMq.matches ? 'tab' : 'pc';
+      Array.prototype.forEach.call(lazyVideos, function (v) {
+        if (v.dataset.side !== want) {
+          if (!v.paused) { v.pause(); }
+          return;
+        }
+        if (!v.getAttribute('src') && v.dataset.src) {
+          v.setAttribute('autoplay', '');
+          v.src = v.dataset.src;
+        }
+        var p = v.play();
+        if (p && p.catch) { p.catch(function () {}); }
+      });
+    };
+    activateVideo();
+    if (tabMq.addEventListener) { tabMq.addEventListener('change', activateVideo); } else if (tabMq.addListener) { tabMq.addListener(activateVideo); }
+  }
+
+  // ---- トップ見本D: スマホの固定バーは、ヒーローを過ぎてから出す ----
+  // ヒーロー(#mv)の下端が画面の上から3分の1より上に来たら表示、戻ったら隠す。
+  // PC(992px以上)ではバー自体をCSSで出さないので、ここでは判定だけ行う。
+  var revealBar = document.querySelector('.sample-cro--var-d #sampleBar');
+  var revealHero = document.getElementById('mv');
+  if (revealBar && revealHero) {
+    var barQueued = false;
+    var updateBar = function () {
+      barQueued = false;
+      var show = revealHero.getBoundingClientRect().bottom < window.innerHeight / 3;
+      revealBar.classList.toggle('is-visible', show);
+    };
+    var queueBar = function () {
+      if (barQueued) { return; }
+      barQueued = true;
+      (window.requestAnimationFrame || window.setTimeout)(updateBar);
+    };
+    updateBar();
+    window.addEventListener('scroll', queueBar, { passive: true });
+    window.addEventListener('resize', queueBar);
+  }
+
+  // ---- トップ見本D: 校章のオープニング ----
+  // <head>のスクリプトが html に .sample-opening-on を付けている時だけ動く（動きを減らす設定の人には付かない）。
+  // 表示中の動画の再生位置で進める: 4.3秒で校章を消し始め、5.6秒（教室の場面）で見出しと左下の校章を出す。
+  // 動画が始まらない・遅い時は、読み込みから8秒で同じ流れに進める。先にスクロールした人には、すぐ最後の状態を見せる。
+  var openRoot = document.documentElement;
+  if (openRoot.classList.contains('sample-opening-on') && document.querySelector('.sample-opening')) {
+    var OUT_AT = 4.3, DONE_AT = 5.6, FALLBACK_MS = 8000;
+    var openStart = Date.now(), openPhase = 0;
+    var openOut = function () {
+      if (openPhase >= 1) { return; }
+      openPhase = 1; openRoot.classList.add('sample-opening-out');
+    };
+    var openFinish = function () {
+      if (openPhase >= 2) { return; }
+      openPhase = 2;
+      openRoot.classList.add('sample-opening-out');
+      openRoot.classList.remove('sample-opening-on');
+      openRoot.classList.add('sample-opening-done');
+    };
+    var shownVideo = function () {
+      var vs = document.querySelectorAll('video.sample-lazy-video');
+      for (var i = 0; i < vs.length; i++) {
+        if (vs[i].offsetParent !== null && vs[i].getAttribute('src')) { return vs[i]; }
+      }
+      return null;
+    };
+    var openTick = function () {
+      if (openPhase >= 2) { return; }
+      var v = shownVideo();
+      var t = v && !v.paused ? v.currentTime : -1;
+      var elapsed = Date.now() - openStart;
+      if (t >= DONE_AT || elapsed > FALLBACK_MS + 1300) { openFinish(); return; }
+      if (t >= OUT_AT || elapsed > FALLBACK_MS) { openOut(); }
+      (window.requestAnimationFrame || window.setTimeout)(openTick);
+    };
+    // 校章の置き場所: 見出しの下端から、動画の下端（PC）／下の矢印の上（スマホ）まで。
+    // スマホは今の大きさ（動画の高さの44%）まで、PCは空いている高さいっぱいに大きく
+    var openCard = document.querySelector('.sample-opening-card');
+    var layoutOpening = function () {
+      var box = document.querySelector('#mv .l-mv_video');
+      var stack = document.querySelector('#mv .top-v2-mv-stack');
+      var cue = document.querySelector('#mv .top-v2-mv-scrollcue');
+      if (!box || !stack || !openCard) { return; }
+      var b = box.getBoundingClientRect(), k = stack.getBoundingClientRect();
+      var isPc = window.matchMedia && window.matchMedia('(min-width: 992px)').matches;
+      var top = k.bottom - b.top + (isPc ? 18 : 14);
+      var bottomEdge = isPc ? b.height - 30 : (cue ? cue.getBoundingClientRect().top - b.top - 4 : b.height - 20);
+      var avail = Math.max(0, bottomEdge - top);
+      var logoH = isPc ? avail : Math.min(avail, b.height * 0.44);
+      openCard.style.setProperty('--open-top', Math.round(top) + 'px');
+      openCard.style.setProperty('--open-bottom', Math.round(b.height - bottomEdge) + 'px');
+      openCard.style.setProperty('--open-logo-h', Math.round(logoH) + 'px');
+    };
+    layoutOpening();
+    window.addEventListener('resize', layoutOpening);
+    var keyImg = document.querySelector('#mv .top-v2-mv-key img');
+    if (keyImg && !keyImg.complete) { keyImg.addEventListener('load', layoutOpening); }
+    openTick();
+    // 動画がほとんど画面の外に出るまでスクロールした人には、すぐ最後の状態を見せる
+    // （ノートPCで動画を画面の上端に合わせる程度のスクロールでは飛ばさない）
+    var openHero = document.getElementById('mv');
+    var openOnScroll = function () {
+      if (openHero && openHero.getBoundingClientRect().bottom < window.innerHeight * 0.35) {
+        openFinish(); window.removeEventListener('scroll', openOnScroll);
+      }
+    };
+    window.addEventListener('scroll', openOnScroll, { passive: true });
+  }
 })();
