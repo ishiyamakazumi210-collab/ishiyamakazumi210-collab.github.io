@@ -774,23 +774,24 @@
   background: rgba(255, 255, 255, 0.9); box-shadow: 0 1px 6px rgba(10, 30, 40, 0.5);
 }
 .sample-cro--var-d .sample-opening-place::after { margin-left: -0.28em; }
-html.sample-opening-on .sample-cro--var-d .sample-opening {
+/* フェードインは、動画が実際に動き出してから（読み込みが遅い時は、少し待ってポスターの上で）JSが .sample-opening-in を付けて始める。
+   読み込み直後に始めると、回線によっては動画が動く前に出終わってしまい、フェードインに見えないため（2026-11-20 ユーザー指摘） */
+html.sample-opening-on.sample-opening-in .sample-cro--var-d .sample-opening {
   visibility: visible;
-  /* JSが動かなくても8.5秒で消える（JSが動けば、動画の再生位置に合わせて .sample-opening-out で先に消す） */
-  animation: sample-open-in 1s 0.15s ease-out both, sample-open-out 0.6s 8.5s ease-in forwards;
+  animation: sample-open-in 1.2s ease-out both;
 }
-/* 名前を変えておく（同じ名前だと、読み込み時から数えた続きとして扱われ、フェードせずに一瞬で消えるため） */
-html.sample-opening-on.sample-opening-out .sample-cro--var-d .sample-opening { animation: sample-open-fade 0.6s ease-in both; }
-@keyframes sample-open-in { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: none; } }
+/* 名前を変えておく（同じ名前だと、続きとして扱われてフェードせずに一瞬で消えるため） */
+html.sample-opening-on.sample-opening-in.sample-opening-out .sample-cro--var-d .sample-opening { animation: sample-open-fade 0.6s ease-in both; }
+@keyframes sample-open-in { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: none; } }
 @keyframes sample-open-out { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
 @keyframes sample-open-fade { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
 /* 見出しは最初から最後まで出しておく（2026-11-19 ユーザー案）。
-   オープニング中は、左下の校章と下の矢印だけ隠す（大きな校章とぶつからないように。JSが動かなくても9.5秒で出る） */
+   オープニング中は、左下の校章と下の矢印だけ隠す（大きな校章とぶつからないように。JSが動かなくても14秒で左下の校章は出る） */
 .sample-cro--var-d .sample-bug,
 .sample-cro--var-d .top-v2-mv-scrollcue { transition: opacity 0.9s ease; }
 html.sample-opening-on .sample-cro--var-d .sample-bug,
 html.sample-opening-on .sample-cro--var-d .top-v2-mv-scrollcue { opacity: 0; }
-html.sample-opening-on .sample-cro--var-d .sample-bug { animation: sample-reveal-late 0.8s 9.5s forwards; }
+html.sample-opening-on .sample-cro--var-d .sample-bug { animation: sample-reveal-late 0.8s 14s forwards; }
 @keyframes sample-reveal-late { to { opacity: 1; } }
 
 /* 左下の丸い校章（テレビの局ロゴのように常に小さく出しておく） */

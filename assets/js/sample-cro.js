@@ -169,15 +169,24 @@
 
   // ---- トップ見本D: 校章のオープニング ----
   // <head>のスクリプトが html に .sample-opening-on を付けている時だけ動く（動きを減らす設定の人には付かない）。
-  // 表示中の動画の再生位置で進める: 4.3秒で校章を消し始め、5.6秒（教室の場面）で見出しと左下の校章を出す。
-  // 動画が始まらない・遅い時は、読み込みから8秒で同じ流れに進める。先にスクロールした人には、すぐ最後の状態を見せる。
+  // 1) 動画が実際に動き出したら（＋校章の画像が読み込めたら）校章をフェードイン（.sample-opening-in）。
+  //    動画が2.5秒たっても始まらない時は、ポスターの上でフェードインする。
+  // 2) 動画の再生位置で 4.3秒に消し始め、5.6秒（教室の場面）で左下の校章と矢印を出す。
+  //    動画が始まらないままなら校章を4.3秒見せて、動画が遅れて始まった時も最長9秒で、同じ流れに進める。
+  // 先に大きくスクロールした人には、すぐ最後の状態を見せる。
   var openRoot = document.documentElement;
   if (openRoot.classList.contains('sample-opening-on') && document.querySelector('.sample-opening')) {
-    var OUT_AT = 4.3, DONE_AT = 5.6, FALLBACK_MS = 8000;
-    var openStart = Date.now(), openPhase = 0;
+    var OUT_AT = 4.3, DONE_AT = 5.6, IN_FALLBACK_MS = 2500, OUT_NO_VIDEO_MS = 4300, OUT_CAP_MS = 9000, OUT_TO_DONE_MS = 1300;
+    var openStart = Date.now(), openPhase = 0, openInAt = 0, openOutAt = 0, openVideoStarted = false;
+    var openLogo = document.querySelector('.sample-opening-logo');
+    var logoReady = function () { return !openLogo || (openLogo.complete && openLogo.naturalWidth > 0); };
+    var openIn = function () {
+      if (openInAt) { return; }
+      openInAt = Date.now(); openRoot.classList.add('sample-opening-in');
+    };
     var openOut = function () {
       if (openPhase >= 1) { return; }
-      openPhase = 1; openRoot.classList.add('sample-opening-out');
+      openPhase = 1; openOutAt = Date.now(); openRoot.classList.add('sample-opening-out');
     };
     var openFinish = function () {
       if (openPhase >= 2) { return; }
@@ -197,9 +206,19 @@
       if (openPhase >= 2) { return; }
       var v = shownVideo();
       var t = v && !v.paused ? v.currentTime : -1;
-      var elapsed = Date.now() - openStart;
-      if (t >= DONE_AT || elapsed > FALLBACK_MS + 1300) { openFinish(); return; }
-      if (t >= OUT_AT || elapsed > FALLBACK_MS) { openOut(); }
+      var now = Date.now();
+      if (!openInAt) {
+        var waited = now - openStart;
+        // 校章の画像がどうしても読めない時は、オープニングをやめて最後の状態にする
+        if (waited > 10000 && !logoReady()) { openFinish(); return; }
+        if (logoReady() && (t > 0.05 || waited > IN_FALLBACK_MS)) { openIn(); }
+        (window.requestAnimationFrame || window.setTimeout)(openTick);
+        return;
+      }
+      var sinceIn = now - openInAt;
+      if (t > 0.05) { openVideoStarted = true; }
+      if (t >= DONE_AT || (openOutAt && now - openOutAt >= OUT_TO_DONE_MS)) { openFinish(); return; }
+      if (t >= OUT_AT || sinceIn >= OUT_CAP_MS || (!openVideoStarted && sinceIn >= OUT_NO_VIDEO_MS)) { openOut(); }
       (window.requestAnimationFrame || window.setTimeout)(openTick);
     };
     // 校章の置き場所: 見出しの下端から、動画の下端（PC）／下の矢印の上（スマホ）まで。
