@@ -102,8 +102,8 @@ window.KATASHO_DATA = {
       "alt": "体育館でボール遊びをする2組の家族"
     },
     "showerRoom": {
-      "src": "/assets/img/shower-room.jpg",
-      "alt": "シャワー室"
+      "src": "/assets/img/shower-changing-2026.jpg",
+      "alt": "鍵のかかる個室が並ぶシャワー室"
     },
     "entranceGroup": {
       "src": "/assets/img/friends-entrance-group.jpg",

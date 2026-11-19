@@ -12016,3 +12016,345 @@ main:has(#catalog) .l-main_inner,
 .l-main:has(.top-v2-scene-finalcta) .l-main_inner {
   padding-bottom: 0 !important;
 }
+
+/* 2026-11-19 デザイン点検 バッチA */
+/* A2: /play/option/ ヒーロー。旧HTMLが TOP の価格ピル用クラス(.top-v2-mv-price:
+   inline-block・999px角丸・白背景)をヒーロー外枠に誤用しており、SPで高さ136pxの
+   細い帯＋右端に白い弧が出ていた。専用クラス .top-v2-opt-mv に置換し、
+   高さは /play/ の #mv と同じ clamp、PCの左右余白・角丸はTOPのMVと揃える */
+.top-v2-opt-mv .l-mv_title {
+  text-shadow: 0 2px 18px rgba(20, 50, 65, 0.55), 0 1px 4px rgba(20, 50, 65, 0.45);
+}
+.top-v2-opt-mv .l-mv_bg {
+  height: clamp(300px, 46vw, 460px);
+}
+.top-v2-opt-mv .l-mv_bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A2(b): ≥992pxのMVを左右対称・4隅角丸に（TOPのMV: section p-lg-4=24px +
+   container-fluid 12px = 左右36px・角丸40px。≤991pxは旧テーマCSSが全幅・角丸0にする） */
+@media (min-width: 992px) {
+  .top-v2-opt-mv {
+    padding: 24px 36px;
+  }
+  .top-v2-opt-mv .l-mv_bg,
+  #mv.l-mv--under .l-mv_bg {
+    border-radius: 40px;
+  }
+}
+
+/* 2026-11-19 デザイン点検 バッチA */
+/* A1: 時間割のスナップ写真(PC)。inset:0 で枠が親の高さ360pxまで伸び、写真＋キャプション
+   (約270px)の下に box-shadow が空の「L字」として見えていた。中身の高さで止める。
+   ≤767pxのミニカードは別ルール(inset:0)のまま */
+@media (min-width: 992px) {
+  .top-v2-schedule-snap {
+    inset: 0 auto auto 0;
+  }
+}
+
+/* 2026-11-19 デザイン点検 バッチA */
+/* A3: /access/ 電車・バス(#transit)。3枚カードが narrow(860px)コンテナの2列で
+   「2+1」の欠け行になっていた。車(#drive)と同じ全幅コンテナ(HTML側で --narrow を外す)＋
+   同じ768px以上3列に揃える。≤767pxは既存の1列 */
+@media (min-width: 768px) {
+  #transit .top-v2-scene-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* 2026-11-19 デザイン点検 バッチA */
+/* A4: /album/ Googleクチコミカード。grid の行ストレッチで、短い口コミのカードも
+   同じ行の長いカードの高さ(約470px)まで伸び、下半分が空の白になっていた。
+   768px以上は2段組み(CSS columns)のマソンリーにして各カードを中身の高さで止める。
+   テープ(::before)・回転・影は既存のまま。カード間の縦間隔は margin-bottom、
+   グリッド下端〜ボタンの間隔(従来36px)は最終カードの余白を引いて維持 */
+@media (min-width: 768px) {
+  .top-v2-review-grid {
+    display: block;
+    column-count: 2;
+    column-gap: 28px;
+  }
+  .top-v2-review-card {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 40px;
+  }
+  .top-v2-review-card:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* 2026-11-19 デザイン点検 バッチA */
+/* A4(改): 直前のCSS columns案は、列頭のカードのテープ(::before)が列境界で
+   分断されて前の列の下端に断片が出るため撤回し、grid に戻して上書きする。
+   各カードは align-items:start で中身の高さに。ちょうど4件のときだけ、
+   長い1件目を左列に通しで置き、残り3件を右列に積む(行ストレッチの空白と
+   行間の大穴を避ける)。件数が変わった場合は汎用の start 揃えにフォールバック */
+@media (min-width: 768px) {
+  .top-v2-review-grid {
+    display: grid;
+    column-count: auto;
+    align-items: start;
+  }
+  .top-v2-review-card,
+  .top-v2-review-card:last-child {
+    margin-bottom: 0;
+  }
+  .top-v2-review-card:first-child:nth-last-child(4) {
+    grid-row: 1 / span 3;
+  }
+  .top-v2-review-card:first-child:nth-last-child(4) ~ .top-v2-review-card {
+    grid-column: 2;
+  }
+}
+
+/* 2026-11-19 デザイン点検 バッチA */
+/* A5(a): /about/ 歴史年表。写真付きの行だけ、年(dt)が上・説明(dd)が写真の縦中央に
+   振り分けられ、年と説明の間が大きく空いていた(写真なし行はコンパクト)。
+   写真が dt/dd の2行をまたぐため、余った高さが2行に均等配分されるのが原因。
+   2行目を 1fr にして余白をそちらに寄せ、年＋説明を行頭で密着させて全行のリズムを揃える */
+.top-v2-about-history-row {
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  align-content: start;
+}
+.top-v2-about-history-photo {
+  align-self: start;
+}
+
+/* A5(b): 校歌(縦書き画像)。SPでは約290px幅に縮んで読めないため、約640px幅の
+   横スクロール枠に入れる。縦書きは右から読むので direction:rtl で右端から開始し、
+   画像側は ltr に戻して中身の向きを崩さない。PCは変更なし */
+.top-v2-about-song-hint {
+  display: none;
+}
+@media (max-width: 767px) {
+  .top-v2-about-song-scroll {
+    direction: rtl;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 14px;
+    border-radius: 6px;
+  }
+  .top-v2-about-song-scroll img {
+    direction: ltr;
+    width: 640px;
+    max-width: none;
+    margin-top: 0;
+  }
+  .top-v2-about-song-hint {
+    display: block;
+    margin: 8px 0 0;
+    color: #665a4a;
+    font-weight: 700;
+    font-size: 12.5px;
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+
+/* A5(c): /about/ 最終CTA。SPで .top-v2-btn-outline の margin:0 16px が残り、width:100%
+   と合わさって右へ16px押し出されていた(左36px/右4px)。余白を外してオレンジと同幅に */
+@media (max-width: 767px) {
+  .top-v2-about-cta-actions .top-v2-btn-outline {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* 2026-11-19 デザイン点検 バッチA */
+/* A6: TOP #usagescene PC。H2(マーカー下端)→最初の写真(遊んで)の間が約217pxと間延びしていた。
+   内訳: h2 mb40 + 見出し枠 mb48 + memory-section01 の pt80(lp-style) + 最初の
+   .memory-item1 の pt80(lp-style, 装飾用の頭上スペース) 等が積み重なっていた。
+   section01 の pt を 0 にし、最初のitemの pt を 43px に詰めて約96pxへ。
+   ジグザグ配置・筆文字・切り抜き装飾(下端基準で配置)は触らない。H2のfont-sizeも不変。SPは現状で均衡のため変更なし */
+@media (min-width: 992px) {
+  #usagescene .memory-section01 {
+    padding-top: 0;
+  }
+  #usagescene .memory-section01 > .memory-item1:first-child {
+    padding-top: 43px;
+  }
+}
+
+/* 2026-11-19 デザイン点検 バッチB（文字） */
+
+/* B1: サブページのセクションH2を PC44px / SP28px に統一する。
+   TOPだけは96px級の見出しがオーナー判断で確定しているため、TOP専用id #usagescene を
+   持つmainを除外する（サブページには存在しない）。
+   旧: 他ページ40/24px・/play/option/ 44/28px・/about/ 48/30px・/map/ 96/47px。
+   SPでは旧救済 .top-v2-scene-title-mark{font-size:21px} が文字を21pxに潰していたので
+   マーカーspanは親h2のサイズを継承させる */
+.l-main:not(:has(#usagescene)) h2.top-v2-scene-title,
+.l-main:not(:has(#usagescene)) .top-v2-scene-finalcta h2 {
+  font-size: clamp(28px, 2.4vw + 18px, 44px);
+  line-height: 1.4;
+}
+.l-main:not(:has(#usagescene)) h2.top-v2-scene-title .top-v2-scene-title-mark {
+  font-size: inherit;
+}
+
+/* B3: 平日／土日祝トグルの小書き「または オフシーズン」を語中で折らない。
+   12px化で幅が増えるため、≤767pxはボタン左右paddingと隙間を詰めて1行に収める
+   （収まらない幅ではスペース位置でだけ2行になる） */
+.top-v2-chalk-season .top-v2-chalk-tab small {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+@media (max-width: 767px) {
+  .top-v2-chalk-season {
+    gap: 8px;
+  }
+  .top-v2-chalk-season .top-v2-chalk-tab {
+    min-width: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+/* B4: 末尾に1〜2文字だけ残る行（孤立行）を避ける。
+   本文系は text-wrap:pretty、短い中央寄せのリード・注記・見出しは balance + 文節改行 */
+main p,
+main li,
+main dd,
+main figcaption,
+main summary {
+  text-wrap: pretty;
+  word-break: auto-phrase;
+}
+.top-v2-scene-lead,
+.top-v2-playroll-lead,
+.top-v2-mapsec-lead,
+.top-v2-play-mv-lead,
+.top-v2-about-center,
+.top-v2-timeline-note,
+.top-v2-chalk-menu-note,
+.top-v2-catalog-note,
+.top-v2-price-min,
+.top-v2-scene-card-body p,
+.top-v2-timeline-body p,
+.top-v2-quip,
+main figcaption {
+  text-wrap: balance;
+  word-break: auto-phrase;
+}
+/* 見出しはTOP(#usagescene)を除外。:has非対応ブラウザで上のルールごと無効化されないよう別ルールにしている */
+.l-main:not(:has(#usagescene)) :is(h2.top-v2-scene-title, .top-v2-scene-finalcta h2, h3, h4) {
+  text-wrap: balance;
+  word-break: auto-phrase;
+}
+
+/* B2: 12px未満の文字を12px以上へ（▼矢印・No.xx番号などの純装飾は対象外） */
+.top-v2-header-textlogo-sub {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+main small {
+  font-size: max(12px, 0.875em);
+}
+.top-v2-scene-card-body h3 small {
+  font-size: max(12px, 0.68em);
+}
+@media (max-width: 767px) {
+  /* 友達・家族系黒板の「1人あたり：…」「こたえ」 */
+  .top-v2-chalkboard--art .top-v2-chalk-answer,
+  .top-v2-chalkboard--art .top-v2-chalk-sub,
+  .top-v2-price-simulator .top-v2-chalkboard--art .top-v2-chalk-sub {
+    font-size: 12px;
+  }
+  .top-v2-price-party,
+  .top-v2-price-row dd span {
+    font-size: 12px;
+  }
+  .top-v2-catalog-name {
+    font-size: 12px;
+    text-wrap: balance;
+  }
+  .top-v2-catalog-numbox .top-v2-catalog-chalk {
+    font-size: 12px;
+  }
+  .top-v2-address-tab,
+  .top-v2-address-tab.top-v2-print-tab {
+    font-size: 12px;
+  }
+}
+@media (max-width: 991px) {
+  .top-v2-playcard-name {
+    font-size: clamp(12px, 2.6vw, 12.5px);
+  }
+}
+@media (min-width: 992px) {
+  .top-v2-playroll-period {
+    font-size: 12px;
+  }
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-menu-note {
+    font-size: 12px;
+  }
+  .top-v2-price-simulator-controls > .top-v2-chalk-menu .top-v2-chalk-mealtime .top-v2-chalk-tab {
+    font-size: 12px;
+  }
+}
+.top-v2-address-tab {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.top-v2-price-condition-or,
+.top-v2-price-condition-season sup {
+  font-size: 12px;
+}
+.top-v2-chalk-mealtime .top-v2-chalk-tab small {
+  font-size: 12px;
+}
+.top-v2-catalog-photo .top-v2-catalog-paidtag,
+.top-v2-catalog-item--numbered .top-v2-catalog-name .top-v2-catalog-paidtag {
+  font-size: 12px;
+}
+.top-v2-form-required {
+  font-size: 12px;
+}
+.top-v2-menu-pricetag small,
+.top-v2-menu-condtag,
+.top-v2-menu-desc small,
+.top-v2-sim-rowlabel small,
+.top-v2-route-node--goal small,
+.top-v2-formal-table thead th small,
+.top-v2-formal-table tbody th small {
+  font-size: 12px;
+}
+@media (max-width: 480px) {
+  .top-v2-formal-table thead th {
+    font-size: 12px;
+  }
+}
+@media (max-width: 991.98px) {
+  .top-v2-sim-sum-per,
+  .top-v2-sim-sum-totallabel {
+    font-size: 12px;
+  }
+}
+
+/* B6: ≤767pxで右下の固定「予約（空き状況）」ボタン(約88px)が、ページ最下部の
+   言語スイッチャー(English / 日本語)を覆うので、スクロール末尾に余白を足して逃がす。
+   /price-simulator/ はこのボタンを隠すページなので除外 */
+@media (max-width: 767px) {
+  body:not(.top-v2-sim-page) .wpml-ls-statics-footer {
+    padding-bottom: 104px;
+  }
+}
+
+/* ヘッダー予約ボタン(≤767px)の小書き「（空き状況）」: 10px→12px。
+   ピルは右固定のため左へ約20px広がる。ロゴ(中央)とは375px幅でも14px以上空く */
+@media screen and (max-width: 767px) {
+  #header #headerBtnReserve.l-header_btnReserve .u-sm {
+    font-size: 12px;
+  }
+}

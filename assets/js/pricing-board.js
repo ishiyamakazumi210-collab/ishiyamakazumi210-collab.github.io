@@ -26,8 +26,9 @@
 
   // コンパクトプランの寝室2部屋(中部屋s1f1・小部屋s1f2)の定員は site.json
   // (rooms.s1f1/rooms.s1f2、map-rooms.jsの部屋データと同じ単一データソース)
-  // が唯一の元数字。COMPACT_COMFORT_MAX(=目安の合計)はここで計算するだけで、
-  // 数字そのものは持たない。
+  // が唯一の元数字。COMPACT_COMFORT_MAX(=目安の合計)とCOMPACT_HARD_MAX
+  // (=「手狭でもよければ」の最大の合計、2026-11-19オーナー確認)はここで計算する
+  // だけで、数字そのものは持たない。
   var ROOMS_DATA = (window.KATASHO_DATA && window.KATASHO_DATA.rooms) || {};
   function roomCapacityNum(roomId, field) {
     return parseInt((ROOMS_DATA[roomId] || {})[field], 10) || 0;
@@ -37,7 +38,7 @@
   var COMPACT_SMALL_TYPICAL = roomCapacityNum('s1f2', 'typical'); // 小部屋(目安)
   var COMPACT_SMALL_MAX = roomCapacityNum('s1f2', 'max'); // 小部屋(手狭最大)
   var COMPACT_COMFORT_MAX = COMPACT_MID_TYPICAL + COMPACT_SMALL_TYPICAL;
-  var COMPACT_HARD_MAX = 25;
+  var COMPACT_HARD_MAX = COMPACT_MID_MAX + COMPACT_SMALL_MAX;
 
   // 調理室併設コンパクトプラン（20名くらいまで）: 大人-1,000円、子どもは
   // 割引後の大人料金へ既存の子ども割引率(小学生30%OFF/3〜5歳50%OFF)を掛け直す。
