@@ -45,8 +45,8 @@
     parking: {
       name: '駐車場',
       body: '第1（校舎側）・第2（体育館前）・第3と第4（グラウンド側）の4か所にあります。第1が満車のときは、第3・第4をご利用ください。大型バスも停められます。',
-      photo: '/assets/img/spots/spot-parking.jpg',
-      alt: '駐車場入口の目印になる、カタショー・ワンラボの赤い看板'
+      photo: '/assets/img/parking/parking-1.jpg',
+      alt: '「カタショー第1駐車場」の看板が立つ、校舎側の駐車場'
     },
     // 番号は⑥。「7」ではないので取り違えに注意(⑦は海=sea)
     // photo/altは site.json → window.KATASHO_DATA (site-data.js) の単一データソース
