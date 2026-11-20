@@ -1,0 +1,64 @@
+/* トップの最初の画面（動画ヒーロー）: 校章のオープニングと左下の校章。
+   見本D（/sample/d/、2026-11-19〜20にオーナーと合意）から本番トップへ移した（2026-11-20）。index.html だけが読み込む */
+/* ===== 校章のオープニング =====
+   動画が動き出したら、白い校章（遊んで泊まれる小学校 カタショー）を見出しの下にフェードイン。
+   動画が白く飛ぶところ（約4.3秒〜）でフェードアウト → 教室の場面（約5.6秒）で左下の校章と下の矢印をフェードイン。
+   見出しは最初から最後まで出しておく。切り替えの合図は top-hero.js が動画の再生位置で出す。
+   <head>の短いスクリプトが html に .top-hero-opening-on を付ける。動きを減らす設定の人・JSが動かない場合は
+   付かないので、最初から最後の状態（見出し＋左下の校章）になる */
+.top-hero-opening, .top-hero-bug { display: none; }
+#mv .top-hero-opening {
+  display: block; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  opacity: 0; visibility: hidden;
+}
+#mv .top-hero-opening-veil {
+  position: absolute; inset: 0;
+  /* 校章の後ろだけ少し暗くして、明るい空や校舎の上でも読めるように */
+  background: linear-gradient(to bottom, rgba(14, 32, 40, 0) 30%, rgba(14, 32, 40, 0.38) 100%);
+}
+/* 校章は、見出しの下端と動画の下端（スマホは矢印の上）のあいだに置く。位置と大きさは top-hero.js が測って入れる */
+#mv .top-hero-opening-card {
+  position: absolute; left: 0; right: 0; top: var(--open-top, 0); bottom: var(--open-bottom, 0);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+#mv .top-hero-opening-logo {
+  display: block; height: var(--open-logo-h, 44%); width: auto; max-width: 92%; object-fit: contain;
+  filter: drop-shadow(0 4px 16px rgba(10, 30, 40, 0.5));
+}
+/* フェードインは、動画が実際に動き出してから（読み込みが遅い時は、少し待ってポスターの上で）JSが .top-hero-opening-in を付けて始める。
+   読み込み直後に始めると、回線によっては動画が動く前に出終わってしまい、フェードインに見えないため（2026-11-20 ユーザー指摘） */
+html.top-hero-opening-on.top-hero-opening-in #mv .top-hero-opening {
+  visibility: visible;
+  animation: top-hero-open-in 1.2s ease-out both;
+}
+/* 名前を変えておく（同じ名前だと、続きとして扱われてフェードせずに一瞬で消えるため） */
+html.top-hero-opening-on.top-hero-opening-in.top-hero-opening-out #mv .top-hero-opening { animation: top-hero-open-fade 0.6s ease-in both; }
+@keyframes top-hero-open-in { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes top-hero-open-fade { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+/* 見出しは最初から最後まで出しておく（2026-11-19 ユーザー案）。
+   オープニング中は、左下の校章と下の矢印だけ隠す（大きな校章とぶつからないように。JSが動かなくても14秒で左下の校章は出る） */
+#mv .top-hero-bug,
+#mv .top-v2-mv-scrollcue { transition: opacity 0.9s ease; }
+html.top-hero-opening-on #mv .top-hero-bug,
+html.top-hero-opening-on #mv .top-v2-mv-scrollcue { opacity: 0; }
+html.top-hero-opening-on #mv .top-hero-bug { animation: top-hero-reveal-late 0.8s 14s forwards; }
+@keyframes top-hero-reveal-late { to { opacity: 1; } }
+
+/* 左下の校章: 最初に真ん中に出した白い校章（遊んで泊まれる小学校 カタショー）を小さくして置く（2026-11-20 ユーザー案。丸い校章はやめた）
+   PCは「動画を画面の上端に合わせた時に見えればいい」（ユーザー基準）ので、動画の下端から決まった位置に置く。
+   スマホはブラウザのバーで画面が短くなっても最初の画面に収まるよう、画面の高さで持ち上げる */
+#mv .top-hero-bug {
+  display: block; position: absolute; left: 28px; bottom: 26px; z-index: 4; pointer-events: none;
+}
+#mv .top-hero-bug-logo {
+  display: block; height: 150px; width: auto;
+  filter: drop-shadow(0 2px 8px rgba(10, 30, 40, 0.55));
+}
+@media (max-width: 991px) {
+  #mv .top-hero-bug { left: 14px; bottom: 14px; bottom: max(14px, calc(100% - 100vh + 128px)); bottom: max(14px, calc(100% - 100svh + 128px)); }
+  #mv .top-hero-bug-logo { height: 104px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #mv .top-hero-bug,
+  #mv .top-v2-mv-scrollcue { transition: none; }
+}
