@@ -98,7 +98,7 @@ window.KATASHO_DATA = {
       "alt": ""
     },
     "familiesGymBall": {
-      "src": "/assets/img/families-gym-ball.jpg",
+      "src": "/assets/img/people-2026/family-gym.jpg",
       "alt": "体育館でボール遊びをする2組の家族"
     },
     "showerRoom": {
@@ -106,8 +106,8 @@ window.KATASHO_DATA = {
       "alt": "鍵のかかる個室が並ぶシャワー室"
     },
     "entranceGroup": {
-      "src": "/assets/img/friends-entrance-group.jpg",
-      "alt": "校舎の前に集まった7人の友達グループ"
+      "src": "/assets/img/people-2026/friends-arrive.jpg",
+      "alt": "キャリーケースを持って校舎の入口へ向かう友達グループ"
     },
     "universityFriends": {
       "src": "/assets/img/university_friends.jpg",
