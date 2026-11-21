@@ -90,8 +90,12 @@ window.KATASHO_DATA = {
       "alt": "徒歩すぐの海岸"
     },
     "trainingRoom": {
-      "src": "/assets/img/training-room.jpg",
-      "alt": "企業研修・会議利用"
+      "src": "/assets/img/people-2026/kenshu-meeting.jpg",
+      "alt": "会議室で研修をする社会人のグループ"
+    },
+    "friendsRoom": {
+      "src": "/assets/img/people-2026/friends-room.jpg",
+      "alt": "大部屋で座卓を囲み、飲みながら語る友達グループ"
     },
     "mathBlackboard": {
       "src": "/assets/img/math-blackboard.webp",
