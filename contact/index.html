@@ -32,7 +32,7 @@
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121l"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121m"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -326,6 +326,12 @@ height: 78vw;
 <section class="top-v2-scene-section" id="form">
   <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
     <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">お問い合わせフォーム</span></h2>
+    <!-- 送信後（FormSubmit から /contact/?sent=1#form に戻る）だけ出す。文面は旧サイトの送信完了ページと同じ事実 -->
+    <div class="top-v2-contact-sent" id="contactSent" role="status" hidden>
+      <p class="top-v2-contact-sent-title">送信しました</p>
+      <p>お問い合わせいただき、ありがとうございました。内容を確認させていただき、担当者より3営業日を目安にご連絡します。</p>
+      <p>お急ぎの場合は、総合受付（<a href="tel:080-7890-0388">080-7890-0388</a>）にご連絡ください。</p>
+    </div>
 <div class="top-v2-faq-best">
   <p class="top-v2-faq-best-title">送る前に：よくある質問ベスト5</p>
   <ul class="top-v2-faq-best-list">
@@ -338,31 +344,34 @@ height: 78vw;
   <p class="top-v2-faq-best-more"><a href="/faq/" data-event="contact_best_all">ほかの質問をさがす（50問以上）→</a></p>
 </div>
 
-    <!-- 送信先メール確定後: action のREPLACE_WITH_EMAILを実メールに置換し、data-static-disabled属性を削除する -->
-    <form class="top-v2-contact-form" data-static-disabled="true" action="https://formsubmit.co/REPLACE_WITH_EMAIL" method="post" aria-label="お問い合わせフォーム">
+    <!-- 送信は FormSubmit。送り先は site.json の contactForm.action（2026-11-21 オーナー指定）。
+         項目名はスタッフに届くメールの見出しになるので日本語。email はそのまま返信先になる -->
+    <form class="top-v2-contact-form" id="contactForm" action="https://formsubmit.co/accommodation@makilabo.jp" method="post" accept-charset="UTF-8" aria-label="お問い合わせフォーム">
       <input type="hidden" name="_subject" value="カタショーHP お問い合わせ">
       <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
       <div class="top-v2-form-row">
         <label for="contactName">お名前<span class="top-v2-form-required">必須</span></label>
-        <input type="text" id="contactName" name="your-name" autocomplete="name" required>
+        <input type="text" id="contactName" name="お名前" autocomplete="name" required>
       </div>
       <div class="top-v2-form-row">
         <label for="contactEmail">メールアドレス<span class="top-v2-form-required">必須</span></label>
-        <input type="email" id="contactEmail" name="your-email" autocomplete="email" required>
+        <input type="email" id="contactEmail" name="email" autocomplete="email" required>
       </div>
       <div class="top-v2-form-row">
         <label for="contactTel">電話番号</label>
-        <input type="tel" id="contactTel" name="your-tel" autocomplete="tel">
+        <input type="tel" id="contactTel" name="電話番号" autocomplete="tel">
       </div>
       <div class="top-v2-form-row">
         <label for="contactMessage">お問い合わせ内容<span class="top-v2-form-required">必須</span></label>
-        <textarea id="contactMessage" name="your-message" rows="6" required></textarea>
+        <textarea id="contactMessage" name="お問い合わせ内容" rows="6" required></textarea>
       </div>
       <div class="top-v2-form-row top-v2-form-consent">
         <label>
-          <input type="checkbox" name="acceptance" value="1" required>
+          <input type="checkbox" name="プライバシーポリシー" value="同意する" required>
           <span><a href="/privacy/">プライバシーポリシー</a>に同意する</span>
         </label>
       </div>
@@ -370,6 +379,25 @@ height: 78vw;
         <input type="submit" class="btn btn-orange" value="送信">
       </div>
     </form>
+    <script>
+      // 送信後は自分のページ（/contact/?sent=1#form）に戻す。公開プレビューでも本番でも同じ場所へ戻れるように、ここで組み立てる
+      (function () {
+        var form = document.getElementById('contactForm');
+        if (!form) { return; }
+        var next = form.querySelector('input[name="_next"]');
+        if (next) { next.value = location.origin + '/contact/?sent=1#form'; }
+        form.addEventListener('submit', function () {
+          var btn = form.querySelector('[type="submit"]');
+          if (btn) { btn.disabled = true; btn.value = '送信しています…'; }
+        });
+        if (/[?&]sent=1(&|$)/.test(location.search)) {
+          var sent = document.getElementById('contactSent');
+          if (sent) { sent.hidden = false; }
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: 'contact_sent' });
+        }
+      })();
+    </script>
 
     <div class="top-v2-address-card top-v2-address-card--standalone" style="margin-top:48px;">
       <div class="l-address_info">

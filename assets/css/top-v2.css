@@ -13176,3 +13176,25 @@ main small {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+/* お問い合わせ：送信後のお知らせ（2026-11-21） */
+.top-v2-contact-sent {
+  max-width: 640px;
+  margin: 0 auto 32px;
+  padding: 20px 22px;
+  border: 2px solid #2f7890;
+  border-radius: 16px;
+  background: #f1f8fa;
+  color: #24434e;
+  font-weight: 700;
+  line-height: 1.8;
+}
+.top-v2-contact-sent[hidden] { display: none; }
+.top-v2-contact-sent p { margin: 0; }
+.top-v2-contact-sent p + p { margin-top: 8px; }
+.top-v2-contact-sent .top-v2-contact-sent-title {
+  margin-bottom: 8px;
+  color: #2f7890;
+  font-size: 18px;
+  font-weight: 900;
+}
+.top-v2-contact-sent a { color: #2f7890; text-decoration: underline; white-space: nowrap; }

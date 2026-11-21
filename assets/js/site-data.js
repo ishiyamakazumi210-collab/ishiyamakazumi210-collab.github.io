@@ -3,6 +3,9 @@ window.KATASHO_DATA = {
     "gtmId": "GTM-MZC23TD"
   },
   "reserveUrl": "https://www.489pro-x.com/ja/s/katasho/search/",
+  "contactForm": {
+    "action": "https://formsubmit.co/accommodation@makilabo.jp"
+  },
   "contact": {
     "tel": "080-7890-0388",
     "telLabel": "総合受付",
