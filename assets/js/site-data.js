@@ -4,7 +4,7 @@ window.KATASHO_DATA = {
   },
   "reserveUrl": "https://www.489pro-x.com/ja/s/katasho/search/",
   "contactForm": {
-    "action": "https://formsubmit.co/accommodation@makilabo.jp"
+    "action": "https://formsubmit.co/13a98553cb0dd0ad7b07ef475ffca59e"
   },
   "contact": {
     "tel": "080-7890-0388",
