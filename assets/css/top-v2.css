@@ -12485,18 +12485,22 @@ main small {
     text-overflow: ellipsis;
   }
   .reserve-bar-main {
-    color: #665a4a;
-    font-size: 13.5px;
-    font-weight: 800;
+    color: #a5540e;
+    font-size: 17px;
+    font-weight: 900;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .reserve-bar.is-estimate .reserve-bar-main {
-    color: #a5540e;
-    font-size: 17px;
-    font-weight: 900;
+  .reserve-bar-cond {
+    color: #665a4a;
+    font-size: 10.5px;
+    font-weight: 700;
+    white-space: nowrap;
   }
+  .reserve-bar-cond[hidden] { display: none; }
+  /* 計算した金額は桁が増えるので少し小さく（合計が6桁でも1行に収める） */
+  .reserve-bar.is-estimate .reserve-bar-main { font-size: 15.5px; }
   .reserve-bar .reserve-bar-cta {
     flex: 0 0 auto;
     width: auto;
@@ -12513,7 +12517,8 @@ main small {
 }
 @media (max-width: 359px) {
   .reserve-bar .reserve-bar-cta { padding: 12px 14px; font-size: 15px; }
-  .reserve-bar.is-estimate .reserve-bar-main { font-size: 15px; }
+  .reserve-bar-main { font-size: 15px; }
+  .reserve-bar.is-estimate .reserve-bar-main { font-size: 13.5px; }
 }
 @media (max-width: 991.98px) and (prefers-reduced-motion: reduce) {
   body:not(.sample-cro):not(.top-v2-sim-page) .reserve-bar,

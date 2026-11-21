@@ -1,7 +1,7 @@
 // スマホの予約バー（2026-11-21）。見た目は top-v2.css 末尾、置き場所は partials/footer.html。
 // 1) 最初の画面を過ぎたら下から出し、ページの上の方へ戻ったら隠す（PCではCSSで出さない）
-// 2) 料金計算のあるページで、人数などを一度でもさわったら、左の一言を「いまの計算」の金額に替える。
-//    さわる前は「予約時の人数は概算でOK」のまま（値段は興味を持ってから、の方針）
+// 2) ふだんは「1人 7,900円〜 ※平日・コンパクトプラン」（一番安い値段を大きく、条件は小さく。2026-11-21 オーナー案）。
+//    料金計算のあるページで人数などを一度でもさわったら、「いまの計算」の金額に替える
 (function () {
   'use strict';
 
@@ -9,6 +9,7 @@
   if (!bar) { return; }
   var labelEl = document.getElementById('reserveBarLabel');
   var mainEl = document.getElementById('reserveBarMain');
+  var condEl = document.getElementById('reserveBarCond');
 
   // ---- 出し入れ ----------------------------------------------------------
   var queued = false;
@@ -42,12 +43,12 @@
     var answer = document.querySelector('.top-v2-chalk-answer');
     var text;
     if (famTotal && famTotal.textContent.trim()) {
-      text = people + '人で 合計' + famTotal.textContent.trim() + '〜';
+      text = people + '人で ' + famTotal.textContent.trim() + '〜';
     } else if (answer) {
       var t = answer.textContent.replace(/\s+/g, '');
       var per = t.match(/1人([\d,]+円)/);
       var total = t.match(/みんなで([\d,]+円)/);
-      if (per) { text = people + '人で 1人' + per[1] + '〜'; } else if (total) { text = people + '人で 合計' + total[1] + '〜'; }
+      if (per) { text = people + '人で 1人' + per[1] + '〜'; } else if (total) { text = people + '人で ' + total[1] + '〜'; }
     }
     if (!text) { return null; }
     var on = document.querySelector('.top-v2-chalk-season .top-v2-chalk-tab.is-on');
@@ -63,6 +64,7 @@
     mainEl.textContent = e.main;
     labelEl.textContent = e.label;
     labelEl.hidden = false;
+    if (condEl) { condEl.hidden = true; }
     bar.classList.add('is-estimate');
   }
   // 料金計算の部品（人数の＋−・平日/土日祝・食事やプランの切り替え）をさわったら
