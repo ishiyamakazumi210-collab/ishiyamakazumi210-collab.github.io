@@ -891,6 +891,17 @@
   buildNights();
   buildMeals();
   buildOptions();
+  // ほかのページの料金計算から渡された人数・プランで始める（例 ?adult=12&elem=1&pre=2&plan=compact。2026-11-21）
+  // 範囲外の数はこの後の update(true) が正規化する
+  (function prefillFromQuery() {
+    var q;
+    try { q = new URLSearchParams(window.location.search); } catch (e) { return; }
+    ['adult', 'elem', 'pre', 'infant'].forEach(function (key) {
+      var v = q.get(key);
+      if (v !== null && /^\d+$/.test(v) && peopleInputs[key]) { peopleInputs[key].value = v; }
+    });
+    if (q.get('plan') === 'compact' && compactRadio) { compactRadio.checked = true; }
+  })();
   update(true);
 
   // 検算・動作確認用（コンソールから window.KATASHO_SIM.calculate(...) で使える）
