@@ -12761,3 +12761,28 @@ main small {
   .top-v2-review-summary { flex-direction: column; gap: 8px; }
   .top-v2-review-summary-text { text-align: center; }
 }
+
+/* 2026-11-21 シャワーブースの写真は縦長（800x1200）。3:2に切ると中が一部しか見えないので、
+   縦長のまま左に置き、横長の脱衣スペースと高さをそろえる（2:3 と 3:2 を同じ高さ → 幅は 4:9） */
+.top-v2-shower-photos:has(.top-v2-shower-photo--tall) {
+  grid-template-columns: minmax(0, 4fr) minmax(0, 9fr);
+  align-items: start;
+}
+.top-v2-shower-photos .top-v2-shower-photo--tall img {
+  aspect-ratio: 2 / 3;
+}
+
+/* 2026-11-21 くわしい料金シミュレーターへのリンクは、計算の黒板のすぐ下に（オーナー指摘：料金ボタンの並びの奥にあって見つからない） */
+.top-v2-sim-more {
+  margin: 14px 0 6px;
+  text-align: center;
+}
+.top-v2-sim-more .top-v2-sim-more-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 20px;
+  font-size: 15px;
+  font-weight: 800;
+}

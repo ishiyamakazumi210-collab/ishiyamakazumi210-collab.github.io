@@ -136,7 +136,7 @@ window.KATASHO_DATA = {
       "alt": "木造校舎の白黒写真"
     },
     "kyushokuTray": {
-      "src": "/assets/img/option-2026/kyushoku.jpg",
+      "src": "/assets/img/option-2026/kyushoku-angle.jpg",
       "alt": "昔なつかしの給食トレー"
     },
     "fireworksSparkler": {
@@ -152,7 +152,7 @@ window.KATASHO_DATA = {
       "alt": "夜の校庭BBQを楽しむ友達グループ"
     },
     "lunchNostalgy": {
-      "src": "/assets/img/option-2026/kyushoku.jpg",
+      "src": "/assets/img/option-2026/kyushoku-angle.jpg",
       "alt": ""
     },
     "scienceSkeletonCatalog": {
@@ -164,11 +164,11 @@ window.KATASHO_DATA = {
       "alt": ""
     },
     "basketballGym": {
-      "src": "/assets/img/play-cards/14-basketball-gym-catalog.jpg",
+      "src": "/assets/img/play-cards-2026/basketball-gym.jpg",
       "alt": "体育館でバスケットボール"
     },
     "dodgeballGym": {
-      "src": "/assets/img/play-cards/13-dodgeball-gym-catalog.jpg",
+      "src": "/assets/img/play-cards-2026/dodgeball-gym.jpg",
       "alt": "体育館でドッジボール"
     },
     "stepIcon1": {
