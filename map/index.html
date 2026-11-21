@@ -11,7 +11,7 @@
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121g"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121h"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -306,19 +306,18 @@ height: 78vw;
       </div>
     </div>
 
-    <div class="top-v2-worksheet top-v2-map-legend">
-      <p class="top-v2-print-tab">ばしょのあんない</p>
-      <p class="top-v2-timeline-note top-v2-mapspot-legend-hint">番号をタップすると、くわしい説明が出ます。</p>
-      <dl class="top-v2-map-legend-list top-v2-mapspot-legend-list">
-        <div class="top-v2-map-legend-row"><dt>① 北棟</dt></div>
-        <div class="top-v2-map-legend-row"><dt>② 南棟</dt></div>
-        <div class="top-v2-map-legend-row"><dt>③ 体育館</dt></div>
-        <div class="top-v2-map-legend-row"><dt>④ グラウンド</dt></div>
-        <div class="top-v2-map-legend-row"><dt>⑤ 茶畑</dt></div>
-        <div class="top-v2-map-legend-row"><dt>⑥ 海</dt></div>
-        <div class="top-v2-map-legend-row"><dt>Ⓟ 駐車場（第1〜第4）</dt></div>
-      </dl>
-      <p class="top-v2-timeline-note">※ 喫煙所は、南棟1階・職員室の外にあります。</p>
+    <div class="top-v2-maplegend">
+      <p class="top-v2-maplegend-hint">番号を押すと、くわしい説明が出ます。</p>
+      <ul class="top-v2-maplegend-list">
+        <li><button type="button" class="top-v2-maplegend-item" data-spot="kita"><span class="top-v2-maplegend-num" aria-hidden="true">1</span>北棟</button></li>
+        <li><button type="button" class="top-v2-maplegend-item" data-spot="minami"><span class="top-v2-maplegend-num" aria-hidden="true">2</span>南棟</button></li>
+        <li><button type="button" class="top-v2-maplegend-item" data-spot="gym"><span class="top-v2-maplegend-num" aria-hidden="true">3</span>体育館</button></li>
+        <li><button type="button" class="top-v2-maplegend-item" data-spot="grounds"><span class="top-v2-maplegend-num" aria-hidden="true">4</span>グラウンド</button></li>
+        <li><button type="button" class="top-v2-maplegend-item" data-spot="tea"><span class="top-v2-maplegend-num" aria-hidden="true">5</span>茶畑</button></li>
+        <li><button type="button" class="top-v2-maplegend-item" data-spot="sea"><span class="top-v2-maplegend-num" aria-hidden="true">6</span>海</button></li>
+        <li><button type="button" class="top-v2-maplegend-item" data-spot="parking"><span class="top-v2-maplegend-num" aria-hidden="true">P</span>駐車場（第1〜第4）</button></li>
+      </ul>
+      <p class="top-v2-maplegend-note">※ 喫煙所は、南棟1階・職員室の外にあります。</p>
     </div>
   </div>
 </section>
@@ -387,10 +386,19 @@ height: 78vw;
 
 <!-- 3. 場所の写真3枚 -->
 <!-- 4. 締め -->
-<section class="top-v2-scene-section top-v2-scene-section--gray" id="access">
-  <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
-    <p class="top-v2-actions"><a class="top-v2-inline-link" href="/access/" data-event="map_access_link">交通アクセス・行き方はこちら →</a></p>
-    <p class="top-v2-actions"><a class="top-v2-inline-link" href="/play/" data-event="map_play_link">遊びかた・泊まりかたを見る →</a></p>
+<section class="top-v2-scene-section" id="access">
+  <div class="top-v2-scene-inner">
+    <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark">つぎに見る</span></h2>
+    <div class="top-v2-nextcards">
+      <a class="top-v2-nextcard" href="/access/" data-event="map_access_link">
+        <span class="top-v2-nextcard-photo"><img src="/assets/img/spots-2026/kita.jpg" alt="カタショーの北棟の外観" loading="lazy"></span>
+        <span class="top-v2-nextcard-body"><span class="top-v2-nextcard-title">交通アクセス・行き方</span><span class="top-v2-nextcard-text">車・電車とバスでの行き方と、駐車場の場所</span><span class="top-v2-nextcard-more" aria-hidden="true">見る →</span></span>
+      </a>
+      <a class="top-v2-nextcard" href="/play/" data-event="map_play_link">
+        <span class="top-v2-nextcard-photo"><img src="/assets/img/people-2026/play-tug.jpg" alt="体育館で綱引きをする友達グループ" loading="lazy"></span>
+        <span class="top-v2-nextcard-body"><span class="top-v2-nextcard-title">遊びかた・泊まりかた</span><span class="top-v2-nextcard-text">48種類以上の遊びと、食事・シャワー・寝る場所</span><span class="top-v2-nextcard-more" aria-hidden="true">見る →</span></span>
+      </a>
+    </div>
     <p class="top-v2-map-closing-cta"><span class="reserve-cta"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big" data-event="map_reserve">空き状況を見る</a><span class="reserve-reassure"><span>予約時の人数は概算でOK</span><span>人数・食事の変更は10日前まで</span><span>お支払いは当日（事前振込も可）</span></span></span></p>
   </div>
 </section>

@@ -12786,3 +12786,187 @@ main small {
   font-size: 15px;
   font-weight: 800;
 }
+
+/* ===================================================================
+   2026-11-21 マスキングテープの整理（オーナー判断「テープは写真だけ、1画面に1〜2枚まで。文字のカードには使わない」）
+   元のルールは残し、ここで上書きして外す。戻すときはこのブロックを消す */
+/* 文字のカード・札・地図からは外す */
+.top-v2-teacher-note::before,
+.top-v2-shiori::before,
+.top-v2-worksheet::before,
+.top-v2-price-card--formal::before,
+.top-v2-price-card--notice::before,
+.top-v2-playroll-tab.top-v2-print-tab::before,
+.top-v2-address-card::before,
+.top-v2-playdialog-sheet::before,
+.top-v2-price-simulator::before,
+.top-v2-review-card::before,
+.top-v2-map-frame::before,
+.top-v2-map-photo-wrap .top-v2-scenecard-photo::before {
+  content: none !important;
+  display: none !important;
+}
+.top-v2-review-grid .top-v2-review-card {
+  transform: none !important;
+}
+/* 写真が並ぶ所は、先頭の1枚だけに貼る */
+.top-v2-scene-hero-photo::after,
+#can-do .top-v2-scene-cards .top-v2-scene-card:nth-child(n+2) .top-v2-scene-card-photo::before,
+#rooms .top-v2-scene-cards .top-v2-scene-card:nth-child(n+2) .top-v2-scene-card-photo::before,
+.top-v2-doors li:nth-child(n+2) .top-v2-scenecard-photo::before,
+.top-v2-otherscenes-cards li:nth-child(n+2) .top-v2-scenecard-photo::before,
+.top-v2-about-team-card:nth-child(n+2) .top-v2-scenecard-photo::before,
+.top-v2-about-story-card:nth-child(n+2) .top-v2-scenecard-photo::before,
+.top-v2-menu-grid .top-v2-menu-card:nth-child(n+2) .top-v2-menu-photo::before {
+  content: none !important;
+  display: none !important;
+}
+/* 写真がびっしり並ぶ帯・カタログには貼らない */
+.top-v2-playroll-track .top-v2-playcard::before,
+.top-v2-catalog-photo::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* ===================================================================
+   2026-11-21 校内マップの凡例：飾り（テープ・札・左の線・影）をやめ、地図のすぐ下に
+   地図のピンと同じ丸数字のボタンを並べる。押すと地図のピンと同じ説明が開く（map-spots.js は [data-spot] を拾う） */
+.top-v2-maplegend {
+  max-width: 880px;
+  margin: 18px auto 0;
+  text-align: center;
+}
+.top-v2-maplegend-hint {
+  margin: 0 0 10px;
+  color: #4a5a60;
+  font-size: 14px;
+  font-weight: 700;
+}
+.top-v2-maplegend-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-maplegend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 6px 14px 6px 6px;
+  border: 1px solid #d5e2e8;
+  border-radius: 999px;
+  background: #fff;
+  color: #24434e;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.top-v2-maplegend-item:hover,
+.top-v2-maplegend-item:focus-visible {
+  border-color: #2f7890;
+}
+.top-v2-maplegend-item:focus-visible {
+  outline: 2px solid #2f7890;
+  outline-offset: 2px;
+}
+.top-v2-maplegend-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #2f7890;
+  box-shadow: 0 1px 4px rgba(20, 50, 65, 0.25);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+}
+.top-v2-maplegend-note {
+  margin: 12px 0 0;
+  color: #4a5a60;
+  font-size: 13px;
+  font-weight: 700;
+}
+@media (max-width: 575px) {
+  .top-v2-maplegend-item { font-size: 14px; padding-right: 12px; }
+}
+
+/* マップの下「つぎに見る」：文字リンク2本をやめ、写真付きのカード2枚＋予約ボタン。背景は白（上のグレーと区切る） */
+.top-v2-nextcards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 820px;
+  margin: 8px auto 0;
+}
+.top-v2-nextcard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #d5e2e8;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(47, 120, 144, 0.1);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.top-v2-nextcard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(47, 120, 144, 0.16);
+  color: inherit;
+}
+.top-v2-nextcard:focus-visible {
+  outline: 3px solid #2f7890;
+  outline-offset: 3px;
+}
+.top-v2-nextcard-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.top-v2-nextcard-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 18px 16px;
+}
+.top-v2-nextcard-title {
+  color: #24434e;
+  font-size: 18px;
+  font-weight: 900;
+}
+.top-v2-nextcard-text {
+  color: #4a5a60;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.top-v2-nextcard-more {
+  margin-top: 4px;
+  color: #2f7890;
+  font-size: 14px;
+  font-weight: 800;
+}
+@media (max-width: 575px) {
+  .top-v2-nextcards { grid-template-columns: 1fr; gap: 14px; }
+  .top-v2-nextcard { flex-direction: row; }
+  .top-v2-nextcard-photo { flex: 0 0 38%; }
+  .top-v2-nextcard-photo img { height: 100%; aspect-ratio: auto; min-height: 110px; }
+  .top-v2-nextcard-body { padding: 12px 14px; }
+  .top-v2-nextcard-title { font-size: 16px; }
+  .top-v2-nextcard-text { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-nextcard { transition: none; }
+  .top-v2-nextcard:hover { transform: none; }
+}
