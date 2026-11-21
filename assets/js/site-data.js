@@ -94,8 +94,8 @@ window.KATASHO_DATA = {
       "alt": "会議室で研修をする社会人のグループ"
     },
     "friendsRoom": {
-      "src": "/assets/img/people-2026/friends-room.jpg",
-      "alt": "大部屋で座卓を囲み、飲みながら語る友達グループ"
+      "src": "/assets/img/people-2026/friends-toast.jpg",
+      "alt": "夜の大部屋で座卓を囲み、乾杯する友達グループ"
     },
     "mathBlackboard": {
       "src": "/assets/img/math-blackboard.webp",
