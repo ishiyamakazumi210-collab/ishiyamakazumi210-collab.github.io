@@ -11,7 +11,7 @@
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261119md"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121b"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -280,7 +280,7 @@ height: 78vw;
       <h1 class="top-v2-scene-h1logo top-v2-scene-h1text"><span class="top-v2-scene-title-mark">遊びも、食事も、<br>夜の交流も。</span></h1>
       <p class="top-v2-scene-lead">体育館もグラウンドも大部屋も、まるごと貸切。給食で始まり、昼はミニ運動会、夜はBBQと宴会。準備も片付けもおまかせだから、幹事さんも全力で楽しめます。20〜100人のサークル・ゼミ・部活合宿に。</p>
       <div class="top-v2-scene-hero-actions">
-        <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big">空き状況を見る</a>
+        <span class="reserve-cta"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big">空き状況を見る</a><span class="reserve-reassure"><span>予約時の人数は概算でOK</span><span>人数・食事の変更は10日前まで</span><span>お支払いは当日（事前振込も可）</span></span></span>
         <a href="/contact/" class="top-v2-btn-outline">相談してから決めたい →</a>
       </div>
     </div>
@@ -666,7 +666,7 @@ height: 78vw;
   <img class="top-v2-finalcta-figure" src="/assets/wp/themes/katasho/asset/image/btn_reserve_image.png" alt="" aria-hidden="true" loading="lazy">
   <div class="top-v2-scene-inner">
     <p class="top-v2-callout top-v2-callout--cta"><img src="/assets/img/callout-weekend-first-come.png" alt="人気の土日祝は、早い者勝ち！" loading="lazy"></p>
-    <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big">空き状況を見る</a>
+    <span class="reserve-cta"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big">空き状況を見る</a><span class="reserve-reassure"><span>予約時の人数は概算でOK</span><span>人数・食事の変更は10日前まで</span><span>お支払いは当日（事前振込も可）</span></span></span>
     <div class="top-v2-share">
       <a class="top-v2-btn-outline top-v2-btn-line" href="https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Fkatasho.jp%2Fgasshuku%2F" target="_blank" rel="noopener">LINEでみんなに送る</a>
     </div>
@@ -784,6 +784,12 @@ height: 78vw;
                       </div>
                     </a>
                   </div>
+                <!-- スマホの予約バー（2026-11-21）。CSSは top-v2.css 末尾、出し入れと「いまの計算」の表示は reserve-bar.js -->
+                <div class="reserve-bar" id="reserveBar" role="region" aria-label="予約のご案内">
+                  <p class="reserve-bar-text"><span class="reserve-bar-label" id="reserveBarLabel" hidden></span><span class="reserve-bar-main" id="reserveBarMain">予約時の人数は概算でOK</span></p>
+                  <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange reserve-bar-cta" data-event="bar_reserve">空き状況を見る</a>
+                </div>
+                <script src="/assets/js/reserve-bar.js?v=20261121b" defer></script>
             </footer>
         </div>
 

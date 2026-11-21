@@ -149,7 +149,7 @@ height: 78vw;
 <meta name="msapplication-TileImage" content="/assets/wp/uploads/2023/09/cropped-校章映像用-270x270.png" />
 <noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>
 <link rel="stylesheet" href="/static/local-preview.css">
-<link rel="stylesheet" href="/assets/css/top-v2.css?v=20261119md">
+<link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121b">
 <link rel="stylesheet" href="/assets/css/sample-cro.css?v=20261120c">
 <link rel="preload" as="image" href="/assets/img/summary-play-tug-left.jpg?v=20260711" media="(max-width: 991.98px)">
 <link rel="preload" as="image" href="/assets/img/gasshuku-tug.jpg" media="(min-width: 992px)">
@@ -1050,6 +1050,12 @@ height: 78vw;
                       </div>
                     </a>
                   </div>
+                <!-- スマホの予約バー（2026-11-21）。CSSは top-v2.css 末尾、出し入れと「いまの計算」の表示は reserve-bar.js -->
+                <div class="reserve-bar" id="reserveBar" role="region" aria-label="予約のご案内">
+                  <p class="reserve-bar-text"><span class="reserve-bar-label" id="reserveBarLabel" hidden></span><span class="reserve-bar-main" id="reserveBarMain">予約時の人数は概算でOK</span></p>
+                  <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange reserve-bar-cta" data-event="bar_reserve">空き状況を見る</a>
+                </div>
+                <script src="/assets/js/reserve-bar.js?v=20261121b" defer></script>
             </footer>
     <!-- 見本: スマホ下部の固定予約バー（PCは従来の追従ボタン） -->
     <div class="sample-bar" id="sampleBar" role="region" aria-label="予約のご案内">

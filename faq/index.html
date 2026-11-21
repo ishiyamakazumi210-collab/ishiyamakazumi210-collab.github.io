@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261119md"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121b"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -549,7 +549,7 @@ height: 78vw;
 <!-- 5. 最終CTA -->
 <section class="top-v2-scene-section top-v2-scene-section--gray" id="cta">
   <div class="top-v2-scene-inner top-v2-scene-inner--narrow" style="text-align:center;">
-    <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big" data-event="faq_footer_reserve">空き状況を見る</a>
+    <span class="reserve-cta"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big" data-event="faq_footer_reserve">空き状況を見る</a><span class="reserve-reassure"><span>予約時の人数は概算でOK</span><span>人数・食事の変更は10日前まで</span><span>お支払いは当日（事前振込も可）</span></span></span>
   </div>
 </section>
 
@@ -600,6 +600,12 @@ height: 78vw;
                       </div>
                     </a>
                   </div>
+                <!-- スマホの予約バー（2026-11-21）。CSSは top-v2.css 末尾、出し入れと「いまの計算」の表示は reserve-bar.js -->
+                <div class="reserve-bar" id="reserveBar" role="region" aria-label="予約のご案内">
+                  <p class="reserve-bar-text"><span class="reserve-bar-label" id="reserveBarLabel" hidden></span><span class="reserve-bar-main" id="reserveBarMain">予約時の人数は概算でOK</span></p>
+                  <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange reserve-bar-cta" data-event="bar_reserve">空き状況を見る</a>
+                </div>
+                <script src="/assets/js/reserve-bar.js?v=20261121b" defer></script>
             </footer>
         </div>
 

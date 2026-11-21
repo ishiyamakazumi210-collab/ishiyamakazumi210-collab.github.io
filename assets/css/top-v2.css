@@ -12401,3 +12401,121 @@ main small {
     transform-origin: top left;
   }
 }
+
+/* =====================================================================
+   予約ボタンまわり（2026-11-21 オーナー了承）
+   1) 大きな予約ボタンのすぐ下に「安心の一言」（事実はHPの4ステップとFAQのとおり）
+   2) スマホ: 右下の丸い予約ボタンをやめ、画面下いっぱいの予約バーにする。
+      最初の画面を過ぎてから下から出す（出し入れは reserve-bar.js）。PCは今のまま（丸ボタン）。
+      くわしい料金シミュレーターは自前の合計バーがあるので出さない。見本ページ（/sample/）は見本のバーを使う
+   ===================================================================== */
+.reserve-cta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  vertical-align: top;
+}
+.reserve-reassure {
+  display: block;
+  margin: 10px 0 0;
+  color: #665a4a;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.7;
+  text-align: center;
+  letter-spacing: 0;
+}
+.reserve-reassure > span { display: inline-block; }
+/* 区切りは前の項目の後ろに付ける（折り返したとき、行頭に「／」が来ないように） */
+.reserve-reassure > span:not(:last-child)::after {
+  content: "／";
+  margin: 0 4px;
+  color: rgba(102, 90, 74, 0.55);
+}
+@media (max-width: 767px) {
+  .reserve-reassure { font-size: 12px; }
+}
+/* シーン別ページの最初の画面は左寄せなので、ボタンと一言も左にそろえる */
+@media (min-width: 768px) {
+  .top-v2-scene-hero-actions .reserve-cta { align-items: flex-start; }
+  .top-v2-scene-hero-actions .reserve-reassure { text-align: left; }
+}
+
+.reserve-bar { display: none; }
+@media (max-width: 991.98px) {
+  body:not(.sample-cro):not(.top-v2-sim-page) { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
+  body:not(.top-v2-sim-page) #reserveFixed { display: none !important; }
+  body:not(.sample-cro):not(.top-v2-sim-page) .reserve-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1030;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 12px calc(9px + env(safe-area-inset-bottom, 0px)) 16px;
+    background: #fff;
+    border-top: 2px solid #f2dfb6;
+    box-shadow: 0 -6px 18px rgba(20, 50, 65, 0.16);
+    transform: translateY(110%);
+    visibility: hidden;
+    transition: transform 0.32s ease, visibility 0s linear 0.32s;
+  }
+  body:not(.sample-cro):not(.top-v2-sim-page) .reserve-bar.is-visible {
+    transform: translateY(0);
+    visibility: visible;
+    transition: transform 0.32s ease, visibility 0s linear 0s;
+  }
+  .reserve-bar-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 0;
+    line-height: 1.3;
+  }
+  .reserve-bar-label {
+    color: #665a4a;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .reserve-bar-main {
+    color: #665a4a;
+    font-size: 13.5px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .reserve-bar.is-estimate .reserve-bar-main {
+    color: #a5540e;
+    font-size: 17px;
+    font-weight: 900;
+  }
+  .reserve-bar .reserve-bar-cta {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 48px;
+    margin: 0;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-size: 16px;
+    line-height: 1.3;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .reserve-bar .reserve-bar-cta::after { display: none; }
+}
+@media (max-width: 359px) {
+  .reserve-bar .reserve-bar-cta { padding: 12px 14px; font-size: 15px; }
+  .reserve-bar.is-estimate .reserve-bar-main { font-size: 15px; }
+}
+@media (max-width: 991.98px) and (prefers-reduced-motion: reduce) {
+  body:not(.sample-cro):not(.top-v2-sim-page) .reserve-bar,
+  body:not(.sample-cro):not(.top-v2-sim-page) .reserve-bar.is-visible { transition: none; }
+}
