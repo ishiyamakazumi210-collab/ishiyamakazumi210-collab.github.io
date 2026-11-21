@@ -13144,3 +13144,35 @@ main small {
   .top-v2-faq-cats { gap: 6px; }
   .top-v2-faq-cats a { padding: 6px 11px; font-size: 13px; }
 }
+/* プライバシーポリシー：アクセス解析・広告（2026-11-21） */
+.top-v2-policy-list .top-v2-scene-card-body p + p,
+.top-v2-policy-list .top-v2-scene-card-body p + ul,
+.top-v2-policy-list .top-v2-scene-card-body ul + p {
+  margin-top: 14px;
+}
+.top-v2-policy-list .top-v2-scene-card-body .top-v2-policy-services {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  padding-left: 16px !important; /* lp-style.css の ul{padding-left:0 !important} に勝つため */
+  border-radius: 12px;
+  background: #f4f8fa;
+  list-style: none;
+}
+.top-v2-policy-services li {
+  color: #665a4a;
+  font-weight: 700;
+  font-size: clamp(14px, 1.6vw, 15px);
+  line-height: 1.7;
+}
+.top-v2-policy-services li + li {
+  margin-top: 10px;
+}
+.top-v2-policy-services strong {
+  color: #24434e;
+  font-weight: 900;
+}
+.top-v2-policy-list .top-v2-scene-card-body a {
+  color: #2f7890;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

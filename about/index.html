@@ -6,12 +6,33 @@
     <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- 計測（Googleタグマネージャー。今のkatasho.jp・予約ページ(ProX)と同じ箱）。本番の katasho.jp のときだけ読み込む。
+       公開プレビューや手元で動かすと確認作業のアクセスが混ざるため。data-event の付いた部品を押したら hp_click を送る（2026-11-21） -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    (function (w, d) {
+      if (/(^|\.)katasho\.jp$/.test(location.hostname)) {
+        w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var j = d.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MZC23TD';
+        var f = d.getElementsByTagName('script')[0];
+        f.parentNode.insertBefore(j, f);
+      }
+      d.addEventListener('click', function (e) {
+        var el = e.target && e.target.closest ? e.target.closest('a[data-event],button[data-event],summary[data-event],li[data-event],div[data-event]') : null;
+        if (!el) { return; }
+        w.dataLayer.push({ event: 'hp_click', click_id: el.getAttribute('data-event'), click_url: el.getAttribute('href') || '' });
+      }, true);
+    })(window, document);
+  </script>
+
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121k"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121l"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 

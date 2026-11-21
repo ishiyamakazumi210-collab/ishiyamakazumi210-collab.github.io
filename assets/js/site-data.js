@@ -1,4 +1,7 @@
 window.KATASHO_DATA = {
+  "measurement": {
+    "gtmId": "GTM-MZC23TD"
+  },
   "reserveUrl": "https://www.489pro-x.com/ja/s/katasho/search/",
   "contact": {
     "tel": "080-7890-0388",

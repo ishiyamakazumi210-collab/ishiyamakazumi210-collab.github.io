@@ -6,12 +6,33 @@
     <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- 計測（Googleタグマネージャー。今のkatasho.jp・予約ページ(ProX)と同じ箱）。本番の katasho.jp のときだけ読み込む。
+       公開プレビューや手元で動かすと確認作業のアクセスが混ざるため。data-event の付いた部品を押したら hp_click を送る（2026-11-21） -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    (function (w, d) {
+      if (/(^|\.)katasho\.jp$/.test(location.hostname)) {
+        w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var j = d.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MZC23TD';
+        var f = d.getElementsByTagName('script')[0];
+        f.parentNode.insertBefore(j, f);
+      }
+      d.addEventListener('click', function (e) {
+        var el = e.target && e.target.closest ? e.target.closest('a[data-event],button[data-event],summary[data-event],li[data-event],div[data-event]') : null;
+        if (!el) { return; }
+        w.dataLayer.push({ event: 'hp_click', click_id: el.getAttribute('data-event'), click_url: el.getAttribute('href') || '' });
+      }, true);
+    })(window, document);
+  </script>
+
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121k"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121l"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -272,7 +293,7 @@ height: 78vw;
   <div class="top-v2-scene-hero top-v2-map-hero-grid">
     <div>
       <h1 class="top-v2-scene-h1logo top-v2-scene-h1text"><span class="top-v2-scene-title-mark">プライバシーポリシー</span></h1>
-      <p class="top-v2-scene-lead">お問い合わせフォームでお預かりする情報の取り扱いについて。</p>
+      <p class="top-v2-scene-lead">お問い合わせフォームでお預かりする情報の取り扱いと、このサイトの利用状況の計測について。</p>
     </div>
   </div>
 </section>
@@ -303,6 +324,19 @@ height: 78vw;
         <div class="top-v2-scene-card-body">
           <h3>送信の仕組み</h3>
           <p>フォームの送信には外部サービス（FormSubmit）を利用しています</p>
+        </div>
+      </div>
+      <div class="top-v2-scene-card" id="analytics">
+        <div class="top-v2-scene-card-body">
+          <h3>アクセス解析・広告</h3>
+          <p>このサイトと予約ページでは、サイトをよくするためと広告の効果を測るために、次のサービスを使っています。Cookieなどを使い、見たページ、押したボタン、予約まで進んだかどうか、お使いの端末やブラウザの種類などの情報が各社に送られます。</p>
+          <ul class="top-v2-policy-services">
+            <li><strong>Googleアナリティクス</strong>（Google）<br>どのページがどれだけ見られているかを知るため</li>
+            <li><strong>Google広告</strong>（Google）<br>広告から予約につながった数を測るため</li>
+            <li><strong>Microsoft Clarity</strong>（Microsoft）<br>ページのどこが押され、どこまで読まれたかを知るため</li>
+            <li><strong>TikTokピクセル</strong>（TikTok）<br>TikTokの広告の効果を測るため</li>
+          </ul>
+          <p>Cookieはブラウザの設定で止められます。Googleアナリティクスは<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener">オプトアウト アドオン</a>でも止められます。各社での情報の扱いは、<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener">Google</a>・<a href="https://privacy.microsoft.com/ja-jp/privacystatement" target="_blank" rel="noopener">Microsoft</a>・<a href="https://www.tiktok.com/legal/page/row/privacy-policy/ja" target="_blank" rel="noopener">TikTok</a>の説明をご覧ください。</p>
         </div>
       </div>
       <div class="top-v2-scene-card">
