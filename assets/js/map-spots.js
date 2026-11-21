@@ -1,4 +1,4 @@
-// /map/ 全体マップの番号ドット(①〜⑥とⓅ)→詳細ポップアップ。
+// /map/ 全体マップの番号ドット(①〜⑥とP1・P2・P3・4)→詳細ポップアップ。凡例のボタン([data-spot])からも開く。
 // 開閉・backdrop・ESC・bodyスクロールロックの流儀はmap-rooms.js/play-catalog.jsを踏襲した
 // 独立実装（.top-v2-mapspot-*で新規スコープ、既存の部屋ポップアップ側は無変更）。
 // ドット本体は既存の<button class="top-v2-map-dot">(座標・見た目は既存CSSを流用)。
@@ -41,12 +41,28 @@
       alt: '広い芝生のグラウンド',
       body: 'すべり台・ブランコ・うんてい・登り棒・鉄棒があります。'
     },
-    // ドット3箇所(正門横・裏・南側)とも同じ内容。番号ではなく「P」（2026-11-21、3つとも⑤で紛らわしいとオーナー指摘）
-    parking: {
-      name: '駐車場',
-      body: '第1（校舎側）・第2（体育館前）・第3と第4（グラウンド側）の4か所にあります。第1が満車のときは、第3・第4をご利用ください。大型バスも停められます。',
+    // 駐車場は3つのピンに分け、それぞれの写真と説明（2026-11-21、全部同じ写真だとオーナー指摘）。
+    // 写真・文は交通アクセスページの「駐車場」と同じ。地図のどのピンがどの駐車場かはオーナー確認
+    parking1: {
+      name: '第1駐車場（校舎側）',
+      body: 'ワンラボ入居者・体育館利用の方が優先です。満車のときは第3・第4へ。枠の外には停めないでくださいね。',
       photo: '/assets/img/parking/parking-1.jpg',
-      alt: '「カタショー第1駐車場」の看板が立つ、校舎側の駐車場'
+      alt: '「カタショー第1駐車場」の赤い看板と、校舎側の駐車スペース',
+      link: { href: '/access/#parking', label: '駐車場の案内（交通アクセス）→' }
+    },
+    parking2: {
+      name: '第2駐車場（体育館前）',
+      body: '体育館の前の駐車場です。大型バスでお越しの場合は、ここを予約できます。ご予約のときに、大型バスで来ることをお伝えください。',
+      photo: '/assets/img/parking/parking-2.jpg',
+      alt: '体育館と校舎の前に広がる、第2駐車場のスペース',
+      link: { href: '/access/#parking', label: '駐車場の案内（交通アクセス）→' }
+    },
+    parking34: {
+      name: '第3・第4駐車場（グラウンド側）',
+      body: 'グラウンド駐車場です。第1が満車のときはこちらへどうぞ。大型バスも停められます。',
+      photo: '/assets/img/parking/parking-3-4.jpg',
+      alt: 'グラウンド側の砂利の駐車場。広いスペースに車が停まっている',
+      link: { href: '/access/#parking', label: '駐車場の案内（交通アクセス）→' }
     },
     // 番号は⑤、海(sea)は⑥（2026-11-21に駐車場をPにして繰り上げ）
     // photo/altは site.json → window.KATASHO_DATA (site-data.js) の単一データソース
@@ -133,7 +149,8 @@
       // 「押すと写真が見られる」。写真なしスポットに付けると嘘になるため
       // データ駆動で自動判定。2026-07-17オーナー要望)
       var data = SPOT_DATA[btn.dataset.spot];
-      if (data && data.photo) {
+      // カメラの印は地図のピンだけ（凡例のボタンには付けない）
+      if (data && data.photo && btn.classList.contains('top-v2-map-dot')) {
         var cam = document.createElement('span');
         cam.className = 'top-v2-mapspot-camchip';
         cam.setAttribute('aria-hidden', 'true');

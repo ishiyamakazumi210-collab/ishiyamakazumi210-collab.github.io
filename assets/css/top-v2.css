@@ -12970,3 +12970,21 @@ main small {
   .top-v2-nextcard { transition: none; }
   .top-v2-nextcard:hover { transform: none; }
 }
+
+/* 2026-11-21 駐車場のピンは「P1・P2・P3・4」と横長の丸に（3つとも同じ「P」で区別できないとオーナー指摘） */
+.top-v2-map-dot[data-spot^="parking"] {
+  width: auto;
+  min-width: 24px;
+  padding: 0 6px;
+  border-radius: 12px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.top-v2-maplegend-num--wide {
+  width: auto;
+  min-width: 26px;
+  padding: 0 6px;
+  border-radius: 13px;
+  font-size: 12px;
+  white-space: nowrap;
+}
