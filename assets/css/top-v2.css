@@ -12988,3 +12988,159 @@ main small {
   font-size: 12px;
   white-space: nowrap;
 }
+
+/* ===================================================================
+   2026-11-21 よくある質問の組み立て直し（台帳A12「トップにあると他に無いと思われ問い合わせが増える」への対応）
+   ・FAQページ：言葉でさがす欄＋分類ジャンプ（予約とお金を先頭に）。faq-search.js
+   ・トップ：問数と分類ボタン ・問い合わせ：送る前のベスト5 ・各シーンのFAQ：最後に「すべて見る」 */
+#faq details.faq[hidden],
+#faq section[hidden] {
+  display: none !important;
+}
+.top-v2-faq-search {
+  max-width: 560px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+.top-v2-faq-search-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #24434e;
+  font-size: 16px;
+  font-weight: 900;
+}
+.top-v2-faq-search-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 22px;
+  border: 2px solid #2f7890;
+  border-radius: 999px;
+  background: #fff;
+  color: #222;
+  font-size: 16px; /* 16px未満だとiPhoneで入力時に拡大される */
+  font-weight: 600;
+}
+.top-v2-faq-search-input:focus {
+  outline: 3px solid rgba(47, 120, 144, 0.35);
+  outline-offset: 2px;
+}
+.top-v2-faq-search-result {
+  margin: 10px 0 0;
+  color: #2a4750;
+  font-size: 14px;
+  font-weight: 700;
+}
+.top-v2-faq-search-result a {
+  color: #2f7890;
+  text-decoration: underline;
+}
+/* トップ：問数と分類ボタン */
+.top-v2-faq-intro {
+  max-width: 760px;
+  margin: -20px auto 28px;
+  text-align: center;
+}
+.top-v2-faq-count {
+  margin: 0 0 12px;
+  color: #2a4750;
+  font-size: 15px;
+  font-weight: 700;
+}
+.top-v2-faq-count strong {
+  color: #f0831e;
+  font-size: 1.15em;
+  font-weight: 900;
+}
+.top-v2-faq-cats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-faq-cats a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 16px;
+  border: 1px solid #d5e2e8;
+  border-radius: 999px;
+  background: #fff;
+  color: #24434e;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.top-v2-faq-cats a:hover,
+.top-v2-faq-cats a:focus-visible {
+  border-color: #2f7890;
+  color: #2f7890;
+}
+/* 問い合わせ：送る前のベスト5 */
+.top-v2-faq-best {
+  max-width: 640px;
+  margin: 0 auto 32px;
+  padding: 20px 22px;
+  border: 1px solid #d5e2e8;
+  border-radius: 14px;
+  background: #f6f9fb;
+}
+.top-v2-faq-best-title {
+  margin: 0 0 10px;
+  color: #24434e;
+  font-size: 16px;
+  font-weight: 900;
+}
+.top-v2-faq-best-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-faq-best-list li + li {
+  border-top: 1px dashed #d5e2e8;
+}
+.top-v2-faq-best-list a {
+  display: block;
+  padding: 10px 2px;
+  color: #2f7890;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.top-v2-faq-best-list a::before {
+  content: "Q ";
+  color: #f0831e;
+  font-weight: 900;
+}
+.top-v2-faq-best-list a:hover { text-decoration: underline; }
+.top-v2-faq-best-more {
+  margin: 10px 0 0;
+  text-align: right;
+}
+.top-v2-faq-best-more a {
+  color: #2a4750;
+  font-size: 14px;
+  font-weight: 800;
+}
+/* 各シーンのFAQの最後の「すべて見る」 */
+.l-faq_list + .top-v2-faq-all {
+  margin-top: 24px;
+}
+.top-v2-faq-catnav { text-align: center; }
+.top-v2-faq-catnav-label {
+  margin: 0 0 8px;
+  color: #24434e;
+  font-size: 15px;
+  font-weight: 900;
+}
+/* スマホでは分類ボタン4つを1列に（トップと同じ見え方。2026-11-21） */
+@media (max-width: 420px) {
+  .top-v2-faq-cats { gap: 8px; }
+  .top-v2-faq-cats a { padding: 6px 13px; }
+}
+@media (max-width: 374px) {
+  .top-v2-faq-cats { gap: 6px; }
+  .top-v2-faq-cats a { padding: 6px 11px; font-size: 13px; }
+}

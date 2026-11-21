@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121i"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121k"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -280,30 +280,81 @@ height: 78vw;
   </div>
 </section>
 
-<!-- 2. カテゴリジャンプ -->
+<!-- 2. 質問をさがす（2026-11-21 言葉で絞り込み＋分類ジャンプ） -->
 <section class="top-v2-scene-section top-v2-scene-section--gray" id="jump">
   <div class="top-v2-scene-inner">
-    <nav aria-label="カテゴリジャンプ">
-      <ul class="top-v2-anchor-circles list-unstyled">
-      <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#facility" aria-label="施設のカテゴリへ移動" data-event="faq_toc_facility"><span class="top-v2-anchor-circle-label">施設</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
-      <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#meal" aria-label="食事のカテゴリへ移動" data-event="faq_toc_meal"><span class="top-v2-anchor-circle-label">食事</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
-      <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#reservation" aria-label="予約のカテゴリへ移動" data-event="faq_toc_reservation"><span class="top-v2-anchor-circle-label">予約</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
-      <li class="top-v2-anchor-circle-item"><a class="top-v2-anchor-circle" href="#usage" aria-label="利用のカテゴリへ移動" data-event="faq_toc_usage"><span class="top-v2-anchor-circle-label">利用</span><span class="top-v2-anchor-circle-arrow" aria-hidden="true">▼</span></a></li>
+    <div class="top-v2-faq-search" role="search">
+      <label class="top-v2-faq-search-label" for="faq-search">言葉でさがす</label>
+      <input type="search" id="faq-search" class="top-v2-faq-search-input" placeholder="例：駐車場、キャンセル、お酒、雨" autocomplete="off" enterkeyhint="search">
+      <p class="top-v2-faq-search-result" id="faq-search-result" aria-live="polite" hidden></p>
+    </div>
+    <nav aria-label="分類から探す" class="top-v2-faq-catnav">
+      <p class="top-v2-faq-catnav-label">分類から探す</p>
+      <ul class="top-v2-faq-cats">
+        <li><a href="#reservation" data-event="faq_toc_reservation">予約とお金</a></li>
+        <li><a href="#facility" data-event="faq_toc_facility">施設</a></li>
+        <li><a href="#meal" data-event="faq_toc_meal">食事</a></li>
+        <li><a href="#usage" data-event="faq_toc_usage">遊び・利用</a></li>
       </ul>
     </nav>
   </div>
 </section>
 
 <div id="faq">
-<!-- 3-1. 施設のこと -->
-<section class="top-v2-scene-section" id="facility">
+<!-- 3-1. 予約とお金のこと（2026-11-21 幹事が一番知りたいので先頭へ） -->
+<section class="top-v2-scene-section" id="reservation">
   <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
-    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">カタショーの施設に関すること</span></h2>
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">予約とお金のこと</span></h2>
     <div class="l-faq_list">
-      <details class="faq" open>
+      <details class="faq" id="faq-people">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>何人から泊まれますか？料金はいくらですか？</summary>
+        <div class="faq_body">平日は5人から、土日祝は7人から、最大100名まで泊まれます。料金は1人7,900円〜（平日・コンパクトプラン）です。人数・日付・食事を入れると、<a href="/price-simulator/">料金シミュレーター</a>でおおよその金額が出ます。シャワー室が7つのため、人数が多い場合は提携している温泉施設の利用がおすすめです。</div>
+      </details>
+      <details class="faq" id="faq-cancel">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span><span>予約後に人数が変わったら？キャンセル料は？</span></summary>
+        <div class="faq_body">人数・食事の変更は宿泊10日前までにご連絡ください。キャンセル料は宿泊日までの日数に応じて発生します（くわしい規定は予約システムのプラン詳細に記載）。予定が動きそうな時は早めのご相談が安心です。</div>
+      </details>
+      <details class="faq" id="faq-pay">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>お支払い方法はどのようになっていますか？</summary>
+        <div class="faq_body">基本的にはチェックイン時に現金払いとなります。ただし、現金払いが難しいという方向けに事前振込みにも対応しております。詳しくはお問い合わせください。</div>
+      </details>
+      <details class="faq" id="faq-kashikiri">
         <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>カタショーは貸切施設なのですか？</summary>
         <div class="faq_body">学校全体の貸切ではありませんが、泊まるフロアは夜間グループ貸切（各棟1グループ）です。日中は地域の団体など、宿泊者以外の利用もあります。</div>
       </details>
+      <details class="faq">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>貸切で利用したいのですが、可能でしょうか？</summary>
+        <div class="faq_body">最低60名様分の金額を頂ければ対応可能です。ただし、日中は地域の団体などの宿泊者以外の利用もございます。まずはご相談くださいませ。</div>
+      </details>
+      <details class="faq">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>割引はありますか？</summary>
+        <div class="faq_body">連泊割、子供割がございます。くわしくはお問い合わせください。</div>
+      </details>
+      <details class="faq">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>食事にも子供料金はありますか？</summary>
+        <div class="faq_body">夕食のみございます。小学生は30%OFF/未就学児は50%OFFです。</div>
+      </details>
+      <details class="faq">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>アーリーチェックイン、レイトチェックアウトはできますか？</summary>
+        <div class="faq_body">前後の予約状況によりますので、ご相談くださいませ。対応可能な場合、1時間1人500円で対応しています！</div>
+      </details>
+      <details class="faq">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>日帰り利用が利用不可の場合があるのでしょうか？</summary>
+        <div class="faq_body">繁忙期(夏休み・春休み期間等)には、日帰り利用を停止する場合がございます。</div>
+      </details>
+      <details class="faq">
+        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>カタショー内の見学はできますか？</summary>
+        <div class="faq_body">宿泊やイベントなどでの利用を検討されている場合のみ可能です。まずは<a href="/contact/">お問い合わせ</a>くださいませ。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 3-2. 施設のこと -->
+<section class="top-v2-scene-section top-v2-scene-section--gray" id="facility">
+  <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">施設のこと</span></h2>
+    <div class="l-faq_list">
       <details class="faq">
         <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>部屋は男女で分けられますか？</summary>
         <div class="faq_body">可能です。ただし、25名様以下でのご利用の場合は部屋追加清掃料として5000円いただきます。事前にご相談くださいませ。</div>
@@ -312,11 +363,11 @@ height: 78vw;
         <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>冷蔵庫、エアコン、洗濯機はありますか？</summary>
         <div class="faq_body">冷蔵庫は調理室と宿泊フロアにございます。エアコンも宿泊部屋、調理室、音楽室にございます。洗濯機はシャワー室に1つございます。</div>
       </details>
-      <details class="faq">
+      <details class="faq" id="faq-parking">
         <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>学校内の駐車場は無料ですか？</summary>
         <div class="faq_body">無料です。駐車場は第1（校舎側）・第2（体育館前）・第3と第4（グラウンド側）の4か所にあり、大型バスも停められます。くわしい場所は<a href="/map/">校内マップ</a>をご覧ください。</div>
       </details>
-      <details class="faq">
+      <details class="faq" id="faq-bus">
         <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>大型バスで行けますか？</summary>
         <div class="faq_body">行けます。第2駐車場（体育館前）は大型バス用に予約できます。ご予約のときに、大型バスで来ることをお伝えください。第3・第4駐車場（グラウンド側）にも大型バスを停められます。くわしい場所は<a href="/map/">校内マップ</a>をご覧ください。</div>
       </details>
@@ -344,10 +395,10 @@ height: 78vw;
   </div>
 </section>
 
-<!-- 3-2. 食事のこと -->
-<section class="top-v2-scene-section top-v2-scene-section--gray" id="meal">
+<!-- 3-3. 食事のこと -->
+<section class="top-v2-scene-section" id="meal">
   <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
-    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">カタショーの食事に関すること</span></h2>
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">食事のこと</span></h2>
     <div class="l-faq_list">
       <details class="faq">
         <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>食事の量はどれくらいありますか？</summary>
@@ -397,55 +448,10 @@ height: 78vw;
   </div>
 </section>
 
-<!-- 3-3. 予約のこと -->
-<section class="top-v2-scene-section" id="reservation">
-  <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
-    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">カタショーの予約に関すること</span></h2>
-    <div class="l-faq_list">
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>宿泊時の値段や人数制限など知りたいです？</summary>
-        <div class="faq_body">「<a href="/play/">学校で遊んで泊まる</a>」をご覧ください！シャワー室が7つの為、人数が多い場合は提携している温泉施設の利用がおすすめです。</div>
-      </details>
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>貸切で利用したいのですが、可能でしょうか？</summary>
-        <div class="faq_body">最低60名様分の金額を頂ければ対応可能です。ただし、日中は地域の団体などの宿泊者以外の利用もございます。まずはご相談くださいませ。</div>
-      </details>
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>アーリーチェックイン、レイトチェックアウトはできますか？</summary>
-        <div class="faq_body">前後の予約状況によりますので、ご相談くださいませ。対応可能な場合、1時間1人500円で対応しています！</div>
-      </details>
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>日帰り利用が利用不可の場合があるのでしょうか？</summary>
-        <div class="faq_body">繁忙期(夏休み・春休み期間等)には、日帰り利用を停止する場合がございます。</div>
-      </details>
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>お支払い方法はどのようになっていますか？</summary>
-        <div class="faq_body">基本的にはチェックイン時に現金払いとなります。ただし、現金払いが難しいという方向けに事前振込みにも対応しております。詳しくはお問い合わせください。</div>
-      </details>
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span><span>予約後に人数が変わったら？キャンセル料は？</span></summary>
-        <div class="faq_body">人数・食事の変更は宿泊10日前までにご連絡ください。キャンセル料は宿泊日までの日数に応じて発生します（くわしい規定は予約システムのプラン詳細に記載）。予定が動きそうな時は早めのご相談が安心です。</div>
-      </details>
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>カタショー内の見学はできますか？</summary>
-        <div class="faq_body">宿泊やイベントなどでの利用を検討されている場合のみ可能です。まずは<a href="/contact/">お問い合わせ</a>くださいませ。</div>
-      </details>
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>割引はありますか？</summary>
-        <div class="faq_body">連泊割、子供割がございます。くわしくはお問い合わせください。</div>
-      </details>
-      <details class="faq">
-        <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>食事にも子供料金はありますか？</summary>
-        <div class="faq_body">夕食のみございます。小学生は30%OFF/未就学児は50%OFFです。</div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- 3-4. 利用のこと -->
+<!-- 3-4. 遊び・利用のこと -->
 <section class="top-v2-scene-section top-v2-scene-section--gray" id="usage">
   <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
-    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">カタショーの利用に関すること</span></h2>
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">遊び・利用のこと</span></h2>
     <div class="l-faq_list">
       <details class="faq">
         <summary class="faq_title"><span class="top-v2-faq-q" aria-hidden="true">Q</span>雨の日でも楽しめますか？</summary>
@@ -614,6 +620,7 @@ height: 78vw;
         </div>
 
         <script src="/assets/wp/themes/katasho/asset/js/bundle.js" async></script>
+        <script src="/assets/js/faq-search.js?v=20261121a" defer></script>
 
         <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/katasho/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
