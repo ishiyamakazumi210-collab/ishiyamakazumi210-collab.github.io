@@ -10559,7 +10559,7 @@ body.top-v2-mapspot-dialog-lock {
 
 /* ===== album/index.html 追補 (2026-07-20 全面リニューアル):
    Googleクチコミカード。連絡帳・おたより風＝白カード＋テープ留め（既存tape-1〜4.png
-   流用）＋わずかな回転。件数・星・スコアは変動するため掲載しない方針のため、
+   流用）＋わずかな回転。件数・星・スコアはカードには載せない（平均点と件数は時点つきで見出し下に。2026-11-21〜）。
    カード内は本文＋投稿者名＋出典表記のみ。 ===== */
 .top-v2-review-grid {
   display: grid;
@@ -12563,4 +12563,201 @@ main small {
 @media (max-width: 767px) {
   .hero-price-line { justify-content: center; text-align: center; }
   .hero-price-jump { flex-basis: 100%; }
+}
+
+/* ===================================================================
+   2026-11-21 Googleの星（オーナー判断「googleの星で」）
+   前は「件数・星・スコアは変動するため掲載しない」方針だったが、時点を必ず添えて載せる形に変更。
+   数字は src/data/site.json の googleReviews だけを直す（トップの「カタショーの風景」とクチコミページが同じ値を使う）。
+   個々のクチコミカードには星を付けない（本文＋投稿者名＋出典のまま）。 */
+/* トップの実績行（2026-11-21）: 3つ（6,000名以上・大学サークル・ゼミ・最大100名）は変えず、
+   スマホも縦3段をやめて横1列に（オーナー「3つでもスマホだと多い」）。PC・タブレットは前と同じ3列。
+   Googleの星は実績行に入れず、「カタショーの風景」のクチコミボタンの上に1行（オーナー判断） */
+@media (max-width: 575px) {
+  .top-v2-statrow {
+    /* 一番長い「6,000名以上」の列を少し広く */
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.94fr) minmax(0, 0.94fr);
+  }
+  .top-v2-statrow > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3px;
+    padding: 4px 2px;
+    text-align: center;
+  }
+  .top-v2-statrow > li + li {
+    border-top: 0;
+    border-left: 1px solid #dde6ea;
+  }
+  .top-v2-statrow-value { justify-content: center; }
+  /* 「大学」の下に「サークル・ゼミ」 */
+  .top-v2-statrow-groups .top-v2-statrow-value {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .top-v2-statrow-value strong { font-size: 23px; }
+  .top-v2-statrow-value small { font-size: 11px; }
+  .top-v2-statrow-label { font-size: 11px; letter-spacing: 0; }
+}
+@media (max-width: 374px) {
+  .top-v2-statrow-value strong { font-size: 20px; }
+  .top-v2-statrow-value small { font-size: 10px; }
+  .top-v2-statrow-label { font-size: 10px; }
+}
+@media (max-width: 340px) {
+  /* 幅320pxの古い小型スマホだけは横1列に収まらないので、前の縦3段（値は右・ラベルは左）に戻す */
+  .top-v2-statrow { grid-template-columns: 1fr; }
+  .top-v2-statrow > li {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    column-gap: 10px;
+    align-items: baseline;
+    padding: 8px 2px;
+    text-align: left;
+  }
+  .top-v2-statrow > li + li {
+    border-left: 0;
+    border-top: 1px solid #dde6ea;
+  }
+  .top-v2-statrow-value { justify-content: flex-end; }
+  .top-v2-statrow-groups .top-v2-statrow-value {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 2px;
+  }
+  .top-v2-statrow-value strong { font-size: 24px; }
+  .top-v2-statrow-value small { font-size: 12px; }
+  .top-v2-statrow-label { font-size: 12px; }
+}
+
+/* トップ「カタショーの風景」: クチコミ＆SNSボタンのすぐ上に「Googleクチコミ ★4.7 ⓘ」。
+   件数・時点・日帰りも含むことは ⓘ を押すと出る（オーナー案）。details/summary なのでJSなしでも開閉できる */
+.top-v2-landscape-review {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 2px;
+  margin: 0 0 14px;
+  color: #2a4750;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.top-v2-landscape-review > strong {
+  margin: 0 2px 0 6px;
+  color: #f0831e;
+  font-size: 21px;
+  font-weight: 900;
+}
+.top-v2-info {
+  display: inline-block;
+}
+.top-v2-info > summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 見た目の丸は17px、押せる範囲は36px（指で押しやすく） */
+  width: 36px;
+  height: 36px;
+  margin: -6px -8px -6px -4px;
+  border-radius: 50%;
+  cursor: pointer;
+  list-style: none;
+}
+.top-v2-info > summary::-webkit-details-marker { display: none; }
+.top-v2-info > summary::marker { content: ""; }
+.top-v2-info > summary > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border: 1.5px solid #6b7f86;
+  border-radius: 50%;
+  color: #6b7f86;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11.5px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+}
+.top-v2-info > summary:hover > span,
+.top-v2-info[open] > summary > span {
+  border-color: #2f7890;
+  background: #2f7890;
+  color: #fff;
+}
+.top-v2-info > summary:focus { outline: none; }
+.top-v2-info > summary:focus-visible { outline: 2px solid #2f7890; outline-offset: 2px; }
+/* 上に開く（下はボタンと区切りの余白しかなく、はみ出すと切れるため） */
+.top-v2-info-pop {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 5;
+  width: min(300px, calc(100vw - 40px));
+  padding: 12px 14px;
+  border: 1px solid #dde6ea;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(31, 58, 68, 0.16);
+  color: #2a4750;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.65;
+  text-align: left;
+  transform: translateX(-50%);
+}
+.top-v2-info-pop p { margin: 0 0 4px; }
+.top-v2-info-pop a {
+  display: inline-block;
+  margin-top: 4px;
+  color: #2f7890;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* クチコミページ: 「Googleのクチコミ」見出しの下に平均点と件数 */
+.top-v2-review-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 14px;
+  margin: -4px auto 28px;
+}
+.top-v2-review-summary-score {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  color: #f0831e;
+  font-size: 46px;
+  font-weight: 900;
+  line-height: 1;
+}
+.top-v2-review-summary-star {
+  font-size: 30px;
+}
+.top-v2-review-summary-text {
+  color: #2f7890;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+}
+.top-v2-review-summary-text small {
+  display: block;
+  color: #6b7f86;
+  font-size: 12px;
+  font-weight: 700;
+}
+@media (max-width: 575px) {
+  /* スマホは点数の下に文字を中央そろえで（横に並べると折り返しで左右がずれる） */
+  .top-v2-review-summary { flex-direction: column; gap: 8px; }
+  .top-v2-review-summary-text { text-align: center; }
 }

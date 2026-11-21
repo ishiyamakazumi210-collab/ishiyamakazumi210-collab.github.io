@@ -17,6 +17,12 @@ window.KATASHO_DATA = {
   "capacity": {
     "total": "100"
   },
+  "googleReviews": {
+    "rating": "4.7",
+    "count": "32",
+    "asOf": "2026年11月時点",
+    "url": "https://www.google.com/maps/search/?api=1&query=%E9%81%8A%E3%82%93%E3%81%A7%E6%B3%8A%E3%81%BE%E3%82%8C%E3%82%8B%E5%B0%8F%E5%AD%A6%E6%A0%A1%20%E3%82%AB%E3%82%BF%E3%82%B7%E3%83%A7%E3%83%BC&query_place_id=ChIJj4QJKUtdGmAREBUynsY2dxY"
+  },
   "compact": {
     "label": "調理室併設コンパクトプラン",
     "roomsNote": "寝室は2部屋のみ（就寝中心の目安：中部屋16名＋小部屋8名／手狭でもよければ最大20名＋10名）"
