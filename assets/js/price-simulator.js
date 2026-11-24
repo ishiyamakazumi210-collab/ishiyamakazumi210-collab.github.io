@@ -353,26 +353,26 @@
     for (var i = 0; i < MAX_NIGHTS; i += 1) {
       (function (idx) {
         var li = h('li', 'top-v2-sim-night');
-        var head = h('div', 'top-v2-sim-night-head');
-        var no = h('span', 'top-v2-sim-night-no', (idx + 1) + '泊目');
-        head.appendChild(no);
-        var field = h('div', 'top-v2-sim-field');
-        var lab = h('label', 'top-v2-sim-label', (idx + 1) + '泊目の料金区分');
-        lab.setAttribute('for', 'sim-season-' + idx);
-        var sel = h('select', 'top-v2-sim-select');
-        sel.id = 'sim-season-' + idx;
-        sel.setAttribute('data-season', String(idx));
+        var fs = h('fieldset', 'top-v2-sim-season');
+        var legend = h('legend', '', (idx + 1) + '泊目は？');
+        fs.appendChild(legend);
+        var radios = {};
         ['weekday', 'holiday'].forEach(function (key) {
-          var opt = h('option', '', SEASON_LABEL[key]);
-          opt.value = key;
-          sel.appendChild(opt);
+          var lab = h('label', '');
+          var inp = document.createElement('input');
+          inp.type = 'radio';
+          inp.name = 'sim-season-' + idx;
+          inp.value = key;
+          if (key === 'weekday') { inp.checked = true; }
+          var sp = h('span', '', SEASON_LABEL[key]);
+          lab.appendChild(inp);
+          lab.appendChild(sp);
+          fs.appendChild(lab);
+          radios[key] = inp;
         });
-        field.appendChild(lab);
-        field.appendChild(sel);
-        li.appendChild(head);
-        li.appendChild(field);
+        li.appendChild(fs);
         els.nightList.appendChild(li);
-        nightRows.push({ li: li, select: sel });
+        nightRows.push({ li: li, radios: radios, name: 'sim-season-' + idx });
       })(i);
     }
   }
@@ -505,7 +505,7 @@
     });
     s.lunch = els.lunch.value;
     for (var i = 0; i < MAX_NIGHTS; i += 1) {
-      s.seasons[i] = nightRows[i].select.value === 'holiday' ? 'holiday' : 'weekday';
+      s.seasons[i] = nightRows[i].radios.holiday.checked ? 'holiday' : 'weekday';
       s.dinner[i] = mealRows[i].select.value;
       s.drink[i] = clampInt(mealRows[i].drink.value, 0, 100);
       s.breakfast[i] = mealRows[i].bf.checked;
@@ -582,8 +582,7 @@
     Array.prototype.forEach.call(planInputs, function (input) { input.checked = input.value === s.plan; });
     compactRadio.disabled = !compactOk;
     compactRadio.parentNode.classList.toggle('is-disabled', !compactOk);
-    var planText = '少人数プランの目安は20名くらいまで、手狭でもよければ最大' + P.COMPACT_HARD_MAX + '名です。' + (DATA.compact && DATA.compact.roomsNote ? DATA.compact.roomsNote + '。' : '') +
-      '大部屋・追加部屋は利用できず、夕食オプションはBBQのみです。';
+    var planText = '寝室は中部屋と小部屋の2部屋です（就寝の目安：中部屋16名＋小部屋8名／手狭でもよければ最大20名＋10名）。';
     if (!compactOk) { planText = '合計' + total + '名のため、少人数プラン（' + P.COMPACT_HARD_MAX + '名まで）は選べません。'; }
     else if (compact && total > P.COMPACT_COMFORT_MAX) {
       var rooms = DATA.rooms || {};
@@ -600,7 +599,8 @@
       var row = nightRows[i];
       row.li.hidden = i >= s.nights;
       if (i >= s.nights) { continue; }
-      row.select.value = s.seasons[i];
+      row.radios.holiday.checked = s.seasons[i] === 'holiday';
+      row.radios.weekday.checked = s.seasons[i] !== 'holiday';
     }
 
     // 人数
@@ -745,7 +745,7 @@
     }
 
     els.notes.textContent = '';
-    var notes = ['最終的な料金は予約画面でご確認ください（料金区分・割引は目安です）'].concat(res.notes);
+    var notes = ['最終的な料金は予約画面でご確認ください（時期の選び方・割引は目安です）'].concat(res.notes);
     notes.forEach(function (text) { els.notes.appendChild(h('li', '', text)); });
   }
 

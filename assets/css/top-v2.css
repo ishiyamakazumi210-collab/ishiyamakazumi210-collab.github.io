@@ -13694,3 +13694,76 @@ main small {
   color: #fff;
   opacity: .9;
 }
+
+/* 2026-11-24 料金計算：選べると分かる形に（オーナー指摘）。プランは丸印つきカード、泊数と時期は実線のボタン。点線をやめる。戻すときはこのブロックとHTML/JSの変更を戻す */
+.top-v2-sim-instruct { margin: 0 0 12px; color: #4a5b62; font-size: 14px; font-weight: 700; line-height: 1.6; }
+.top-v2-sim .top-v2-sim-cards { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+@media (min-width: 720px) {
+  .top-v2-sim .top-v2-sim-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
+}
+.top-v2-sim .top-v2-sim-card { position: relative; display: block; cursor: pointer; }
+.top-v2-sim .top-v2-sim-card-body {
+  position: relative; display: block; height: 100%; box-sizing: border-box;
+  padding: 14px 16px 14px 48px; background: #fff; color: #1f4f63;
+  border: 1.5px solid #cfe0e8; border-radius: 12px;
+}
+.top-v2-sim .top-v2-sim-card-body strong { color: #1f4f63; font-size: 16px; font-weight: 900; line-height: 1.4; }
+.top-v2-sim .top-v2-sim-card-body small { color: #4a5b62; }
+.top-v2-sim .top-v2-sim-card-body::before {
+  content: ""; position: absolute; left: 14px; top: 14px; width: 22px; height: 22px; box-sizing: border-box;
+  border: 2px solid #8fb3c2; border-radius: 50%; background: #fff;
+}
+.top-v2-sim .top-v2-sim-card input:checked + .top-v2-sim-card-body {
+  background: #eef6f8; color: #1f4f63; border: 2px solid #2f7890; padding: 13.5px 15.5px 13.5px 47.5px;
+}
+.top-v2-sim .top-v2-sim-card input:checked + .top-v2-sim-card-body small { color: #4a5b62; }
+.top-v2-sim .top-v2-sim-card input:checked + .top-v2-sim-card-body::before {
+  border-color: #2f7890; background: radial-gradient(circle, #2f7890 0 5px, #fff 5.5px);
+}
+.top-v2-sim .top-v2-sim-card input:checked + .top-v2-sim-card-body::after {
+  content: "選択中"; position: absolute; top: 10px; right: 10px; padding: 2px 8px; border-radius: 999px;
+  background: #2f7890; color: #fff; font-size: 11.5px; font-weight: 700; line-height: 1.5;
+}
+.top-v2-sim .top-v2-sim-card input:focus-visible + .top-v2-sim-card-body { outline: 3px solid #2f7890; outline-offset: 2px; }
+.top-v2-sim-card-points { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.top-v2-sim-card-points li {
+  margin: 0; padding: 2px 8px; background: #f1f7f9; border: 1px solid #dde6ea; border-radius: 999px;
+  color: #4a5b62; font-size: 12.5px; font-weight: 700; line-height: 1.5;
+}
+
+/* 泊数 */
+.top-v2-sim .top-v2-sim-question { margin: 0 0 8px; color: #1f4f63; font-size: 15px; font-weight: 700; }
+.top-v2-sim .top-v2-sim-chips { max-width: 460px; }
+.top-v2-sim .top-v2-sim-chip span {
+  min-height: 44px; background: #fff; color: #1f4f63; border: 1.5px solid #cfe0e8; border-radius: 10px;
+}
+.top-v2-sim .top-v2-sim-chip input:checked + span { background: #2f7890; color: #fff; border-color: #2f7890; }
+.top-v2-sim .top-v2-sim-chip input:focus-visible + span { outline: 3px solid #2f7890; outline-offset: 2px; }
+
+/* 泊ごとの時期（2択ボタン） */
+.top-v2-sim-season { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.top-v2-sim-season legend { grid-column: 1 / -1; float: none; width: auto; margin: 0 0 6px; padding: 0; color: #1f4f63; font-size: 15px; font-weight: 700; line-height: 1.5; }
+.top-v2-sim-season label { position: relative; display: block; margin: 0; cursor: pointer; }
+.top-v2-sim-season input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.top-v2-sim-season span {
+  display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 6px 8px; box-sizing: border-box;
+  background: #fff; color: #1f4f63; border: 1.5px solid #cfe0e8; border-radius: 10px;
+  font-size: 15px; font-weight: 900; line-height: 1.35; text-align: center;
+}
+.top-v2-sim-season input:checked + span { background: #2f7890; color: #fff; border-color: #2f7890; }
+.top-v2-sim-season input:focus-visible + span { outline: 3px solid #2f7890; outline-offset: 2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .top-v2-sim .top-v2-sim-card-body, .top-v2-sim .top-v2-sim-chip span, .top-v2-sim-season span { transition: background-color .15s, border-color .15s; }
+}
+/* 2026-11-24 料金計算：「選択中」の印がプラン名に重ならないよう、カードの上の線に載せる。単価表のボタンも実線に */
+.top-v2-sim .top-v2-sim-card input:checked + .top-v2-sim-card-body::after,
+.top-v2-sim-card input:checked + .top-v2-sim-card-body::after {
+  top: -11px;
+  right: 14px;
+}
+.top-v2-sim-fold > summary {
+  border-style: solid;
+  border-width: 1.5px;
+  border-color: #cfe0e8;
+  background: #fff;
+}
