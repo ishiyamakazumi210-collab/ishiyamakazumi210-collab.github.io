@@ -13921,3 +13921,66 @@ main small {
 /* 2026-11-24 泊ごとの一覧をやめ、料金の区分を1行で（オーナー指摘） */
 .top-v2-sim-datenights { list-style: none; margin: 8px 0 0; padding: 0; }
 .top-v2-sim-datenight-sum { margin: 0; padding: 10px 12px; border-radius: 10px; background: #f1f7f9; color: #1f4f63; font-size: 13.5px; font-weight: 800; line-height: 1.6; }
+/* 2026-11-24 カレンダーを真ん中寄せ（オーナー指示）。案内文も中央に */
+.top-v2-sim-cal { margin-left: auto; margin-right: auto; }
+.top-v2-sim-cal-guide { text-align: center; }
+
+/* 2026-11-24 料金計算：昼食・夕食をプルダウンから写真つきカード（ラジオ）に（オーナー判断：全部の選択肢と値段を一度に見せる）。
+   プランのカードと同じ実線・丸印・「選択中」。スマホ2列（340px〜）、720px〜3列。戻すときはこのブロックとHTML/JSの変更を戻す */
+.top-v2-sim-mealfs { margin: 0; }
+.top-v2-sim-mealfs[hidden] { display: none; }
+.top-v2-sim-mealcards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px 10px; padding-top: 4px; }
+@media (min-width: 340px) { .top-v2-sim-mealcards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 720px) { .top-v2-sim-mealcards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 12px; } }
+.top-v2-sim-mealcard { position: relative; display: block; min-width: 0; margin: 0; cursor: pointer; }
+.top-v2-sim-mealcard input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 2; }
+.top-v2-sim-mealcard-body {
+  position: relative; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;
+  background: #fff; color: #1f4f63; border: 1.5px solid #cfe0e8; border-radius: 12px;
+}
+/* 丸印（写真の左上に載せる） */
+.top-v2-sim-mealcard-body::before {
+  content: ""; position: absolute; left: 8px; top: 8px; z-index: 1; width: 22px; height: 22px; box-sizing: border-box;
+  border: 2px solid #8fb3c2; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(20, 50, 65, 0.25);
+}
+.top-v2-sim-mealcard-photo {
+  display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 10.5px 10.5px 0 0; background: #f1f7f9;
+}
+.top-v2-sim-mealcard-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.top-v2-sim-mealcard-photo.is-blank {
+  display: flex; align-items: center; justify-content: center; padding: 6px 8px; box-sizing: border-box;
+  border-bottom: 1px solid #dde6ea; color: #4a5b62; font-size: 13px; font-weight: 800; line-height: 1.4; text-align: center;
+}
+.top-v2-sim-mealcard-text { display: block; padding: 8px 10px 10px; }
+.top-v2-sim-mealcard-name { display: block; color: #1f4f63; font-size: 14px; font-weight: 900; line-height: 1.4; }
+.top-v2-sim-mealcard-price { display: block; margin-top: 2px; color: #1f5d72; font-size: 14px; font-weight: 900; line-height: 1.4; }
+.top-v2-sim-mealcard-off { display: block; margin-top: 4px; color: #a5540e; font-size: 11.5px; font-weight: 800; line-height: 1.45; }
+.top-v2-sim-mealcard-off[hidden] { display: none; }
+.top-v2-sim-mealcard input:checked + .top-v2-sim-mealcard-body {
+  background: #eef6f8; border-color: #2f7890; box-shadow: 0 0 0 1px #2f7890;
+}
+.top-v2-sim-mealcard input:checked + .top-v2-sim-mealcard-body::before {
+  border-color: #2f7890; background: radial-gradient(circle, #2f7890 0 5px, #fff 5.5px);
+}
+.top-v2-sim-mealcard input:checked + .top-v2-sim-mealcard-body::after {
+  content: "選択中"; position: absolute; top: -10px; right: 8px; z-index: 1; padding: 1px 8px; border-radius: 999px;
+  background: #2f7890; color: #fff; font-size: 11px; font-weight: 700; line-height: 1.6;
+}
+.top-v2-sim-mealcard input:focus-visible + .top-v2-sim-mealcard-body { outline: 3px solid #2f7890; outline-offset: 2px; }
+.top-v2-sim-mealcard.is-disabled,
+.top-v2-sim-mealcard.is-disabled input { cursor: not-allowed; }
+.top-v2-sim-mealcard.is-disabled .top-v2-sim-mealcard-body { background: #f6f8f9; }
+.top-v2-sim-mealcard.is-disabled .top-v2-sim-mealcard-photo,
+.top-v2-sim-mealcard.is-disabled .top-v2-sim-mealcard-name,
+.top-v2-sim-mealcard.is-disabled .top-v2-sim-mealcard-price,
+.top-v2-sim-mealcard.is-disabled .top-v2-sim-mealcard-body::before { opacity: 0.45; }
+@media (prefers-reduced-motion: no-preference) {
+  .top-v2-sim-mealcard-body { transition: background-color .15s, border-color .15s, box-shadow .15s; }
+}
+/* 2泊目以降の「1泊目と同じにする」と、たたんだときの1行 */
+.top-v2-sim-mealblock .top-v2-sim-samecheck { margin: 0 0 10px; }
+.top-v2-sim-samesum {
+  margin: 0; padding: 10px 12px; border: 1.5px solid #cfe0e8; border-radius: 10px; background: #fff;
+  color: #1f4f63; font-size: 14px; font-weight: 800; line-height: 1.5;
+}
+.top-v2-sim-samesum[hidden] { display: none; }

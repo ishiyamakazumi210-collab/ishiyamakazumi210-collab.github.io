@@ -31,7 +31,7 @@
 
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124l"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124n"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -320,15 +320,15 @@ height: 78vw;
             <div class="top-v2-sim-cards">
               <label class="top-v2-sim-card">
                 <input type="radio" name="sim-plan" value="standard" id="sim-plan-standard" checked>
-                <span class="top-v2-sim-card-body"><strong>スタンダードプラン（3階・大部屋）</strong><small data-sim-rate="standard"></small></span>
+                <span class="top-v2-sim-card-body"><strong>スタンダードプラン（3階・特大部屋）</strong><small data-sim-rate="standard"></small></span>
               </label>
               <label class="top-v2-sim-card">
                 <input type="radio" name="sim-plan" value="compact" id="sim-plan-compact">
-                <span class="top-v2-sim-card-body"><strong>少人数プラン（1階・20名くらいまで）</strong><small data-sim-rate="compact"></small><ul class="top-v2-sim-card-points"><li>1階・寝室2部屋</li><li>20名くらいまで（手狭でもよければ最大30名）</li><li>夕食はBBQのみ</li><li>大部屋・追加部屋は使えません</li></ul></span>
+                <span class="top-v2-sim-card-body"><strong>少人数プラン（1階・20名くらいまで）</strong><small data-sim-rate="compact"></small><ul class="top-v2-sim-card-points"><li>1階の中部屋（就寝16名くらい）＋小部屋（8名くらい）</li><li>20名くらいまで（手狭でもよければ最大30名）</li><li>夕食はBBQのみ</li><li>3階の特大部屋は使いません</li><li>追加部屋は1部屋まで</li></ul></span>
               </label>
             </div>
           </fieldset>
-          <p class="top-v2-sim-note" id="sim-plan-note">寝室は中部屋と小部屋の2部屋です（就寝の目安：中部屋16名＋小部屋8名／手狭でもよければ最大20名＋10名）。</p>
+          <p class="top-v2-sim-note" id="sim-plan-note">少人数プランの中部屋・小部屋は、手狭でもよければ最大20名＋10名まで泊まれます。</p>
           <details class="top-v2-sim-fold">
             <summary>このプランの単価表を見る</summary>
             <div class="top-v2-formal-tablewrap">
@@ -434,10 +434,11 @@ height: 78vw;
           <p class="top-v2-sim-note" id="sim-meal-gate"></p>
           <div class="top-v2-sim-mealblock">
             <h3 class="top-v2-sim-sub" id="sim-lunch-title">昼食（1日目）<small>チェックイン前に食べられます</small></h3>
-            <div class="top-v2-sim-field">
-              <label class="top-v2-sim-label" for="sim-lunch">昼食</label>
-              <select id="sim-lunch" class="top-v2-sim-select"></select>
-            </div>
+            <!-- 2026-11-24 昼食・夕食はプルダウンをやめ、写真つきカードで全部の選択肢と値段を一度に見せる（オーナー判断）。カードは price-simulator.js が作る -->
+            <fieldset class="top-v2-sim-fieldset top-v2-sim-mealfs">
+              <legend class="top-v2-sim-sr">昼食（1日目）</legend>
+              <div class="top-v2-sim-mealcards" id="sim-lunch-cards"></div>
+            </fieldset>
             <p class="top-v2-sim-note" id="sim-lunch-note"></p>
           </div>
           <div class="top-v2-sim-mealgroup">
@@ -499,9 +500,9 @@ height: 78vw;
   </div>
 </section>
 
-<script src="/assets/js/site-data.js?v=20261119dr" defer></script>
-<script src="/assets/js/pricing-board.js?v=20261124a" defer></script>
-<script src="/assets/js/price-simulator.js?v=20261124v" defer></script>
+<script src="/assets/js/site-data.js?v=20261124a" defer></script>
+<script src="/assets/js/pricing-board.js?v=20261124b" defer></script>
+<script src="/assets/js/price-simulator.js?v=20261124x" defer></script>
 <script src="/assets/js/reserve-handoff.js?v=20261124d" defer></script>
 <script src="/assets/js/info-pop.js?v=20261124a" defer></script>
 

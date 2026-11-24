@@ -226,7 +226,7 @@
     if (!board) { return null; }
     var notice = document.createElement('p');
     notice.className = 'top-v2-chalk-capacity-notice';
-    notice.textContent = '※ 寝室2部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。手狭な配置になるため、ご相談ください';
+    notice.textContent = '※ 中部屋・小部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。手狭な配置になるため、ご相談ください';
     notice.hidden = true;
     board.insertAdjacentElement('afterend', notice);
     return notice;
@@ -236,8 +236,8 @@
     notice.hidden = !compact || totalPeople <= COMPACT_COMFORT_MAX;
     if (notice.hidden) { return; }
     notice.textContent = totalPeople <= COMPACT_HARD_MAX
-      ? '※ 寝室2部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。中部屋' + COMPACT_MID_MAX + '名＋小部屋' + COMPACT_SMALL_MAX + '名までの手狭な配置になるため、ご相談ください'
-      : '※ 寝室2部屋の上限' + COMPACT_HARD_MAX + '名を超えるため、スタンダードプラン料金で計算しています';
+      ? '※ 中部屋・小部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。中部屋' + COMPACT_MID_MAX + '名＋小部屋' + COMPACT_SMALL_MAX + '名までの手狭な配置になるため、ご相談ください'
+      : '※ 少人数プランの上限' + COMPACT_HARD_MAX + '名を超えるため、スタンダードプラン料金で計算しています';
   }
 
   // ---- グループボード（friends / gasshuku / kenshu） ---------------------
