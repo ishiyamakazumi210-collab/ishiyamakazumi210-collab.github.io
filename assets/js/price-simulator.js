@@ -88,7 +88,8 @@
       ]
     },
     {
-      id: 'beer', name: '生ビール10L', price: 11000, unit: '/樽（税込）',
+      // 2026-11-24 入力欄はステップ4の「お飲み物」に置き、内訳も「お食事」の欄に出す（group: 'drink'）。計算・合計は今までどおり
+      id: 'beer', name: '生ビール10L', price: 11000, unit: '/樽（税込）', group: 'drink',
       note: 'ジョッキ約25杯分です。',
       fields: [{ key: 'kegs', label: '樽の数', unit: '樽', max: 10 }]
     },
@@ -328,7 +329,7 @@
       });
     }
     if (o.beer.kegs > 0) {
-      res.options.push({ label: OPT.beer.name, detail: o.beer.kegs + '樽×' + fmt(OPT.beer.price), amount: o.beer.kegs * OPT.beer.price });
+      res.options.push({ label: OPT.beer.name, detail: o.beer.kegs + '樽×' + fmt(OPT.beer.price), amount: o.beer.kegs * OPT.beer.price, group: OPT.beer.group });
     }
     // 少人数プランは追加部屋1部屋まで（料金は未確認のため、どちらのプランも合計に入れず「お見積り」）
     var roomCount = compact ? Math.min(o.room.rooms, OPT.room.fields[0].compactMax) : o.room.rooms;
@@ -451,8 +452,10 @@
     lunchCountWrap: null,
     lunchCount: null,
     mealNights: $('sim-meal-nights'),
+    drinkNights: $('sim-drink-nights'),
     mealGate: $('sim-meal-gate'),
     options: $('sim-options'),
+    drinkOptions: $('sim-drink-options'),
     planNote: $('sim-plan-note'),
     discountNote: $('sim-discount-note'),
     peopleSum: $('sim-peoplesum'),
@@ -590,6 +593,14 @@
     var wrap = h('div', 'top-v2-sim-dinnercount');
     var rows = h('div', 'top-v2-sim-rows');
     var row = labelledStepperRow(inputId, label, '', '人', attrs, 10, MEAL_MIN_SERVINGS, 100);
+    // スマホで「夕食を頼む人／数」と切れないよう、折り返すなら「人数」の前だけにする（2026-11-24）
+    var labEl = row.querySelector('label');
+    var cut = label.lastIndexOf('人数');
+    if (labEl && cut > 0) {
+      labEl.textContent = '';
+      labEl.appendChild(h('span', 'top-v2-sim-nobr', label.slice(0, cut)));
+      labEl.appendChild(h('span', 'top-v2-sim-nobr', label.slice(cut)));
+    }
     rows.appendChild(row);
     wrap.appendChild(rows);
     wrap.appendChild(h('p', 'top-v2-sim-note', noun + 'は' + MEAL_MIN_SERVINGS + '人分からご注文できます。人数を減らすと、おとなの分から減らして計算します。'));
@@ -604,7 +615,7 @@
     els.lunchNote.parentNode.insertBefore(lunchCount.wrap, els.lunchNote);
     for (var i = 0; i < MAX_NIGHTS; i += 1) {
       (function (idx) {
-        // 夕食（1泊ごと）：選択・人数・飲み放題
+        // 夕食（1泊ごと）：選択・人数（飲み放題は下の「お飲み物」へ。2026-11-24）
         var box = h('div', 'top-v2-sim-mealblock');
         var title = h('h4', 'top-v2-sim-mealtitle');
         // 2泊目以降は「1泊目と同じにする」（はじめはオン）。オンのあいだはカードをたたみ、1泊目の夕食をそのまま使う
@@ -630,9 +641,21 @@
         var cardsBox = h('div', 'top-v2-sim-mealcards');
         fs.appendChild(cardsBox);
         var cards = buildMealCards(cardsBox, DINNERS, 'sim-dinner-' + idx, true);
-        var dinnerCount = buildMealCount('sim-dinner-count-' + idx, '夕食の人数', '夕食', { 'data-dinner-count': String(idx) });
+        var dinnerCount = buildMealCount('sim-dinner-count-' + idx, '夕食を頼む人数', '夕食', { 'data-dinner-count': String(idx) });
         var countWrap = dinnerCount.wrap;
         var dinnerNote = h('p', 'top-v2-sim-note');
+        box.appendChild(title);
+        if (sameRow) {
+          box.appendChild(sameRow);
+          box.appendChild(sameSum);
+        }
+        box.appendChild(fs);
+        box.appendChild(countWrap);
+        box.appendChild(dinnerNote);
+        els.mealNights.appendChild(box);
+        // 飲み放題（1泊ごと）：「お飲み物」の欄。人数は選べない（料金のかかる方全員分）ことをすぐ下に書く
+        var drinkBox = h('div', 'top-v2-sim-mealblock');
+        var drinkTitle = h('h4', 'top-v2-sim-mealtitle');
         var drinkRow = h('label', 'top-v2-sim-check top-v2-sim-check--photo');
         var drinkInput = h('input');
         drinkInput.type = 'checkbox';
@@ -642,21 +665,13 @@
         var drinkStrong = h('strong', '', DRINK.label + 'をつける');
         drinkText.appendChild(drinkStrong);
         drinkText.appendChild(document.createTextNode('\u3000全員分・1人' + priceYen(DRINK.price) + '（2歳以下を除く）'));
+        drinkText.appendChild(h('small', 'top-v2-sim-check-sub', '人数は選べません（料金のかかる方全員分）'));
         drinkRow.appendChild(drinkInput);
         drinkRow.appendChild(rowThumb('drinks'));
         drinkRow.appendChild(drinkText);
-        var drinkNote = h('p', 'top-v2-sim-note', '延長は1時間500円で可能です（合計には含みません）。ビールは含まれません。');
-        box.appendChild(title);
-        if (sameRow) {
-          box.appendChild(sameRow);
-          box.appendChild(sameSum);
-        }
-        box.appendChild(fs);
-        box.appendChild(countWrap);
-        box.appendChild(dinnerNote);
-        box.appendChild(drinkRow);
-        box.appendChild(drinkNote);
-        els.mealNights.appendChild(box);
+        drinkBox.appendChild(drinkTitle);
+        drinkBox.appendChild(drinkRow);
+        els.drinkNights.appendChild(drinkBox);
         // 朝食（翌朝ごと）
         var bfBox = h('div', 'top-v2-sim-mealblock');
         var bfLabel = h('label', 'top-v2-sim-check top-v2-sim-check--photo');
@@ -670,23 +685,26 @@
         bfLabel.appendChild(bfText);
         bfBox.appendChild(bfLabel);
         els.bfNights.appendChild(bfBox);
-        mealRows.push({ box: box, title: title, legend: legend, fs: fs, cards: cards, same: same, sameSum: sameSum, note: dinnerNote, countWrap: countWrap, count: dinnerCount.input, drink: drinkInput, bfBox: bfBox, bf: bf, bfText: bfText });
+        mealRows.push({ box: box, title: title, legend: legend, fs: fs, cards: cards, same: same, sameSum: sameSum, note: dinnerNote, countWrap: countWrap, count: dinnerCount.input, drinkBox: drinkBox, drinkTitle: drinkTitle, drink: drinkInput, bfBox: bfBox, bf: bf, bfText: bfText });
       })(i);
     }
   }
 
   function buildOptions() {
     OPTIONS.forEach(function (def) {
+      // 生ビールなど group: 'drink' のものはステップ4「お飲み物」（見出しh3）の中に置くので、名前はh4
+      var inDrinks = def.group === 'drink';
+      var nameTag = inDrinks ? 'h4' : 'h3';
       var card = h('div', 'top-v2-sim-opt');
       var head = h('div', 'top-v2-sim-opt-head');
       if (def.info) {
         // 名前の横にⓘ（見た目・開け閉めは top-v2.css の .top-v2-info と info-pop.js）
         var titleWrap = h('div', 'top-v2-sim-opt-title');
-        titleWrap.appendChild(h('h3', 'top-v2-sim-opt-name', def.name));
+        titleWrap.appendChild(h(nameTag, 'top-v2-sim-opt-name', def.name));
         titleWrap.appendChild(infoPop(def.info.label, def.info.text));
         head.appendChild(titleWrap);
       } else {
-        head.appendChild(h('h3', 'top-v2-sim-opt-name', def.name));
+        head.appendChild(h(nameTag, 'top-v2-sim-opt-name', def.name));
       }
       var priceP = h('p', 'top-v2-sim-opt-price');
       var priceSmall = null;
@@ -718,7 +736,7 @@
         refs.inputs[f.key] = { input: row.querySelector('input'), def: f };
       });
       card.appendChild(rows);
-      els.options.appendChild(card);
+      (inDrinks && els.drinkOptions ? els.drinkOptions : els.options).appendChild(card);
       optionRefs[def.id] = refs;
     });
   }
@@ -970,9 +988,11 @@
       var mr = mealRows[n];
       mr.box.hidden = n >= s.nights;
       mr.bfBox.hidden = n >= s.nights;
+      mr.drinkBox.hidden = n >= s.nights;
       if (n >= s.nights) { continue; }
       mr.title.textContent = d0 ? (n + 1) + '泊目 ' + dateLabelW(addDays(d0, n)) + 'の夕食' : (n + 1) + '泊目の夕食';
       mr.legend.textContent = mr.title.textContent;
+      mr.drinkTitle.textContent = d0 ? (n + 1) + '泊目 ' + dateLabelW(addDays(d0, n)) + 'の夜' : (n + 1) + '泊目の夜';
       // 隠れているカードも、いまの値（1泊目と同じならその値）に合わせておく。オフにした直前の値から選び直せる
       syncMealCards(mr.cards, DINNERS, s.dinner[n], !mealsOk, compact);
       var sameOn = !!(mr.same && mr.same.checked);
@@ -1072,14 +1092,16 @@
         lodgingItems.push(h('li', 'top-v2-sim-line-note', '最低利用金額に満たないため' + fmt(n.floor) + 'で計算'));
       }
     });
+    // 生ビール（group: 'drink'）は入力欄と同じく「お食事」の欄に出す。金額・合計は変わらない（2026-11-24）
+    function optionLine(o) { return lineItem(o.label, o.detail, fmt(o.amount) + (o.approx ? '〜' : '')); }
+    var drinkOpts = res.options.filter(function (o) { return o.group === 'drink'; });
+    var otherOpts = res.options.filter(function (o) { return o.group !== 'drink'; });
     var secs = [
       section('宿泊', lodgingItems),
       section('お食事', res.meals.map(function (m) {
         return lineItem(m.label, m.detail + (m.note ? '（' + m.note + '）' : ''), fmt(m.amount));
-      })),
-      section('オプション', res.options.map(function (o) {
-        return lineItem(o.label, o.detail, fmt(o.amount) + (o.approx ? '〜' : ''));
-      }).concat(res.quotes.map(function (q) {
+      }).concat(drinkOpts.map(optionLine))),
+      section('オプション', otherOpts.map(optionLine).concat(res.quotes.map(function (q) {
         return lineItem(q.label, q.detail, q.amountText, 'is-quote');
       })))
     ];

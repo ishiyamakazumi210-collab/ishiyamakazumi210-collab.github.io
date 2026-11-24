@@ -14087,3 +14087,8 @@ main small {
 .top-v2-sim-row { flex-wrap: nowrap; }
 .top-v2-sim-row .top-v2-sim-rowlabel { flex: 1 1 auto; min-width: 0; }
 .top-v2-sim-row .top-v2-sim-unit { flex: 0 0 auto; white-space: nowrap; }
+/* 2026-11-24 料金計算：飲み放題を夕食から外し、ステップ4の「お飲み物」へ（オーナー承認：夕食の人数のすぐ下だと飲み放題も人数を選べると思われる）。
+   飲み放題の行の「人数は選べません」の1行と、同じ欄に移した生ビール10Lのカードの間隔。戻すときはこのブロックとHTML/JSの変更を戻す */
+.top-v2-sim-check-sub { display: block; margin-top: 2px; color: #665a4a; font-size: 12.5px; font-weight: 800; line-height: 1.5; }
+.top-v2-sim-drinkopts { margin-top: 12px; }
+.top-v2-sim-nobr { display: inline-block; white-space: nowrap; }
