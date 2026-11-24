@@ -96,8 +96,9 @@
     {
       id: 'room', name: '部屋分けオプション', quote: true, unitText: '5,000円/追加1部屋・26名以上は1部屋無料',
       // 2026-11-24 「合計には含めず」は合計欄の注記（P91）と重なるので外した（P82）
-      // 2026-11-24 オーナー確認：少人数プランも「少人数用の追加部屋を1部屋まで」使える（料金は未確認なので出さない）
-      compactUnitText: '少人数プランの追加部屋の料金は予約時にご確認ください',
+      // 2026-11-24 オーナー確認：少人数プランも「少人数用の追加部屋を1部屋まで」使える
+      // 2026-11-25 オーナー確認：少人数プランの追加部屋は1部屋まで・16名以上は無料・15名以下は5,000円
+      compactUnitText: '5,000円/追加1部屋・16名以上は1部屋無料',
       compactNote: '少人数プランは追加部屋1部屋まで',
       note: '追加部屋は最大2部屋です。料金は予約時にご確認ください（合計には入っていません）。',
       fields: [{ key: 'rooms', label: '追加する部屋数', unit: '部屋', max: 2, compactMax: 1 }]
@@ -330,7 +331,7 @@
     if (o.beer.kegs > 0) {
       res.options.push({ label: OPT.beer.name, detail: o.beer.kegs + '樽×' + fmt(OPT.beer.price), amount: o.beer.kegs * OPT.beer.price, group: OPT.beer.group });
     }
-    // 少人数プランは追加部屋1部屋まで（料金は未確認のため、どちらのプランも合計に入れず「お見積り」）
+    // 少人数プランは追加部屋1部屋まで（16名以上は無料・15名以下は5,000円）。どちらのプランも合計には入れず「お見積り」のまま
     var roomCount = compact ? Math.min(o.room.rooms, OPT.room.fields[0].compactMax) : o.room.rooms;
     if (roomCount > 0) {
       res.quotes.push({ label: OPT.room.name + '（追加' + roomCount + '部屋）', detail: compact ? OPT.room.compactUnitText : OPT.room.unitText, amountText: 'お見積り' });

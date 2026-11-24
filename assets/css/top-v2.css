@@ -14267,3 +14267,20 @@ footer#footer.l-footer { padding-bottom: 20px !important; }
 #floors .top-v2-scene-lead:has(+ .top-v2-timeline-note) { margin-bottom: 8px; }
 /* 2026-11-24 ページ内リンクで「よくある質問」の1問へ飛んだとき、質問の見出しが右上のメニューボタンの下に隠れないようにする（家族ページ「部屋分けの料金 →」ほか） */
 details.faq[id] { scroll-margin-top: 96px; }
+/* 2026-11-25 アクセス：地図のピンの名前（カタショー・ワンラボ南駐車場）が、ページの呼び方（第1〜第4駐車場）と違うので、地図の下に対応を1行で書く。所在地の表の注記と同じ小さな灰色の字 */
+.top-v2-map-frame .top-v2-map-pin-note {
+  margin: 10px 4px 2px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #6b7a82;
+}
+/* 2026-11-25 スマホ幅で、ポップアップ下のボタンが右にはみ出す（width:100% + 左右margin16px）のを、全部のポップアップで是正。
+   これまでは #stay-room-dialog と #stay-option-room-dialog だけ直してあり、料金・オプションの「少人数プラン」のポップアップ（料金を確認する）が漏れていた */
+@media (max-width: 575px) {
+  .top-v2-scenedialog-actions .top-v2-btn-outline {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

@@ -13,7 +13,7 @@ window.KATASHO_DATA = {
     "address": "静岡県牧之原市片浜1216-1",
     "building": "カタショー・ワンラボ内",
     "hours": "9:00〜21:00",
-    "hoursNote": "施設利用状況により閉館時間が変わる場合があります"
+    "hoursNote": "施設の利用状況により、受付時間が変わる場合があります"
   },
   "checkin": {
     "normal": "13:00",
