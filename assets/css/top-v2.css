@@ -13572,3 +13572,125 @@ main small {
 .top-v2-address-card--nearby .top-v2-nearby-map {
   width: 100%;
 }
+
+/* 2026-11-24 メニューを「押せる」と分かる形に（オーナー承認）：親は1行ずつ区切って右に›、子は枠付きの小さなボタンを2列、シーンは見出しだけ、今いるページは青、最後に空き状況ボタン。戻すときはこのブロックとnav.htmlの変更を戻す */
+#headerNav .l-nav_menuList .l-nav_menuLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 6px;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: #1f4f63;
+  text-decoration: none;
+  border-bottom: 1px solid #e3ecef;
+}
+#headerNav .l-nav_menuList .l-nav_menuLink::before,
+#headerNav .l-nav_menuList .l-nav_menuLink:hover::before,
+#headerNav .l-nav_menuList .l-nav_menuLink.active::before {
+  content: none;
+}
+#headerNav .l-nav_menuList .l-nav_menuLink::after {
+  content: "›";
+  position: static;
+  font-size: 24px;
+  line-height: 1;
+  color: #2f7890;
+  opacity: .75;
+}
+#headerNav .l-nav_menuList .l-nav_menuLink:hover,
+#headerNav .l-nav_menuList .l-nav_menuLink:focus-visible {
+  color: #2f7890;
+  opacity: 1;
+}
+#headerNav .l-nav_menuList .l-nav_menuLink.active,
+#headerNav .l-nav_menuList .l-nav_menuLink.active:hover {
+  color: #2f7890;
+  padding-left: 14px;
+  box-shadow: inset 4px 0 0 #2f7890;
+}
+#headerNav .l-nav_menuList .l-nav_menuLabel {
+  margin: 18px 0 6px;
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #6b7a82;
+  letter-spacing: .06em;
+}
+#headerNav .l-nav_menuList .l-nav_menuSublist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 10px 0 16px;
+  padding: 0 2px;
+  list-style: none;
+}
+#headerNav .l-nav_menuList .l-nav_menuSublist > li,
+#headerNav .l-nav_menuList .l-nav_menuSublist .nav-item {
+  margin: 0;
+}
+#headerNav .l-nav_menuList .l-nav_menuSublink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1.5px solid #cfe0e8;
+  border-radius: 10px;
+  background: #f5f9fb;
+  color: #22343b;
+  font-size: 14.5px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-align: center;
+  text-decoration: none;
+}
+#headerNav .l-nav_menuList .l-nav_menuSublink::before,
+#headerNav .l-nav_menuList .l-nav_menuSublink::after,
+#headerNav .l-nav_menuList .l-nav_menuSublink:hover::before,
+#headerNav .l-nav_menuList .l-nav_menuSublink.active::before {
+  content: none;
+}
+#headerNav .l-nav_menuList .l-nav_menuSublink:hover,
+#headerNav .l-nav_menuList .l-nav_menuSublink:focus-visible {
+  border-color: #2f7890;
+  background: #eaf3f6;
+  color: #22343b;
+  opacity: 1;
+}
+#headerNav .l-nav_menuList .l-nav_menuSublink.active,
+#headerNav .l-nav_menuList .l-nav_menuSublink.active:hover {
+  border-color: #2f7890;
+  color: #2f7890;
+}
+#headerNav .l-nav_menuList .l-nav_menuDivider {
+  border: 0;
+  border-top: 1px solid #e3ecef;
+  margin: 10px 0;
+  height: 0;
+}
+#headerNav .l-nav_cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  margin: 22px 0 10px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: #e6471a;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 900;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+}
+#headerNav .l-nav_cta:hover,
+#headerNav .l-nav_cta:focus-visible {
+  color: #fff;
+  opacity: .9;
+}
