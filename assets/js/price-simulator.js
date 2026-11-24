@@ -27,7 +27,7 @@
 
   // 昼食（チェックイン前）: 給食は MEALS.kyushoku（全年齢同額）、弁当は 1,250円/人（子ども料金の記載なし）
   var LUNCHES = [
-    { id: 'byo', label: '持ち込み調理' },
+    { id: 'byo', label: '不要・持ち込み' }, // 2026-11-24 食べない人も選べる言い方に（オーナー指摘）
     { id: 'kyushoku', label: '懐かしの給食', mealKey: 'kyushoku' },
     { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250 }
   ];
@@ -35,7 +35,7 @@
   // BBQ は MEALS.bbq、それ以外は大人料金 × KID_RATIO で計算（kidRates）。
   // 少人数プランは「夕食オプションはBBQのみ」。
   var DINNERS = [
-    { id: 'byo', label: '持ち込み調理', compactOk: true },
+    { id: 'byo', label: '不要・持ち込み（BBQも可）', compactOk: true },
     { id: 'bbq', label: 'BBQ（満腹コース）', mealKey: 'bbq', compactOk: true },
     { id: 'sukiyaki', label: '【冬季限定】すき焼き', flat: 5000, kidRates: true, seasonNote: '【冬季限定】すき焼きは11月〜3月のみの提供です' },
     { id: 'curry', label: '林間学校式カレー', flat: 2000, kidRates: true, note: 'お客様自身で調理していただきます' },
@@ -329,7 +329,7 @@
 
   function mealOptionText(def) {
     var pr = def.mealKey || def.flat ? mealPrices(def) : null;
-    if (!pr) { return def.label; }
+    if (!pr) { return def.label + '　0円'; }
     return def.label + '　' + priceYen(pr.adult);
   }
   function fillSelect(select, list) {
@@ -544,7 +544,7 @@
       for (var j = 0; j < MAX_NIGHTS; j += 1) {
         if (!findDef(DINNERS, s.dinner[j]).compactOk) {
           s.dinner[j] = 'byo';
-          flash.meal = '少人数プランの夕食オプションはBBQのみのため、BBQ以外は「持ち込み調理」に戻しました。';
+          flash.meal = '少人数プランの夕食オプションはBBQのみのため、BBQ以外は「不要・持ち込み」に戻しました。';
         }
       }
       s.opts.room.rooms = 0;
