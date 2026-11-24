@@ -45,9 +45,31 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
+  // ページ内のよくある質問（<details id="faq-...">）へ飛ぶリンク・URLの#つきで来たとき、
+  // その質問を開く。/faq/ の faq-search.js の openFromHash と同じ働き。
+  function openDetails(id) {
+    if (!id) { return; }
+    var el = document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') { el.open = true; }
+  }
+  function openFromHash() {
+    openDetails(decodeURIComponent(location.hash.slice(1)));
+  }
+  // 同じ#のリンクをもう一度押したとき（hashchange が起きない）も開く
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    if (link) { openDetails(decodeURIComponent(link.getAttribute('href').slice(1))); }
+  });
+  window.addEventListener('hashchange', openFromHash);
+
+  function start() {
     boot();
+    openFromHash();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
   }
 })();

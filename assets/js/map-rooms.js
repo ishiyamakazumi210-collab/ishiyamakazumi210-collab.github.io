@@ -56,7 +56,7 @@
     shokudo: {
       name: '食堂',
       sub: '給食室・調理設備つき',
-      body: '少人数プランの専有スペース内にある、調理設備つきの食堂です。少人数プランの宴会・食事は、ここで行います。',
+      body: '少人数プランの専用スペース内にある、調理設備つきの食堂です。少人数プランの宴会・食事は、ここで行います。',
       photo: '/assets/img/rooms-2026/shokudo.jpg',
       alt: '長机と大型テレビ、卓球台が並ぶ食堂'
     },
@@ -80,7 +80,7 @@
     shower: {
       name: 'シャワー室',
       sub: '保健室',
-      chips: ['個室ブース3', '脱衣所共有ブース4', 'リンスインシャンプー', 'ボディーソープ'],
+      chips: ['個室ブース3', '脱衣所共用ブース4', 'リンスインシャンプー', 'ボディーソープ'],
       body: 'バスタオル1人1枚と歯ブラシ付き。',
       note: '団体ごとに優先時間を設けています。',
       photo: '/assets/img/shower-changing-2026.jpg',
@@ -132,7 +132,7 @@
     // --- 3F ---
     s3f1: {
       name: '南棟宿泊部屋①',
-      sub: '多目的室',
+      sub: '特大部屋・多目的室',
       capacity: capacityText('s3f1'),
       chips: stayChips('布団で就寝'),
       note: STANDARD_STAY_NOTE,
@@ -140,7 +140,7 @@
     },
     s3f3: {
       name: '南棟宿泊部屋③',
-      sub: '放送室',
+      sub: '3階の小部屋・放送室',
       capacity: capacityText('s3f3'),
       chips: stayChips('布団で就寝'),
       note: STANDARD_STAY_NOTE,
@@ -149,7 +149,7 @@
     },
     s3f2: {
       name: '南棟宿泊部屋②',
-      sub: '3年教室',
+      sub: '3階の中部屋・3年教室',
       capacity: capacityText('s3f2'),
       chips: stayChips('二段ベッド5台'),
       note: STANDARD_STAY_NOTE,
@@ -293,6 +293,13 @@
       // ＋は「押せる」に読めないとの指摘(2026-07-16)→カメラの描き起こしSVGに
       // (全22室に実写が入ったので「カメラ=この部屋の写真が見られる」が全部屋で真)
       chip.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#2f7890" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M3 8.5h4l1.6-2.3h6.8L17 8.5h4v11H3z"/><circle cx="12" cy="13.7" r="3.4"/></svg>';
+      // 部屋名や札に重なる部屋だけ、gen-floormaps.mjs の chip 指定で角の外側へ寄せる
+      if (spot.chipX != null && spot.chipY != null) {
+        chip.style.right = 'auto';
+        chip.style.left = spot.chipX + '%';
+        chip.style.top = spot.chipY + '%';
+        chip.style.transform = 'translate(-50%, -50%)';
+      }
       btn.appendChild(chip);
 
       btn.addEventListener('click', function () {

@@ -31,7 +31,8 @@ window.KATASHO_DATA = {
   },
   "compact": {
     "label": "少人数プラン",
-    "roomsNote": "寝室は1階の中部屋（就寝16名くらい）＋小部屋（8名くらい）／手狭でもよければ最大20名＋10名"
+    "guide": "20",
+    "roomsNote": "寝室は二段ベッド（1階の中部屋16名くらい＋小部屋8名くらい）／手狭でもよければ、布団を敷いて最大30名（20名＋10名）"
   },
   "minSpend": {
     "weekday": "44,500円(大人5名分)",
@@ -87,7 +88,7 @@ window.KATASHO_DATA = {
     },
     "stayRoom": {
       "src": "/assets/img/room-futon-real.jpg",
-      "alt": "教室に布団を並べた大部屋"
+      "alt": "教室に布団を並べた特大部屋"
     },
     "classroomStory": {
       "src": "/assets/img/about-story-classroom.jpg",
@@ -107,7 +108,7 @@ window.KATASHO_DATA = {
     },
     "friendsRoom": {
       "src": "/assets/img/people-2026/friends-toast.jpg",
-      "alt": "夜の大部屋で座卓を囲み、乾杯する友達グループ"
+      "alt": "夜の特大部屋で座卓を囲み、乾杯する友達グループ"
     },
     "mathBlackboard": {
       "src": "/assets/img/math-blackboard.webp",
@@ -190,7 +191,7 @@ window.KATASHO_DATA = {
       "alt": ""
     },
     "stepIcon3": {
-      "src": "/assets/img/step-icon-3.png",
+      "src": "/assets/img/step-icon-3-mail.png",
       "alt": ""
     },
     "stepIcon4": {
@@ -226,13 +227,13 @@ window.KATASHO_DATA = {
       "note": "平日は5人から、土日祝は7人から"
     },
     "priceExample": {
-      "note": "「平日／オフシーズン」の宿泊料金で計算した一例です。最低利用金額など詳細は料金ページへ"
+      "note": "選んだ曜日・時期の宿泊料金で計算した目安です。最低利用人数など、くわしくは料金・オプションへ"
     },
     "rainOk": {
       "note": "体育館・教室・音楽室など屋内あそびが主役なので、雨でも一日遊べます。"
     },
     "playIntro": {
-      "note": "あそびは48種類以上。ぜんぶは載せきれないので、いちばん人気の4つだけ紹介します。"
+      "note": "あそびは48種類以上。ぜんぶは載せきれないので、人気の過ごし方を4つ紹介します。"
     },
     "modelCourse": {
       "note": "モデルコースの一例です。ぜんぶ入れ替え自由。"

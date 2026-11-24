@@ -31,18 +31,18 @@
     { id: 'kyushoku', label: '懐かしの給食', mealKey: 'kyushoku' },
     { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250 }
   ];
-  // 夕食: 子ども料金は夕食のみ（小学生30%OFF・3〜5歳50%OFF、FAQ記載・2026-11-19オーナー確認）。
-  // BBQ は MEALS.bbq、それ以外は大人料金 × KID_RATIO で計算（kidRates）。
+  // 夕食: 子ども料金（小学生30%OFF・3〜5歳50%OFF）があるのは BBQ とすき焼きだけ（2026-11-24 オーナー決定 D4）。
+  // BBQ は MEALS.bbq、すき焼きは大人料金 × KID_RATIO で計算（kidRates）。カレー・弁当は全員同額。
   // 少人数プランは「夕食オプションはBBQのみ」。
   var DINNERS = [
-    { id: 'byo', label: '不要・持ち込み（BBQも可）', compactOk: true },
+    { id: 'byo', label: '不要・持ち込み（自分たちでBBQもOK）', compactOk: true },
     { id: 'bbq', label: 'BBQ（満腹コース）', mealKey: 'bbq', compactOk: true },
     { id: 'sukiyaki', label: '【冬季限定】すき焼き', flat: 5000, kidRates: true, months: [11, 12, 1, 2, 3], seasonNote: '【冬季限定】すき焼きは11月〜3月のみの提供です' },
-    { id: 'curry', label: '林間学校式カレー', flat: 2000, kidRates: true, note: 'お客様自身で調理していただきます' },
-    { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250, kidRates: true }
+    { id: 'curry', label: '林間学校式カレー', flat: 2000, note: 'お客様自身で調理していただきます' },
+    { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250 }
   ];
   var KID_RATIO = { elem: 0.7, pre: 0.5 };
-  var BREAKFAST = { label: 'サンドイッチ朝食', mealKey: 'sando' };
+  var BREAKFAST = { label: '朝食サンドイッチ', mealKey: 'sando' }; // 2026-11-24 そろえる言葉「朝食サンドイッチ」
   // 2026-11-24 昼食・夕食は写真つきカードで選ぶ（オーナー判断）。写真は /play/option/ などで使っている写真を
   // カード用に縮めたサムネイル（480×360のJPG、assets/img/meal-thumbs/）。元の大きい写真は読まない。
   // 写真がないもの（不要・持ち込み、すき焼き＝今の写真は別の料理）は、薄い色の枠に文字だけ出す。
@@ -52,7 +52,7 @@
     bbq: { src: '/assets/img/meal-thumbs/bbq.jpg', w: 480, h: 360 },
     curry: { src: '/assets/img/meal-thumbs/curry.jpg', w: 480, h: 360 }
   };
-  var MEAL_NO_PHOTO = { byo: '不要・持ち込み', sukiyaki: '写真準備中' };
+  var MEAL_NO_PHOTO = { byo: '', sukiyaki: '写真準備中' }; // 2026-11-24 「不要・持ち込み」は名前と重なるので枠は空に
   // 2026-11-24 朝食・飲み放題・オプションの行にも小さな写真（オーナー指示：写真を付けられるものは全部付ける）。
   // /play/option/ で使っている写真を同じ 480×360 のサムネイルに縮めたもの。写真がないものは「写真準備中」の枠。
   var ROW_PHOTOS = {
@@ -99,7 +99,7 @@
       // 2026-11-24 オーナー確認：少人数プランも「少人数用の追加部屋を1部屋まで」使える（料金は未確認なので出さない）
       compactUnitText: '少人数プランの追加部屋の料金は予約時にご確認ください',
       compactNote: '少人数プランは追加部屋1部屋まで',
-      note: '追加部屋は最大2部屋です。泊数ごとの扱いなどは予約時にご確認いただくため、「お見積り」としています。',
+      note: '追加部屋は最大2部屋です。料金は予約時にご確認ください（合計には入っていません）。',
       fields: [{ key: 'rooms', label: '追加する部屋数', unit: '部屋', max: 2, compactMax: 1 }]
     }
   ];
@@ -289,9 +289,8 @@
           var extra = '';
           var dc = countsFor(s.dinnerCount ? s.dinnerCount[n] : null);
           if (dinner.flat && !dinner.mealKey && !dinner.kidRates && (dc.elem + dc.pre) > 0) {
-            extra = 'お子さま料金の記載がないため全員同額で計算';
-            res.approx = true;
-            note('お子さま料金の記載がない夕食（すき焼き・カレー・弁当）は、全員同額で計算しています（目安）');
+            // 2026-11-24 D4：カレー・弁当は子ども料金なし（言い切る。目安扱いにしない）
+            note('カレー・弁当は、お子さまも同じ料金です');
           }
           // 2026-11-24 すき焼きの提供期間は、選んだ夕食の下のキャプション（P75）にだけ出す。合計欄の同じ文は消した（P88）
           addMeal(nightDate(n) + ' 夕食 ' + dinner.label, dinner, extra, dc);
@@ -464,6 +463,7 @@
     total: $('sim-total'),
     per: $('sim-per'),
     approx: $('sim-approx'),
+    basis: $('sim-basis'),
     breakdown: $('sim-breakdown'),
     notes: $('sim-notes'),
     rateTable: $('sim-ratetable'),
@@ -486,7 +486,8 @@
   function mealPriceText(def) {
     var pr = def.mealKey || def.flat ? mealPrices(def) : null;
     if (!pr) { return '0円'; }
-    return priceYen(pr.adult);
+    // 2026-11-24 F26：値段に「/人」。子ども料金があるもの（BBQ・すき焼き）は「おとな」を付ける
+    return (isFlat(pr) ? '' : 'おとな') + priceYen(pr.adult) + '/人';
   }
   // 昼食・夕食の写真つきカード（ラジオ）。プランのカードと同じく、丸印と「選択中」は CSS で付ける
   function buildMealCards(box, list, name, withPlanRule) {
@@ -662,9 +663,15 @@
         drinkInput.id = 'sim-drink-' + idx;
         drinkInput.setAttribute('data-drink', String(idx));
         var drinkText = h('span');
-        var drinkStrong = h('strong', '', DRINK.label + 'をつける');
+        // 2026-11-24 V3：「つける」「1,500円」が語の途中で折れないよう、かたまりごとに折らない
+        var drinkStrong = h('strong');
+        drinkStrong.appendChild(h('span', 'top-v2-nowrap', DRINK.label));
+        drinkStrong.appendChild(h('span', 'top-v2-nowrap', 'をつける'));
         drinkText.appendChild(drinkStrong);
-        drinkText.appendChild(document.createTextNode('\u3000全員分・1人' + priceYen(DRINK.price) + '（2歳以下を除く）'));
+        drinkText.appendChild(document.createTextNode('\u3000'));
+        drinkText.appendChild(h('span', 'top-v2-nowrap', '全員分・'));
+        drinkText.appendChild(h('span', 'top-v2-nowrap', '1人' + priceYen(DRINK.price)));
+        drinkText.appendChild(h('span', 'top-v2-nowrap', '（2歳以下を除く）'));
         drinkText.appendChild(h('small', 'top-v2-sim-check-sub', '人数は選べません（料金のかかる方全員分）'));
         drinkRow.appendChild(drinkInput);
         drinkRow.appendChild(rowThumb('drinks'));
@@ -732,6 +739,14 @@
         var inputId = 'sim-opt-' + def.id + '-' + f.key;
         var max = typeof f.max === 'number' ? f.max : 100;
         var row = labelledStepperRow(inputId, f.label, '', f.unit, { 'data-opt': def.id, 'data-field': f.key }, 0, 0, max);
+        // 2026-11-24 V3：スマホで「追加する部屋数」などが語の途中で折れないよう、折るなら「する」の後ろだけ
+        var optLab = row.querySelector('label');
+        var optCut = f.label.indexOf('する');
+        if (optLab && optCut > 0) {
+          optLab.textContent = '';
+          optLab.appendChild(h('span', 'top-v2-sim-nobr', f.label.slice(0, optCut + 2)));
+          optLab.appendChild(h('span', 'top-v2-sim-nobr', f.label.slice(optCut + 2)));
+        }
         rows.appendChild(row);
         refs.inputs[f.key] = { input: row.querySelector('input'), def: f };
       });
@@ -746,11 +761,16 @@
     var cmp = [P.getRates('weekday', true), P.getRates('holiday', true)];
     var stdSmall = form.querySelector('[data-sim-rate="standard"]');
     var cmpSmall = form.querySelector('[data-sim-rate="compact"]');
+    // 2026-11-24 V3：金額が途中で折れないよう、かたまりごとに折らない（文字は今までどおり）
+    function nobrParts(el, parts) {
+      el.textContent = '';
+      parts.forEach(function (t) { el.appendChild(h('span', 'top-v2-sim-nobr', t)); });
+    }
     if (stdSmall) {
-      stdSmall.textContent = '平日・オフ ' + priceYen(std[0].adult) + '〜 ／ 土日祝・ハイ ' + priceYen(std[1].adult) + '〜（おとな1泊）';
+      nobrParts(stdSmall, ['平日・オフ ' + priceYen(std[0].adult) + '〜\u00a0／\u00a0', '土日祝・ハイ ' + priceYen(std[1].adult) + '〜', '（おとな1泊）']);
     }
     if (cmpSmall) {
-      cmpSmall.textContent = 'おとな' + priceYen(-P.COMPACT.adultDelta) + '引き（' + priceYen(cmp[0].adult) + '〜 ／ ' + priceYen(cmp[1].adult) + '〜）';
+      nobrParts(cmpSmall, ['おとな' + priceYen(-P.COMPACT.adultDelta) + '引き', '（' + priceYen(cmp[0].adult) + '〜 ／ ', priceYen(cmp[1].adult) + '〜）']);
     }
     var max = form.querySelector('[data-sim-compact-max]');
     if (max) { max.textContent = String(P.COMPACT_HARD_MAX); }
@@ -912,15 +932,17 @@
     Array.prototype.forEach.call(planInputs, function (input) { input.checked = input.value === s.plan; });
     compactRadio.disabled = !compactOk;
     compactRadio.parentNode.classList.toggle('is-disabled', !compactOk);
-    var planText = '少人数プランの中部屋・小部屋は、手狭でもよければ最大20名＋10名まで泊まれます。';
+    var rooms = DATA.rooms || {};
+    var mid = rooms.s1f1 ? rooms.s1f1.max : '';
+    var small = rooms.s1f2 ? rooms.s1f2.max : '';
+    // 2026-11-24 いつも出していた「最大30名まで泊まれます」はカードの札と重なるのでやめ、超えたときだけ出す
+    var planText = '';
     if (!compactOk) { planText = '合計' + total + '名のため、少人数プラン（' + P.COMPACT_HARD_MAX + '名まで）は選べません。'; }
-    else if (compact && total > P.COMPACT_COMFORT_MAX) {
-      var rooms = DATA.rooms || {};
-      var mid = rooms.s1f1 ? rooms.s1f1.max : '';
-      var small = rooms.s1f2 ? rooms.s1f2.max : '';
-      planText += '中部屋・小部屋の目安' + P.COMPACT_COMFORT_MAX + '名を超えます' + (mid && small ? '（中部屋' + mid + '名＋小部屋' + small + '名までの手狭な配置）' : '') + '。ご相談ください。';
+    else if (compact && total > P.COMPACT_GUIDE) {
+      planText = '目安の' + P.COMPACT_GUIDE + '名くらいを超えています。最大' + P.COMPACT_HARD_MAX + '名' + (mid && small ? '（中部屋' + mid + '名＋小部屋' + small + '名）' : '') + 'まで泊まれますが、手狭になることがあります。ご相談ください。';
     }
-    els.planNote.textContent = (flash.plan ? flash.plan + ' ' : '') + planText;
+    els.planNote.textContent = (flash.plan ? flash.plan + (planText ? ' ' : '') : '') + planText;
+    els.planNote.hidden = !els.planNote.textContent;
     renderRateTable(compact);
 
     // 日程
@@ -1019,7 +1041,14 @@
       mr.bf.checked = s.breakfast[n];
       mr.bf.disabled = !mealsOk;
       var sando = P.MEALS[BREAKFAST.mealKey];
-      mr.bfText.textContent = (d0 ? (n + 2) + '日目 ' + dateLabelW(addDays(d0, n + 1)) + 'の朝食　' : (n + 2) + '日目の朝食　') + BREAKFAST.label + ' +' + priceYen(sando.adult) + '/人（全年齢同額）';
+      // 2026-11-24 V3：「サンドイッチ」「1,000円」が語の途中で折れないよう、かたまりごとに折らない
+      mr.bfText.textContent = '';
+      mr.bfText.appendChild(h('span', 'top-v2-nowrap', d0 ? (n + 2) + '日目 ' + dateLabelW(addDays(d0, n + 1)) + 'の朝食' : (n + 2) + '日目の朝食'));
+      mr.bfText.appendChild(document.createTextNode('\u3000'));
+      mr.bfText.appendChild(h('span', 'top-v2-nowrap', BREAKFAST.label));
+      mr.bfText.appendChild(document.createTextNode(' '));
+      mr.bfText.appendChild(h('span', 'top-v2-nowrap', '+' + priceYen(sando.adult) + '/人'));
+      mr.bfText.appendChild(h('span', 'top-v2-nowrap', '（全年齢同額）'));
     }
 
     // オプション
@@ -1030,7 +1059,15 @@
       refs.gate.hidden = !compactNote;
       refs.gate.textContent = compactNote;
       if (refs.priceSmall) {
-        refs.priceSmall.textContent = '（' + (compact && def.compactUnitText ? def.compactUnitText : def.unitText) + '）';
+        // 2026-11-24 V3：「・」の区切りで折る（「1部屋」が途中で折れないように）。長いかたまりは普通に折る
+        var unitText = '（' + (compact && def.compactUnitText ? def.compactUnitText : def.unitText) + '）';
+        refs.priceSmall.textContent = '';
+        var unitPieces = unitText.split('・');
+        unitPieces.forEach(function (piece, pi) {
+          if (pi < unitPieces.length - 1) { piece += '・'; }
+          if (piece.length <= 14) { refs.priceSmall.appendChild(h('span', 'top-v2-sim-nobr', piece)); }
+          else { refs.priceSmall.appendChild(document.createTextNode(piece)); }
+        });
       }
       def.fields.forEach(function (f) {
         var max = f.max === 'payers' ? Math.max(0, payers) : (compact && f.compactMax !== undefined ? f.compactMax : f.max);
@@ -1046,7 +1083,8 @@
     if (s.local) { dnNames.push('地域割'); }
     if (s.repeat) { dnNames.push('リピート割'); }
     if (dnNames.length >= 2) {
-      dn = dnNames.join('と') + 'を同時に使えるかは確認が取れていないため、割引率の大きい方（同率なら 連泊割→地域割→リピート割 の順）の1つだけを計算に入れています。併用の可否は予約画面でご確認ください。';
+      // 2026-11-24 D5：割引はどれか1つだけ（オーナー決定）。どれも5%OFFなので1回分だけ計算に入れる
+      dn = '割引は、どれか1つだけ使えます。' + DISCOUNT_PERCENT.renpaku + '%OFFを1回分だけ計算に入れています。';
     } else if (s.nights >= 2) {
       dn = 'いまの泊数は連泊割の対象です。';
     }
@@ -1082,6 +1120,18 @@
       els.per.appendChild(h('span', 'top-v2-sim-per-note', '（2歳以下を除く）'));
     }
     els.approx.hidden = !res.approx;
+    // 2026-11-24 F5：日付を選んでいないときは、いまの計算の前提（区分と泊数）を合計の近くに出す
+    if (els.basis) {
+      var basis = '';
+      if (!state.datesMode) {
+        var nWd = 0, nHd = 0;
+        res.nights.forEach(function (nt) { if (nt.season === 'holiday') { nHd += 1; } else { nWd += 1; } });
+        var kind = nWd && nHd ? '平日・土日祝' : (nHd ? '土日祝' : '平日');
+        basis = '日付未選択：' + kind + res.nights.length + '泊で計算中';
+      }
+      els.basis.textContent = basis;
+      els.basis.hidden = !basis;
+    }
 
     var bd = els.breakdown;
     bd.textContent = '';
@@ -1120,7 +1170,7 @@
     }
 
     els.notes.textContent = '';
-    var notes = ['最終的な料金は予約画面でご確認ください（時期の選び方・割引は目安です）'].concat(res.notes);
+    var notes = ['最終的な料金は予約画面でご確認ください（平日・土日祝の分け方は目安です）'].concat(res.notes);
     notes.forEach(function (text) { els.notes.appendChild(h('li', '', text)); });
   }
 

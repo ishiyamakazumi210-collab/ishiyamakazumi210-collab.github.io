@@ -22,23 +22,24 @@
     sando: { adult: 1000, elem: 1000, pre: 1000 }
   };
   var MEAL_LABELS = { kyushoku: '給食', bbq: '提供型BBQ', sando: 'サンド' };
+  // 食事オプションを閉じたときの状態表示用の短い名前（2026-11-24）
+  var MEAL_STATE_LABELS = { kyushoku: '給食', bbq: 'BBQ', sando: '朝食' };
   var MAX_PEOPLE = parseInt(window.KATASHO_DATA && window.KATASHO_DATA.capacity && window.KATASHO_DATA.capacity.total, 10) || 100;
 
   // 少人数プランの寝室2部屋(中部屋s1f1・小部屋s1f2)の定員は site.json
   // (rooms.s1f1/rooms.s1f2、map-rooms.jsの部屋データと同じ単一データソース)
-  // が唯一の元数字。COMPACT_COMFORT_MAX(=目安の合計)とCOMPACT_HARD_MAX
-  // (=「手狭でもよければ」の最大の合計、2026-11-19オーナー確認)はここで計算する
-  // だけで、数字そのものは持たない。
+  // が唯一の元数字。COMPACT_HARD_MAX(=「手狭でもよければ」の最大の合計、
+  // 2026-11-19オーナー確認)はここで計算するだけで、数字そのものは持たない。
+  // プランの目安人数 COMPACT_GUIDE は site.json の compact.guide(=20、
+  // 2026-11-24オーナー確認：目安20名くらい・最大30名の2つに統一)から読む。
   var ROOMS_DATA = (window.KATASHO_DATA && window.KATASHO_DATA.rooms) || {};
   function roomCapacityNum(roomId, field) {
     return parseInt((ROOMS_DATA[roomId] || {})[field], 10) || 0;
   }
-  var COMPACT_MID_TYPICAL = roomCapacityNum('s1f1', 'typical'); // 中部屋(目安)
   var COMPACT_MID_MAX = roomCapacityNum('s1f1', 'max'); // 中部屋(手狭最大)
-  var COMPACT_SMALL_TYPICAL = roomCapacityNum('s1f2', 'typical'); // 小部屋(目安)
   var COMPACT_SMALL_MAX = roomCapacityNum('s1f2', 'max'); // 小部屋(手狭最大)
-  var COMPACT_COMFORT_MAX = COMPACT_MID_TYPICAL + COMPACT_SMALL_TYPICAL;
   var COMPACT_HARD_MAX = COMPACT_MID_MAX + COMPACT_SMALL_MAX;
+  var COMPACT_GUIDE = parseInt(window.KATASHO_DATA && window.KATASHO_DATA.compact && window.KATASHO_DATA.compact.guide, 10) || 20;
 
   // 少人数プラン（1階・20名くらいまで）: 大人-1,000円、子どもは
   // 割引後の大人料金へ既存の子ども割引率(小学生30%OFF/3〜5歳50%OFF)を掛け直す。
@@ -84,7 +85,7 @@
     MEAL_LABELS: frozenCopy(MEAL_LABELS),
     COMPACT: frozenCopy(COMPACT),
     COMPACT_HARD_MAX: COMPACT_HARD_MAX,
-    COMPACT_COMFORT_MAX: COMPACT_COMFORT_MAX,
+    COMPACT_GUIDE: COMPACT_GUIDE,
     MAX_PEOPLE: MAX_PEOPLE,
     getRates: function (season, compact) {
       return frozenCopy(getRates(season, compact));
@@ -110,7 +111,7 @@
     });
     var note = document.createElement('span');
     note.className = 'top-v2-chalk-unitnote';
-    note.textContent = '（1人あたり）';
+    note.textContent = '（宿泊のみ・1人あたり）';
     el.appendChild(note);
   }
 
@@ -158,11 +159,14 @@
     }
     function applyMealState() {
       if (!mealStateEl) { return; }
-      var anyPaid = false;
-      Object.keys(choice).forEach(function (slot) {
-        if (choice[slot] !== 'byo') { anyPaid = true; }
+      // 入っている食事の短い名前を並べる（例「（給食・BBQ・朝食）」）。
+      // 並びはHTMLのslot順（昼→夕→朝）に従う。
+      var names = [];
+      Object.keys(slots).forEach(function (slot) {
+        var key = choice[slot];
+        if (key !== 'byo') { names.push(MEAL_STATE_LABELS[key] || MEAL_LABELS[key] || key); }
       });
-      mealStateEl.textContent = anyPaid ? '（あり）' : '（なし）';
+      mealStateEl.textContent = names.length ? '（' + names.join('・') + '）' : '（なし）';
     }
     function applyUI() {
       Object.keys(slots).forEach(function (slot) {
@@ -221,22 +225,37 @@
   // ---- 定員注意行（少人数プラン専用・非ブロッキング） ------------------
   // .top-v2-chalkboard--artの直後にJS側で1個だけ差し込む。食事状態spanと同じく
   // 状態依存の生成物のため、6ページのHTMLは触らずJS側で完結させる。
+  function compactGuideOverText() {
+    return '※ 少人数プランの目安（' + COMPACT_GUIDE + '名くらい）を超えています。最大' + COMPACT_HARD_MAX + '名まで泊まれますが、手狭になることがあるのでご相談ください';
+  }
+  // 少人数プランを使っていないときの一言（F3・2026-11-24）。数字は定数から組む。
+  // トップの帯(.top-v2-price-min)が同じことを言っているページでは出さない。
+  function compactHintText() {
+    return '※ ' + COMPACT_GUIDE + '名くらいまでなら、少人数プラン（1階）で1人' + fmt(-COMPACT.adultDelta) + '引きにできます';
+  }
+  var HAS_PRICE_MIN_BAND = !!document.querySelector('.top-v2-price-min');
   function setupCapacityNotice() {
     var board = document.querySelector('.top-v2-chalkboard--art');
     if (!board) { return null; }
     var notice = document.createElement('p');
     notice.className = 'top-v2-chalk-capacity-notice';
-    notice.textContent = '※ 中部屋・小部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。手狭な配置になるため、ご相談ください';
+    notice.textContent = compactGuideOverText();
     notice.hidden = true;
     board.insertAdjacentElement('afterend', notice);
     return notice;
   }
   function updateCapacityNotice(notice, compact, totalPeople) {
     if (!notice) { return; }
-    notice.hidden = !compact || totalPeople <= COMPACT_COMFORT_MAX;
+    if (!compact) {
+      // 少人数プランなし：上限以下なら1,000円引きの案内（トップの帯があるページは出さない）
+      notice.hidden = HAS_PRICE_MIN_BAND || totalPeople > COMPACT_HARD_MAX;
+      if (!notice.hidden) { notice.textContent = compactHintText(); }
+      return;
+    }
+    notice.hidden = totalPeople <= COMPACT_GUIDE;
     if (notice.hidden) { return; }
     notice.textContent = totalPeople <= COMPACT_HARD_MAX
-      ? '※ 中部屋・小部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。中部屋' + COMPACT_MID_MAX + '名＋小部屋' + COMPACT_SMALL_MAX + '名までの手狭な配置になるため、ご相談ください'
+      ? compactGuideOverText()
       : '※ 少人数プランの上限' + COMPACT_HARD_MAX + '名を超えるため、スタンダードプラン料金で計算しています';
   }
 
@@ -254,6 +273,12 @@
     var seasonBtns = document.querySelectorAll('.top-v2-chalk-season .top-v2-chalk-tab');
     if (!unitEl || !nEl || !totalEl || !countEl || !minus || !plus) { return; }
     totalEl.setAttribute('aria-live', 'polite');
+    // こたえの前置き：data-answer-prefix があれば、先頭の文字だけ差し替える
+    var groupAnswerEl = document.querySelector('.top-v2-chalk-answer');
+    var groupPrefix = groupAnswerEl && groupAnswerEl.getAttribute('data-answer-prefix');
+    if (groupPrefix && groupAnswerEl.firstChild && groupAnswerEl.firstChild.nodeType === 3) {
+      groupAnswerEl.firstChild.nodeValue = groupPrefix + ' ';
+    }
 
     var requestedMax = stepperEl && parseInt(stepperEl.dataset.max, 10);
     var MAX = Math.min(requestedMax || MAX_PEOPLE, MAX_PEOPLE);
@@ -420,6 +445,8 @@
     var answerEl = document.querySelector('.top-v2-chalk-answer');
     var breakdownEl = document.getElementById('chalk-breakdown');
     if (!countEl || !minus || !plus || !formulaEl || !answerEl || !breakdownEl) { return; }
+    // こたえの前置き。研修ページは data-answer-prefix="こたえ：1人あたり"（無ければ割り勘）
+    var answerPrefix = answerEl.getAttribute('data-answer-prefix') || 'こたえ：割り勘で 1人';
 
     var KID_MINIMUMS = { elem: 0, pre: 0 };
     var countEls = { elem: document.getElementById('fam-elem'), pre: document.getElementById('fam-pre') };
@@ -493,7 +520,7 @@
       if (kidsCount === 0) {
         // 子ども0人: initGroupBoardと1文字も変わらない表示（式は×＝、こたえは割り勘）
         formulaEl.innerHTML = '<span id="chalk-unit">' + fmt(adultUnit) + '</span> <span class="top-v2-chalk-op">×</span> <span id="chalk-n">' + n + '人</span> <span class="top-v2-chalk-op">=</span> <span id="chalk-total">' + fmt(total) + '</span>';
-        answerEl.innerHTML = 'こたえ：割り勘で 1人 <strong id="chalk-per">' + fmt(adultUnit) + '</strong>〜';
+        answerEl.innerHTML = answerPrefix + ' <strong id="chalk-per">' + fmt(adultUnit) + '</strong>〜';
         breakdownEl.textContent = '1人あたり: ' + bdParts.join(' ＋ ');
         animateTargets = [document.getElementById('chalk-unit'), document.getElementById('chalk-n'), document.getElementById('chalk-total')];
       } else {

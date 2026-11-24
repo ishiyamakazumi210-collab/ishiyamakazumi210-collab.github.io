@@ -32,7 +32,7 @@
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124q"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124r"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -118,7 +118,6 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wpml-legacy-horizontal-list-0-inline-css */
 </style>
 
-<script data-wp-strategy="defer" defer id="wpml-cookie-js" src="/assets/wp/plugins/sitepress-multilingual-cms/res/js/cookies/language-cookie.js"></script>
 <meta name="generator" content="WPML ver:4.9.1 stt:1,28;" />
 <!-- Instagram Feed CSS -->
 <style type="text/css">
@@ -298,6 +297,7 @@ height: 78vw;
     <div>
       <h1 class="top-v2-scene-h1logo top-v2-scene-h1text"><span class="top-v2-scene-title-mark">お問い合わせ</span></h1>
       <p class="top-v2-scene-lead">ご質問・ご相談はこのフォームからどうぞ。3営業日を目安にお返事します。お急ぎの方は、お電話のほうが早くお答えできます。</p>
+      <p class="top-v2-scene-lead top-v2-contact-quick"><span class="top-v2-nowrap">総合受付 <a class="top-v2-inline-link" href="tel:080-7890-0388" data-event="contact_hero_tel">080-7890-0388</a></span><span class="top-v2-nowrap">（受付 9:00〜21:00）</span><br><a class="top-v2-inline-link" href="#contactForm" data-event="contact_hero_form">フォームで問い合わせる ↓</a></p>
     </div>
   </div>
 </section>
@@ -310,7 +310,7 @@ height: 78vw;
         <div class="top-v2-scene-card-body">
           <h3>ご予約・空き状況の確認は</h3>
           <p>予約システムからどうぞ。空き確認だけでもOKです。</p>
-          <p style="margin-top:18px"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="top-v2-btn-outline" data-event="contact_branch_reserve">空き状況を見る</a></p>
+          <p class="top-v2-card-cta"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="top-v2-btn-outline" data-event="contact_branch_reserve">空き状況を見る</a></p>
         </div>
       </div>
       <div class="top-v2-scene-card">
@@ -368,7 +368,8 @@ height: 78vw;
       </div>
       <div class="top-v2-form-row">
         <label for="contactMessage">お問い合わせ内容<span class="top-v2-form-required">必須</span></label>
-        <textarea id="contactMessage" name="お問い合わせ内容" rows="6" required></textarea>
+        <p id="contactMessageHint" class="top-v2-form-hint">希望の日にち（未定なら時期）・人数（おとな／子ども）・どんな集まりか・聞きたいことを書いていただくと、お返事が早くなります。</p>
+        <textarea id="contactMessage" name="お問い合わせ内容" rows="6" aria-describedby="contactMessageHint" placeholder="例：3月の土日で1泊、大学サークル25名くらい。体育館を使いたいです。" required></textarea>
       </div>
       <div class="top-v2-form-row top-v2-form-consent">
         <label>
@@ -413,7 +414,7 @@ height: 78vw;
 <!-- 4. 最終CTA -->
 <section class="top-v2-scene-section top-v2-scene-section--gray" id="cta">
   <div class="top-v2-scene-inner top-v2-scene-inner--narrow" style="text-align:center;">
-    <span class="reserve-cta"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big" data-event="contact_footer_reserve">空き状況を見る</a><span class="reserve-reassure"><span>予約時の人数は概算でOK</span><span>人数・食事の変更は10日前まで</span><span>お支払いは当日（事前振込も可）</span></span></span>
+    <span class="reserve-cta"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big" data-event="contact_footer_reserve">空き状況を見る</a><span class="reserve-reassure"><span>予約時の人数は概算でOK</span><span>人数・食事の変更は10日前まで</span><span>お支払いは当日現金（事前振込も可）</span></span></span>
   </div>
 </section>
 
@@ -447,6 +448,7 @@ height: 78vw;
                         </div>
                         <div class="col-lg-4 d-flex">
                             <div class="l-footer_copy">
+                                <p class="text-center text-lg-end mb-1"><small><a href="/privacy/">プライバシーポリシー</a></small></p>
                                 <p class="text-center text-lg-end mb-0"><small>&copy; 2021-2026 <a href="https://makilabo.jp/" target="_blank" rel="noopener">株式会社マキノハラボ</a></small></p>
                             </div>
                         </div>

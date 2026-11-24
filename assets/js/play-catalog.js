@@ -71,7 +71,7 @@
     var noteEl = dialog.querySelector('.top-v2-playdialog-note');
     var noteText = item.dataset.note || '';
     if (item.dataset.place === '特大部屋') {
-      var compactRoomNote = '「場所：特大部屋」の遊びはスタンダードプランでご利用いただけます。少人数プランの宴会・食事は併設の調理室をご利用ください。';
+      var compactRoomNote = '「場所：特大部屋」の遊びはスタンダードプランでご利用いただけます。少人数プランの宴会・食事は1階の食堂をご利用ください。';
       noteText = noteText ? noteText + ' ' + compactRoomNote : compactRoomNote;
     }
     if (noteText) {

@@ -14092,3 +14092,178 @@ main small {
 .top-v2-sim-check-sub { display: block; margin-top: 2px; color: #665a4a; font-size: 12.5px; font-weight: 800; line-height: 1.5; }
 .top-v2-sim-drinkopts { margin-top: 12px; }
 .top-v2-sim-nobr { display: inline-block; white-space: nowrap; }
+/* 2026-11-24 くわしい料金シミュレーター（共通の部品と料金計算の直し）
+   F4：合計の欄に「人数と日付は引き継がれます」の一言・3点メモ（.reserve-reassure）・相談リンク。
+       PCは「空き状況を見る」の上下（--pc）、スマホは下の固定バーが狭いので内訳を開いた中（--m）
+   F5：日付未選択のときの計算の前提（#sim-basis。見た目は .top-v2-sim-sum-approx と同じ） */
+.top-v2-sim-handoff { margin: 0; color: #2e2518; font-size: 12.5px; font-weight: 800; line-height: 1.5; text-align: center; }
+.top-v2-sim-reserve-more { display: grid; gap: 8px; justify-items: center; }
+.top-v2-sim-reserve-more .reserve-reassure { margin: 0; font-size: 12px; }
+.top-v2-sim-consult.top-v2-btn-outline { display: block; width: 100%; margin: 0; padding: 10px 14px; box-sizing: border-box; font-size: 14px; text-align: center; }
+.top-v2-sim-reserve-more--m { display: none; }
+@media (max-width: 991.98px) {
+  .top-v2-sim-reserve-more--pc { display: none; }
+  .top-v2-sim-reserve-more--m { display: grid; margin: 4px 0 10px; padding: 10px 0 0; border-top: 1px solid #f2dfb6; }
+}
+.top-v2-sim-sum-basis[hidden] { display: none; }
+/* 2026-11-24 V3（スマホの改行）：語の途中で折らないかたまりを、狭い幅でもはみ出さずに収める */
+.top-v2-sim-opts { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 374.98px) {
+  /* オプションの入力行：見出しを1行目、増減ボタンと単位を2行目に */
+  .top-v2-sim-opt .top-v2-sim-row { flex-wrap: wrap; }
+  .top-v2-sim-opt .top-v2-sim-row .top-v2-sim-rowlabel { flex: 1 0 100%; }
+  .top-v2-sim-opt .top-v2-sim-row .top-v2-sim-stepper { margin-left: 0; }
+  /* 朝食・飲み放題の行：写真を小さく、余白を詰める */
+  .top-v2-sim-mealblock { padding: 10px; }
+  .top-v2-sim-check--photo { gap: 8px; padding: 10px; font-size: 13px; }
+  .top-v2-sim-check--photo .top-v2-sim-thumb { flex-basis: 44px; width: 44px; }
+}
+@media (max-width: 374.98px) {
+  /* オプション名：行いっぱいに置き、ふつうの改行に（auto-phrase だと「部／屋分け」や枠外はみ出しが起きる） */
+  .l-main #sim-form .top-v2-sim-opt .top-v2-sim-opt-name { flex: 1 1 100%; font-size: 15px; word-break: normal; text-wrap: wrap; }
+  .l-main #sim-form .top-v2-sim-opt .top-v2-sim-opt-title { flex: 1 1 100%; }
+}
+/* ==========================================================================
+   2026-11-24 見た目の直し（点検 docs/site-audit-2026-11-24.md の V1〜V14 と申し送り。オーナー承認済み）
+   ========================================================================== */
+/* V1 パンくずと大見出しの間（スマホ104px・PC120px）を半分ほどに。#hero を使う下層ページ全部が同じ値 */
+#hero.top-v2-scene-section { padding-top: 24px !important; }
+.top-v2-scene-hero { padding-top: 28px; }
+@media (min-width: 992px) {
+  #hero.top-v2-scene-section { padding-top: 20px !important; }
+  .top-v2-scene-hero { padding-top: 28px; }
+  /* PC 1280×800 の最初の画面に「1人 7,900円〜」まで入るよう、ヒーローの中の縦の間隔を少しだけ詰める */
+  .top-v2-scene-hero h1 { margin-bottom: 12px; }
+  .top-v2-scene-hero .top-v2-scene-lead { margin-bottom: 20px; }
+  .top-v2-scene-hero-actions { row-gap: 12px; }
+  .top-v2-scene-hero .hero-price-line { margin-top: 12px; }
+}
+/* V2 「定番の過ごし方」のカード（スマホ）：均等割り(balance)で文の幅が半分ほどになり、語の途中で折れていた → 行いっぱいに流す */
+@media (max-width: 767px) {
+  .top-v2-scene-card-body h3,
+  .top-v2-scene-card-body p { text-wrap: pretty; }
+}
+/* V5 縁取りボタンが2つ並ぶ所（「あそびを全部見る」「食事・オプションを見る」ほか）がくっつく → 間を空ける（PCは左右14px、スマホは上下12px） */
+.top-v2-actions:has(> .top-v2-btn-outline + .top-v2-btn-outline) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 14px;
+}
+@media (max-width: 767px) {
+  .top-v2-actions:has(> .top-v2-btn-outline + .top-v2-btn-outline) { flex-direction: column; align-items: stretch; }
+}
+/* V7 お問い合わせの送信ボタン：.btn-orange の右の矢印用の余白（input には矢印が出ない）で「送信」が左に寄っていた → 左右同じ余白で真ん中に */
+.top-v2-form-submit input[type="submit"].btn {
+  padding-left: 40px;
+  padding-right: 40px;
+  text-align: center;
+}
+/* V8 フッターの下の言語切り替え（English／日本語）：白地に別の大きさで出ていた → フッターと同じ地の色・文字で、フッターの続きに見せる。
+   下の白い空き（スマホ約200px）の理由は、①旧・右下の丸い予約ボタン用の余白 104px（B6、いまは丸ボタンを出さない）、
+   ②WPMLの下余白 30px、③予約バー用の body の下余白 70px の三重。①②をやめ、③（予約バーが中身を隠さないための分）だけ残す。
+   あわせて、フッターの中の下余白（スマホ 52px。これも丸ボタン用）を詰める。
+   WPMLのCSS（あとから読み込まれる・ページ内の style）に勝つよう、セレクタを強めにしてある */
+html body div.wpml-ls-statics-footer.wpml-ls-legacy-list-horizontal {
+  margin: 0;
+  padding: 0 16px 24px;
+  border: 0;
+  background: #006d88;
+}
+html body div.wpml-ls-statics-footer.wpml-ls li.wpml-ls-item a.wpml-ls-link {
+  padding: 4px 10px;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+html body div.wpml-ls-statics-footer.wpml-ls li.wpml-ls-item a.wpml-ls-link:hover,
+html body div.wpml-ls-statics-footer.wpml-ls li.wpml-ls-item a.wpml-ls-link:focus-visible { background: transparent; color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+html body div.wpml-ls-statics-footer.wpml-ls li.wpml-ls-current-language a.wpml-ls-link { opacity: 0.8; }
+@media (max-width: 767px) {
+  html body:not(.top-v2-sim-page) div.wpml-ls-statics-footer.wpml-ls-legacy-list-horizontal { padding-bottom: 16px; }
+  #footer .l-footer_inner { padding-bottom: 0; }
+}
+footer#footer.l-footer { padding-bottom: 20px !important; }
+/* 予約バーの出る幅では、body の下余白（予約バーの高さ分）もフッターの色にして、白い帯に見せない */
+@media (max-width: 991.98px) {
+  html:has(> body:not(.sample-cro):not(.top-v2-sim-page)) { background-color: #fff; } /* 画面の上下の引っぱり（iOS）では白のまま */
+  body:not(.sample-cro):not(.top-v2-sim-page) { background-color: #006d88; }
+  body:not(.sample-cro):not(.top-v2-sim-page) .l-wrapper { background-color: #fff; }
+}
+/* V14 PC右下の人物の予約ボタン（「予約する人、この指、と〜まれっ!」）：1280px前後でカードの右端・帯・フッターの著作権表示に重なる
+   → 1439pxまでは小さく（129→88px）右へ寄せる（right 40→12px）。フッターの右寄せの文字は、ボタンの分だけ左へ逃がす。1440px以上は今のまま */
+@media (min-width: 992px) and (max-width: 1439.98px) {
+  .l-footer_reserve { width: 88px; right: 12px; bottom: 64px; }
+  #footer .l-footer_copy { padding-right: 96px; }
+}
+/* V9 遊び（PC）のチェックインの枠：3つの項目が縦線つきで横に流れ、2行目が「｜チェックアウト」と縦線から始まっていた
+   → 1行目「チェックイン｜※給食…」、2行目「チェックアウト」に分け、2行目の頭の縦線を消す */
+.l-stay_infoTitle > span + span + span:last-child {
+  display: flex;
+  justify-content: center;
+}
+.l-stay_infoTitle > span + span + span:last-child::before { content: none; }
+/* V10 料金・オプション（PC）の黒板：枠いっぱい（760px）で中の文字は3行だけ → トップの黒板（約626px）と同じくらいに絞る */
+@media (min-width: 992px) {
+  .top-v2-price-card + .top-v2-price-simulator .top-v2-chalkboard--art { max-width: 620px; }
+}
+/* V11 トップ（スマホ）：「クチコミ＆SNSをもっと見る」の下に、バスケの男の絵だけで約200〜300pxの空き → 絵を小さくし、ボタンの右下へ寄せて詰める */
+@media (max-width: 767px) {
+  #landscape .l-album_bgRightbtm {
+    --w: 40vw;
+    margin-top: calc(var(--w) * -0.34 - 34px);
+    margin-right: calc(var(--w) * -0.3);
+  }
+}
+/* V12 カタショーについて
+   ・スマホ：物語の文が「2018年に／株式会社マキノハラボが…」と句のかたまりで折れて右が大きく空く → ふつうの折り返しにする
+   ・リード「ここが誰かの母校だった／ことも、」の均等割り → 行いっぱいに流してから折る
+   ・校歌の横スクロール枠の左端で文字が切れて見える → 左端をぼかして「続きがある」と分かる見せ方に
+   ・PC：最後の「空き状況を見る」と「遊びをぜんぶ見る」の高さと上端がずれる → 上端と高さをそろえる */
+@media (max-width: 767px) {
+  .top-v2-about-story-card p:not(.top-v2-about-story-emphasis) { word-break: normal; overflow-wrap: anywhere; text-wrap: pretty; }
+  #song .top-v2-about-center { text-wrap: pretty; }
+  .top-v2-about-song-scroll {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px);
+    mask-image: linear-gradient(to right, transparent 0, #000 28px);
+  }
+}
+@media (min-width: 768px) {
+  .top-v2-about-cta-actions { align-items: flex-start; }
+  .top-v2-about-cta-actions .top-v2-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 74px;
+    box-sizing: border-box;
+  }
+}
+/* 申し送り：インライン style をクラスに（お問い合わせ・クチコミ＆SNS） */
+/* カードの中の文のあとに置くボタン（お問い合わせの分流カード、SNSのカード） */
+.top-v2-card-cta,
+.top-v2-scene-card-body p.top-v2-card-cta { margin: 18px 0 0; }
+/* お問い合わせ：「お問い合わせ内容」の見出しの下の書き方の説明 */
+.top-v2-form-hint { margin: 0 0 8px; color: #2e2518; font-size: 14px; font-weight: 500; line-height: 1.7; text-wrap: pretty; }
+/* お問い合わせ：最初の画面の電話・フォームへの近道（電話番号と受付時間は途中で折らない） */
+.top-v2-scene-lead.top-v2-contact-quick { margin: 0; font-size: 15px; line-height: 1.9; }
+/* クチコミ＆SNS：節の終わりの中央の一言（「あなたの集まりは？」など） */
+.top-v2-scene-lead.top-v2-lead-center-gap { margin: 40px 0 0; text-align: center; }
+/* クチコミ＆SNS：「友達と／家族で／合宿で／研修・会議で」の4つの入口（全角スペース区切りをやめ、すき間で並べる） */
+.top-v2-actions.top-v2-scene-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 24px;
+  margin-top: 12px;
+}
+/* V13 クチコミ＆SNS（PC）：X のカードが Instagram のカードの高さに引き伸ばされ、中が大きく空いていた → 中身の高さに */
+#sns .top-v2-scene-cards { align-items: start; }
+/* 申し送り：カタショーについての最後の節。足したリンク2行（料金・オプション／4つの入口）の間が36pxずつ空いて間延びしていた → 2行目は詰める */
+.top-v2-about-cta-actions ~ .top-v2-actions + .top-v2-actions { margin-top: 14px; }
+/* 申し送り：校内マップの「フロア案内図」。説明文（左寄せ）の下に足した案内の1行が中央寄せでそろっていなかった → 左寄せにそろえる */
+#floors .top-v2-scene-lead + .top-v2-timeline-note { margin-left: 0; margin-right: 0; max-width: none; text-align: left; }
+#floors .top-v2-scene-lead:has(+ .top-v2-timeline-note) { margin-bottom: 8px; }
+/* 2026-11-24 ページ内リンクで「よくある質問」の1問へ飛んだとき、質問の見出しが右上のメニューボタンの下に隠れないようにする（家族ページ「部屋分けの料金 →」ほか） */
+details.faq[id] { scroll-margin-top: 96px; }

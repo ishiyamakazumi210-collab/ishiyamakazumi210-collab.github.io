@@ -77,7 +77,7 @@
       name: '海',
       photo: window.KATASHO_DATA.images.beach.src,
       alt: window.KATASHO_DATA.images.beach.alt,
-      body: '歩いてすぐに海。散歩や海水浴にどうぞ。'
+      body: '歩いて3分の海。散歩や波あそびにどうぞ。サーファーにも人気です。ライフセーバーはいないので、泳ぐなら海開き中の静波海水浴場・さがらサンビーチがおすすめです。'
     }
   };
 
