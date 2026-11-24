@@ -117,6 +117,10 @@ window.KATASHO_DATA = {
       "src": "/assets/img/people-2026/family-gym.jpg",
       "alt": "体育館でボール遊びをする2組の家族"
     },
+    "familiesGymBallCard": {
+      "src": "/assets/img/people-2026/family-gym-card.jpg",
+      "alt": "体育館でボール遊びをする2組の家族"
+    },
     "showerRoom": {
       "src": "/assets/img/shower-changing-2026.jpg",
       "alt": "鍵のかかる個室が並ぶシャワー室"
@@ -126,7 +130,7 @@ window.KATASHO_DATA = {
       "alt": "キャリーケースを持って校舎の入口へ向かう友達グループ"
     },
     "universityFriends": {
-      "src": "/assets/img/university_friends.jpg",
+      "src": "/assets/img/university-friends-bright.jpg",
       "alt": "校舎の前に集まったサークル合宿の集合写真"
     },
     "bbqPlatter": {
@@ -170,11 +174,11 @@ window.KATASHO_DATA = {
       "alt": ""
     },
     "basketballGym": {
-      "src": "/assets/img/play-cards-2026/basketball-gym.jpg",
+      "src": "/assets/img/play-cards-2026/basketball-gym-v3.jpg",
       "alt": "体育館でバスケットボール"
     },
     "dodgeballGym": {
-      "src": "/assets/img/play-cards-2026/dodgeball-gym.jpg",
+      "src": "/assets/img/play-cards-2026/dodgeball-gym-v3.jpg",
       "alt": "体育館でドッジボール"
     },
     "stepIcon1": {

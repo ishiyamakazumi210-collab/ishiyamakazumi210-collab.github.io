@@ -31,7 +31,7 @@
 
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261121m"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124a"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -435,10 +435,14 @@ height: 78vw;
         <!-- 6. 割引 -->
         <section class="top-v2-sim-step" aria-labelledby="sim-h-disc">
           <h2 class="top-v2-sim-step-title" id="sim-h-disc"><span class="top-v2-sim-step-no" aria-hidden="true">6</span>割引</h2>
-          <p class="top-v2-sim-discline"><strong>連泊割</strong><span>2泊以上で自動的に宿泊料金の合計から<span data-sim-percent="renpaku"></span>%OFF</span></p>
+          <p class="top-v2-sim-discline"><strong>連泊割</strong><span>2泊以上で自動的に、宿泊の基本料金から<span data-sim-percent="renpaku"></span>%OFF（お食事・オプションは対象外）</span></p>
           <label class="top-v2-sim-check">
             <input type="checkbox" id="sim-local">
-            <span><strong>地域割</strong>　牧之原市内にお住まいの方（宿泊料金の合計から<span data-sim-percent="chiiki"></span>%OFF）</span>
+            <span><strong>地域割</strong>　牧之原市内にお住まいの方（宿泊の基本料金から<span data-sim-percent="chiiki"></span>%OFF。お食事・オプションは対象外）</span>
+          </label>
+          <label class="top-v2-sim-check">
+            <input type="checkbox" id="sim-repeat">
+            <span><strong>リピート割</strong>　以前カタショーに泊まったことがある方（宿泊の基本料金から<span data-sim-percent="repeat"></span>%OFF。お食事・オプションは対象外）</span>
           </label>
           <p class="top-v2-sim-note" id="sim-discount-note"></p>
         </section>
@@ -470,7 +474,7 @@ height: 78vw;
 
 <script src="/assets/js/site-data.js?v=20261119dr" defer></script>
 <script src="/assets/js/pricing-board.js?v=20261119dr" defer></script>
-<script src="/assets/js/price-simulator.js?v=20261121a" defer></script>
+<script src="/assets/js/price-simulator.js?v=20261124b" defer></script>
 <script src="/assets/js/reserve-handoff.js?v=20261121a" defer></script>
 
                 </div>

@@ -12721,6 +12721,23 @@ main small {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+/* 2026-11-24 PCでは小さすぎた（オーナー指摘）。広い画面だけ一回り大きく */
+@media (min-width: 768px) {
+  .top-v2-landscape-review {
+    gap: 0 4px;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  .top-v2-landscape-review > strong {
+    margin: 0 4px 0 10px;
+    font-size: 34px;
+  }
+  .top-v2-landscape-review .top-v2-info > summary > span {
+    width: 22px;
+    height: 22px;
+    font-size: 15px;
+  }
+}
 
 /* クチコミページ: 「Googleのクチコミ」見出しの下に平均点と件数 */
 .top-v2-review-summary {
@@ -12772,20 +12789,32 @@ main small {
   aspect-ratio: 2 / 3;
 }
 
-/* 2026-11-21 くわしい料金シミュレーターへのリンクは、計算の黒板のすぐ下に（オーナー指摘：料金ボタンの並びの奥にあって見つからない） */
+/* 2026-11-21 くわしい料金シミュレーターへのリンクは、計算の黒板のすぐ下に（オーナー指摘：料金ボタンの並びの奥にあって見つからない）
+   2026-11-24 丸いボタンをやめて文字のリンクに（オーナー指摘：トップの狭い列で4行に折れて丸くなり、ダサい）。
+   文言は「日付を入れて」→「オプションも入れて」（空きは予約画面でしか分からないので、日付より中身の細かさを売りに）。
+   トップは見出し「かんたん宿泊料金シミュレーター」のすぐ下、ほかの4ページは今までどおり黒板のすぐ下 */
 .top-v2-sim-more {
-  margin: 14px 0 6px;
+  margin: 10px 0 6px;
   text-align: center;
 }
 .top-v2-sim-more .top-v2-sim-more-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 8px 20px;
+  display: inline-block;
+  padding: 10px 4px;
+  color: #a5540e;
   font-size: 15px;
   font-weight: 800;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-color: rgba(240, 131, 30, 0.55);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
+.top-v2-sim-more .top-v2-sim-more-link:hover,
+.top-v2-sim-more .top-v2-sim-more-link:focus-visible {
+  text-decoration-color: #f0831e;
+}
+.top-v2-nowrap { white-space: nowrap; }
+.top-v2-price-simulator-head .top-v2-sim-more { margin: 4px 0 -6px; }
 
 /* ===================================================================
    2026-11-21 マスキングテープの整理（オーナー判断「テープは写真だけ、1画面に1〜2枚まで。文字のカードには使わない」）
@@ -13198,3 +13227,25 @@ main small {
   font-weight: 900;
 }
 .top-v2-contact-sent a { color: #2f7890; text-decoration: underline; white-space: nowrap; }
+
+/* 2026-11-24 くわしい料金シミュレーターを青基調に（オーナー指摘：オレンジ基調が気持ち悪い。ベースは見出しの青 #2f7890）。元の規則は残し、ここで色だけ上書き。戻すときはこのブロックを消す */
+.top-v2-sim-step { border-color: #cfe0e8; }
+.top-v2-sim-step-no { color: #ffffff; }
+.top-v2-sim-card input:checked + .top-v2-sim-card-body { color: #ffffff; }
+.top-v2-sim-chip input:checked + span { color: #ffffff; }
+.top-v2-sim-night { border-color: #cfe0e8; background-color: #f1f7f9; }
+.top-v2-sim-peoplesum { background-color: #f1f7f9; }
+.top-v2-sim-mealblock { border-color: #cfe0e8; background-color: #f1f7f9; }
+.top-v2-sim-opt { border-color: #cfe0e8; background-color: #f1f7f9; }
+.top-v2-sim-opt-price { color: #1f5d72; }
+.top-v2-sim-discline { background-color: #f1f7f9; }
+.top-v2-sim-sum-total strong { color: #1f5d72; }
+.top-v2-sim-line { border-bottom-color: #dbe8ee; }
+.top-v2-sim-line-amount { color: #1f5d72; }
+.top-v2-sim-bd-total b { color: #1f5d72; }
+@media (min-width: 992px) {
+  .top-v2-sim-sum-top { background-color: #f1f7f9; }
+}
+@media (max-width: 991.98px) {
+  .top-v2-sim-sum-body { border-top-color: #cfe0e8; }
+}

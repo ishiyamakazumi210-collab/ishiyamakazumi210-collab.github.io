@@ -21,7 +21,7 @@
   // ---- 転記データ（/play/option/ の記載） ---------------------------------
   var MAX_NIGHTS = 5;
   var MEAL_MIN_SERVINGS = 5; // 食事メニューの「5人分〜」
-  var DISCOUNT_PERCENT = { renpaku: 5, chiiki: 5 }; // 連泊割 合計5%OFF / 地域割 牧之原市内5%OFF
+  var DISCOUNT_PERCENT = { renpaku: 5, chiiki: 5, repeat: 5 }; // 連泊割・地域割・リピート割とも、宿泊の基本料金から5%OFF（お食事・オプションは対象外）
   var DRINK = { label: '飲み放題2時間', price: 1500 }; // 1,500円/人（税込）
   var SEASON_LABEL = { weekday: '平日・オフシーズン', holiday: '土日祝・ハイシーズン' };
 
@@ -53,7 +53,7 @@
     },
     {
       id: 'surf', name: 'サーフィン教室', price: 8000, from: true, unit: '/人（税込）',
-      note: 'チェックアウト後に、地元のサーフショップの方からサーフィンとボディボードのレクチャーを受けます。料金は受け入れてくださるサーフショップによって変わるため、合計は目安になります。',
+      note: '地元のサーフショップの方から、サーフィンとボディボードのレクチャーを受けられます（チェックアウト後の参加もできます）。料金は受け入れてくださるサーフショップによって変わるため、合計は目安になります。',
       fields: [{ key: 'people', label: '参加人数', unit: '人', max: 'payers' }]
     },
     {
@@ -181,7 +181,8 @@
       drink: arr(0),
       breakfast: arr(false),
       opts: { gym: { hours: 0 }, surf: { people: 0 }, sauna: { people: 0, hours: 0 }, beer: { kegs: 0 }, room: { rooms: 0 } },
-      local: false
+      local: false,
+      repeat: false
     };
   }
 
@@ -293,17 +294,19 @@
     }
     res.options.forEach(function (it) { res.optionTotal += it.amount; });
 
-    // 割引（宿泊料金の合計に対して。連泊割・地域割はどちらか大きい方1つのみ）
+    // 割引（宿泊の基本料金に対して。お食事・オプションは対象外。連泊割・地域割・リピート割はどれか1つのみ）
     var eligible = [];
     if (s.nights >= 2) { eligible.push({ id: 'renpaku', label: '連泊割', percent: DISCOUNT_PERCENT.renpaku }); }
     if (s.local) { eligible.push({ id: 'chiiki', label: '地域割（牧之原市内）', percent: DISCOUNT_PERCENT.chiiki }); }
+    if (s.repeat) { eligible.push({ id: 'repeat', label: 'リピート割', percent: DISCOUNT_PERCENT.repeat }); }
     if (eligible.length) {
       var best = eligible[0];
       eligible.forEach(function (it) { if (it.percent > best.percent) { best = it; } });
       var amountOff = Math.floor(res.lodgingTotal * best.percent / 100);
       res.discount = { label: best.label, percent: best.percent, amount: amountOff };
       if (eligible.length > 1) {
-        note('連泊割と地域割を同時に使えるかは確認が取れていないため、割引率の大きい方（同率なら連泊割）の1つだけを適用しています。併用の可否は予約画面でご確認ください');
+        var names = eligible.map(function (it) { return it.label.replace('（牧之原市内）', ''); }).join('と');
+        note(names + 'を同時に使えるかは確認が取れていないため、割引率の大きい方（同率なら 連泊割→地域割→リピート割 の順）の1つだけを適用しています。併用の可否は予約画面でご確認ください');
       }
     }
 
@@ -370,6 +373,7 @@
     discountNote: $('sim-discount-note'),
     peopleSum: $('sim-peoplesum'),
     local: $('sim-local'),
+    repeat: $('sim-repeat'),
     total: $('sim-total'),
     per: $('sim-per'),
     approx: $('sim-approx'),
@@ -585,6 +589,7 @@
       });
     });
     s.local = els.local.checked;
+    s.repeat = els.repeat.checked;
   }
 
   function autoSeason(i) {
@@ -765,8 +770,12 @@
 
     // 割引
     var dn = '';
-    if (s.nights >= 2 && s.local) {
-      dn = '連泊割と地域割を同時に使えるかは確認が取れていないため、割引率の大きい方（同率なら連泊割）の1つだけを計算に入れています。';
+    var dnNames = [];
+    if (s.nights >= 2) { dnNames.push('連泊割'); }
+    if (s.local) { dnNames.push('地域割'); }
+    if (s.repeat) { dnNames.push('リピート割'); }
+    if (dnNames.length >= 2) {
+      dn = dnNames.join('と') + 'を同時に使えるかは確認が取れていないため、割引率の大きい方（同率なら 連泊割→地域割→リピート割 の順）の1つだけを計算に入れています。';
     } else if (s.nights >= 2) {
       dn = 'いまの泊数は連泊割の対象です。';
     }
@@ -825,7 +834,7 @@
     ];
     if (res.discount) {
       secs.push(section('割引', [
-        lineItem(res.discount.label + ' ' + res.discount.percent + '%OFF', '宿泊料金の合計 ' + fmt(res.lodgingTotal) + ' に対して', '−' + fmt(res.discount.amount), 'is-discount')
+        lineItem(res.discount.label + ' ' + res.discount.percent + '%OFF', '宿泊の基本料金 ' + fmt(res.lodgingTotal) + ' に対して（お食事・オプションは対象外）', '−' + fmt(res.discount.amount), 'is-discount')
       ]));
     }
     secs.forEach(function (sec) { if (sec) { bd.appendChild(sec); } });
