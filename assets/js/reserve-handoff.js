@@ -4,7 +4,7 @@
 //    num=大人  num_1=小学生  num_2=3〜5歳  num_3=0〜2歳  dt=YYYYMMDD（泊まる日）  nights=泊数
 //    プランの選択は渡さない（ProXのプランIDが不明なため）。
 // 2) 各ページの簡易な料金計算から「くわしい料金シミュレーター」へのリンク。
-//    adult=おとな  elem=小学生  pre=3〜5歳  plan=compact（コンパクトプランを適用中のとき）。price-simulator.js が読む
+//    adult=おとな  elem=小学生  pre=3〜5歳  plan=compact（少人数プランを適用中のとき）。price-simulator.js が読む
 // 料金計算のないページでは何もしない。読み込みは pricing-board.js / price-simulator.js の後。人数の表示を読むだけで、料金計算には手を出さない。
 (function () {
   'use strict';
@@ -45,7 +45,7 @@
     p.num = countOf(adult);
     p.num_1 = countOf(byId('fam-elem'));
     p.num_2 = countOf(byId('fam-pre'));
-    // コンパクトプランは、チェックが入っていて人数も対象内（表示が「適用中」）のときだけ
+    // 少人数プランは、チェックが入っていて人数も対象内（表示が「適用中」）のときだけ
     var compact = byId('plan-compact');
     var menu = compact && compact.closest ? compact.closest('details') : null;
     var state = menu ? menu.querySelector('.top-v2-chalk-menu-state') : null;

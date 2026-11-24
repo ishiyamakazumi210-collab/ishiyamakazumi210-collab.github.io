@@ -1,5 +1,5 @@
 // くわしい料金シミュレーター (/price-simulator/)
-// 宿泊・BBQ・給食・サンド・コンパクトプランの料金は pricing-board.js が公開する
+// 宿泊・BBQ・給食・サンド・少人数プランの料金は pricing-board.js が公開する
 // window.KATASHO_PRICING（唯一の定義元）から読む。ここに書くのは、/play/option/ に掲載されている
 // オプション価格・割引率・祝日などの「転記」だけ（出典は各定数のコメント参照）。
 (function () {
@@ -33,7 +33,7 @@
   ];
   // 夕食: 子ども料金は夕食のみ（小学生30%OFF・3〜5歳50%OFF、FAQ記載・2026-11-19オーナー確認）。
   // BBQ は MEALS.bbq、それ以外は大人料金 × KID_RATIO で計算（kidRates）。
-  // コンパクトプランは「夕食オプションはBBQのみ」。
+  // 少人数プランは「夕食オプションはBBQのみ」。
   var DINNERS = [
     { id: 'byo', label: '持ち込み調理', compactOk: true },
     { id: 'bbq', label: 'BBQ（満腹コース）', mealKey: 'bbq', compactOk: true },
@@ -71,7 +71,7 @@
     },
     {
       id: 'room', name: '部屋分けオプション', quote: true, unitText: '5,000円/追加1部屋・26名以上は1部屋無料',
-      note: '追加部屋は最大2部屋です。泊数ごとの扱いなどは予約時にご確認いただくため、合計には含めず「お見積り」としています。コンパクトプランでは利用できません。',
+      note: '追加部屋は最大2部屋です。泊数ごとの扱いなどは予約時にご確認いただくため、合計には含めず「お見積り」としています。少人数プランでは利用できません。',
       fields: [{ key: 'rooms', label: '追加する部屋数', unit: '部屋', max: 2 }]
     }
   ];
@@ -225,7 +225,7 @@
     }
     if (anyFloor) { note('最低利用金額に満たない泊は、最低利用金額で計算しています'); }
 
-    // 食事（食事は「5人分〜」。コンパクトプランの夕食はBBQのみ）
+    // 食事（食事は「5人分〜」。少人数プランの夕食はBBQのみ）
     function addMeal(label, def, extraNote) {
       var pr = mealPrices(def);
       var amount = counts.adult * pr.adult + counts.elem * pr.elem + counts.pre * pr.pre;
@@ -532,7 +532,7 @@
       stdSmall.textContent = '平日・オフ ' + priceYen(std[0].adult) + '〜 ／ 土日祝・ハイ ' + priceYen(std[1].adult) + '〜（おとな1泊）';
     }
     if (cmpSmall) {
-      cmpSmall.textContent = '20名くらいまで・おとな' + priceYen(-P.COMPACT.adultDelta) + '引き（' + priceYen(cmp[0].adult) + '〜 ／ ' + priceYen(cmp[1].adult) + '〜）';
+      cmpSmall.textContent = 'おとな' + priceYen(-P.COMPACT.adultDelta) + '引き（' + priceYen(cmp[0].adult) + '〜 ／ ' + priceYen(cmp[1].adult) + '〜）';
     }
     var max = form.querySelector('[data-sim-compact-max]');
     if (max) { max.textContent = String(P.COMPACT_HARD_MAX); }
@@ -612,7 +612,7 @@
     flash.meal = '';
     if (s.plan === 'compact' && total > P.COMPACT_HARD_MAX) {
       s.plan = 'standard';
-      flash.plan = '合計が' + P.COMPACT_HARD_MAX + '名を超えたため、通常プランの料金で計算しています。';
+      flash.plan = '合計が' + P.COMPACT_HARD_MAX + '名を超えたため、スタンダードプランの料金で計算しています。';
     }
     var compact = s.plan === 'compact';
     if (payers < MEAL_MIN_SERVINGS) {
@@ -623,7 +623,7 @@
       for (var j = 0; j < MAX_NIGHTS; j += 1) {
         if (!findDef(DINNERS, s.dinner[j]).compactOk) {
           s.dinner[j] = 'byo';
-          flash.meal = 'コンパクトプランの夕食オプションはBBQのみのため、BBQ以外は「持ち込み調理」に戻しました。';
+          flash.meal = '少人数プランの夕食オプションはBBQのみのため、BBQ以外は「持ち込み調理」に戻しました。';
         }
       }
       s.opts.room.rooms = 0;
@@ -665,9 +665,9 @@
     Array.prototype.forEach.call(planInputs, function (input) { input.checked = input.value === s.plan; });
     compactRadio.disabled = !compactOk;
     compactRadio.parentNode.classList.toggle('is-disabled', !compactOk);
-    var planText = 'コンパクトプランは' + P.COMPACT_HARD_MAX + '名までです。' + (DATA.compact && DATA.compact.roomsNote ? DATA.compact.roomsNote + '。' : '') +
+    var planText = '少人数プランは' + P.COMPACT_HARD_MAX + '名までです。' + (DATA.compact && DATA.compact.roomsNote ? DATA.compact.roomsNote + '。' : '') +
       '大部屋・追加部屋は利用できず、夕食オプションはBBQのみです。';
-    if (!compactOk) { planText = '合計' + total + '名のため、コンパクトプラン（' + P.COMPACT_HARD_MAX + '名まで）は選べません。'; }
+    if (!compactOk) { planText = '合計' + total + '名のため、少人数プラン（' + P.COMPACT_HARD_MAX + '名まで）は選べません。'; }
     else if (compact && total > P.COMPACT_COMFORT_MAX) {
       var rooms = DATA.rooms || {};
       var mid = rooms.s1f1 ? rooms.s1f1.max : '';
@@ -728,7 +728,7 @@
       Array.prototype.forEach.call(mr.select.options, function (opt) {
         var def = findDef(DINNERS, opt.value);
         opt.disabled = compact && !def.compactOk;
-        opt.textContent = mealOptionText(def) + (opt.disabled ? '（コンパクトプランでは選べません）' : '');
+        opt.textContent = mealOptionText(def) + (opt.disabled ? '（少人数プランでは選べません）' : '');
       });
       var dinnerDef = findDef(DINNERS, s.dinner[n]);
       var caption = mealCaption(dinnerDef);
@@ -755,7 +755,7 @@
       var refs = optionRefs[def.id];
       var blocked = def.id === 'room' && compact;
       refs.gate.hidden = !blocked;
-      refs.gate.textContent = blocked ? 'コンパクトプランでは大部屋・追加部屋を利用できません。' : '';
+      refs.gate.textContent = blocked ? '少人数プランでは大部屋・追加部屋を利用できません。' : '';
       def.fields.forEach(function (f) {
         var max = f.max === 'payers' ? Math.max(0, payers) : f.max;
         var value = s.opts[def.id][f.key];

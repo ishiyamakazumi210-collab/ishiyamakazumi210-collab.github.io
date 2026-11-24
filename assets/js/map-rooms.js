@@ -40,8 +40,8 @@
     return '目安' + typical + '名（手狭でよければ最大' + max + '名）';
   }
 
-  var STANDARD_STAY_NOTE = '通常プランの宿泊棟・お部屋は施設側で決定し、宿泊日の10日前を目安にご案内します。';
-  var COMPACT_STAY_NOTE = '調理室併設コンパクトプランで使用する寝室です。';
+  var STANDARD_STAY_NOTE = 'スタンダードプランの宿泊棟・お部屋は施設側で決定し、宿泊日の10日前を目安にご案内します。';
+  var COMPACT_STAY_NOTE = '少人数プランで使用する寝室です。';
   var COMMON_BEDDING = ['寝具一式', 'エアコン', 'ドライヤー'];
   var CLASSROOM_BODY = '机も黒板も、当時のまま残っています。集まりや宴会にも使えます。';
   var BBQ_BODY = 'ビニール屋根つきなので、雨の日でもBBQができます。①②は調理室の前、③は南棟側です。';
@@ -56,7 +56,7 @@
     shokudo: {
       name: '食堂',
       sub: '給食室・調理設備つき',
-      body: 'コンパクトプランの専有スペース内にある、調理設備つきの食堂です。コンパクトプランの宴会・食事は、ここで行います。',
+      body: '少人数プランの専有スペース内にある、調理設備つきの食堂です。少人数プランの宴会・食事は、ここで行います。',
       photo: '/assets/img/rooms-2026/shokudo.jpg',
       alt: '長机と大型テレビ、卓球台が並ぶ食堂'
     },
@@ -88,7 +88,7 @@
     },
     s1f1: {
       name: '南棟一階宿泊部屋①',
-      sub: 'コンパクトプランの中部屋',
+      sub: '少人数プランの中部屋',
       capacity: capacityText('s1f1'),
       chips: stayChips('二段ベッド8台'),
       note: COMPACT_STAY_NOTE,
@@ -97,7 +97,7 @@
     },
     s1f2: {
       name: '南棟一階宿泊部屋②',
-      sub: 'コンパクトプランの小部屋',
+      sub: '少人数プランの小部屋',
       capacity: capacityText('s1f2'),
       chips: stayChips('二段ベッド4台'),
       note: COMPACT_STAY_NOTE,

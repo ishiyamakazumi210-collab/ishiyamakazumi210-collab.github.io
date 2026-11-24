@@ -24,7 +24,7 @@
   var MEAL_LABELS = { kyushoku: '給食', bbq: '提供型BBQ', sando: 'サンド' };
   var MAX_PEOPLE = parseInt(window.KATASHO_DATA && window.KATASHO_DATA.capacity && window.KATASHO_DATA.capacity.total, 10) || 100;
 
-  // コンパクトプランの寝室2部屋(中部屋s1f1・小部屋s1f2)の定員は site.json
+  // 少人数プランの寝室2部屋(中部屋s1f1・小部屋s1f2)の定員は site.json
   // (rooms.s1f1/rooms.s1f2、map-rooms.jsの部屋データと同じ単一データソース)
   // が唯一の元数字。COMPACT_COMFORT_MAX(=目安の合計)とCOMPACT_HARD_MAX
   // (=「手狭でもよければ」の最大の合計、2026-11-19オーナー確認)はここで計算する
@@ -40,7 +40,7 @@
   var COMPACT_COMFORT_MAX = COMPACT_MID_TYPICAL + COMPACT_SMALL_TYPICAL;
   var COMPACT_HARD_MAX = COMPACT_MID_MAX + COMPACT_SMALL_MAX;
 
-  // 調理室併設コンパクトプラン（20名くらいまで）: 大人-1,000円、子どもは
+  // 少人数プラン（1階・20名くらいまで）: 大人-1,000円、子どもは
   // 割引後の大人料金へ既存の子ども割引率(小学生30%OFF/3〜5歳50%OFF)を掛け直す。
   // floorは「最低人数(5/7)×割引後大人料金」と一致する値（検算済み）。site.json由来。
   var COMPACT = {
@@ -50,7 +50,7 @@
     floor: { weekday: yenOf(MIN_SPEND.compactWeekday), holiday: yenOf(MIN_SPEND.compactHoliday) }
   };
 
-  // 季節×コンパクトプランの単価をまとめて返す、料金定数の唯一の参照口。
+  // 季節×少人数プランの単価をまとめて返す、料金定数の唯一の参照口。
   // 通常時はSEASONS[season]をそのまま返す＝プラン分岐はここに一本化する。
   function getRates(season, compact) {
     var base = SEASONS[season];
@@ -185,7 +185,7 @@
     return { slots: slots, choice: choice };
   }
 
-  // ---- コンパクトプラン切替（全ボード共通） --------------------------------
+  // ---- 少人数プラン切替（全ボード共通） --------------------------------
   // [data-plan="compact"] のチェックボックス1個を見る。状態ラベル（適用中/なし）
   // はsummary内の.top-v2-chalk-menu-stateに書き込む（食事オプション／お子さま
   // 人数と同じ文法）。チェックボックス自体は6ページのHTMLに直書きしてある。
@@ -218,7 +218,7 @@
     };
   }
 
-  // ---- 定員注意行（コンパクトプラン専用・非ブロッキング） ------------------
+  // ---- 定員注意行（少人数プラン専用・非ブロッキング） ------------------
   // .top-v2-chalkboard--artの直後にJS側で1個だけ差し込む。食事状態spanと同じく
   // 状態依存の生成物のため、6ページのHTMLは触らずJS側で完結させる。
   function setupCapacityNotice() {
@@ -237,7 +237,7 @@
     if (notice.hidden) { return; }
     notice.textContent = totalPeople <= COMPACT_HARD_MAX
       ? '※ 寝室2部屋の目安' + COMPACT_COMFORT_MAX + '名を超えます。中部屋' + COMPACT_MID_MAX + '名＋小部屋' + COMPACT_SMALL_MAX + '名までの手狭な配置になるため、ご相談ください'
-      : '※ 寝室2部屋の上限' + COMPACT_HARD_MAX + '名を超えるため、通常プラン料金で計算しています';
+      : '※ 寝室2部屋の上限' + COMPACT_HARD_MAX + '名を超えるため、スタンダードプラン料金で計算しています';
   }
 
   // ---- グループボード（friends / gasshuku / kenshu） ---------------------
@@ -472,7 +472,7 @@
       var preUnit = cfg.pre + mealCost.pre;
       var kidsCount = counts.elem + counts.pre;
       // おとな最小人数ルールでn*adultUnitがcfg.floor（=minPeople×cfg.adult。
-      // 通常・コンパクトプランどちらも一致するよう定数を設計済み）を自動的に
+      // 通常・少人数プランどちらも一致するよう定数を設計済み）を自動的に
       // 上回るため、家族ボードのようなfloor補正は不要。
       var total = n * adultUnit + counts.elem * elemUnit + counts.pre * preUnit;
 
