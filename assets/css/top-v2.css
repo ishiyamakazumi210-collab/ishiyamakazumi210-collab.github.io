@@ -13533,3 +13533,42 @@ main small {
 .top-v2-review-grid:has(.top-v2-review-card--g) {
   align-items: stretch;
 }
+
+/* 2026-11-24 アクセス「周辺情報」に、旧サイトの周辺観光地マイマップを埋め込む（オーナー案）。戻すときはこのブロックとHTMLの地図を消す */
+.top-v2-address-card.top-v2-address-card--nearby {
+  max-width: 760px;
+}
+.top-v2-nearby-map {
+  margin: 4px 0 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #dde6ea;
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+}
+.top-v2-nearby-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+@media (min-width: 768px) {
+  .top-v2-nearby-map {
+    aspect-ratio: 16 / 10;
+  }
+}
+.top-v2-nearby-maplink {
+  margin: 10px 0 0;
+  text-align: left;
+}
+.top-v2-nearby-maplink a {
+  color: #2f7890;
+}
+/* 2026-11-24 周辺情報の地図と「大きな地図で見る」は、見出し｜中身の2列をまたいで横いっぱいに */
+.top-v2-address-card--nearby .top-v2-nearby-map,
+.top-v2-address-card--nearby .top-v2-nearby-maplink {
+  grid-column: 1 / -1;
+}
+.top-v2-address-card--nearby .top-v2-nearby-map {
+  width: 100%;
+}
