@@ -23,7 +23,7 @@
   var MEAL_MIN_SERVINGS = 5; // 食事メニューの「5人分〜」
   var DISCOUNT_PERCENT = { renpaku: 5, chiiki: 5, repeat: 5 }; // 連泊割・地域割・リピート割とも、宿泊の基本料金から5%OFF（お食事・オプションは対象外）
   var DRINK = { label: '飲み放題2時間', price: 1500 }; // 1,500円/人（税込）
-  var SEASON_LABEL = { weekday: '平日・オフシーズン', holiday: '土日祝・ハイシーズン' };
+  var SEASON_LABEL = { weekday: '平日・オフシーズン', holiday: '土日祝・ハイシーズン' }; // 2026-11-24 一度「平日／土日祝」にしたが、オーナー判断でこの表記に戻した
 
   // 昼食（チェックイン前）: 給食は MEALS.kyushoku（全年齢同額）、弁当は 1,250円/人（子ども料金の記載なし）
   var LUNCHES = [
@@ -476,7 +476,7 @@
       ['おとな', priceYen(w.adult), priceYen(hd.adult)],
       ['小学生（30%OFF）', priceYen(w.elem), priceYen(hd.elem)],
       ['3〜5歳（50%OFF）', priceYen(w.pre), priceYen(hd.pre)],
-      ['2歳以下', '無料', '無料'],
+      ['2歳以下（添い寝）', '無料', '無料'],
       ['最低人数', w.minPeople + '名', hd.minPeople + '名'],
       ['最低利用金額', priceYen(w.floor), priceYen(hd.floor)]
     ];
