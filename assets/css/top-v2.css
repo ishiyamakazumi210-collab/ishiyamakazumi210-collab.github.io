@@ -13249,3 +13249,287 @@ main small {
 @media (max-width: 991.98px) {
   .top-v2-sim-sum-body { border-top-color: #cfe0e8; }
 }
+
+/* 2026-11-24 「せんせいより」→「料金の注意事項」（オーナー指摘：注意事項だと分かりづらい）。見出しを少し大きく濃くし、頭に「！」の丸印。戻すときはこのブロックを消す */
+.top-v2-teacher-note-label,
+.top-v2-teacher-note--unified .top-v2-teacher-note-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 900;
+  color: #2a4750;
+  letter-spacing: 0.02em;
+}
+.top-v2-teacher-note-label::before,
+.top-v2-teacher-note--unified .top-v2-teacher-note-label::before {
+  content: "!";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2f7890;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* 2026-11-24 アルバムのGoogleクチコミを、本物のクチコミらしい見た目に（オーナー指摘：手で作ったように見える）。アイコン・星・投稿月・Googleで見る。長文は6行で畳んで「もっと見る」。戻すときはこのブロックを消す */
+.top-v2-review-grid:has(.top-v2-review-card--g) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  column-count: auto;
+}
+@media (min-width: 768px) {
+  .top-v2-review-grid:has(.top-v2-review-card--g) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1100px) {
+  .top-v2-review-grid:has(.top-v2-review-card--g) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.top-v2-review-card.top-v2-review-card--g {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid #dde6ea;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(31, 58, 68, 0.06);
+  text-align: left;
+  transform: none;
+  grid-row: auto;
+  grid-column: auto;
+}
+.top-v2-review-card--g::before,
+.top-v2-review-card--g::after {
+  content: none;
+  display: none;
+}
+.top-v2-review-card--g .top-v2-review-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.top-v2-review-card--g .top-v2-review-avatar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--avatar);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+}
+.top-v2-review-card--g .top-v2-review-who {
+  min-width: 0;
+}
+.top-v2-review-card--g .top-v2-review-name {
+  margin: 0;
+  color: #22343b;
+  font-size: 15px;
+  font-weight: 800;
+}
+.top-v2-review-card--g .top-v2-review-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 0 0;
+  color: #6b7a82;
+  font-size: 12.5px;
+}
+.top-v2-review-card--g .top-v2-review-stars {
+  color: #fbbc04;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.top-v2-review-card--g .top-v2-review-text {
+  margin: 0;
+  color: #2e2518;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.top-v2-review-card--g.is-open .top-v2-review-text {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+.top-v2-review-card--g .top-v2-review-more {
+  align-self: flex-start;
+  margin: 0;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: #2f7890;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.top-v2-review-card--g .top-v2-review-more[hidden] {
+  display: none;
+}
+.top-v2-review-card--g .top-v2-review-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: auto 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #eef2f4;
+}
+.top-v2-review-card--g .top-v2-review-source {
+  margin: 0;
+  color: #6b7a82;
+  font-size: 12px;
+  font-weight: 400;
+}
+.top-v2-review-card--g .top-v2-review-link {
+  color: #2f7890;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 2026-11-24 連絡先・所在地のカードを、白地の情報カードに（オーナー指摘：めちゃくちゃダサい）。たいせつ・ほぞんばんの丸印、テープ、波線、傾きをやめ、見出しと中身を表のように並べる。戻すときはこのブロックを消す */
+.top-v2-address-card.top-v2-address-card {
+  background: #fff;
+  border: 1px solid #dde6ea;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(31, 58, 68, 0.06);
+  transform: none;
+  padding: 6px 22px 18px;
+  text-align: left;
+}
+.top-v2-address-card.top-v2-address-card::before,
+.top-v2-address-card.top-v2-address-card::after,
+.top-v2-price-card--formal.top-v2-price-card--formal::after {
+  content: none;
+  display: none;
+}
+.top-v2-address-card.top-v2-address-card .l-address_info {
+  margin: 0;
+  padding: 14px 0;
+  border-top: 1px solid #eef2f4;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 4px;
+  text-align: left;
+}
+.top-v2-address-card.top-v2-address-card .l-address_info + .l-address_info {
+  margin: 0;
+}
+.top-v2-address-card.top-v2-address-card .l-address_info:first-child,
+.top-v2-address-card.top-v2-address-card .top-v2-address-tab + .l-address_info {
+  border-top: 0;
+}
+.top-v2-address-card.top-v2-address-card .l-address_infoTitle,
+.top-v2-address-card.top-v2-address-card .top-v2-address-heading {
+  display: block;
+  position: static;
+  font-size: 13px;
+  font-weight: 800;
+  color: #2f7890;
+  letter-spacing: 0.04em;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: none;
+}
+.top-v2-address-card.top-v2-address-card .l-address_infoTitle::before,
+.top-v2-address-card.top-v2-address-card .l-address_infoTitle::after,
+.top-v2-address-card.top-v2-address-card .top-v2-address-heading::before,
+.top-v2-address-card.top-v2-address-card .top-v2-address-heading::after {
+  content: none;
+  display: none;
+  background: none;
+}
+.top-v2-address-card.top-v2-address-card .l-address_infoText {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #22343b;
+  font-weight: 500;
+}
+.top-v2-address-card.top-v2-address-card .l-address_infoText a {
+  color: #2f7890;
+  font-weight: 800;
+  text-underline-offset: 3px;
+}
+.top-v2-address-card.top-v2-address-card .l-address_infoCaption {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #6b7a82;
+  line-height: 1.6;
+}
+.top-v2-address-card.top-v2-address-card .l-address_infoCaption small {
+  font-size: inherit;
+  color: inherit;
+}
+@media (min-width: 600px) {
+  .top-v2-address-card.top-v2-address-card .l-address_info {
+    grid-template-columns: 8em 1fr;
+    column-gap: 16px;
+    align-items: baseline;
+  }
+  .top-v2-address-card.top-v2-address-card .l-address_infoTitle,
+  .top-v2-address-card.top-v2-address-card .top-v2-address-heading {
+    grid-column: 1;
+  }
+  .top-v2-address-card.top-v2-address-card .l-address_infoText,
+  .top-v2-address-card.top-v2-address-card .l-address_infoCaption {
+    grid-column: 2;
+  }
+}
+.top-v2-address-card.top-v2-address-card .top-v2-actions {
+  margin: 4px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid #eef2f4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  justify-content: flex-start;
+  text-align: left;
+}
+.top-v2-address-card.top-v2-address-card .top-v2-actions .top-v2-inline-link {
+  color: #2f7890;
+}
+/* 「がっこうのれんらくさき」タブ：縁にかぶせず、カード内の小さなピルに（「カタショーのあゆみ」と同じ見た目） */
+.top-v2-address-card.top-v2-address-card .top-v2-address-tab.top-v2-print-tab {
+  position: static;
+  top: auto;
+  left: auto;
+  transform: none;
+  display: inline-block;
+  margin: 14px 0 6px;
+  padding: 4px 14px;
+  font-size: 12.5px;
+}
+
+/* 2026-11-24 アルバムのクチコミ：横に並ぶカードの高さをそろえる。戻すときはこのブロックを消す */
+.top-v2-review-grid:has(.top-v2-review-card--g) {
+  align-items: stretch;
+}

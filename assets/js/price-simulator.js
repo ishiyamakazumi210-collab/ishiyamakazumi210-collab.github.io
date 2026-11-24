@@ -42,7 +42,7 @@
     { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250, kidRates: true }
   ];
   var KID_RATIO = { elem: 0.7, pre: 0.5 };
-  var BREAKFAST = { label: 'サンドウィッチ朝食', mealKey: 'sando' };
+  var BREAKFAST = { label: 'サンドイッチ朝食', mealKey: 'sando' };
 
   // オプション（価格・単位は /play/option/ の記載）。
   var OPTIONS = [
@@ -58,7 +58,7 @@
     },
     {
       id: 'sauna', name: 'プライベート貸切サウナ', price: 1000, minCharge: 4000, unit: '/人・時間（税込）',
-      note: '最低利用料金は4,000円です。',
+      note: '最低利用金額は4,000円です。',
       fields: [
         { key: 'people', label: '利用人数', unit: '人', max: 'payers' },
         { key: 'hours', label: '利用時間', unit: '時間', max: 6 }
@@ -281,7 +281,7 @@
       var saunaMin = raw < OPT.sauna.minCharge;
       res.options.push({
         label: OPT.sauna.name,
-        detail: o.sauna.people + '人×' + o.sauna.hours + '時間×' + fmt(OPT.sauna.price) + (saunaMin ? '（最低利用料金' + fmt(OPT.sauna.minCharge) + 'で計算）' : ''),
+        detail: o.sauna.people + '人×' + o.sauna.hours + '時間×' + fmt(OPT.sauna.price) + (saunaMin ? '（最低利用金額' + fmt(OPT.sauna.minCharge) + 'で計算）' : ''),
         amount: saunaMin ? OPT.sauna.minCharge : raw
       });
     }
