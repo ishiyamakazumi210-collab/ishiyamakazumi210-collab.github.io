@@ -13984,3 +13984,106 @@ main small {
   color: #1f4f63; font-size: 14px; font-weight: 800; line-height: 1.5;
 }
 .top-v2-sim-samesum[hidden] { display: none; }
+
+/* 2026-11-24 くわしい料金計算：朝食・飲み放題・オプションの行の左に小さな写真（オーナー指示：写真を付けられるものは全部付ける）。大きなカードにはしない。戻すときはこのブロックとJSの rowThumb を消す */
+.top-v2-sim-thumb {
+  flex: 0 0 64px;
+  display: block;
+  width: 64px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f1f7f9;
+}
+.top-v2-sim-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.top-v2-sim-thumb.is-blank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  box-sizing: border-box;
+  border: 1px solid #dde6ea;
+  color: #4a5b62;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.3;
+  text-align: center;
+}
+@media (min-width: 640px) {
+  .top-v2-sim-thumb { flex-basis: 80px; width: 80px; }
+}
+.top-v2-sim-check--photo { align-items: center; }
+.top-v2-sim-check--photo input { margin-top: 0; }
+.top-v2-sim-check--photo > span:last-child { flex: 1 1 auto; min-width: 0; }
+.top-v2-sim-opt-top { display: flex; align-items: center; gap: 12px; }
+.top-v2-sim-opt-top > .top-v2-sim-opt-head { flex: 1 1 auto; min-width: 0; }
+
+/* 2026-11-24 点線のボタンを実線に（オーナー指示：点線は押せないように見える）。戻すときはこのブロックを消す */
+/* かんたん料金計算（トップ・家族・友達・合宿・研修・料金オプション）：時期・食事のボタン、−／＋、「食事オプション」「お子さま人数」「少人数プラン」の開閉 */
+.top-v2-chalk-tab,
+.top-v2-chalk-step,
+.top-v2-chalk-menu-summary {
+  border: 1.5px solid #b9d0da;
+  background-color: #fff;
+}
+/* 選んでいるボタン・開いている開閉は今までどおり */
+.top-v2-chalk-tab.is-on {
+  border-color: rgba(47, 120, 144, 0.5);
+}
+.top-v2-chalk-menu[open] .top-v2-chalk-menu-summary {
+  border: 2px solid rgba(47, 120, 144, 0.5);
+}
+/* くわしい料金計算：チェックの枠（飲み放題・朝食・1泊目と同じ・地域割・リピート割）、開閉（単価表・日付が決まっていない場合）、内訳ボタン */
+.top-v2-sim-check,
+.top-v2-sim-sum-toggle {
+  border: 1.5px solid #b9d0da;
+  background-color: #fff;
+}
+.top-v2-sim-check:has(input:checked) {
+  border-color: #2f7890;
+  background-color: #eef6f8;
+}
+.top-v2-sim-fold > summary {
+  border: 1.5px solid #b9d0da;
+  background-color: #fff;
+}
+/* 料金・オプション：少人数プランの囲み、「日帰りプラン」「割引・お子さま料金」「少人数プラン」の開閉の下線 */
+.top-v2-plan-fold {
+  border: 1.5px solid #b9d0da;
+  background-color: #fff;
+}
+.top-v2-price-card--formal .top-v2-formal-fold-summary {
+  border-bottom: 1.5px solid #b9d0da;
+}
+/* さわったとき・キーボードで選んだときは濃い青の線 */
+@media (hover: hover) {
+  .top-v2-chalk-tab:hover,
+  .top-v2-chalk-step:hover:not(:disabled),
+  .top-v2-chalk-menu:not([open]) > .top-v2-chalk-menu-summary:hover,
+  .top-v2-sim-check:hover:not(:has(input:disabled)),
+  .top-v2-sim-fold > summary:hover,
+  .top-v2-sim-sum-toggle:hover,
+  .top-v2-plan-fold:has(> summary:hover),
+  .top-v2-price-card--formal .top-v2-formal-fold-summary:hover {
+    border-color: #2f7890;
+  }
+}
+.top-v2-chalk-tab:focus-visible,
+.top-v2-chalk-step:focus-visible,
+.top-v2-chalk-menu:not([open]) > .top-v2-chalk-menu-summary:focus-visible,
+.top-v2-sim-check:has(input:focus-visible),
+.top-v2-sim-fold > summary:focus-visible,
+.top-v2-sim-sum-toggle:focus-visible,
+.top-v2-plan-fold:has(> summary:focus-visible),
+.top-v2-price-card--formal .top-v2-formal-fold-summary:focus-visible {
+  border-color: #2f7890;
+}
+/* 2026-11-24 スマホで「時間」「部屋」の単位が下の行に落ちる → 見出し・増減ボタン・単位を1行に */
+.top-v2-sim-row { flex-wrap: nowrap; }
+.top-v2-sim-row .top-v2-sim-rowlabel { flex: 1 1 auto; min-width: 0; }
+.top-v2-sim-row .top-v2-sim-unit { flex: 0 0 auto; white-space: nowrap; }

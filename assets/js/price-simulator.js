@@ -53,6 +53,17 @@
     curry: { src: '/assets/img/meal-thumbs/curry.jpg', w: 480, h: 360 }
   };
   var MEAL_NO_PHOTO = { byo: '不要・持ち込み', sukiyaki: '写真準備中' };
+  // 2026-11-24 朝食・飲み放題・オプションの行にも小さな写真（オーナー指示：写真を付けられるものは全部付ける）。
+  // /play/option/ で使っている写真を同じ 480×360 のサムネイルに縮めたもの。写真がないものは「写真準備中」の枠。
+  var ROW_PHOTOS = {
+    sando: '/assets/img/meal-thumbs/sando.jpg',
+    drinks: '/assets/img/meal-thumbs/drinks.jpg',
+    gym: '/assets/img/meal-thumbs/gym.jpg',
+    surf: '/assets/img/meal-thumbs/surf.jpg',
+    sauna: '/assets/img/meal-thumbs/sauna.jpg',
+    beer: '/assets/img/meal-thumbs/beer.jpg',
+    room: '/assets/img/meal-thumbs/room.jpg'
+  };
 
   // オプション（価格・単位は /play/option/ の記載）。
   var OPTIONS = [
@@ -352,6 +363,25 @@
     if (text !== undefined && text !== null) { node.textContent = text; }
     return node;
   }
+  // 行の左に置く小さな写真（4:3）。写真がないときは薄い枠に「写真準備中」
+  function rowThumb(key) {
+    var src = ROW_PHOTOS[key];
+    if (!src) {
+      var blank = h('span', 'top-v2-sim-thumb is-blank', '写真準備中');
+      blank.setAttribute('aria-hidden', 'true');
+      return blank;
+    }
+    var wrap = h('span', 'top-v2-sim-thumb');
+    var img = h('img');
+    img.src = src;
+    img.alt = '';
+    img.width = 480;
+    img.height = 360;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    wrap.appendChild(img);
+    return wrap;
+  }
   // ⓘ（トップのクチコミⓘと同じ部品）。label は読み上げ用の名前、text は中に出す説明
   function infoPop(label, text) {
     var d = h('details', 'top-v2-info top-v2-info--inline');
@@ -603,7 +633,7 @@
         var dinnerCount = buildMealCount('sim-dinner-count-' + idx, '夕食の人数', '夕食', { 'data-dinner-count': String(idx) });
         var countWrap = dinnerCount.wrap;
         var dinnerNote = h('p', 'top-v2-sim-note');
-        var drinkRow = h('label', 'top-v2-sim-check');
+        var drinkRow = h('label', 'top-v2-sim-check top-v2-sim-check--photo');
         var drinkInput = h('input');
         drinkInput.type = 'checkbox';
         drinkInput.id = 'sim-drink-' + idx;
@@ -613,6 +643,7 @@
         drinkText.appendChild(drinkStrong);
         drinkText.appendChild(document.createTextNode('\u3000全員分・1人' + priceYen(DRINK.price) + '（2歳以下を除く）'));
         drinkRow.appendChild(drinkInput);
+        drinkRow.appendChild(rowThumb('drinks'));
         drinkRow.appendChild(drinkText);
         var drinkNote = h('p', 'top-v2-sim-note', '延長は1時間500円で可能です（合計には含みません）。ビールは含まれません。');
         box.appendChild(title);
@@ -628,13 +659,14 @@
         els.mealNights.appendChild(box);
         // 朝食（翌朝ごと）
         var bfBox = h('div', 'top-v2-sim-mealblock');
-        var bfLabel = h('label', 'top-v2-sim-check');
+        var bfLabel = h('label', 'top-v2-sim-check top-v2-sim-check--photo');
         var bf = h('input');
         bf.type = 'checkbox';
         bf.id = 'sim-bf-' + idx;
         bf.setAttribute('data-bf', String(idx));
         var bfText = h('span');
         bfLabel.appendChild(bf);
+        bfLabel.appendChild(rowThumb(BREAKFAST.mealKey));
         bfLabel.appendChild(bfText);
         bfBox.appendChild(bfLabel);
         els.bfNights.appendChild(bfBox);
@@ -667,7 +699,11 @@
         priceP.appendChild(h('small', '', def.unit));
       }
       head.appendChild(priceP);
-      card.appendChild(head);
+      // 名前・値段の左に小さな写真（2026-11-24）
+      var optTop = h('div', 'top-v2-sim-opt-top');
+      optTop.appendChild(rowThumb(def.id));
+      optTop.appendChild(head);
+      card.appendChild(optTop);
       card.appendChild(h('p', 'top-v2-sim-note', def.note));
       var gate = h('p', 'top-v2-sim-note top-v2-sim-note--warn');
       gate.hidden = true;
