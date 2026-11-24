@@ -37,7 +37,7 @@
   var DINNERS = [
     { id: 'byo', label: '不要・持ち込み（BBQも可）', compactOk: true },
     { id: 'bbq', label: 'BBQ（満腹コース）', mealKey: 'bbq', compactOk: true },
-    { id: 'sukiyaki', label: '【冬季限定】すき焼き', flat: 5000, kidRates: true, seasonNote: '【冬季限定】すき焼きは11月〜3月のみの提供です' },
+    { id: 'sukiyaki', label: '【冬季限定】すき焼き', flat: 5000, kidRates: true, months: [11, 12, 1, 2, 3], seasonNote: '【冬季限定】すき焼きは11月〜3月のみの提供です' },
     { id: 'curry', label: '林間学校式カレー', flat: 2000, kidRates: true, note: 'お客様自身で調理していただきます' },
     { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250, kidRates: true }
   ];
@@ -79,6 +79,69 @@
   var OPT = {};
   OPTIONS.forEach(function (def) { OPT[def.id] = def; });
 
+  // ---- 日付・料金区分の判定 --------------------------------------------
+  var WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
+  // ハイシーズン期間。夏休み・春休みの日付は料金ページの注記どおり。
+  // ゴールデンウィーク・年末年始は注記に日付がないため目安の日付（approx）。
+  var HIGH_PERIODS = [
+    { name: 'ゴールデンウィーク', from: 429, to: 505, text: '4/29〜5/5', approx: true },
+    { name: '夏休み', from: 715, to: 930, text: '7/15〜9/30' },
+    { name: '年末年始', from: 1228, to: 103, text: '12/28〜1/3' },
+    { name: '春休み', from: 201, to: 410, text: '2/1〜4/10' }
+  ];
+  // 日本の祝日（2026〜2027年・振替休日と国民の休日を含む）
+  var HOLIDAYS = {
+    '2026-01-01': '元日', '2026-01-12': '成人の日', '2026-02-11': '建国記念の日', '2026-02-23': '天皇誕生日',
+    '2026-03-20': '春分の日', '2026-04-29': '昭和の日', '2026-05-03': '憲法記念日', '2026-05-04': 'みどりの日',
+    '2026-05-05': 'こどもの日', '2026-05-06': '振替休日', '2026-07-20': '海の日', '2026-08-11': '山の日',
+    '2026-09-21': '敬老の日', '2026-09-22': '国民の休日', '2026-09-23': '秋分の日', '2026-10-12': 'スポーツの日',
+    '2026-11-03': '文化の日', '2026-11-23': '勤労感謝の日',
+    '2027-01-01': '元日', '2027-01-11': '成人の日', '2027-02-11': '建国記念の日', '2027-02-23': '天皇誕生日',
+    '2027-03-21': '春分の日', '2027-03-22': '振替休日', '2027-04-29': '昭和の日', '2027-05-03': '憲法記念日',
+    '2027-05-04': 'みどりの日', '2027-05-05': 'こどもの日', '2027-07-19': '海の日', '2027-08-11': '山の日',
+    '2027-09-20': '敬老の日', '2027-09-23': '秋分の日', '2027-10-11': 'スポーツの日', '2027-11-03': '文化の日',
+    '2027-11-23': '勤労感謝の日'
+  };
+  var HOLIDAY_YEARS = [2026, 2027];
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function parseDate(str) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str || '');
+    if (!m) { return null; }
+    var d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    if (d.getFullYear() !== Number(m[1]) || d.getMonth() !== Number(m[2]) - 1 || d.getDate() !== Number(m[3])) { return null; }
+    return d;
+  }
+  function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+  function ymd(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function dateLabel(d) { return (d.getMonth() + 1) + '/' + d.getDate() + '(' + WEEKDAYS[d.getDay()] + ')'; }
+  function dateLabelW(d) { return (d.getMonth() + 1) + '/' + d.getDate() + '（' + WEEKDAYS[d.getDay()] + '）'; }
+  function inPeriod(md, period) {
+    return period.from <= period.to ? (md >= period.from && md <= period.to) : (md >= period.from || md <= period.to);
+  }
+
+  // その日の宿泊（チェックイン日の夜）が「土日祝・ハイシーズン」か「平日・オフシーズン」かの目安を返す
+  function classifyNight(dateStr) {
+    var d = parseDate(dateStr);
+    if (!d) { return null; }
+    var md = (d.getMonth() + 1) * 100 + d.getDate();
+    var reasons = [];
+    var holiday = HOLIDAYS[ymd(d)];
+    if (holiday) { reasons.push('祝日（' + holiday + '）'); }
+    HIGH_PERIODS.forEach(function (period) {
+      if (inPeriod(md, period)) {
+        reasons.push(period.name + '期間（' + (period.approx ? '目安 ' : '') + period.text + '）');
+      }
+    });
+    if (d.getDay() === 6) { reasons.push('土曜日'); }
+    if (d.getDay() === 0) { reasons.push('日曜日'); }
+    return {
+      season: reasons.length ? 'holiday' : 'weekday',
+      reasons: reasons,
+      holidayDataMissing: HOLIDAY_YEARS.indexOf(d.getFullYear()) === -1
+    };
+  }
+
   // ---- 計算（純粋関数。画面からもコンソールからも使える） --------------------
   function clampInt(v, min, max) {
     var n = parseInt(v, 10);
@@ -110,12 +173,13 @@
     var arr = function (v) { var a = []; for (var i = 0; i < MAX_NIGHTS; i += 1) { a.push(v); } return a; };
     return {
       plan: 'standard',
+      checkin: '',
       nights: 1,
       seasons: arr('weekday'),
       people: { adult: 10, elem: 0, pre: 0, infant: 0 },
       lunch: 'byo',
       dinner: arr('byo'),
-      drink: arr(0),
+      drink: arr(false),
       breakfast: arr(false),
       opts: { gym: { hours: 0 }, surf: { people: 0 }, sauna: { people: 0, hours: 0 }, beer: { kegs: 0 }, room: { rooms: 0 } },
       local: false,
@@ -124,6 +188,7 @@
   }
 
   function calculate(s) {
+    var d0 = parseDate(s.checkin);
     var people = s.people;
     var payers = people.adult + people.elem + people.pre;
     var totalPeople = payers + people.infant;
@@ -137,7 +202,7 @@
       lodgingTotal: 0, mealTotal: 0, optionTotal: 0, discount: null, total: 0, perPerson: 0
     };
     function note(text) { if (res.notes.indexOf(text) === -1) { res.notes.push(text); } }
-    function nightDate(i) { return (i + 1) + '泊目の夜'; }
+    function nightDate(i) { return d0 ? dateLabel(addDays(d0, i)) : (i + 1) + '泊目の夜'; }
 
     // 宿泊（1泊ごとに料金区分の単価と最低利用金額を適用）
     var anyFloor = false;
@@ -151,7 +216,7 @@
       if (floorApplied) { anyFloor = true; }
       res.nights.push({
         index: i,
-        label: (i + 1) + '泊目',
+        label: d0 ? (i + 1) + '泊目 ' + dateLabel(addDays(d0, i)) : (i + 1) + '泊目',
         season: season,
         seasonLabel: SEASON_LABEL[season],
         detail: describeCounts(counts, { adult: rates.adult, elem: rates.elem, pre: rates.pre }),
@@ -183,17 +248,21 @@
             res.approx = true;
             note('お子さま料金の記載がない夕食（すき焼き・カレー・弁当）は、全員同額で計算しています（目安）');
           }
-          if (dinner.seasonNote) { note(dinner.seasonNote); }
+          if (d0 && dinner.months) {
+            if (dinner.months.indexOf(addDays(d0, n).getMonth() + 1) === -1) {
+              note('【冬季限定】すき焼きは11月〜3月のみの提供です。この日付では提供されない可能性があります');
+            }
+          } else if (dinner.seasonNote) { note(dinner.seasonNote); }
           addMeal(nightDate(n) + ' 夕食 ' + dinner.label, dinner, extra);
         }
-        if (s.drink[n] > 0) {
-          var cups = Math.min(s.drink[n], payers);
+        if (s.drink[n]) {
+          var cups = payers;
           var drinkAmount = cups * DRINK.price;
           res.meals.push({ label: nightDate(n) + ' ' + DRINK.label, detail: cups + '人×' + fmt(DRINK.price), amount: drinkAmount, note: '' });
           res.mealTotal += drinkAmount;
         }
         if (s.breakfast[n]) {
-          addMeal((n + 2) + '日目の朝 朝食 ' + BREAKFAST.label, BREAKFAST);
+          addMeal((d0 ? dateLabel(addDays(d0, n + 1)) : (n + 2) + '日目の朝') + ' 朝食 ' + BREAKFAST.label, BREAKFAST);
         }
       }
       if (people.infant > 0) { note('2歳以下のお食事は計算に含めていません'); }
@@ -295,6 +364,7 @@
 
   // ---- 画面の組み立て（動的部分） ---------------------------------------
   var els = {
+    checkin: $('sim-checkin'),
     nightList: $('sim-night-list'),
     lunch: $('sim-lunch'),
     lunchNote: $('sim-lunch-note'),
@@ -370,9 +440,12 @@
           fs.appendChild(lab);
           radios[key] = inp;
         });
+        var hint = h('p', 'top-v2-sim-hint');
+        hint.hidden = true;
         li.appendChild(fs);
+        li.appendChild(hint);
         els.nightList.appendChild(li);
-        nightRows.push({ li: li, radios: radios, name: 'sim-season-' + idx });
+        nightRows.push({ li: li, legend: legend, hint: hint, radios: radios, name: 'sim-season-' + idx });
       })(i);
     }
   }
@@ -393,9 +466,17 @@
         field.appendChild(lab);
         field.appendChild(sel);
         var dinnerNote = h('p', 'top-v2-sim-note');
-        var drinkRow = labelledStepperRow(
-          'sim-drink-' + idx, DRINK.label, priceYen(DRINK.price) + '/人', '人', { 'data-drink': String(idx) }, 0, 0, 100
-        );
+        var drinkRow = h('label', 'top-v2-sim-check');
+        var drinkInput = h('input');
+        drinkInput.type = 'checkbox';
+        drinkInput.id = 'sim-drink-' + idx;
+        drinkInput.setAttribute('data-drink', String(idx));
+        var drinkText = h('span');
+        var drinkStrong = h('strong', '', DRINK.label + 'をつける');
+        drinkText.appendChild(drinkStrong);
+        drinkText.appendChild(document.createTextNode('\u3000全員分・1人' + priceYen(DRINK.price) + '（2歳以下を除く）'));
+        drinkRow.appendChild(drinkInput);
+        drinkRow.appendChild(drinkText);
         var drinkNote = h('p', 'top-v2-sim-note', '延長は1時間500円で可能です（合計には含みません）。ビールは含まれません。');
         var bfLabel = h('label', 'top-v2-sim-check');
         var bf = h('input');
@@ -412,7 +493,7 @@
         box.appendChild(drinkNote);
         box.appendChild(bfLabel);
         els.mealNights.appendChild(box);
-        mealRows.push({ box: box, title: title, select: sel, note: dinnerNote, drink: drinkRow.querySelector('input'), bf: bf, bfText: bfText });
+        mealRows.push({ box: box, title: title, select: sel, note: dinnerNote, drink: drinkInput, bf: bf, bfText: bfText });
       })(i);
     }
   }
@@ -492,6 +573,7 @@
 
   // ---- 状態の読み取り・正規化・書き戻し ------------------------------------
   var state = defaultState();
+  var override = []; // 泊ごとに利用者が手で選んだ料金区分（日付を変えると消える）
   var flash = { plan: '', meal: '' };
 
   function readState() {
@@ -500,6 +582,7 @@
     s.plan = planChecked ? planChecked.value : 'standard';
     var nightChecked = form.querySelector('input[name="sim-nights"]:checked');
     s.nights = nightChecked ? clampInt(nightChecked.value, 1, MAX_NIGHTS) : 1;
+    s.checkin = els.checkin ? (els.checkin.value || '') : '';
     ['adult', 'elem', 'pre', 'infant'].forEach(function (key) {
       s.people[key] = clampInt(peopleInputs[key].value, key === 'adult' ? 1 : 0, P.MAX_PEOPLE);
     });
@@ -507,8 +590,11 @@
     for (var i = 0; i < MAX_NIGHTS; i += 1) {
       s.seasons[i] = nightRows[i].radios.holiday.checked ? 'holiday' : 'weekday';
       s.dinner[i] = mealRows[i].select.value;
-      s.drink[i] = clampInt(mealRows[i].drink.value, 0, 100);
+      s.drink[i] = mealRows[i].drink.checked;
       s.breakfast[i] = mealRows[i].bf.checked;
+      // 日付があれば、泊ごとの区分は「手で選んだもの、なければ日付からの自動判定」
+      var auto = autoSeason(i);
+      if (auto) { s.seasons[i] = override[i] || auto.season; }
     }
     OPTIONS.forEach(function (def) {
       def.fields.forEach(function (f) {
@@ -517,6 +603,12 @@
     });
     s.local = els.local.checked;
     s.repeat = els.repeat.checked;
+  }
+
+  function autoSeason(i) {
+    var d0 = parseDate(state.checkin);
+    if (!d0) { return null; }
+    return classifyNight(ymd(addDays(d0, i)));
   }
 
   function normalize() {
@@ -538,7 +630,7 @@
     var compact = s.plan === 'compact';
     if (payers < MEAL_MIN_SERVINGS) {
       s.lunch = 'byo';
-      for (var i = 0; i < MAX_NIGHTS; i += 1) { s.dinner[i] = 'byo'; s.breakfast[i] = false; }
+      for (var i = 0; i < MAX_NIGHTS; i += 1) { s.dinner[i] = 'byo'; s.breakfast[i] = false; s.drink[i] = false; }
     }
     if (compact) {
       for (var j = 0; j < MAX_NIGHTS; j += 1) {
@@ -548,9 +640,6 @@
         }
       }
       s.opts.room.rooms = 0;
-    }
-    for (var k = 0; k < MAX_NIGHTS; k += 1) {
-      s.drink[k] = Math.min(s.drink[k], payers);
     }
     s.opts.surf.people = Math.min(s.opts.surf.people, payers);
     s.opts.sauna.people = Math.min(s.opts.sauna.people, payers);
@@ -595,10 +684,27 @@
 
     // 日程
     Array.prototype.forEach.call(nightInputs, function (input) { input.checked = Number(input.value) === s.nights; });
+    var d0 = parseDate(s.checkin);
     for (var i = 0; i < MAX_NIGHTS; i += 1) {
       var row = nightRows[i];
       row.li.hidden = i >= s.nights;
       if (i >= s.nights) { continue; }
+      row.legend.textContent = d0 ? (i + 1) + '泊目 ' + dateLabelW(addDays(d0, i)) + 'は？' : (i + 1) + '泊目は？';
+      var auto = autoSeason(i);
+      if (!auto) {
+        row.hint.hidden = true;
+        row.hint.textContent = '';
+      } else {
+        row.hint.hidden = false;
+        if (override[i] && override[i] !== auto.season) {
+          row.hint.textContent = '手動で変更中です（日付からの目安は「' + SEASON_LABEL[auto.season] + '」：' + (auto.reasons.length ? auto.reasons.join('・') : '平日でハイシーズン期間外') + '）。';
+        } else if (auto.season === 'holiday') {
+          row.hint.textContent = '日付から自動で選びました（' + auto.reasons.join('・') + 'のため「' + SEASON_LABEL.holiday + '」）。';
+        } else {
+          row.hint.textContent = '日付から自動で選びました（平日でハイシーズン期間外のため「' + SEASON_LABEL.weekday + '」）。';
+        }
+        if (auto.holidayDataMissing) { row.hint.textContent += '（祝日は2026〜2027年分のみ反映しています）'; }
+      }
       row.radios.holiday.checked = s.seasons[i] === 'holiday';
       row.radios.weekday.checked = s.seasons[i] !== 'holiday';
     }
@@ -623,7 +729,7 @@
       var mr = mealRows[n];
       mr.box.hidden = n >= s.nights;
       if (n >= s.nights) { continue; }
-      mr.title.textContent = (n + 1) + '泊目の夜と、翌朝';
+      mr.title.textContent = d0 ? (n + 1) + '泊目 ' + dateLabel(addDays(d0, n)) + 'の夜と、翌朝' : (n + 1) + '泊目の夜と、翌朝';
       mr.select.value = s.dinner[n];
       mr.select.disabled = !mealsOk;
       Array.prototype.forEach.call(mr.select.options, function (opt) {
@@ -633,19 +739,21 @@
       });
       var dinnerDef = findDef(DINNERS, s.dinner[n]);
       var caption = mealCaption(dinnerDef);
-      if (dinnerDef.seasonNote) {
+      if (d0 && dinnerDef.months && dinnerDef.months.indexOf(addDays(d0, n).getMonth() + 1) === -1) {
+        caption += (caption ? '。' : '') + dinnerDef.seasonNote + '。この日付では提供されない可能性があります';
+      } else if (dinnerDef.seasonNote) {
         caption += (caption ? '。' : '') + dinnerDef.seasonNote;
       }
       if (dinnerDef.flat && !dinnerDef.mealKey && !dinnerDef.kidRates && dinnerDef.id !== 'byo' && (p.elem + p.pre) > 0) {
         caption += '。お子さま料金の記載がないため、全員同額で計算します（目安）';
       }
       mr.note.textContent = caption;
-      setNum(mr.drink, s.drink[n], 0, Math.max(0, payers), force);
+      mr.drink.checked = !!s.drink[n];
       mr.drink.disabled = !mealsOk;
       mr.bf.checked = s.breakfast[n];
       mr.bf.disabled = !mealsOk;
       var sando = P.MEALS[BREAKFAST.mealKey];
-      mr.bfText.textContent = '翌朝（' + (n + 2) + '日目）の朝食　' + BREAKFAST.label + ' +' + priceYen(sando.adult) + '/人（全年齢同額）';
+      mr.bfText.textContent = (d0 ? '翌朝 ' + dateLabel(addDays(d0, n + 1)) + 'の朝食　' : '翌朝（' + (n + 2) + '日目）の朝食　') + BREAKFAST.label + ' +' + priceYen(sando.adult) + '/人（全年齢同額）';
     }
 
     // オプション
@@ -757,12 +865,17 @@
     renderSummary(calculate(state));
   }
 
+  function trackOverride(t) {
+    if (t === els.checkin) { override = []; return; }
+    var m = t && t.name ? /^sim-season-(\d+)$/.exec(t.name) : null;
+    if (m && t.checked) { override[Number(m[1])] = t.value; }
+  }
   form.addEventListener('input', function (e) {
-    var t = e.target;
+    trackOverride(e.target);
     update(false);
   });
   form.addEventListener('change', function (e) {
-    var t = e.target;
+    trackOverride(e.target);
     update(true);
   });
   form.addEventListener('click', function (e) {
@@ -784,6 +897,7 @@
   });
 
   // ---- 初期化 -------------------------------------------------------------
+  els.checkin.min = ymd(new Date());
   renderRateInfo();
   buildNights();
   buildMeals();
@@ -804,6 +918,7 @@
   // 検算・動作確認用（コンソールから window.KATASHO_SIM.calculate(...) で使える）
   window.KATASHO_SIM = Object.freeze({
     calculate: calculate,
+    classifyNight: classifyNight,
     defaultState: defaultState,
     getState: function () { return JSON.parse(JSON.stringify(state)); }
   });
