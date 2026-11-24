@@ -1,7 +1,7 @@
-// 料金計算で選んでいる人数（と日付）を、次に開くページへ引き継ぐ（2026-11-21）。
+// 料金計算で選んでいる人数を、次に開くページへ引き継ぐ（2026-11-21）。
 // 1) 「空き状況を見る」などの予約リンク（ProX）。何も付けないとProXは「大人10名」で開く。
 //    付けられるもの（2026-11-21にProXを実際に開いて確認）:
-//    num=大人  num_1=小学生  num_2=3〜5歳  num_3=0〜2歳  dt=YYYYMMDD（泊まる日）  nights=泊数
+//    num=大人  num_1=小学生  num_2=3〜5歳  num_3=0〜2歳  （dt・nightsは日付を聞かなくなったため付けない）
 //    プランの選択は渡さない（ProXのプランIDが不明なため）。
 // 2) 各ページの簡易な料金計算から「くわしい料金シミュレーター」へのリンク。
 //    adult=おとな  elem=小学生  pre=3〜5歳  plan=compact（少人数プランを適用中のとき）。price-simulator.js が読む
@@ -30,13 +30,6 @@
       p.num_1 = countOf(byId('sim-elem'));
       p.num_2 = countOf(byId('sim-pre'));
       p.num_3 = countOf(byId('sim-infant'));
-      var day = byId('sim-checkin');
-      var m = day && /^(\d{4})-(\d{2})-(\d{2})$/.exec(day.value || '');
-      if (m) {
-        p.dt = m[1] + m[2] + m[3];
-        var night = document.querySelector('input[name="sim-nights"]:checked');
-        p.nights = night ? countOf(night) : null;
-      }
       return p;
     }
     // トップ・家族などの料金ボード（おとな・小学生・3〜5歳）、友達・合宿・研修の人数ボード
@@ -71,9 +64,7 @@
       ['num', 'num_1', 'num_2', 'num_3', 'dt', 'nights'].forEach(function (k) {
         var v = p[k];
         // 大人は1人以上、子どもと泊数は1以上のときだけ付ける（0や読めない値は付けない＝ProXの既定に任せる）
-        if (k === 'dt') {
-          if (v) { url.searchParams.set(k, v); } else { url.searchParams.delete(k); }
-        } else if (typeof v === 'number' && v > 0) {
+        if (typeof v === 'number' && v > 0) {
           url.searchParams.set(k, String(v));
         } else {
           url.searchParams.delete(k);
@@ -100,7 +91,7 @@
     });
   }
 
-  // 人数・日付が変わったら付け直す。ボタンの表示が書き換わった後に読むため、少し遅らせる
+  // 人数が変わったら付け直す。ボタンの表示が書き換わった後に読むため、少し遅らせる
   var queued = false;
   function schedule() {
     if (queued) { return; }
