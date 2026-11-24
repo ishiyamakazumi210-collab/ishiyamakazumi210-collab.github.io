@@ -12710,7 +12710,15 @@ main small {
   font-weight: 600;
   line-height: 1.65;
   text-align: left;
-  transform: translateX(-50%);
+  /* --info-shift: 画面の端からはみ出すときに info-pop.js が入れる横のずらし量 */
+  transform: translateX(calc(-50% + var(--info-shift, 0px)));
+  /* 置き場所（料金カードの nowrap 行など）の文字設定を持ち込まない */
+  white-space: normal;
+  letter-spacing: normal;
+  text-indent: 0;
+  font-style: normal;
+  text-decoration: none;
+  cursor: auto;
 }
 .top-v2-info-pop p { margin: 0 0 4px; }
 .top-v2-info-pop a {
@@ -12720,6 +12728,80 @@ main small {
   font-weight: 800;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* 2026-11-24 ⓘを共通部品に（注記の見せ方の見直し・docs/annotations-decision-2026-11-24.md）。
+   吹き出しは ⓘ の真上に出す。画面の左右からはみ出すときは info-pop.js が --info-shift で横にずらし、
+   上に余白がないときは is-below を付けて下に出す。開け閉め・外を押して閉じる・Esc も info-pop.js */
+.top-v2-info { position: relative; }
+/* トップのクチコミ（P15）は今までどおり、行の真ん中に出す */
+.top-v2-landscape-review > .top-v2-info { position: static; }
+.top-v2-info.is-below > .top-v2-info-pop {
+  top: calc(100% + 8px);
+  bottom: auto;
+}
+
+/* 文の中に置くⓘ（料金カードの「ハイシーズン」の横など）。押せる範囲36pxは保ったまま、行の高さは増やさない */
+.top-v2-info--inline {
+  margin-left: 2px;
+  vertical-align: middle;
+}
+.top-v2-info--inline > summary {
+  margin: -10px -8px -10px -6px;
+}
+
+/* 文字つきのⓘ（「ⓘ ハイシーズンとは」）。押せる範囲は文字まで含めて高さ36px */
+.top-v2-info--labeled > summary {
+  gap: 6px;
+  width: auto;
+  height: 36px;
+  margin: 0;
+  padding: 0 10px 0 8px;
+  border-radius: 18px;
+}
+.top-v2-info--labeled > summary > .top-v2-info-text,
+.top-v2-info--labeled > summary:hover > .top-v2-info-text,
+.top-v2-info--labeled[open] > summary > .top-v2-info-text {
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: #2f7890;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+/* 料金計算のシーズンのボタン（平日／土日祝）のすぐ下に「ⓘ ハイシーズンとは」。ボタンの中には入れない */
+.top-v2-season-info {
+  display: flex;
+  justify-content: center;
+  margin: -8px 0 8px;
+}
+
+/* 少人数プランの「大人料金1,000円引き ＝ …」の後ろのⓘ（お子さま料金の計算） */
+.top-v2-plan-price .top-v2-info { margin-left: 4px; }
+
+/* くわしい料金計算のオプション名の横のⓘ（サーフィン教室について） */
+.top-v2-sim-opt-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.top-v2-sim-opt-title .top-v2-info > summary { margin: -8px -6px; }
+
+/* 料金・オプションの夕食: BBQ と すき焼き の2枚に共通の注記を、2枚のすぐ下に1行で */
+.top-v2-menu-sharednote {
+  margin: 12px 0 24px;
+  text-align: center;
+}
+@media (min-width: 992px) {
+  .top-v2-menu-sharednote { margin-bottom: 28px; }
 }
 /* 2026-11-24 PCでは小さすぎた（オーナー指摘）。広い画面だけ一回り大きく */
 @media (min-width: 768px) {
@@ -13767,3 +13849,75 @@ main small {
   border-color: #cfe0e8;
   background: #fff;
 }
+
+/* 2026-11-24 料金計算：チェックイン・チェックアウトのカレンダー、自動の時期表示、夕食の人数 */
+.top-v2-sim-dates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0 0 4px; }
+.top-v2-sim-dates .top-v2-sim-field { margin: 0; min-width: 0; }
+.top-v2-sim-dates .top-v2-sim-input { width: 100%; max-width: none; }
+@media (max-width: 560px) {
+  .top-v2-sim-dates { grid-template-columns: 1fr; gap: 8px; }
+}
+.top-v2-sim-datenights { margin: 10px 0 8px; padding: 0; list-style: none; display: grid; gap: 8px; }
+.top-v2-sim-datenights[hidden] { display: none; }
+.top-v2-sim-datenight { margin: 0; padding: 10px 14px; border: 2px solid #cfe0e8; border-radius: 12px; background: #f1f7f9; }
+.top-v2-sim-datenight-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 0; }
+.top-v2-sim-datenight-no { color: #2f7890; font-size: 15px; font-weight: 900; }
+.top-v2-sim-datenight-date { color: #2e2518; font-size: 16px; font-weight: 900; }
+.top-v2-sim-pill { display: inline-block; padding: 3px 12px; border: 1.5px solid #cfe0e8; border-radius: 999px; background: #fff; color: #1f4f63; font-size: 13px; font-weight: 800; line-height: 1.5; }
+.top-v2-sim-pill.is-high { border-color: #2f7890; background: #2f7890; color: #fff; }
+.top-v2-sim-datenight-why { display: block; margin-top: 3px; color: #665a4a; font-size: 12px; font-weight: 700; line-height: 1.6; }
+.top-v2-sim-sublabel { margin: 0 0 6px; padding: 0; color: #1f4f63; font-size: 14px; font-weight: 800; }
+.top-v2-sim-undecided-body { margin-top: 10px; }
+.top-v2-sim-undecided-body.is-dimmed { opacity: 0.45; pointer-events: none; }
+.top-v2-sim-undecided-msg { margin: 10px 0 0; font-weight: 800; }
+.top-v2-sim-dinnercount { margin-top: 4px; }
+.top-v2-sim-dinnercount[hidden] { display: none; }
+.top-v2-sim-mealgroup { margin-top: 18px; }
+.top-v2-sim-mealtitle { margin: 0 0 6px; color: #2e2518; font-size: 15px; font-weight: 900; line-height: 1.5; }
+.top-v2-sim-mealgroup .top-v2-sim-mealblock[hidden] { display: none; }
+
+/* 2026-11-24 料金計算：ページ内カレンダー（1回目のタップでチェックイン、2回目でチェックアウト） */
+.top-v2-sim-cal { width: 100%; max-width: 420px; margin: 0 0 10px; padding: 12px 10px 10px; border: 1.5px solid #cfe0e8; border-radius: 14px; background: #fff; box-sizing: border-box; }
+.top-v2-sim-cal-summary { min-height: 1.6em; margin: 0 0 8px; color: #1f4f63; font-size: 14px; font-weight: 800; line-height: 1.6; text-align: center; }
+.top-v2-sim-cal-summary.is-done { color: #2f7890; font-size: 16px; }
+.top-v2-sim-cal-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 6px; }
+.top-v2-sim-cal-title { margin: 0; color: #1f4f63; font-size: 17px; font-weight: 900; line-height: 1.4; }
+.top-v2-sim-cal-nav { width: 44px; height: 40px; padding: 0; border: 1.5px solid #cfe0e8; border-radius: 10px; background: #fff; color: #2f7890; font-size: 22px; font-weight: 900; line-height: 1; cursor: pointer; }
+.top-v2-sim-cal-nav:disabled { opacity: 0.35; cursor: default; }
+.top-v2-sim-cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.top-v2-sim-cal-dow { padding: 4px 0; color: #4a4a4a; font-size: 12px; font-weight: 800; text-align: center; }
+.top-v2-sim-cal-dow.is-sun { color: #b4584f; }
+.top-v2-sim-cal-dow.is-sat { color: #2f6f9a; }
+.top-v2-sim-cal-day { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; height: 44px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #2e2518; font: inherit; cursor: pointer; }
+.top-v2-sim-cal-day.is-sun { color: #b4584f; }
+.top-v2-sim-cal-day.is-sat { color: #2f6f9a; }
+.top-v2-sim-cal-num { font-size: 15px; font-weight: 800; line-height: 1.2; }
+.top-v2-sim-cal-tag { min-height: 10px; font-size: 8px; font-weight: 800; line-height: 10px; white-space: nowrap; }
+.top-v2-sim-cal-day.is-high { background: #fdf1e6; }
+.top-v2-sim-cal-day.is-high::after { content: ""; position: absolute; top: 4px; right: 5px; width: 5px; height: 5px; border-radius: 50%; background: #d98a3d; }
+.top-v2-sim-cal-day.is-today .top-v2-sim-cal-num { text-decoration: underline; }
+.top-v2-sim-cal-day.is-range { background: #dcecf2; color: #1f4f63; }
+.top-v2-sim-cal-day.is-in,
+.top-v2-sim-cal-day.is-out { background: #2f7890; color: #fff; }
+.top-v2-sim-cal-day.is-in::after,
+.top-v2-sim-cal-day.is-out::after { background: #fff; }
+.top-v2-sim-cal-day:disabled { opacity: 0.3; cursor: default; }
+.top-v2-sim-cal-day:focus-visible,
+.top-v2-sim-cal-nav:focus-visible,
+.top-v2-sim-cal-clear:focus-visible { outline: 3px solid #1f4f63; outline-offset: 1px; }
+.top-v2-sim-cal-legend { margin: 8px 0 0; color: #4a4a4a; font-size: 12px; line-height: 1.6; }
+.top-v2-sim-cal-legend-dot { color: #d98a3d; }
+.top-v2-sim-cal-clear { margin: 6px 0 0; padding: 6px 4px; border: 0; background: transparent; color: #2f7890; font: inherit; font-size: 13px; font-weight: 800; text-decoration: underline; cursor: pointer; }
+.top-v2-sim-cal-clear[hidden] { display: none; }
+@media (min-width: 768px) {
+  .top-v2-sim-cal-day { height: 48px; }
+}
+
+/* 2026-11-24 「かんたん宿泊料金シミュレーター」が細い枠（料金・オプションなど）ではみ出す → 言葉の切れ目（かんたん／宿泊料金シミュレーター）で2行に折る。PCでは1行のまま */
+.top-v2-price-simulator-title {
+  max-width: 100%;
+  white-space: normal;
+}
+/* 2026-11-24 泊ごとの一覧をやめ、料金の区分を1行で（オーナー指摘） */
+.top-v2-sim-datenights { list-style: none; margin: 8px 0 0; padding: 0; }
+.top-v2-sim-datenight-sum { margin: 0; padding: 10px 12px; border-radius: 10px; background: #f1f7f9; color: #1f4f63; font-size: 13.5px; font-weight: 800; line-height: 1.6; }

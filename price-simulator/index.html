@@ -31,7 +31,7 @@
 
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124g"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124l"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -347,37 +347,49 @@ height: 78vw;
           </details>
         </section>
 
-        <!-- 2. 泊数（一問一答：オーナー指示 2026-11-24） -->
+        <!-- 2. いつ（チェックイン・チェックアウトのカレンダー。泊数と時期は日付から自動。2026-11-24 オーナー指示） -->
         <section class="top-v2-sim-step" aria-labelledby="sim-h-date">
-          <h2 class="top-v2-sim-step-title" id="sim-h-date"><span class="top-v2-sim-step-no" aria-hidden="true">2</span>何泊しますか？</h2>
-          <fieldset class="top-v2-sim-fieldset">
-            <legend class="top-v2-sim-sr">泊数</legend>
-            <div class="top-v2-sim-chips">
-              <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="1" checked><span>1泊</span></label>
-              <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="2"><span>2泊</span></label>
-              <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="3"><span>3泊</span></label>
-              <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="4"><span>4泊</span></label>
-              <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="5"><span>5泊</span></label>
+          <h2 class="top-v2-sim-step-title" id="sim-h-date"><span class="top-v2-sim-step-no" aria-hidden="true">2</span>いつ泊まりますか？</h2>
+                    <p class="top-v2-sim-instruct top-v2-sim-cal-guide">カレンダーで、チェックインの日→チェックアウトの日の順にタップしてください</p>
+          <input type="hidden" id="sim-checkin" value="">
+          <input type="hidden" id="sim-checkout" value="">
+          <div class="top-v2-sim-cal" id="sim-cal">
+            <p class="top-v2-sim-cal-summary" id="sim-cal-summary" role="status" aria-live="polite"></p>
+            <div class="top-v2-sim-cal-head">
+              <button type="button" class="top-v2-sim-cal-nav" id="sim-cal-prev" aria-label="前の月">‹</button>
+              <p class="top-v2-sim-cal-title" id="sim-cal-title"></p>
+              <button type="button" class="top-v2-sim-cal-nav" id="sim-cal-next" aria-label="次の月">›</button>
             </div>
-          </fieldset>
-        </section>
-
-        <!-- 3. 時期（1泊ごと） -->
-        <section class="top-v2-sim-step" aria-labelledby="sim-h-season">
-          <h2 class="top-v2-sim-step-title" id="sim-h-season"><span class="top-v2-sim-step-no" aria-hidden="true">3</span>いつ泊まりますか？</h2>
-          <div class="top-v2-sim-field">
-            <label class="top-v2-sim-label" for="sim-checkin">チェックイン日（カレンダーから選べます）</label>
-            <input type="date" id="sim-checkin" class="top-v2-sim-input" min="" autocomplete="off">
-            <p class="top-v2-sim-hint">日付を選ぶと、1泊ごとの「平日・オフシーズン／土日祝・ハイシーズン」を自動で選びます。日付が決まっていなければ、下のボタンで選んでください。</p>
+            <div class="top-v2-sim-cal-grid" id="sim-cal-grid"></div>
+            <p class="top-v2-sim-cal-legend"><span class="top-v2-sim-cal-legend-dot" aria-hidden="true">●</span> 土日祝・ハイシーズンの料金になる夜</p>
+            <button type="button" class="top-v2-sim-cal-clear" id="sim-cal-clear">日付をクリア</button>
           </div>
-          <ol class="top-v2-sim-nights" id="sim-night-list"></ol>
+          <p class="top-v2-sim-note top-v2-sim-note--warn" id="sim-date-msg" role="status" hidden></p>
+          <ol class="top-v2-sim-datenights" id="sim-date-nights" hidden></ol>
           <p class="top-v2-sim-note top-v2-sim-note--season">※ ゴールデンウィーク・夏休み（7/15〜9/30）・年末年始（12/28〜1/3）・春休み（2/1〜4/10）などのハイシーズンは、<strong>土日祝の料金</strong>になります。</p>
           <p class="top-v2-sim-note top-v2-sim-note--strong">※ 平日・土日祝などの時期の選び方は目安です。正式な料金は予約画面でご確認ください</p>
+          <details class="top-v2-sim-fold" id="sim-undecided">
+            <summary>日付が決まっていない場合はこちら</summary>
+            <p class="top-v2-sim-note top-v2-sim-undecided-msg" id="sim-undecided-msg" hidden>日付を選んだので、泊数と時期は自動で決まっています</p>
+            <div class="top-v2-sim-undecided-body" id="sim-undecided-body">
+              <fieldset class="top-v2-sim-fieldset">
+                <legend class="top-v2-sim-sublabel">何泊しますか？</legend>
+                <div class="top-v2-sim-chips">
+                  <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="1" checked><span>1泊</span></label>
+                  <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="2"><span>2泊</span></label>
+                  <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="3"><span>3泊</span></label>
+                  <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="4"><span>4泊</span></label>
+                  <label class="top-v2-sim-chip"><input type="radio" name="sim-nights" value="5"><span>5泊</span></label>
+                </div>
+              </fieldset>
+              <ol class="top-v2-sim-nights" id="sim-night-list"></ol>
+            </div>
+          </details>
         </section>
 
-        <!-- 4. 人数 -->
+        <!-- 3. 人数 -->
         <section class="top-v2-sim-step" aria-labelledby="sim-h-people">
-          <h2 class="top-v2-sim-step-title" id="sim-h-people"><span class="top-v2-sim-step-no" aria-hidden="true">4</span>何人で泊まりますか？</h2>
+          <h2 class="top-v2-sim-step-title" id="sim-h-people"><span class="top-v2-sim-step-no" aria-hidden="true">3</span>何人で泊まりますか？</h2>
           <div class="top-v2-sim-rows">
             <div class="top-v2-sim-row">
               <label class="top-v2-sim-rowlabel" for="sim-adult">おとな</label>
@@ -416,33 +428,40 @@ height: 78vw;
           <p class="top-v2-sim-note">平日は5人から、土日祝は7人からです。最低利用人数に満たない場合は、最低利用金額でご案内します。</p>
         </section>
 
-        <!-- 5. お食事 -->
+        <!-- 4. お食事 -->
         <section class="top-v2-sim-step" aria-labelledby="sim-h-meal">
-          <h2 class="top-v2-sim-step-title" id="sim-h-meal"><span class="top-v2-sim-step-no" aria-hidden="true">5</span>お食事はどうしますか？</h2>
+          <h2 class="top-v2-sim-step-title" id="sim-h-meal"><span class="top-v2-sim-step-no" aria-hidden="true">4</span>お食事はどうしますか？</h2>
           <p class="top-v2-sim-note" id="sim-meal-gate"></p>
           <div class="top-v2-sim-mealblock">
-            <h3 class="top-v2-sim-sub" id="sim-lunch-title">1日目の昼食<small>チェックイン前に食べられます</small></h3>
+            <h3 class="top-v2-sim-sub" id="sim-lunch-title">昼食（1日目）<small>チェックイン前に食べられます</small></h3>
             <div class="top-v2-sim-field">
               <label class="top-v2-sim-label" for="sim-lunch">昼食</label>
               <select id="sim-lunch" class="top-v2-sim-select"></select>
             </div>
             <p class="top-v2-sim-note" id="sim-lunch-note"></p>
           </div>
-          <div id="sim-meal-nights"></div>
+          <div class="top-v2-sim-mealgroup">
+            <h3 class="top-v2-sim-sub">夕食</h3>
+            <div id="sim-meal-nights"></div>
+          </div>
+          <div class="top-v2-sim-mealgroup">
+            <h3 class="top-v2-sim-sub">朝食</h3>
+            <div id="sim-bf-nights"></div>
+          </div>
           <p class="top-v2-sim-note">アレルギーや苦手な食材は事前にご相談ください。</p>
           <p class="top-v2-sim-note"><a class="top-v2-inline-link" href="/play/option/#food" target="_blank" rel="noopener">メニューの写真・くわしい説明は「料金・オプション」へ</a></p>
         </section>
 
-        <!-- 6. オプション -->
+        <!-- 5. オプション -->
         <section class="top-v2-sim-step" aria-labelledby="sim-h-opt">
-          <h2 class="top-v2-sim-step-title" id="sim-h-opt"><span class="top-v2-sim-step-no" aria-hidden="true">6</span>遊び・ほかのオプション</h2>
+          <h2 class="top-v2-sim-step-title" id="sim-h-opt"><span class="top-v2-sim-step-no" aria-hidden="true">5</span>遊び・ほかのオプション</h2>
           <div class="top-v2-sim-opts" id="sim-options"></div>
           <p class="top-v2-sim-note">さがら子生れ温泉のチケットは、温泉施設でお買い求めください（合計には含みません）。</p>
         </section>
 
-        <!-- 7. 割引 -->
+        <!-- 6. 割引 -->
         <section class="top-v2-sim-step" aria-labelledby="sim-h-disc">
-          <h2 class="top-v2-sim-step-title" id="sim-h-disc"><span class="top-v2-sim-step-no" aria-hidden="true">7</span>割引</h2>
+          <h2 class="top-v2-sim-step-title" id="sim-h-disc"><span class="top-v2-sim-step-no" aria-hidden="true">6</span>割引</h2>
           <p class="top-v2-sim-discline"><strong>連泊割</strong><span>2泊以上で自動的に、宿泊の基本料金から<span data-sim-percent="renpaku"></span>%OFF（お食事・オプションは対象外）</span></p>
           <label class="top-v2-sim-check">
             <input type="checkbox" id="sim-local">
@@ -482,8 +501,9 @@ height: 78vw;
 
 <script src="/assets/js/site-data.js?v=20261119dr" defer></script>
 <script src="/assets/js/pricing-board.js?v=20261124a" defer></script>
-<script src="/assets/js/price-simulator.js?v=20261124p" defer></script>
-<script src="/assets/js/reserve-handoff.js?v=20261124c" defer></script>
+<script src="/assets/js/price-simulator.js?v=20261124v" defer></script>
+<script src="/assets/js/reserve-handoff.js?v=20261124d" defer></script>
+<script src="/assets/js/info-pop.js?v=20261124a" defer></script>
 
                 </div>
             </main>

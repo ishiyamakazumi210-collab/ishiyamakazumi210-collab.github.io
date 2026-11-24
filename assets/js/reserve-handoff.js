@@ -34,8 +34,19 @@
       var m = day && /^(\d{4})-(\d{2})-(\d{2})$/.exec(day.value || '');
       if (m) {
         p.dt = m[1] + m[2] + m[3];
-        var night = document.querySelector('input[name="sim-nights"]:checked');
-        p.nights = night ? countOf(night) : null;
+        // 泊数：チェックアウト日がそろっていれば日付から（最大5泊）、なければ「何泊しますか？」のボタンから
+        var out = byId('sim-checkout');
+        var om = out && /^(\d{4})-(\d{2})-(\d{2})$/.exec(out.value || '');
+        var nightsByDates = null;
+        if (om) {
+          nightsByDates = Math.round((Date.UTC(+om[1], +om[2] - 1, +om[3]) - Date.UTC(+m[1], +m[2] - 1, +m[3])) / 86400000);
+        }
+        if (nightsByDates !== null && nightsByDates >= 1) {
+          p.nights = Math.min(5, nightsByDates);
+        } else {
+          var night = document.querySelector('input[name="sim-nights"]:checked');
+          p.nights = night ? countOf(night) : null;
+        }
       }
       return p;
     }

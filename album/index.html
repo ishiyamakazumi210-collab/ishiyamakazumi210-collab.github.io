@@ -32,7 +32,7 @@
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124g"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261124l"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -306,7 +306,8 @@ height: 78vw;
 <section class="top-v2-scene-section top-v2-scene-section--gray" id="reviews">
   <div class="top-v2-scene-inner">
     <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">Googleのクチコミ</span></h2>
-    <p class="top-v2-review-summary"><span class="top-v2-review-summary-score"><span class="top-v2-review-summary-star" aria-hidden="true">★</span>4.7</span><span class="top-v2-review-summary-text">32件の平均<small>2026年11月時点・日帰りの利用も含みます</small></span></p>
+    <!-- 2026-11-24 「2026年11月時点・日帰りの利用も含みます」の小さい文はやめ、トップと同じⓘ「クチコミについて」に（P21） -->
+    <div class="top-v2-review-summary"><span class="top-v2-review-summary-score"><span class="top-v2-review-summary-star" aria-hidden="true">★</span>4.7</span><span class="top-v2-review-summary-text">32件の平均<details class="top-v2-info top-v2-info--inline"><summary aria-label="クチコミについて"><span aria-hidden="true">i</span></summary><div class="top-v2-info-pop"><p>32件のクチコミの平均です（2026年11月時点）。</p><p>泊まった方のほか、日帰りで利用した方のクチコミも含みます。</p></div></details></span></div>
     <div class="top-v2-review-grid">
       <article class="top-v2-review-card top-v2-review-card--g">
         <div class="top-v2-review-head">
@@ -540,6 +541,7 @@ height: 78vw;
         </div>
 
         <script src="/assets/wp/themes/katasho/asset/js/bundle.js" async></script>
+        <script src="/assets/js/info-pop.js?v=20261124a" defer></script>
 
         <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/katasho/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}

@@ -53,7 +53,9 @@
     },
     {
       id: 'surf', name: 'サーフィン教室', price: 8000, from: true, unit: '/人（税込）',
-      note: '地元のサーフショップの方から、サーフィンとボディボードのレクチャーを受けられます（チェックアウト後の参加もできます）。料金は受け入れてくださるサーフショップによって変わるため、合計は目安になります。',
+      // 2026-11-24 経緯の文は名前の横のⓘへ（P79）。料金が変わる一文は表に残す
+      info: { label: 'サーフィン教室について', text: '地元のサーフショップの方から、サーフィンとボディボードのレクチャーを受けられます（チェックアウト後の参加もできます）。' },
+      note: '料金は受け入れてくださるサーフショップによって変わるため、合計は目安になります。',
       fields: [{ key: 'people', label: '参加人数', unit: '人', max: 'payers' }]
     },
     {
@@ -71,7 +73,8 @@
     },
     {
       id: 'room', name: '部屋分けオプション', quote: true, unitText: '5,000円/追加1部屋・26名以上は1部屋無料',
-      note: '追加部屋は最大2部屋です。泊数ごとの扱いなどは予約時にご確認いただくため、合計には含めず「お見積り」としています。少人数プランでは利用できません。',
+      // 2026-11-24 「合計には含めず」は合計欄の注記（P91）、「少人数プランでは利用できません」は少人数プラン選択時の注意（P83）と重なるので外した（P82）
+      note: '追加部屋は最大2部屋です。泊数ごとの扱いなどは予約時にご確認いただくため、「お見積り」としています。',
       fields: [{ key: 'rooms', label: '追加する部屋数', unit: '部屋', max: 2 }]
     }
   ];
@@ -174,11 +177,15 @@
     return {
       plan: 'standard',
       checkin: '',
+      checkout: '',
+      datesMode: false,
       nights: 1,
       seasons: arr('weekday'),
       people: { adult: 10, elem: 0, pre: 0, infant: 0 },
       lunch: 'byo',
+      lunchCount: null, // 昼食の人数（null＝料金のかかる全員）
       dinner: arr('byo'),
+      dinnerCount: arr(null), // 夕食の人数（null＝料金のかかる全員）
       drink: arr(false),
       breakfast: arr(false),
       opts: { gym: { hours: 0 }, surf: { people: 0 }, sauna: { people: 0, hours: 0 }, beer: { kegs: 0 }, room: { rooms: 0 } },
@@ -194,7 +201,6 @@
     var totalPeople = payers + people.infant;
     var compact = s.plan === 'compact' && totalPeople <= P.COMPACT_HARD_MAX;
     var counts = { adult: people.adult, elem: people.elem, pre: people.pre };
-    var kids = people.elem + people.pre;
     var mealsOk = payers >= MEAL_MIN_SERVINGS;
     var res = {
       compact: compact, payers: payers, totalPeople: totalPeople,
@@ -227,33 +233,43 @@
     if (anyFloor) { note('最低利用金額に満たない泊は、最低利用金額で計算しています'); }
 
     // 食事（食事は「5人分〜」。少人数プランの夕食はBBQのみ）
-    function addMeal(label, def, extraNote) {
+    // 夕食の人数が全員より少ないときは、おとな→小学生→3〜5歳の順に減らす
+    function countsFor(count) {
+      var c = { adult: counts.adult, elem: counts.elem, pre: counts.pre };
+      if (typeof count !== 'number' || isNaN(count)) { return c; }
+      var need = payers - Math.max(0, Math.min(payers, Math.round(count)));
+      ['adult', 'elem', 'pre'].forEach(function (k) {
+        var take = Math.min(c[k], need);
+        c[k] -= take;
+        need -= take;
+      });
+      return c;
+    }
+    function addMeal(label, def, extraNote, useCounts) {
+      var cs = useCounts || counts;
       var pr = mealPrices(def);
-      var amount = counts.adult * pr.adult + counts.elem * pr.elem + counts.pre * pr.pre;
-      res.meals.push({ label: label, detail: describeCounts(counts, pr), amount: amount, note: extraNote || '' });
+      var amount = cs.adult * pr.adult + cs.elem * pr.elem + cs.pre * pr.pre;
+      res.meals.push({ label: label, detail: describeCounts(cs, pr), amount: amount, note: extraNote || '' });
       res.mealTotal += amount;
     }
     if (mealsOk) {
       var lunch = findDef(LUNCHES, s.lunch);
       if (lunch.id !== 'byo') {
-        addMeal('1日目 昼食 ' + lunch.label, lunch);
+        addMeal('1日目 昼食 ' + lunch.label, lunch, '', countsFor(s.lunchCount));
       }
       for (var n = 0; n < s.nights; n += 1) {
         var dinner = findDef(DINNERS, s.dinner[n]);
         if (compact && !dinner.compactOk) { dinner = DINNERS[0]; }
         if (dinner.id !== 'byo') {
           var extra = '';
-          if (dinner.flat && !dinner.mealKey && !dinner.kidRates && kids > 0) {
+          var dc = countsFor(s.dinnerCount ? s.dinnerCount[n] : null);
+          if (dinner.flat && !dinner.mealKey && !dinner.kidRates && (dc.elem + dc.pre) > 0) {
             extra = 'お子さま料金の記載がないため全員同額で計算';
             res.approx = true;
             note('お子さま料金の記載がない夕食（すき焼き・カレー・弁当）は、全員同額で計算しています（目安）');
           }
-          if (d0 && dinner.months) {
-            if (dinner.months.indexOf(addDays(d0, n).getMonth() + 1) === -1) {
-              note('【冬季限定】すき焼きは11月〜3月のみの提供です。この日付では提供されない可能性があります');
-            }
-          } else if (dinner.seasonNote) { note(dinner.seasonNote); }
-          addMeal(nightDate(n) + ' 夕食 ' + dinner.label, dinner, extra);
+          // 2026-11-24 すき焼きの提供期間は、選んだ夕食の下のキャプション（P75）にだけ出す。合計欄の同じ文は消した（P88）
+          addMeal(nightDate(n) + ' 夕食 ' + dinner.label, dinner, extra, dc);
         }
         if (s.drink[n]) {
           var cups = payers;
@@ -306,10 +322,7 @@
       eligible.forEach(function (it) { if (it.percent > best.percent) { best = it; } });
       var amountOff = Math.floor(res.lodgingTotal * best.percent / 100);
       res.discount = { label: best.label, percent: best.percent, amount: amountOff };
-      if (eligible.length > 1) {
-        var names = eligible.map(function (it) { return it.label.replace('（牧之原市内）', ''); }).join('と');
-        note(names + 'を同時に使えるかは確認が取れていないため、割引率の大きい方（同率なら 連泊割→地域割→リピート割 の順）の1つだけを適用しています。併用の可否は予約画面でご確認ください');
-      }
+      // 2026-11-24 割引を1つだけ計算に入れる説明は、割引の欄の注記（P84）に1本化。合計欄の同じ説明は消した（P92）
     }
 
     res.total = res.lodgingTotal - (res.discount ? res.discount.amount : 0) + res.mealTotal + res.optionTotal;
@@ -323,6 +336,20 @@
     if (cls) { node.className = cls; }
     if (text !== undefined && text !== null) { node.textContent = text; }
     return node;
+  }
+  // ⓘ（トップのクチコミⓘと同じ部品）。label は読み上げ用の名前、text は中に出す説明
+  function infoPop(label, text) {
+    var d = h('details', 'top-v2-info top-v2-info--inline');
+    var sm = h('summary');
+    sm.setAttribute('aria-label', label);
+    var dot = h('span', '', 'i');
+    dot.setAttribute('aria-hidden', 'true');
+    sm.appendChild(dot);
+    d.appendChild(sm);
+    var pop = h('div', 'top-v2-info-pop');
+    pop.appendChild(h('p', '', text));
+    d.appendChild(pop);
+    return d;
   }
   function stepperHTML(inputId, label, attrs, value, min, max) {
     var wrap = h('div', 'top-v2-sim-stepper');
@@ -365,9 +392,18 @@
   // ---- 画面の組み立て（動的部分） ---------------------------------------
   var els = {
     checkin: $('sim-checkin'),
+    checkout: $('sim-checkout'),
     nightList: $('sim-night-list'),
+    dateNights: $('sim-date-nights'),
+    dateMsg: $('sim-date-msg'),
+    undecided: $('sim-undecided'),
+    undecidedMsg: $('sim-undecided-msg'),
+    undecidedBody: $('sim-undecided-body'),
+    bfNights: $('sim-bf-nights'),
     lunch: $('sim-lunch'),
     lunchNote: $('sim-lunch-note'),
+    lunchCountWrap: null,
+    lunchCount: null,
     mealNights: $('sim-meal-nights'),
     mealGate: $('sim-meal-gate'),
     options: $('sim-options'),
@@ -416,7 +452,8 @@
     var text = isFlat(pr)
       ? '全年齢 ' + priceYen(pr.adult) + '/人'
       : 'おとな ' + priceYen(pr.adult) + '・小学生 ' + priceYen(pr.elem) + '・3〜5歳 ' + priceYen(pr.pre);
-    return text + '（2歳以下は含みません）' + (def.note ? '。' + def.note : '');
+    // 2026-11-24 「（2歳以下は含みません）」は合計欄の「2歳以下のお食事は計算に含めていません」（P89）に1回だけ（P74）
+    return text + (def.note ? '。' + def.note : '');
   }
 
   function buildNights() {
@@ -440,22 +477,35 @@
           fs.appendChild(lab);
           radios[key] = inp;
         });
-        var hint = h('p', 'top-v2-sim-hint');
-        hint.hidden = true;
         li.appendChild(fs);
-        li.appendChild(hint);
         els.nightList.appendChild(li);
-        nightRows.push({ li: li, legend: legend, hint: hint, radios: radios, name: 'sim-season-' + idx });
+        nightRows.push({ li: li, legend: legend, radios: radios, name: 'sim-season-' + idx });
       })(i);
     }
   }
 
+  // 食事の人数ステッパー（昼食・夕食で共通）
+  function buildMealCount(inputId, label, noun, attrs) {
+    var wrap = h('div', 'top-v2-sim-dinnercount');
+    var rows = h('div', 'top-v2-sim-rows');
+    var row = labelledStepperRow(inputId, label, '', '人', attrs, 10, MEAL_MIN_SERVINGS, 100);
+    rows.appendChild(row);
+    wrap.appendChild(rows);
+    wrap.appendChild(h('p', 'top-v2-sim-note', noun + 'は' + MEAL_MIN_SERVINGS + '人分からご注文できます。人数を減らすと、おとなの分から減らして計算します。'));
+    return { wrap: wrap, input: row.querySelector('input') };
+  }
+
   function buildMeals() {
     fillSelect(els.lunch, LUNCHES);
+    var lunchCount = buildMealCount('sim-lunch-count', '昼食の人数', '昼食', { 'data-lunch-count': '1' });
+    els.lunchCountWrap = lunchCount.wrap;
+    els.lunchCount = lunchCount.input;
+    els.lunchNote.parentNode.insertBefore(lunchCount.wrap, els.lunchNote);
     for (var i = 0; i < MAX_NIGHTS; i += 1) {
       (function (idx) {
+        // 夕食（1泊ごと）：選択・人数・飲み放題
         var box = h('div', 'top-v2-sim-mealblock');
-        var title = h('h3', 'top-v2-sim-sub');
+        var title = h('h4', 'top-v2-sim-mealtitle');
         var field = h('div', 'top-v2-sim-field');
         var lab = h('label', 'top-v2-sim-label', '夕食');
         lab.setAttribute('for', 'sim-dinner-' + idx);
@@ -465,6 +515,8 @@
         fillSelect(sel, DINNERS);
         field.appendChild(lab);
         field.appendChild(sel);
+        var dinnerCount = buildMealCount('sim-dinner-count-' + idx, '夕食の人数', '夕食', { 'data-dinner-count': String(idx) });
+        var countWrap = dinnerCount.wrap;
         var dinnerNote = h('p', 'top-v2-sim-note');
         var drinkRow = h('label', 'top-v2-sim-check');
         var drinkInput = h('input');
@@ -478,6 +530,15 @@
         drinkRow.appendChild(drinkInput);
         drinkRow.appendChild(drinkText);
         var drinkNote = h('p', 'top-v2-sim-note', '延長は1時間500円で可能です（合計には含みません）。ビールは含まれません。');
+        box.appendChild(title);
+        box.appendChild(field);
+        box.appendChild(countWrap);
+        box.appendChild(dinnerNote);
+        box.appendChild(drinkRow);
+        box.appendChild(drinkNote);
+        els.mealNights.appendChild(box);
+        // 朝食（翌朝ごと）
+        var bfBox = h('div', 'top-v2-sim-mealblock');
         var bfLabel = h('label', 'top-v2-sim-check');
         var bf = h('input');
         bf.type = 'checkbox';
@@ -486,14 +547,9 @@
         var bfText = h('span');
         bfLabel.appendChild(bf);
         bfLabel.appendChild(bfText);
-        box.appendChild(title);
-        box.appendChild(field);
-        box.appendChild(dinnerNote);
-        box.appendChild(drinkRow);
-        box.appendChild(drinkNote);
-        box.appendChild(bfLabel);
-        els.mealNights.appendChild(box);
-        mealRows.push({ box: box, title: title, select: sel, note: dinnerNote, drink: drinkInput, bf: bf, bfText: bfText });
+        bfBox.appendChild(bfLabel);
+        els.bfNights.appendChild(bfBox);
+        mealRows.push({ box: box, title: title, select: sel, note: dinnerNote, countWrap: countWrap, count: dinnerCount.input, drink: drinkInput, bfBox: bfBox, bf: bf, bfText: bfText });
       })(i);
     }
   }
@@ -502,7 +558,15 @@
     OPTIONS.forEach(function (def) {
       var card = h('div', 'top-v2-sim-opt');
       var head = h('div', 'top-v2-sim-opt-head');
-      head.appendChild(h('h3', 'top-v2-sim-opt-name', def.name));
+      if (def.info) {
+        // 名前の横にⓘ（見た目・開け閉めは top-v2.css の .top-v2-info と info-pop.js）
+        var titleWrap = h('div', 'top-v2-sim-opt-title');
+        titleWrap.appendChild(h('h3', 'top-v2-sim-opt-name', def.name));
+        titleWrap.appendChild(infoPop(def.info.label, def.info.text));
+        head.appendChild(titleWrap);
+      } else {
+        head.appendChild(h('h3', 'top-v2-sim-opt-name', def.name));
+      }
       var priceP = h('p', 'top-v2-sim-opt-price');
       if (def.quote) {
         priceP.appendChild(h('strong', '', 'お見積り'));
@@ -573,7 +637,10 @@
 
   // ---- 状態の読み取り・正規化・書き戻し ------------------------------------
   var state = defaultState();
-  var override = []; // 泊ごとに利用者が手で選んだ料金区分（日付を変えると消える）
+  var lunchTouched = false; // 昼食の人数を利用者が変えたか
+  var dinnerTouched = []; // 夕食の人数を利用者が変えたか（変えていなければ人数に合わせて増減）
+  var dateMsg = false; // 「5泊まで」の案内を出すか
+  var prevDatesMode = null;
   var flash = { plan: '', meal: '' };
 
   function readState() {
@@ -582,19 +649,38 @@
     s.plan = planChecked ? planChecked.value : 'standard';
     var nightChecked = form.querySelector('input[name="sim-nights"]:checked');
     s.nights = nightChecked ? clampInt(nightChecked.value, 1, MAX_NIGHTS) : 1;
-    s.checkin = els.checkin ? (els.checkin.value || '') : '';
+    // 日付がそろっていれば泊数と時期は日付から決める。なければ「日付が決まっていない場合」のボタンから
+    var dIn = parseDate(els.checkin.value);
+    var dOut = parseDate(els.checkout.value);
+    s.datesMode = !!(dIn && dOut && dOut > dIn);
+    s.checkin = '';
+    s.checkout = '';
+    if (s.datesMode) {
+      var diff = Math.round((Date.UTC(dOut.getFullYear(), dOut.getMonth(), dOut.getDate()) - Date.UTC(dIn.getFullYear(), dIn.getMonth(), dIn.getDate())) / 86400000);
+      if (diff > MAX_NIGHTS) {
+        diff = MAX_NIGHTS;
+        dOut = addDays(dIn, MAX_NIGHTS);
+        els.checkout.value = ymd(dOut);
+        dateMsg = true;
+      }
+      s.nights = diff;
+      s.checkin = ymd(dIn);
+      s.checkout = ymd(dOut);
+    }
     ['adult', 'elem', 'pre', 'infant'].forEach(function (key) {
       s.people[key] = clampInt(peopleInputs[key].value, key === 'adult' ? 1 : 0, P.MAX_PEOPLE);
     });
     s.lunch = els.lunch.value;
+    s.lunchCount = lunchTouched ? clampInt(els.lunchCount.value, 0, P.MAX_PEOPLE) : null;
     for (var i = 0; i < MAX_NIGHTS; i += 1) {
       s.seasons[i] = nightRows[i].radios.holiday.checked ? 'holiday' : 'weekday';
       s.dinner[i] = mealRows[i].select.value;
+      s.dinnerCount[i] = dinnerTouched[i] ? clampInt(mealRows[i].count.value, 0, P.MAX_PEOPLE) : null;
       s.drink[i] = mealRows[i].drink.checked;
       s.breakfast[i] = mealRows[i].bf.checked;
-      // 日付があれば、泊ごとの区分は「手で選んだもの、なければ日付からの自動判定」
+      // 日付がそろっていれば、泊ごとの区分は日付から自動で決める
       var auto = autoSeason(i);
-      if (auto) { s.seasons[i] = override[i] || auto.season; }
+      if (s.datesMode && auto) { s.seasons[i] = auto.season; }
     }
     OPTIONS.forEach(function (def) {
       def.fields.forEach(function (f) {
@@ -606,7 +692,7 @@
   }
 
   function autoSeason(i) {
-    var d0 = parseDate(state.checkin);
+    var d0 = state.datesMode ? parseDate(state.checkin) : null;
     if (!d0) { return null; }
     return classifyNight(ymd(addDays(d0, i)));
   }
@@ -640,6 +726,14 @@
         }
       }
       s.opts.room.rooms = 0;
+    }
+    // 昼食・夕食の人数：触っていなければ全員、触っていれば5人〜全員の範囲に収める
+    function clampMealCount(v) {
+      return (v === null || payers < MEAL_MIN_SERVINGS) ? payers : Math.max(MEAL_MIN_SERVINGS, Math.min(payers, v));
+    }
+    s.lunchCount = clampMealCount(s.lunchCount);
+    for (var k = 0; k < MAX_NIGHTS; k += 1) {
+      s.dinnerCount[k] = clampMealCount(s.dinnerCount[k]);
     }
     s.opts.surf.people = Math.min(s.opts.surf.people, payers);
     s.opts.sauna.people = Math.min(s.opts.sauna.people, payers);
@@ -683,28 +777,45 @@
     renderRateTable(compact);
 
     // 日程
-    Array.prototype.forEach.call(nightInputs, function (input) { input.checked = Number(input.value) === s.nights; });
-    var d0 = parseDate(s.checkin);
+    var d0 = s.datesMode ? parseDate(s.checkin) : null;
+    els.dateMsg.hidden = !(dateMsg && s.datesMode);
+    els.dateMsg.textContent = els.dateMsg.hidden ? '' : 'このページでは' + MAX_NIGHTS + '泊まで計算できます';
+    // 日付があるとき：泊ごとの時期を読み取り専用で一覧にする
+    els.dateNights.hidden = !s.datesMode;
+    els.dateNights.textContent = '';
+    // 2026-11-24 オーナー指摘「これ出す必要ある？」→ 泊ごとの一覧をやめ、内訳は1行にまとめる（泊ごとの金額は右の「お見積りの目安」に出る）
+    if (s.datesMode) {
+      var missing = false;
+      var nWeek = 0, highDays = [];
+      for (var di = 0; di < s.nights; di += 1) {
+        var cls = autoSeason(di);
+        if (!cls) { continue; }
+        if (cls.holidayDataMissing) { missing = true; }
+        if (cls.season === 'holiday') { highDays.push(dateLabelW(addDays(d0, di))); } else { nWeek += 1; }
+      }
+      var parts = [];
+      if (nWeek) { parts.push(SEASON_LABEL.weekday + ' ' + nWeek + '泊'); }
+      if (highDays.length) { parts.push(SEASON_LABEL.holiday + ' ' + highDays.length + '泊（' + highDays.join('・') + '）'); }
+      els.dateNights.appendChild(h('li', 'top-v2-sim-datenight-sum', '料金の区分：' + parts.join('／')));
+      if (missing) { els.dateNights.appendChild(h('li', 'top-v2-sim-datenight-why', '祝日は2026〜2027年分のみ反映しています')); }
+    }
+    // 日付が決まっていない場合のボタン：日付があるときは閉じて使えなくし、中身は日付から決めた値に合わせておく
+    els.undecidedMsg.hidden = !s.datesMode;
+    els.undecidedBody.classList.toggle('is-dimmed', s.datesMode);
+    els.undecidedBody.setAttribute('aria-disabled', s.datesMode ? 'true' : 'false');
+    Array.prototype.forEach.call(nightInputs, function (input) {
+      input.checked = Number(input.value) === s.nights;
+      input.disabled = s.datesMode;
+    });
+    if (prevDatesMode !== s.datesMode) {
+      if (s.datesMode) { els.undecided.open = false; }
+      prevDatesMode = s.datesMode;
+    }
     for (var i = 0; i < MAX_NIGHTS; i += 1) {
       var row = nightRows[i];
       row.li.hidden = i >= s.nights;
-      if (i >= s.nights) { continue; }
-      row.legend.textContent = d0 ? (i + 1) + '泊目 ' + dateLabelW(addDays(d0, i)) + 'は？' : (i + 1) + '泊目は？';
-      var auto = autoSeason(i);
-      if (!auto) {
-        row.hint.hidden = true;
-        row.hint.textContent = '';
-      } else {
-        row.hint.hidden = false;
-        if (override[i] && override[i] !== auto.season) {
-          row.hint.textContent = '手動で変更中です（日付からの目安は「' + SEASON_LABEL[auto.season] + '」：' + (auto.reasons.length ? auto.reasons.join('・') : '平日でハイシーズン期間外') + '）。';
-        } else if (auto.season === 'holiday') {
-          row.hint.textContent = '日付から自動で選びました（' + auto.reasons.join('・') + 'のため「' + SEASON_LABEL.holiday + '」）。';
-        } else {
-          row.hint.textContent = '日付から自動で選びました（平日でハイシーズン期間外のため「' + SEASON_LABEL.weekday + '」）。';
-        }
-        if (auto.holidayDataMissing) { row.hint.textContent += '（祝日は2026〜2027年分のみ反映しています）'; }
-      }
+      row.radios.holiday.disabled = s.datesMode;
+      row.radios.weekday.disabled = s.datesMode;
       row.radios.holiday.checked = s.seasons[i] === 'holiday';
       row.radios.weekday.checked = s.seasons[i] !== 'holiday';
     }
@@ -725,12 +836,18 @@
     els.lunch.value = s.lunch;
     els.lunch.disabled = !mealsOk;
     els.lunchNote.textContent = mealCaption(findDef(LUNCHES, s.lunch));
+    els.lunchCountWrap.hidden = !(mealsOk && s.lunch !== 'byo');
+    setNum(els.lunchCount, s.lunchCount, Math.min(MEAL_MIN_SERVINGS, Math.max(payers, 0)), Math.max(payers, MEAL_MIN_SERVINGS), force);
     for (var n = 0; n < MAX_NIGHTS; n += 1) {
       var mr = mealRows[n];
       mr.box.hidden = n >= s.nights;
+      mr.bfBox.hidden = n >= s.nights;
       if (n >= s.nights) { continue; }
-      mr.title.textContent = d0 ? (n + 1) + '泊目 ' + dateLabel(addDays(d0, n)) + 'の夜と、翌朝' : (n + 1) + '泊目の夜と、翌朝';
+      mr.title.textContent = d0 ? (n + 1) + '泊目 ' + dateLabelW(addDays(d0, n)) + 'の夕食' : (n + 1) + '泊目の夕食';
       mr.select.value = s.dinner[n];
+      var showCount = mealsOk && s.dinner[n] !== 'byo' && !(compact && !findDef(DINNERS, s.dinner[n]).compactOk);
+      mr.countWrap.hidden = !showCount;
+      setNum(mr.count, s.dinnerCount[n], Math.min(MEAL_MIN_SERVINGS, Math.max(payers, 0)), Math.max(payers, MEAL_MIN_SERVINGS), force);
       mr.select.disabled = !mealsOk;
       Array.prototype.forEach.call(mr.select.options, function (opt) {
         var def = findDef(DINNERS, opt.value);
@@ -744,16 +861,14 @@
       } else if (dinnerDef.seasonNote) {
         caption += (caption ? '。' : '') + dinnerDef.seasonNote;
       }
-      if (dinnerDef.flat && !dinnerDef.mealKey && !dinnerDef.kidRates && dinnerDef.id !== 'byo' && (p.elem + p.pre) > 0) {
-        caption += '。お子さま料金の記載がないため、全員同額で計算します（目安）';
-      }
+      // 2026-11-24 お子さま料金の記載がない夕食の「全員同額で計算」は、合計欄の注記（P87）に1本化（P76）
       mr.note.textContent = caption;
       mr.drink.checked = !!s.drink[n];
       mr.drink.disabled = !mealsOk;
       mr.bf.checked = s.breakfast[n];
       mr.bf.disabled = !mealsOk;
       var sando = P.MEALS[BREAKFAST.mealKey];
-      mr.bfText.textContent = (d0 ? '翌朝 ' + dateLabel(addDays(d0, n + 1)) + 'の朝食　' : '翌朝（' + (n + 2) + '日目）の朝食　') + BREAKFAST.label + ' +' + priceYen(sando.adult) + '/人（全年齢同額）';
+      mr.bfText.textContent = (d0 ? (n + 2) + '日目 ' + dateLabelW(addDays(d0, n + 1)) + 'の朝食　' : (n + 2) + '日目の朝食　') + BREAKFAST.label + ' +' + priceYen(sando.adult) + '/人（全年齢同額）';
     }
 
     // オプション
@@ -781,7 +896,7 @@
     if (s.local) { dnNames.push('地域割'); }
     if (s.repeat) { dnNames.push('リピート割'); }
     if (dnNames.length >= 2) {
-      dn = dnNames.join('と') + 'を同時に使えるかは確認が取れていないため、割引率の大きい方（同率なら 連泊割→地域割→リピート割 の順）の1つだけを計算に入れています。';
+      dn = dnNames.join('と') + 'を同時に使えるかは確認が取れていないため、割引率の大きい方（同率なら 連泊割→地域割→リピート割 の順）の1つだけを計算に入れています。併用の可否は予約画面でご確認ください。';
     } else if (s.nights >= 2) {
       dn = 'いまの泊数は連泊割の対象です。';
     }
@@ -865,17 +980,33 @@
     renderSummary(calculate(state));
   }
 
-  function trackOverride(t) {
-    if (t === els.checkin) { override = []; return; }
-    var m = t && t.name ? /^sim-season-(\d+)$/.exec(t.name) : null;
-    if (m && t.checked) { override[Number(m[1])] = t.value; }
+  // 日付の入力：チェックインを選んだら、チェックアウトが空か同じ日以前のときは翌日にする
+  function onDateEvent(e) {
+    var t = e.target;
+    if (t !== els.checkin && t !== els.checkout) { return; }
+    dateMsg = false;
+    var dIn = parseDate(els.checkin.value);
+    var dOut = parseDate(els.checkout.value);
+    if (t === els.checkin && dIn && (!dOut || dOut <= dIn)) {
+      els.checkout.value = ymd(addDays(dIn, 1));
+    } else if (t === els.checkout && e.type === 'change' && dIn && dOut && dOut <= dIn) {
+      els.checkout.value = ymd(addDays(dIn, 1));
+    }
+  }
+  function trackDinnerCount(t) {
+    if (!t || !t.getAttribute) { return; }
+    var idx = t.getAttribute('data-dinner-count');
+    if (idx !== null) { dinnerTouched[Number(idx)] = true; }
+    if (t.getAttribute('data-lunch-count') !== null) { lunchTouched = true; }
   }
   form.addEventListener('input', function (e) {
-    trackOverride(e.target);
+    onDateEvent(e);
+    trackDinnerCount(e.target);
     update(false);
   });
   form.addEventListener('change', function (e) {
-    trackOverride(e.target);
+    onDateEvent(e);
+    trackDinnerCount(e.target);
     update(true);
   });
   form.addEventListener('click', function (e) {
@@ -887,6 +1018,7 @@
     var max = input.max === '' ? 100 : Number(input.max);
     var next = clampInt(input.value, min, max) + Number(btn.getAttribute('data-step'));
     input.value = String(Math.max(min, Math.min(max, next)));
+    trackDinnerCount(input);
     update(true);
   });
 
@@ -896,8 +1028,135 @@
     els.toggle.textContent = open ? '内訳 ▴' : '内訳 ▾';
   });
 
+  // ---- ページ内カレンダー（1回目のタップでチェックイン、2回目でチェックアウト。2026-11-24） ----
+  var cal = {
+    grid: $('sim-cal-grid'), title: $('sim-cal-title'), summary: $('sim-cal-summary'),
+    prev: $('sim-cal-prev'), next: $('sim-cal-next'), clear: $('sim-cal-clear'),
+    year: 0, month: 0
+  };
+  var calToday = new Date();
+  calToday = new Date(calToday.getFullYear(), calToday.getMonth(), calToday.getDate());
+  function calSetView(d) { cal.year = d.getFullYear(); cal.month = d.getMonth(); }
+  function renderCalendar(focusDate) {
+    if (!cal.grid) { return; }
+    var inStr = els.checkin.value;
+    var outStr = els.checkout.value;
+    var todayStr = ymd(calToday);
+    cal.title.textContent = cal.year + '年' + (cal.month + 1) + '月';
+    cal.prev.disabled = cal.year * 12 + cal.month <= calToday.getFullYear() * 12 + calToday.getMonth();
+    cal.grid.textContent = '';
+    WEEKDAYS.forEach(function (w, i) {
+      cal.grid.appendChild(h('span', 'top-v2-sim-cal-dow' + (i === 0 ? ' is-sun' : i === 6 ? ' is-sat' : ''), w));
+    });
+    var first = new Date(cal.year, cal.month, 1);
+    for (var b = 0; b < first.getDay(); b += 1) { cal.grid.appendChild(h('span', 'top-v2-sim-cal-blank', '')); }
+    var days = new Date(cal.year, cal.month + 1, 0).getDate();
+    for (var n = 1; n <= days; n += 1) {
+      var d = new Date(cal.year, cal.month, n);
+      var key = ymd(d);
+      var dow = d.getDay();
+      var cls = 'top-v2-sim-cal-day';
+      if (dow === 0 || HOLIDAYS[key]) { cls += ' is-sun'; } else if (dow === 6) { cls += ' is-sat'; }
+      var info = classifyNight(key);
+      if (info && info.season === 'holiday') { cls += ' is-high'; }
+      var tag = '';
+      var aria = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + n + '日（' + WEEKDAYS[dow] + '）';
+      if (key === inStr) { cls += ' is-in'; tag = 'イン'; aria += ' チェックイン'; }
+      else if (outStr && key === outStr) { cls += ' is-out'; tag = 'アウト'; aria += ' チェックアウト'; }
+      else if (inStr && outStr && key > inStr && key < outStr) { cls += ' is-range'; }
+      if (key === todayStr) { cls += ' is-today'; }
+      var btn = h('button', cls, '');
+      btn.type = 'button';
+      btn.setAttribute('data-date', key);
+      btn.setAttribute('aria-label', aria);
+      if (key === inStr || key === outStr) { btn.setAttribute('aria-pressed', 'true'); }
+      if (key < todayStr) { btn.disabled = true; }
+      btn.appendChild(h('span', 'top-v2-sim-cal-num', String(n)));
+      btn.appendChild(h('span', 'top-v2-sim-cal-tag', tag));
+      cal.grid.appendChild(btn);
+    }
+    var dIn = parseDate(inStr);
+    var dOut = parseDate(outStr);
+    if (dIn && dOut && dOut > dIn) {
+      var nn = Math.round((Date.UTC(dOut.getFullYear(), dOut.getMonth(), dOut.getDate()) - Date.UTC(dIn.getFullYear(), dIn.getMonth(), dIn.getDate())) / 86400000);
+      cal.summary.textContent = dateLabelW(dIn).replace('/', '/') + '〜' + dateLabelW(dOut) + '・' + nn + '泊';
+      cal.summary.className = 'top-v2-sim-cal-summary is-done';
+    } else if (dIn) {
+      cal.summary.textContent = dateLabelW(dIn) + 'チェックイン。チェックアウトの日をタップしてください';
+      cal.summary.className = 'top-v2-sim-cal-summary';
+    } else {
+      cal.summary.textContent = 'チェックインの日をタップしてください';
+      cal.summary.className = 'top-v2-sim-cal-summary';
+    }
+    cal.clear.hidden = !dIn;
+    if (focusDate) {
+      var f = cal.grid.querySelector('button[data-date="' + focusDate + '"]');
+      if (f && !f.disabled) { f.focus(); }
+    }
+  }
+  function calPick(key) {
+    var inStr = els.checkin.value;
+    var outStr = els.checkout.value;
+    dateMsg = false;
+    if (!inStr || outStr || key <= inStr) {
+      els.checkin.value = key;
+      els.checkout.value = '';
+    } else {
+      var dIn = parseDate(inStr);
+      var dKey = parseDate(key);
+      var diff = Math.round((Date.UTC(dKey.getFullYear(), dKey.getMonth(), dKey.getDate()) - Date.UTC(dIn.getFullYear(), dIn.getMonth(), dIn.getDate())) / 86400000);
+      if (diff > MAX_NIGHTS) {
+        els.checkout.value = ymd(addDays(dIn, MAX_NIGHTS));
+        dateMsg = true;
+      } else {
+        els.checkout.value = key;
+      }
+    }
+    var shown = parseDate(els.checkout.value) || parseDate(els.checkin.value);
+    // チェックアウトが別の月になっても、いま見ている月は動かさない（続けてタップしやすいように）
+    renderCalendar(key);
+    update(true);
+    return shown;
+  }
+  if (cal.grid) {
+    cal.grid.addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('button[data-date]') : null;
+      if (!btn || btn.disabled) { return; }
+      calPick(btn.getAttribute('data-date'));
+    });
+    cal.grid.addEventListener('keydown', function (e) {
+      var btn = e.target.closest ? e.target.closest('button[data-date]') : null;
+      if (!btn) { return; }
+      var step = { 37: -1, 39: 1, 38: -7, 40: 7 }[e.keyCode];
+      if (!step) { return; }
+      var d = addDays(parseDate(btn.getAttribute('data-date')), step);
+      var target = cal.grid.querySelector('button[data-date="' + ymd(d) + '"]');
+      if (target && !target.disabled) { e.preventDefault(); target.focus(); }
+    });
+    cal.prev.addEventListener('click', function () {
+      if (cal.prev.disabled) { return; }
+      calSetView(new Date(cal.year, cal.month - 1, 1));
+      renderCalendar();
+    });
+    cal.next.addEventListener('click', function () {
+      calSetView(new Date(cal.year, cal.month + 1, 1));
+      renderCalendar();
+    });
+    cal.clear.addEventListener('click', function () {
+      els.checkin.value = '';
+      els.checkout.value = '';
+      dateMsg = false;
+      // 2026-11-24 クリアしたら「日付なし」の初期（1泊・平日）に戻す。直前の泊数・時期を引きずらない
+      Array.prototype.forEach.call(nightInputs, function (r) { r.checked = (r.value === '1'); });
+      nightRows.forEach(function (row) { if (row && row.radios) { row.radios.weekday.checked = true; row.radios.holiday.checked = false; } });
+      renderCalendar();
+      update(true);
+    });
+    calSetView(parseDate(els.checkin.value) || calToday);
+    renderCalendar();
+  }
+
   // ---- 初期化 -------------------------------------------------------------
-  els.checkin.min = ymd(new Date());
   renderRateInfo();
   buildNights();
   buildMeals();
