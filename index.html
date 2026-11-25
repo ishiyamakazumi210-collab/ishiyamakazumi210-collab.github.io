@@ -35,36 +35,6 @@
   <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg" />
   <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff" />
 
-  <script>
-    (function(d) {
-      var config = {
-          kitId: 'iie6hhx',
-          scriptTimeout: 3000,
-          async: true
-        },
-        h = d.documentElement,
-        t = setTimeout(function() {
-          h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
-        }, config.scriptTimeout),
-        tk = d.createElement("script"),
-        f = false,
-        s = d.getElementsByTagName("script")[0],
-        a;
-      h.className += " wf-loading";
-      tk.src = 'https://use.typekit.net/' + config.kitId + '.js';
-      tk.async = true;
-      tk.onload = tk.onreadystatechange = function() {
-        a = this.readyState;
-        if (f || a && a != "complete" && a != "loaded") return;
-        f = true;
-        clearTimeout(t);
-        try {
-          Typekit.load(config)
-        } catch (e) {}
-      };
-      s.parentNode.insertBefore(tk, s)
-    })(document);
-  </script>
 
   <!-- Google Tag Manager -->
   
@@ -232,7 +202,7 @@ height: 78vw;
 <meta name="msapplication-TileImage" content="/assets/wp/uploads/2023/09/cropped-校章映像用-270x270.png" />
 <noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>
 <link rel="stylesheet" href="/static/local-preview.css">
-<link rel="stylesheet" href="/assets/css/top-v2.css?v=20261125e">
+<link rel="stylesheet" href="/assets/css/top-v2.css?v=20261125f">
 <link rel="stylesheet" href="/assets/css/top-hero.css?v=20261120a">
 <script defer src="/static/local-preview.js"></script>
 </head>
@@ -809,13 +779,13 @@ height: 78vw;
           <div class="top-v2-chalk-frow">
             <span class="top-v2-chalk-flabel">小学生</span>
             <button type="button" class="top-v2-chalk-step" id="fam-elem-minus" aria-label="小学生を1人減らす">−</button>
-            <span class="top-v2-chalk-fcount" id="fam-elem" aria-live="polite">0</span>
+            <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" class="top-v2-chalk-fcount" id="fam-elem" value="0" aria-label="小学生の人数">
             <button type="button" class="top-v2-chalk-step" id="fam-elem-plus" aria-label="小学生を1人増やす">＋</button>
           </div>
           <div class="top-v2-chalk-frow">
             <span class="top-v2-chalk-flabel">3〜5歳</span>
             <button type="button" class="top-v2-chalk-step" id="fam-pre-minus" aria-label="3〜5歳を1人減らす">−</button>
-            <span class="top-v2-chalk-fcount" id="fam-pre" aria-live="polite">0</span>
+            <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" class="top-v2-chalk-fcount" id="fam-pre" value="0" aria-label="3〜5歳の人数">
             <button type="button" class="top-v2-chalk-step" id="fam-pre-plus" aria-label="3〜5歳を1人増やす">＋</button>
           </div>
         </div>
@@ -836,7 +806,7 @@ height: 78vw;
       <div class="top-v2-chalk-frow">
         <span class="top-v2-chalk-flabel">おとな</span>
         <button type="button" class="top-v2-chalk-step" id="fam-adult-minus" aria-label="おとなを1人減らす">−</button>
-        <span class="top-v2-chalk-fcount" id="fam-adult" aria-live="polite">10</span>
+        <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" class="top-v2-chalk-fcount" id="fam-adult" value="10" aria-label="おとなの人数">
         <button type="button" class="top-v2-chalk-step" id="fam-adult-plus" aria-label="おとなを1人増やす">＋</button>
       </div>
     </div>
@@ -1248,7 +1218,7 @@ height: 78vw;
                     <div class="row">
                         <div class="col-lg-8 mb-3 mb-lg-0">
                             <div class="l-footer_info">
-                                <div class="l-footer_logo"><a href="/"><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="logo" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="logo" decoding="async"/></noscript></a></div>
+                                <div class="l-footer_logo"><a href="/"><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="カタショー" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="カタショー" decoding="async"/></noscript></a></div>
                                 <div class="l-footer_name">
                                     <p class="mb-0 fw-bold">遊んで泊まれる小学校　カタショー</p>
                                 </div>
@@ -1295,7 +1265,7 @@ height: 78vw;
                   <p class="reserve-bar-text"><span class="reserve-bar-label" id="reserveBarLabel" hidden></span><span class="reserve-bar-main" id="reserveBarMain">1人 7,900円〜</span><span class="reserve-bar-cond" id="reserveBarCond">※平日・少人数プラン</span></p>
                   <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange reserve-bar-cta" data-event="bar_reserve">空き状況を見る</a>
                 </div>
-                <script src="/assets/js/reserve-bar.js?v=20261124a" defer></script>
+                <script src="/assets/js/reserve-bar.js?v=20261125a" defer></script>
             </footer>
   </div>
 
@@ -1426,7 +1396,7 @@ height: 78vw;
 
   <script src="/assets/js/playroll.js?v=20261125a" defer></script>
   <script src="/assets/js/site-data.js?v=20261125d" defer></script>
-  <script src="/assets/js/pricing-board.js?v=20261125c" defer></script>
+  <script src="/assets/js/pricing-board.js?v=20261125d" defer></script>
   <script src="/assets/js/reserve-handoff.js?v=20261124d" defer></script>
   <script src="/assets/js/info-pop.js?v=20261124a" defer></script>
   <script src="/assets/js/top-hero.js?v=20261120a" defer></script>

@@ -31,7 +31,7 @@
 
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261125e"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261125f"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -63,7 +63,6 @@
         </script>
         <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\/script>');</script>
         
-        <script> (function(d) { var config = { kitId: 'iie6hhx', scriptTimeout: 3000, async: true }, h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s) })(document);</script>
         <title>料金・オプション - 遊んで泊まれる小学校 カタショー</title>
 <link rel="alternate" hreflang="en" href="https://katasho.jp/en/play-at-school-then-stay-the-night/additional-options-list" />
 <link rel="alternate" hreflang="ja" href="/play/option/" />
@@ -414,13 +413,13 @@ height: 78vw;
 <div class="top-v2-chalk-frow">
 <span class="top-v2-chalk-flabel">小学生</span>
 <button type="button" class="top-v2-chalk-step" id="fam-elem-minus" aria-label="小学生を1人減らす">−</button>
-<span class="top-v2-chalk-fcount" id="fam-elem" aria-live="polite">0</span>
+<input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" class="top-v2-chalk-fcount" id="fam-elem" value="0" aria-label="小学生の人数">
 <button type="button" class="top-v2-chalk-step" id="fam-elem-plus" aria-label="小学生を1人増やす">＋</button>
 </div>
 <div class="top-v2-chalk-frow">
 <span class="top-v2-chalk-flabel">3〜5歳</span>
 <button type="button" class="top-v2-chalk-step" id="fam-pre-minus" aria-label="3〜5歳を1人減らす">−</button>
-<span class="top-v2-chalk-fcount" id="fam-pre" aria-live="polite">0</span>
+<input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" class="top-v2-chalk-fcount" id="fam-pre" value="0" aria-label="3〜5歳の人数">
 <button type="button" class="top-v2-chalk-step" id="fam-pre-plus" aria-label="3〜5歳を1人増やす">＋</button>
 </div>
 </div>
@@ -441,7 +440,7 @@ height: 78vw;
 <div class="top-v2-chalk-frow">
 <span class="top-v2-chalk-flabel">おとな</span>
 <button type="button" class="top-v2-chalk-step" id="fam-adult-minus" aria-label="おとなを1人減らす">−</button>
-<span class="top-v2-chalk-fcount" id="fam-adult" aria-live="polite">10</span>
+<input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" class="top-v2-chalk-fcount" id="fam-adult" value="10" aria-label="おとなの人数">
 <button type="button" class="top-v2-chalk-step" id="fam-adult-plus" aria-label="おとなを1人増やす">＋</button>
 </div>
 </div>
@@ -524,7 +523,7 @@ height: 78vw;
 </div>
 </section>
 <script src="/assets/js/site-data.js?v=20261125d" defer></script>
-<script src="/assets/js/pricing-board.js?v=20261125c" defer></script>
+<script src="/assets/js/pricing-board.js?v=20261125d" defer></script>
 <script src="/assets/js/reserve-handoff.js?v=20261124d" defer></script>
 <script src="/assets/js/info-pop.js?v=20261124a" defer></script>
 <section class="l-section l-option" id="food">
@@ -580,6 +579,7 @@ height: 78vw;
 <h4 class="top-v2-menu-name">提供型BBQ（満腹コース）</h4>
 <p class="top-v2-menu-tags"><span class="top-v2-menu-pricetag"><strong>3,800円</strong><small>/人（税込）</small></span><span class="top-v2-menu-condtag">5人分〜</span></p>
 <p class="top-v2-menu-desc">地元の老舗精肉店の厳選肉をたっぷり味わえるBBQコース。準備も片付けもおまかせ。ガッツリ食べたい方に。</p>
+<p class="top-v2-menu-venue"><img src="/assets/img/rooms-2026/bbq1.jpg" alt="屋根つきのウッドデッキに長いBBQテーブルが並ぶBBQ場" width="1200" height="800" loading="lazy" decoding="async"><span>会場は屋根つきのウッドデッキ。雨でもできます</span></p>
 </div>
 </li>
 <li class="top-v2-menu-card">
@@ -742,10 +742,10 @@ height: 78vw;
 </div>
 <nav class="top-v2-menu-thumbnav">
 <ul class="top-v2-menu-thumblist list-unstyled nav border-0" id="spaNav" role="tablist">
-<li class="top-v2-menu-thumb-item"><button class="top-v2-menu-thumb-btn nav-link border-0 p-0 active" id="spaNav01" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#spaTab01" aria-controls="spaTab01" aria-selected="true"><img src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare01.jpg" alt="" width="1560" height="1022" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare01.jpg" alt="" width="1560" height="1022" decoding="async"></noscript></button></li>
-<li class="top-v2-menu-thumb-item"><button class="top-v2-menu-thumb-btn nav-link border-0 p-0" id="spaNav02" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#spaTab02" aria-controls="spaTab02" aria-selected="false"><img src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare02.jpg" alt="" width="1560" height="1022" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare02.jpg" alt="" width="1560" height="1022" decoding="async"></noscript></button></li>
-<li class="top-v2-menu-thumb-item"><button class="top-v2-menu-thumb-btn nav-link border-0 p-0" id="spaNav03" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#spaTab03" aria-controls="spaTab03" aria-selected="false"><img src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare03.jpg" alt="" width="1560" height="1022" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare03.jpg" alt="" width="1560" height="1022" decoding="async"></noscript></button></li>
-<li class="top-v2-menu-thumb-item"><button class="top-v2-menu-thumb-btn nav-link border-0 p-0" id="spaNav04" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#spaTab04" aria-controls="spaTab04" aria-selected="false"><img src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare04.jpg" alt="" width="1560" height="1022" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare04.jpg" alt="" width="1560" height="1022" decoding="async"></noscript></button></li>
+<li class="top-v2-menu-thumb-item"><button class="top-v2-menu-thumb-btn nav-link border-0 p-0 active" id="spaNav01" aria-label="温泉の写真 1枚目：屋根のある外の湯船" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#spaTab01" aria-controls="spaTab01" aria-selected="true"><img src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare01.jpg" alt="" width="1560" height="1022" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare01.jpg" alt="" width="1560" height="1022" decoding="async"></noscript></button></li>
+<li class="top-v2-menu-thumb-item"><button class="top-v2-menu-thumb-btn nav-link border-0 p-0" id="spaNav02" aria-label="温泉の写真 2枚目：夕方の温泉の外観" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#spaTab02" aria-controls="spaTab02" aria-selected="false"><img src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare02.jpg" alt="" width="1560" height="1022" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare02.jpg" alt="" width="1560" height="1022" decoding="async"></noscript></button></li>
+<li class="top-v2-menu-thumb-item"><button class="top-v2-menu-thumb-btn nav-link border-0 p-0" id="spaNav03" aria-label="温泉の写真 3枚目：窓のある内湯" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#spaTab03" aria-controls="spaTab03" aria-selected="false"><img src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare03.jpg" alt="" width="1560" height="1022" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare03.jpg" alt="" width="1560" height="1022" decoding="async"></noscript></button></li>
+<li class="top-v2-menu-thumb-item"><button class="top-v2-menu-thumb-btn nav-link border-0 p-0" id="spaNav04" aria-label="温泉の写真 4枚目：木のサウナ室" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#spaTab04" aria-controls="spaTab04" aria-selected="false"><img src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare04.jpg" alt="" width="1560" height="1022" decoding="async" ><noscript><img loading="lazy" src="/assets/wp/themes/katasho/asset/image/play/option/spa_koumare04.jpg" alt="" width="1560" height="1022" decoding="async"></noscript></button></li>
 </ul>
 </nav>
 </figure>
@@ -861,6 +861,10 @@ height: 78vw;
 <p class="top-v2-scenedialog-lead">食堂のある1階のエリアを使う、20名くらいまでの割引プランです。</p>
 <div class="top-v2-scenedialog-block top-v2-scenedialog-block--compact">
 <h4>寝る場所と定員</h4>
+<div class="top-v2-shower-photos top-v2-realroom-photos">
+<figure><img src="/assets/img/rooms-2026/s1f1.jpg" alt="黒い二段ベッドが並ぶ南棟一階の宿泊部屋" width="1200" height="800" loading="lazy" decoding="async"><figcaption>1階の中部屋（二段ベッド）</figcaption></figure>
+<figure><img src="/assets/img/rooms-2026/s1f2.jpg" alt="木の二段ベッドが並ぶ南棟一階の小部屋" width="1200" height="800" loading="lazy" decoding="async"><figcaption>1階の小部屋（二段ベッド）</figcaption></figure>
+</div>
 <ul class="top-v2-scenedialog-list">
 <li>寝室は二段ベッド（1階の中部屋16名くらい＋小部屋8名くらい）</li>
 <li>手狭でもよければ、布団を敷いて最大30名（20名＋10名）</li>
@@ -928,7 +932,7 @@ height: 78vw;
                     <div class="row">
                         <div class="col-lg-8 mb-3 mb-lg-0">
                             <div class="l-footer_info">
-                                <div class="l-footer_logo"><a href="/"><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="logo" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="logo" decoding="async"/></noscript></a></div>
+                                <div class="l-footer_logo"><a href="/"><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="カタショー" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="カタショー" decoding="async"/></noscript></a></div>
                                 <div class="l-footer_name">
                                     <p class="mb-0 fw-bold">遊んで泊まれる小学校　カタショー</p>
                                 </div>
@@ -975,7 +979,7 @@ height: 78vw;
                   <p class="reserve-bar-text"><span class="reserve-bar-label" id="reserveBarLabel" hidden></span><span class="reserve-bar-main" id="reserveBarMain">1人 7,900円〜</span><span class="reserve-bar-cond" id="reserveBarCond">※平日・少人数プラン</span></p>
                   <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange reserve-bar-cta" data-event="bar_reserve">空き状況を見る</a>
                 </div>
-                <script src="/assets/js/reserve-bar.js?v=20261124a" defer></script>
+                <script src="/assets/js/reserve-bar.js?v=20261125a" defer></script>
             </footer>
         </div>
 

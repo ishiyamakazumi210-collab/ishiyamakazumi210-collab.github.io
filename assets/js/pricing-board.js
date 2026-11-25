@@ -96,6 +96,59 @@
 
   function fmt(v) { return v.toLocaleString('ja-JP') + '円'; }
 
+  // ---- 人数を数字で打てる入力欄（2026-11-25 第5弾）---------------------------
+  // 人数の表示は <input>（現行）か <span>（sample ページ）。どちらでも読み書きできるようにする
+  function isInput(el) { return !!el && el.tagName === 'INPUT'; }
+  function readCount(el) {
+    if (!el) { return NaN; }
+    return parseInt(isInput(el) ? el.value : el.textContent, 10);
+  }
+  // 入力欄は数字だけ（「人」は隣の部品）。打っている途中の欄は、同じ数字なら書き換えない
+  function writeCount(el, n, suffix) {
+    if (!el) { return; }
+    if (isInput(el)) {
+      if (document.activeElement === el && parseInt(el.value, 10) === n) { return; }
+      el.value = String(n);
+    } else {
+      el.textContent = n + (suffix || '');
+    }
+  }
+  // 全角数字→半角にして、数字以外を落とす
+  function digitsOnly(s) {
+    return String(s || '')
+      .replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); })
+      .replace(/[^0-9]/g, '');
+  }
+  // opts.min() / opts.max()：いまの下限・上限。opts.apply(n)：ボタンと同じ道で盤面を更新。
+  // opts.sync()：入力欄を盤面の数字に戻す（空のまま離れたとき・範囲外を丸めたとき）
+  function bindTypable(el, opts) {
+    if (!isInput(el)) { return; }
+    el.addEventListener('focus', function () {
+      setTimeout(function () { try { el.select(); } catch (e) { /* noop */ } }, 0);
+    });
+    el.addEventListener('input', function () {
+      var d = digitsOnly(el.value).slice(0, 4);
+      if (el.value !== d) { el.value = d; }
+      if (d === '') { return; }
+      var v = parseInt(d, 10);
+      if (v >= opts.min() && v <= opts.max()) { opts.apply(v); }
+    });
+    function commit() {
+      var d = digitsOnly(el.value);
+      if (d !== '') {
+        var v = Math.max(opts.min(), Math.min(opts.max(), parseInt(d, 10)));
+        opts.apply(v);
+      }
+      el.value = '';
+      opts.sync();
+    }
+    el.addEventListener('change', commit);
+    el.addEventListener('blur', commit);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); commit(); el.blur(); }
+    });
+  }
+
   function renderFamilyUnits(el, cfg) {
     el.classList.add('top-v2-chalk-unitline');
     el.textContent = '';
@@ -423,7 +476,7 @@
     var MAX = Math.min(requestedMax || MAX_PEOPLE, MAX_PEOPLE);
     var initialSeasonBtn = Array.prototype.filter.call(seasonBtns, function (b) { return b.classList.contains('is-on'); })[0];
     var season = (initialSeasonBtn && initialSeasonBtn.dataset.season) || 'weekday';
-    var n = parseInt(countEl.textContent, 10);
+    var n = readCount(countEl);
     if (isNaN(n)) { n = SEASONS[season].minPeople; }
 
     var meal = setupMealSlots(render);
@@ -452,7 +505,7 @@
       var unit = cfg.adult + mealCost;
       unitEl.textContent = fmt(unit);
       if (perEl) { perEl.textContent = fmt(unit); }
-      countEl.textContent = n + '人';
+      writeCount(countEl, n, '人');
       nEl.textContent = n + '人';
       totalEl.textContent = fmt(unit * n);
       if (breakdownEl) { breakdownEl.textContent = '1人あたり: ' + bdParts.join(' ＋ '); }
@@ -467,6 +520,12 @@
 
     minus.addEventListener('click', function () { if (n > SEASONS[season].minPeople) { n -= 1; render(true); } });
     plus.addEventListener('click', function () { if (n < MAX) { n += 1; render(true); } });
+    bindTypable(countEl, {
+      min: function () { return SEASONS[season].minPeople; },
+      max: function () { return MAX; },
+      apply: function (v) { n = v; render(true); },
+      sync: function () { render(false); }
+    });
     seasonBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
         season = btn.dataset.season;
@@ -501,9 +560,9 @@
     var initialSeasonBtn = Array.prototype.filter.call(seasonBtns, function (b) { return b.classList.contains('is-on'); })[0];
     var season = (initialSeasonBtn && initialSeasonBtn.dataset.season) || 'weekday';
     var counts = {
-      adult: parseInt(countEls.adult && countEls.adult.textContent, 10) || 0,
-      elem: parseInt(countEls.elem && countEls.elem.textContent, 10) || 0,
-      pre: parseInt(countEls.pre && countEls.pre.textContent, 10) || 0
+      adult: readCount(countEls.adult) || 0,
+      elem: readCount(countEls.elem) || 0,
+      pre: readCount(countEls.pre) || 0
     };
 
     var meal = setupMealSlots(render);
@@ -548,7 +607,7 @@
         kidsStateEl.textContent = kidsCount > 0 ? '（' + kidsCount + '人）' : '（なし）';
       }
       Object.keys(counts).forEach(function (key) {
-        if (countEls[key]) { countEls[key].textContent = counts[key]; }
+        writeCount(countEls[key], counts[key]);
         if (minusBtns[key]) { minusBtns[key].disabled = counts[key] <= MINIMUMS[key]; }
         if (plusBtns[key]) { plusBtns[key].disabled = totalPeople >= MAX_PEOPLE; }
       });
@@ -565,6 +624,12 @@
       });
       plusBtns[key].addEventListener('click', function () {
         if (counts.adult + counts.elem + counts.pre < MAX_PEOPLE) { counts[key] += 1; render(true); }
+      });
+      bindTypable(countEls[key], {
+        min: function () { return MINIMUMS[key]; },
+        max: function () { return MAX_PEOPLE - (counts.adult + counts.elem + counts.pre - counts[key]); },
+        apply: function (v) { counts[key] = v; render(true); },
+        sync: function () { render(false); }
       });
     });
     seasonBtns.forEach(function (btn) {
@@ -610,11 +675,11 @@
     var MAX = Math.min(requestedMax || MAX_PEOPLE, MAX_PEOPLE);
     var initialSeasonBtn = Array.prototype.filter.call(seasonBtns, function (b) { return b.classList.contains('is-on'); })[0];
     var season = (initialSeasonBtn && initialSeasonBtn.dataset.season) || 'weekday';
-    var n = parseInt(countEl.textContent, 10);
+    var n = readCount(countEl);
     if (isNaN(n)) { n = SEASONS[season].minPeople; }
     var counts = {
-      elem: parseInt(countEls.elem && countEls.elem.textContent, 10) || 0,
-      pre: parseInt(countEls.pre && countEls.pre.textContent, 10) || 0
+      elem: readCount(countEls.elem) || 0,
+      pre: readCount(countEls.pre) || 0
     };
 
     var meal = setupMealSlots(render);
@@ -656,12 +721,12 @@
       // 上回るため、家族ボードのようなfloor補正は不要。
       var total = n * adultUnit + counts.elem * elemUnit + counts.pre * preUnit;
 
-      countEl.textContent = n + '人';
+      writeCount(countEl, n, '人');
       minus.disabled = n <= cfg.minPeople;
       plus.disabled = totalPeople >= MAX;
 
       ['elem', 'pre'].forEach(function (key) {
-        if (countEls[key]) { countEls[key].textContent = counts[key]; }
+        writeCount(countEls[key], counts[key]);
         if (minusBtns[key]) { minusBtns[key].disabled = counts[key] <= KID_MINIMUMS[key]; }
         if (plusBtns[key]) { plusBtns[key].disabled = totalPeople >= MAX; }
       });
@@ -714,6 +779,18 @@
       plusBtns[key].addEventListener('click', function () {
         if (n + counts.elem + counts.pre < MAX) { counts[key] += 1; render(true); }
       });
+      bindTypable(countEls[key], {
+        min: function () { return KID_MINIMUMS[key]; },
+        max: function () { return MAX - (n + counts.elem + counts.pre - counts[key]); },
+        apply: function (v) { counts[key] = v; render(true); },
+        sync: function () { render(false); }
+      });
+    });
+    bindTypable(countEl, {
+      min: function () { return SEASONS[season].minPeople; },
+      max: function () { return MAX - counts.elem - counts.pre; },
+      apply: function (v) { n = v; render(true); },
+      sync: function () { render(false); }
     });
     seasonBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {

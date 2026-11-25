@@ -30,7 +30,7 @@
   function byId(id) { return document.getElementById(id); }
   function countOf(el) {
     if (!el) { return 0; }
-    var m = String(el.textContent || '').match(/\d+/);
+    var m = String(el.tagName === 'INPUT' ? el.value : el.textContent || '').match(/\d+/);
     return m ? parseInt(m[0], 10) : 0;
   }
   var adultEl = byId('fam-adult') || byId('chalk-count');
@@ -46,7 +46,7 @@
       text = people + '人で ' + famTotal.textContent.trim() + '〜';
     } else if (answer) {
       var t = answer.textContent.replace(/\s+/g, '');
-      var per = t.match(/1人([\d,]+円)/);
+      var per = t.match(/1人(?:あたり)?([\d,]+円)/);
       var total = t.match(/みんなで([\d,]+円)/);
       if (per) { text = people + '人で 1人' + per[1] + '〜'; } else if (total) { text = people + '人で ' + total[1] + '〜'; }
     }
@@ -77,4 +77,5 @@
   }
   document.addEventListener('click', onBoard, true);
   document.addEventListener('change', onBoard, true);
+  document.addEventListener('input', onBoard, true);
 })();

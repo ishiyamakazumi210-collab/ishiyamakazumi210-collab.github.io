@@ -14907,3 +14907,123 @@ button.l-header_btnMenu {
   content: none;
   display: none;
 }
+
+/* 2026-11-25 第5弾 B 黒板の人数を数字で打てる */
+input.top-v2-chalk-fcount,
+input.top-v2-chalk-countinput {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 0 2px;
+  border: 0;
+  border-radius: 2px;
+  background-color: transparent;
+  background-image: linear-gradient(to right, rgba(47, 120, 144, 0.6) 50%, transparent 0);
+  background-size: 6px 1.5px;
+  background-repeat: repeat-x;
+  background-position: 0 100%;
+  box-shadow: none;
+  color: #2f7890;
+  font-family: inherit;
+  font-weight: 900;
+  line-height: 1.3;
+  text-align: center;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-text-fill-color: #2f7890;
+  opacity: 1;
+  cursor: text;
+}
+input.top-v2-chalk-fcount { width: 44px; font-size: 20px; }
+input.top-v2-chalk-countinput { width: 2.2em; font-size: 24px; text-align: right; }
+.top-v2-chalk-count { display: inline-flex; justify-content: center; align-items: baseline; }
+input.top-v2-chalk-fcount:focus,
+input.top-v2-chalk-countinput:focus { outline: none; }
+input.top-v2-chalk-fcount:focus-visible,
+input.top-v2-chalk-countinput:focus-visible {
+  outline: 2px solid #2f7890;
+  outline-offset: 2px;
+  background-image: none;
+}
+
+/* 2026-11-25 第5弾 C・D 本物の部屋の写真と小さい直し */
+/* C-1 少人数プランの二段ベッド写真（既存の .top-v2-shower-photos の2列を、スマホでも2列のまま使う） */
+.top-v2-realroom-photos { margin: 8px 0 14px; }
+.top-v2-realroom-photos figcaption { line-height: 1.4; }
+@media (max-width: 575px) {
+  .top-v2-realroom-photos { gap: 8px; }
+  .top-v2-realroom-photos figcaption { font-size: 11.5px; }
+}
+/* C-2a 合宿・研修ページのBBQ場の写真（カード1枚ぶんくらいの幅で中央に） */
+.top-v2-bbq-deck-fig {
+  box-sizing: border-box;
+  width: min(100%, 420px);
+  margin: 18px auto 0;
+}
+.top-v2-bbq-deck-fig img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: 1px solid rgba(42, 71, 80, 0.12);
+  border-radius: 10px;
+}
+.top-v2-bbq-deck-fig figcaption {
+  margin-top: 6px;
+  color: #6b6150;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+/* C-2b 提供型BBQカードの「会場」1行（小さい写真つき） */
+.top-v2-menu-venue {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 0;
+  color: #8a7a5f;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.top-v2-menu-venue img {
+  flex: 0 0 auto;
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border: 1px solid rgba(42, 71, 80, 0.12);
+  border-radius: 6px;
+}
+
+/* D-1 押せる範囲を44px以上に（見た目は変えない） */
+.top-v2-playdialog-closebtn::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+}
+.top-v2-info > summary {
+  width: 44px;
+  height: 44px;
+  margin: -10px -12px -10px -8px;
+}
+.l-footer_snsList li + li { margin-left: 17px; }
+.l-footer_snsList li a {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+.l-footer_snsList li a::after {
+  content: "";
+  position: absolute;
+  inset: -9px -8.5px;
+}
+
+/* D-4 黒板の絵が読み込まれるまで、白い文字が白地に乗らないよう、黒板の中身の位置に同じ濃い緑を敷く（絵は上に重なって隠す） */
+.top-v2-chalkboard--art {
+  background-color: transparent;
+  background-image: linear-gradient(#173e45, #173e45);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 88% 82%;
+}
