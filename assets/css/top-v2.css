@@ -782,7 +782,7 @@
 .top-v2-purpose-link:focus-visible,
 .l-header_btnReserve:focus-visible,
 .l-footer_reserveLink:focus-visible {
-  outline: 3px solid #f0831e;
+  outline: 3px solid #1f4f63;
   outline-offset: 3px;
 }
 
@@ -1285,7 +1285,7 @@
 }
 
 .top-v2-scene-card-hitarea:focus-visible {
-  outline: 4px solid #f0831e;
+  outline: 4px solid #1f4f63;
   outline-offset: -5px;
 }
 
@@ -1355,7 +1355,7 @@
   text-decoration: none;
 }
 .top-v2-scene-detailbtn:focus-visible {
-  outline: 3px solid #f0831e;
+  outline: 3px solid #1f4f63;
   outline-offset: 3px;
 }
 .top-v2-scene-detailbtn--link::after {
@@ -8442,7 +8442,7 @@ section#location > .l-section_bg {
   transform: rotate(0deg) translateY(-6px);
 }
 .top-v2-catalog-item[role="button"]:focus-visible {
-  outline: 3px solid #f0831e;
+  outline: 3px solid #1f4f63;
   outline-offset: 4px;
   border-radius: 8px;
 }
@@ -8587,7 +8587,7 @@ section#location > .l-section_bg {
   background: #eef6f8;
 }
 .top-v2-playdialog-closebtn:focus-visible {
-  outline: 3px solid #f0831e;
+  outline: 3px solid #1f4f63;
   outline-offset: 3px;
 }
 
@@ -8891,7 +8891,7 @@ body.top-v2-playdialog-lock {
 .top-v2-chalk-tab:focus-visible,
 .top-v2-chalk-menu-summary:focus-visible,
 .top-v2-chalk-plancheck input:focus-visible {
-  outline: 3px solid #f0831e;
+  outline: 3px solid #1f4f63;
   outline-offset: 3px;
 }
 
@@ -10104,7 +10104,7 @@ body.top-v2-playdialog-lock {
   background: #eef6f8;
 }
 .top-v2-maproom-dialog-closebtn:focus-visible {
-  outline: 3px solid #f0831e;
+  outline: 3px solid #1f4f63;
   outline-offset: 3px;
 }
 
@@ -10349,7 +10349,7 @@ button.top-v2-map-dot,
   background: #eef6f8;
 }
 .top-v2-mapspot-dialog-closebtn:focus-visible {
-  outline: 3px solid #f0831e;
+  outline: 3px solid #1f4f63;
   outline-offset: 3px;
 }
 
@@ -10522,7 +10522,7 @@ body.top-v2-mapspot-dialog-lock {
 
 .top-v2-form-row input:focus-visible,
 .top-v2-form-row textarea:focus-visible {
-  outline: 3px solid #f0831e;
+  outline: 3px solid #1f4f63;
   outline-offset: 1px;
   border-color: #2f7890;
 }
@@ -11193,7 +11193,7 @@ body.top-v2-mapspot-dialog-lock {
 }
 .top-v2-sim-input:focus-visible,
 .top-v2-sim-select:focus-visible,
-.top-v2-sim-num:focus-visible { outline: 3px solid #f0831e; outline-offset: 2px; }
+.top-v2-sim-num:focus-visible { outline: 3px solid #1f4f63; outline-offset: 2px; }
 .top-v2-sim-select:disabled { opacity: 0.5; background: #f4f1ea; }
 @media (min-width: 640px) {
   .top-v2-sim-input { max-width: 260px; }
@@ -11223,7 +11223,7 @@ body.top-v2-mapspot-dialog-lock {
 }
 .top-v2-sim-chip input:checked + span { border-style: solid; background: #2f7890; color: #fff8e8; }
 .top-v2-sim-card input:focus-visible + .top-v2-sim-card-body,
-.top-v2-sim-chip input:focus-visible + span { outline: 3px solid #f0831e; outline-offset: 2px; }
+.top-v2-sim-chip input:focus-visible + span { outline: 3px solid #1f4f63; outline-offset: 2px; }
 
 /* 泊ごとの料金区分 */
 .top-v2-sim-nights { margin: 4px 0 8px; padding: 0; list-style: none; display: grid; gap: 10px; }
@@ -13132,7 +13132,7 @@ main small {
   font-weight: 600;
 }
 .top-v2-faq-search-input:focus {
-  outline: 3px solid rgba(47, 120, 144, 0.35);
+  outline: 3px solid #1f4f63; /* 2026-11-25 薄い輪（1.62:1）を、ほかの印と同じ色に */
   outline-offset: 2px;
 }
 .top-v2-faq-search-result {
@@ -14333,4 +14333,186 @@ details.faq[id] { scroll-margin-top: 96px; }
   /* 場面ページの料金欄（#price）の黒板の余白指定より強くする */
   #price .top-v2-chalkboard--art:has(+ .top-v2-chalk-season-hint-below:not([hidden])),
   #banner .top-v2-chalkboard--art:has(+ .top-v2-chalk-season-hint-below:not([hidden])) { margin-bottom: 6px; }
+}
+
+/* 2026-11-25 FAQ検索 */
+/* 0件のとき：近い言葉のボタン（faq-search.js が作る） */
+.top-v2-faq-suggest {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 8px;
+  margin: 10px 0 0;
+}
+.top-v2-faq-suggest[hidden] { display: none; }
+.top-v2-faq-suggest-label {
+  color: #2a4750;
+  font-size: 14px;
+  font-weight: 700;
+}
+.top-v2-faq-suggest-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 4px 16px;
+  border: 1px solid #2f7890;
+  border-radius: 999px;
+  background: #fff;
+  color: #2f7890;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.top-v2-faq-suggest-btn:hover,
+.top-v2-faq-suggest-btn:focus-visible {
+  background: #2f7890;
+  color: #fff;
+}
+/* 0件のとき：ほかのページへの道と、聞く先 */
+.top-v2-faq-zero {
+  max-width: 560px;
+  margin: 24px auto 0;
+  padding: 18px 20px;
+  border: 1px solid #d5e2e8;
+  border-radius: 14px;
+  background: #fff;
+  text-align: left;
+}
+.top-v2-faq-zero[hidden] { display: none; }
+.top-v2-faq-zero-title {
+  margin: 0 0 6px;
+  color: #24434e;
+  font-size: 15px;
+  font-weight: 900;
+}
+.top-v2-faq-zero-links + .top-v2-faq-zero-title { margin-top: 16px; }
+.top-v2-faq-zero-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-faq-zero-links li + li { border-top: 1px dashed #d5e2e8; }
+.top-v2-faq-zero-links a {
+  display: block;
+  padding: 10px 2px;
+  color: #2a4750;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.top-v2-faq-zero-links a span {
+  color: #2f7890;
+  font-weight: 800;
+  text-decoration: underline;
+}
+.top-v2-faq-zero-ask {
+  margin: 0;
+  color: #2a4750;
+  font-size: 15px;
+}
+.top-v2-faq-zero-ask a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: #2f7890;
+  font-weight: 800;
+  text-decoration: underline;
+}
+.top-v2-faq-zero-reset {
+  margin: 14px 0 0;
+  text-align: center;
+}
+.top-v2-faq-zero-clear {
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 1px solid #d5e2e8;
+  border-radius: 999px;
+  background: #f6f9fb;
+  color: #24434e;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.top-v2-faq-zero-clear:hover,
+.top-v2-faq-zero-clear:focus-visible { border-color: #2f7890; color: #2f7890; }
+@media (max-width: 420px) {
+  .top-v2-faq-zero { padding: 14px 16px; }
+}
+/* 答えの中の備品の一覧（調理器具） */
+.top-v2-faq-equip {
+  margin: 8px 0 10px;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-faq-equip li {
+  padding: 6px 0;
+  border-top: 1px dashed #d5e2e8;
+}
+.top-v2-faq-equip li:first-child { border-top: 0; }
+.top-v2-faq-equip b {
+  display: block;
+  color: #2f7890;
+  font-size: 0.92em;
+  font-weight: 900;
+}
+
+/* =========================================================
+   2026-11-25 キーボードの「いまここ」の印・入力欄・動きを減らす設定
+   （人物シミュレーション 第2弾。docs/persona-simulation-2026-11-25/S02.md の A1・A2・B3・B9・C6）
+   元のテーマの lp-style.css の *:focus{outline:none} と、app.min.css の
+   .l-header_btnMenu:focus / .faq_title:focus {outline:0} が印を消していた。
+   テーマのファイルは触らず、ここで上書きする（要素名を付けて詳細度で勝つ。
+   個別に印を決めている部品は、そちらの指定がそのまま勝つ）。
+   色 #1f4f63 は白地 8.91:1、灰色地 #ecedf2 7.62:1（基準 3:1）。
+   ========================================================= */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible,
+button.l-header_btnMenu:focus-visible,
+summary.faq_title:focus-visible,
+button.btn-close:focus-visible {
+  outline: 3px solid #1f4f63;
+  outline-offset: 2px;
+}
+/* 濃い青緑の上（フッター・追いかけてくるメニューの四角）は白い輪 */
+.l-footer a:focus-visible,
+.wpml-ls-statics-footer a:focus-visible,
+.l-header_btn--fixed button.l-header_btnMenu:focus-visible {
+  outline-color: #fff;
+}
+/* 校内マップの部屋ボタン：枠の色が変わるだけだったので、輪も出す */
+.top-v2-maproom-hotspot:focus-visible {
+  outline: 3px solid #1f4f63;
+  outline-offset: 2px;
+}
+
+/* スマホ幅：Tab で進んだとき、いまいる場所が下の予約バーに隠れないように */
+@media (max-width: 991.98px) {
+  html { scroll-padding-bottom: 84px; }
+}
+
+/* お問い合わせ：入力欄の字を16pxに（16px未満だと iPhone が入力のたびに画面を拡大する）。
+   枠線を白地 3:1 以上の色に */
+.top-v2-form-row input[type="text"],
+.top-v2-form-row input[type="email"],
+.top-v2-form-row input[type="tel"],
+.top-v2-form-row textarea {
+  font-size: 16px;
+  border-color: #5f93a3;
+}
+
+/* 動きを減らす設定の人：遊びの札の帯を、指とキーボードで横に動かせるようにする
+   （前の指定 overflow-x:auto が、あとの overflow:hidden に負けていた） */
+@media (prefers-reduced-motion: reduce) {
+  .top-v2-playroll .top-v2-playroll-viewport {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }

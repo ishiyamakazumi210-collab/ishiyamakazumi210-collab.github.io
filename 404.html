@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- 計測（Googleタグマネージャー。今のkatasho.jp・予約ページ(ProX)と同じ箱）。本番の katasho.jp のときだけ読み込む。
+       公開プレビューや手元で動かすと確認作業のアクセスが混ざるため。data-event の付いた部品を押したら hp_click を送る（2026-11-21） -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    (function (w, d) {
+      if (/(^|\.)katasho\.jp$/.test(location.hostname)) {
+        w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var j = d.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MZC23TD';
+        var f = d.getElementsByTagName('script')[0];
+        f.parentNode.insertBefore(j, f);
+      }
+      d.addEventListener('click', function (e) {
+        var el = e.target && e.target.closest ? e.target.closest('a[data-event],button[data-event],summary[data-event],li[data-event],div[data-event]') : null;
+        if (!el) { return; }
+        w.dataLayer.push({ event: 'hp_click', click_id: el.getAttribute('data-event'), click_url: el.getAttribute('href') || '' });
+      }, true);
+    })(window, document);
+  </script>
+
+        <!-- ページが見つからないときの画面（2026-11-25）。GitHub Pages はルートの 404.html を自動で使う。
+             お名前.com（本番）では .htaccess の「ErrorDocument 404 /404.html」が要る（scripts/prepare-production.mjs はまだ作っていない）。
+             どの深さのURLで出ても崩れないよう、リンク・画像・CSSはすべて / から始める -->
+        <title>ページが見つかりません｜遊んで泊まれる小学校 カタショー</title>
+        <meta name="robots" content="noindex,nofollow,noarchive" />
+
+        <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
+        <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261125c"/>
+        <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
+        <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
+        <link rel="icon" href="/assets/wp/uploads/2023/09/cropped-校章映像用-32x32.png" sizes="32x32" />
+        <link rel="icon" href="/assets/wp/uploads/2023/09/cropped-校章映像用-192x192.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/assets/wp/uploads/2023/09/cropped-校章映像用-180x180.png" />
+
+        <script> (function(d) { var config = { kitId: 'iie6hhx', scriptTimeout: 3000, async: true }, h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s) })(document);</script>
+
+        <style>
+          /* 404 だけの見た目（top-v2.css は別の担当が直しているので、ここに書く） */
+          .notfound-code { margin: 0 0 6px; color: #2f7890; font-size: 14px; font-weight: 800; letter-spacing: 0.12em; }
+          .notfound-hero .top-v2-scene-hero-actions { justify-content: center; }
+          .notfound-doors { margin-top: 8px; }
+          /* トップのPCは写真を大きく見せる2×2。ここは迷った人がひと目で選べるよう、PCは4つを横1列に */
+          @media (min-width: 992px) {
+            .top-v2-doors.notfound-doors { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 24px; }
+          }
+          .notfound-price .top-v2-nextcards { margin-bottom: 8px; }
+          .notfound-price .top-v2-map-closing-cta { margin-top: 28px; }
+        </style>
+    </head>
+    <body>
+
+        <div class="l-wrapper">
+            <header class="l-header navbar navbar-expand-lg bg-transparent py-3 p-sm-4" id="header">
+                <div class="l-header_inner container-fluid justify-content-center">
+                    <a class="l-header_logo navbar-brand" href="/">
+                        <img src="/assets/wp/themes/katasho/asset/image/logo_header.svg" alt="カタショーロゴ" decoding="async" />
+                    </a>
+                    <div class="l-header_cont container-fluid">
+                        <div class="l-header_contLeft">
+                            <div class="l-header_sns">
+                                <ul class="l-header_snsList list-unstyled mb-0">
+                                    <li><a href="https://twitter.com/katasho2tomaro" target="_blank">
+                                        <img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async" />
+                                    </a></li>
+                                    <li><a href="https://www.instagram.com/shizuoka_katasho/" target="_blank">
+                                        <img src="/assets/wp/themes/katasho/asset/image/sns_instagram_header.svg" alt="Instagram" decoding="async" />
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="l-header_contRight">
+                            <div class="l-header_btn">
+                                <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="l-header_btnReserve btn btn-orange btn-sm me-5 u-pc" id="headerBtnReserve">
+                予約<span class="u-sm">（空き状況）</span>
+              </a>
+                                <button class="l-header_btnMenu" type="button" data-bs-toggle="offcanvas" data-bs-target="#headerNav" aria-controls="headerNav">
+                                    <picture>
+                                        <source media="(max-width: 576px)" srcset="/assets/wp/themes/katasho/asset/image/icon_menu_sp.svg"/>
+                                        <img src="/assets/wp/themes/katasho/asset/image/icon_menu.svg" alt="メニュー" decoding="async" />
+                                    </picture>
+                                </button>
+                            </div>
+                            <div class="l-header_btn--fixed" id="menuFixed">
+                                <button class="l-header_btnMenu" type="button" data-bs-toggle="offcanvas" data-bs-target="#headerNav" aria-controls="headerNav">
+                                    <picture>
+                                        <source media="(max-width: 576px)" srcset="/assets/wp/themes/katasho/asset/image/icon_menu_white_sp.svg"/>
+                                        <img src="/assets/wp/themes/katasho/asset/image/icon_menu_white.svg" alt="メニュー" decoding="async" />
+                                    </picture>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <nav class="l-nav offcanvas offcanvas-end" id="headerNav" tabindex="-1" aria-labelledby="headerNavLabel">
+                <div class="l-nav_header offcanvas-header">
+                    <button class="l-nav_headerBtn btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="メニューを閉じる">
+                        <img src="/assets/wp/themes/katasho/asset/image/icon_close.svg" alt="閉じる" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/icon_close.svg" alt="閉じる" decoding="async"/></noscript>
+                    </button>
+                  </div>
+                  <div class="l-nav_body offcanvas-body">
+                    <div class="l-nav_menu">
+                        <ul class="l-nav_menuList list-unstyled">
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/">トップ</a>
+                            </li>
+                            <li class="nav-item menu-item-has-children">
+                                <a class="l-nav_menuLink nav-link" href="/play/">学校で遊んで泊まる</a>
+                                <ul class="l-nav_menuSublist list-unstyled">
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/#catalog">あそび</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/#eat">たべる</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/#stay">とまる</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item menu-item-has-children">
+                                <a class="l-nav_menuLink nav-link" href="/#stay">誰と行く？</a>
+                                <ul class="l-nav_menuSublist list-unstyled">
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/friends/">卒業旅行・友達旅</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/family/">家族でわいわい</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/gasshuku/">サークル・ゼミ合宿</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/kenshu/">研修・会議</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item l-nav_menuDivider" aria-hidden="true"></li>
+                            <li class="nav-item menu-item-has-children">
+                                <a class="l-nav_menuLink nav-link" href="/play/option/">料金・オプション</a>
+                                <ul class="l-nav_menuSublist list-unstyled">
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/option/#price">料金</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/option/#food">食事</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/option/#play">遊び</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/option/#spa">温泉</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/map/">校内マップ</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/album/">クチコミ＆SNS</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/access/">アクセス</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/faq/">よくある質問</a>
+                            </li>
+                            <li class="nav-item l-nav_menuDivider" aria-hidden="true"></li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/about/">カタショーについて</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/contact/">お問い合わせ</a>
+                            </li>
+                        </ul>
+                        <a class="l-nav_cta" href="https://www.489pro-x.com/ja/s/katasho/search/" data-event="nav_reserve">空き状況を見る →</a>
+                        <div class="l-header_navSns">
+                            <ul class="l-header_snsList list-unstyled mb-0">
+                                <li><a href="https://twitter.com/katasho2tomaro" target="_blank">
+                                    <img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async"/></noscript>
+                                </a></li>
+                                <li><a href="https://www.instagram.com/shizuoka_katasho/" target="_blank">
+                                    <img src="/assets/wp/themes/katasho/asset/image/sns_instagram_header.svg" alt="Instagram" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/sns_instagram_header.svg" alt="Instagram" decoding="async"/></noscript>
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <main class="l-main top-v2-model-main">
+                <div class="l-main_inner pb-lg-5">
+
+<!-- 1. 見つからないことを伝えて、トップへ -->
+<section class="top-v2-scene-section notfound-hero" style="padding-top:0;" id="hero">
+  <div class="top-v2-scene-hero top-v2-map-hero-grid">
+    <div>
+      <p class="notfound-code">404 NOT FOUND</p>
+      <h1 class="top-v2-scene-h1logo top-v2-scene-h1text"><span class="top-v2-scene-title-mark">ページが<span class="top-v2-nowrap">見つかりません</span></span></h1>
+      <p class="top-v2-scene-lead"><span class="top-v2-kinsoku">お探しのページは、</span><span class="top-v2-kinsoku">移動したか、</span><span class="top-v2-kinsoku">なくなったようです。</span><br><span class="top-v2-kinsoku">前のホームページの</span><span class="top-v2-kinsoku">アドレスから来た方も、</span><span class="top-v2-kinsoku">ここから見たいページへ</span><span class="top-v2-kinsoku">どうぞ。</span></p>
+      <div class="top-v2-scene-hero-actions">
+        <a href="/" class="top-v2-btn-outline" data-event="notfound_top">トップへ →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 誰と行く？（トップと同じ4つの場面） -->
+<section class="top-v2-scene-section top-v2-scene-section--gray" id="scenes">
+  <div class="top-v2-scene-inner">
+    <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark">誰と行く？</span></h2>
+    <ul class="top-v2-doors notfound-doors list-unstyled">
+      <li><a href="/friends/" data-event="notfound_doors_friends">
+        <span class="top-v2-scenecard-photo">
+          <img src="/assets/img/people-2026/friends-toast.jpg" alt="夜の特大部屋で座卓を囲み、乾杯する友達グループ" loading="lazy">
+        </span>
+        <span class="top-v2-doors-who">友達と <span aria-hidden="true">→</span></span>
+      </a></li>
+      <li><a href="/family/" data-event="notfound_doors_family">
+        <span class="top-v2-scenecard-photo">
+          <img src="/assets/img/people-2026/family-gym-card.jpg" alt="体育館でボール遊びをする2組の家族" loading="lazy">
+        </span>
+        <span class="top-v2-doors-who">家族で <span aria-hidden="true">→</span></span>
+      </a></li>
+      <li class="top-v2-doors-gasshuku"><a href="/gasshuku/" data-event="notfound_doors_gasshuku">
+        <span class="top-v2-scenecard-photo">
+          <img src="/assets/img/university-friends-bright.jpg" alt="校舎の前に集まったサークル合宿の集合写真" loading="lazy">
+        </span>
+        <span class="top-v2-doors-who">合宿で <span aria-hidden="true">→</span></span>
+      </a></li>
+      <li><a href="/kenshu/" data-event="notfound_doors_kenshu">
+        <span class="top-v2-scenecard-photo">
+          <img src="/assets/img/people-2026/kenshu-meeting.jpg" alt="会議室で研修をする社会人のグループ" loading="lazy">
+        </span>
+        <span class="top-v2-doors-who">研修・会議で <span aria-hidden="true">→</span></span>
+      </a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. 料金と予約 -->
+<section class="top-v2-scene-section notfound-price" id="price">
+  <div class="top-v2-scene-inner">
+    <h2 class="top-v2-scene-title top-v2-h"><span class="top-v2-scene-title-mark">料金と予約</span></h2>
+    <div class="top-v2-nextcards">
+      <a class="top-v2-nextcard" href="/play/option/" data-event="notfound_option">
+        <span class="top-v2-nextcard-photo"><img src="/assets/img/bbq-platter.jpg" alt="提供型BBQの豪華な食材盛り合わせ" loading="lazy"></span>
+        <span class="top-v2-nextcard-body"><span class="top-v2-nextcard-title">料金・オプション</span><span class="top-v2-nextcard-text">宿泊料金と、食事・サウナなどのオプション</span><span class="top-v2-nextcard-more" aria-hidden="true">見る →</span></span>
+      </a>
+      <a class="top-v2-nextcard" href="/price-simulator/" data-event="notfound_simulator">
+        <span class="top-v2-nextcard-photo"><img src="/assets/img/people-2026/play-tug.jpg" alt="体育館で綱引きをする友達グループ" loading="lazy"></span>
+        <span class="top-v2-nextcard-body"><span class="top-v2-nextcard-title">料金シミュレーター</span><span class="top-v2-nextcard-text">日付・人数・食事を入れると、合計の目安がわかります</span><span class="top-v2-nextcard-more" aria-hidden="true">計算する →</span></span>
+      </a>
+    </div>
+    <p class="top-v2-map-closing-cta"><span class="reserve-cta"><a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange top-v2-cta-big" data-event="notfound_reserve">空き状況を見る</a><span class="reserve-reassure"><span>予約時の人数は概算でOK</span><span>人数・食事の変更は10日前まで</span><span>お支払いは当日現金（事前振込も可）</span></span></span></p>
+  </div>
+</section>
+
+                </div>
+            </main>
+            <footer class="l-footer text-white py-5" id="footer">
+                <div class="l-footer_inner container">
+                    <div class="row">
+                        <div class="col-lg-8 mb-3 mb-lg-0">
+                            <div class="l-footer_info">
+                                <div class="l-footer_logo"><a href="/"><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="logo" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="logo" decoding="async"/></noscript></a></div>
+                                <div class="l-footer_name">
+                                    <p class="mb-0 fw-bold">遊んで泊まれる小学校　カタショー</p>
+                                </div>
+                                <div class="l-footer_address">
+                                    <p class="mb-0">静岡県牧之原市片浜1216-1</p>
+                                    <p class="mb-0">カタショー・ワンラボ内</p>
+                                </div>
+                            </div>
+                            <div class="l-footer_contact">
+                                <div class="l-footer_sns">
+                                    <div class="l-footer_snsTitle"><img src="/assets/wp/themes/katasho/asset/image/text_followus.svg" alt="FOLLOW US" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/text_followus.svg" alt="FOLLOW US" decoding="async"/></noscript>
+                                    </div>
+                                    <ul class="l-footer_snsList list-unstyled mb-0">
+                                        <li><a href="https://twitter.com/katasho2tomaro" target="_blank"><img src="/assets/img/sns-x-footer-2026.svg" alt="X" decoding="async" /><noscript><img src="/assets/img/sns-x-footer-2026.svg" alt="X" decoding="async"/></noscript></a></li>
+                                        <li><a href="https://www.instagram.com/shizuoka_katasho/" target="_blank"><img src="/assets/wp/themes/katasho/asset/image/sns_instagram.svg" alt="Instagram" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/sns_instagram.svg" alt="Instagram" decoding="async"/></noscript></a></li>
+                                    </ul>
+                                </div>
+                                <div class="l-footer_contact"><a class="btn btn-outline-white" id="footerBtnContact" href="/contact/">お問い合わせ</a></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 d-flex">
+                            <div class="l-footer_copy">
+                                <p class="text-center text-lg-end mb-1"><small><a href="/privacy/">プライバシーポリシー</a></small></p>
+                                <p class="text-center text-lg-end mb-0"><small>&copy; 2021-2026 <a href="https://makilabo.jp/" target="_blank" rel="noopener">株式会社マキノハラボ</a></small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="l-footer_reserve" id="reserveFixed">
+                    <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="l-footer_reserveLink" id="footerBtnReserve">
+                      <div class="l-footer_reserveBtn">
+                        <picture>
+                          <source media="(max-width: 991px)" srcset="/assets/wp/themes/katasho/asset/image/btn_reserve_sp.svg"/>
+                          <img src="/assets/wp/themes/katasho/asset/image/btn_reserve.svg" alt="予約（空き状況）" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/btn_reserve.svg" alt="予約（空き状況）" decoding="async"/></noscript>
+                        </picture>
+                      </div>
+                      <div class="l-footer_reserveImage u-pc"><img src="/assets/wp/themes/katasho/asset/image/btn_reserve_image.png" alt="" decoding="async" loading="lazy" /><noscript><img src="/assets/wp/themes/katasho/asset/image/btn_reserve_image.png" alt="" decoding="async"/></noscript>
+                      </div>
+                    </a>
+                  </div>
+                <!-- スマホの予約バー（2026-11-21）。CSSは top-v2.css 末尾、出し入れと「いまの計算」の表示は reserve-bar.js -->
+                <div class="reserve-bar" id="reserveBar" role="region" aria-label="予約のご案内">
+                  <p class="reserve-bar-text"><span class="reserve-bar-label" id="reserveBarLabel" hidden></span><span class="reserve-bar-main" id="reserveBarMain">1人 7,900円〜</span><span class="reserve-bar-cond" id="reserveBarCond">※平日・少人数プラン</span></p>
+                  <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange reserve-bar-cta" data-event="bar_reserve">空き状況を見る</a>
+                </div>
+                <script src="/assets/js/reserve-bar.js?v=20261124a" defer></script>
+            </footer>
+        </div>
+
+        <script src="/assets/wp/themes/katasho/asset/js/bundle.js" async></script>
+    </body>
+</html>

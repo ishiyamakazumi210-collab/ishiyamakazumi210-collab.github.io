@@ -137,6 +137,12 @@
   // 意図的にドライバ自体を起動しない）。
   function initMarqueeDriver() {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // 2026-11-25 動きを減らす設定の人も、指とキーボード（左右キー）で全部の札を見られるようにする
+      Array.prototype.forEach.call(document.querySelectorAll('.top-v2-playroll-viewport'), function (vp) {
+        if (!vp.hasAttribute('tabindex')) { vp.tabIndex = 0; }
+        if (!vp.hasAttribute('role')) { vp.setAttribute('role', 'region'); }
+        if (!vp.hasAttribute('aria-label')) { vp.setAttribute('aria-label', '遊びの一覧（横に動かせます）'); }
+      });
       return;
     }
     if (!('requestAnimationFrame' in window)) { return; }
