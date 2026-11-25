@@ -94,13 +94,14 @@
       fields: [{ key: 'kegs', label: '樽の数', unit: '樽', max: 10 }]
     },
     {
-      id: 'room', name: '部屋分けオプション', quote: true, unitText: '5,000円/追加1部屋・26名以上は1部屋無料',
+      id: 'room', name: '部屋分けオプション', quote: true, price: 5000, unitText: '追加1部屋あたり・26名以上は1部屋無料',
       // 2026-11-24 「合計には含めず」は合計欄の注記（P91）と重なるので外した（P82）
       // 2026-11-24 オーナー確認：少人数プランも「少人数用の追加部屋を1部屋まで」使える
       // 2026-11-25 オーナー確認：少人数プランの追加部屋は1部屋まで・16名以上は無料・15名以下は5,000円
-      compactUnitText: '5,000円/追加1部屋・16名以上は1部屋無料',
+      // 2026-11-25 合計に入れたので、カードの見出しは「5,000円（追加1部屋あたり・…）」。金額を2回書かない
+      compactUnitText: '追加1部屋あたり・16名以上は無料',
       compactNote: '少人数プランは追加部屋1部屋まで',
-      note: '追加部屋は最大2部屋です。料金は予約時にご確認ください（合計には入っていません）。',
+      note: '追加部屋は最大2部屋です。料金は合計に入っています。',
       fields: [{ key: 'rooms', label: '追加する部屋数', unit: '部屋', max: 2, compactMax: 1 }]
     }
   ];
@@ -331,11 +332,17 @@
     if (o.beer.kegs > 0) {
       res.options.push({ label: OPT.beer.name, detail: o.beer.kegs + '樽×' + fmt(OPT.beer.price), amount: o.beer.kegs * OPT.beer.price, group: OPT.beer.group });
     }
-    // 少人数プランは追加部屋1部屋まで（16名以上は無料・15名以下は5,000円）。どちらのプランも合計には入れず「お見積り」のまま
+    // 少人数プランは追加部屋1部屋まで。無料の条件は合計人数（おとな＋小学生＋3〜5歳＋2歳以下＝totalPeople。少人数プランの上限判定と同じ数）：
+    // スタンダードは26名以上で1部屋無料、少人数は16名以上で無料（15名以下は5,000円）。合計に入れる（2026-11-25 オーナー決定）
     var roomCount = compact ? Math.min(o.room.rooms, OPT.room.fields[0].compactMax) : o.room.rooms;
     if (roomCount > 0) {
-      res.quotes.push({ label: OPT.room.name + '（追加' + roomCount + '部屋）', detail: compact ? OPT.room.compactUnitText : OPT.room.unitText, amountText: 'お見積り' });
-      note('部屋分けオプションは合計に含めていません（予約時にご確認ください）');
+      var roomFree = compact ? (totalPeople >= 16 ? 1 : 0) : (totalPeople >= 26 ? 1 : 0);
+      var roomPaid = Math.max(0, roomCount - roomFree);
+      res.options.push({
+        label: OPT.room.name + '（追加' + roomCount + '部屋）',
+        detail: roomFree > 0 ? (roomPaid > 0 ? '1部屋無料＋' + roomPaid + '部屋×' + fmt(OPT.room.price) : (compact ? '16名以上は無料' : '26名以上は1部屋無料')) : roomPaid + '部屋×' + fmt(OPT.room.price),
+        amount: roomPaid * OPT.room.price
+      });
     }
     res.options.forEach(function (it) { res.optionTotal += it.amount; });
 
@@ -717,7 +724,7 @@
       var priceP = h('p', 'top-v2-sim-opt-price');
       var priceSmall = null;
       if (def.quote) {
-        priceP.appendChild(h('strong', '', 'お見積り'));
+        priceP.appendChild(h('strong', '', priceYen(def.price)));
         priceSmall = h('small', '', '（' + def.unitText + '）');
         priceP.appendChild(priceSmall);
       } else {
