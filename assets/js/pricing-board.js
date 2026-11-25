@@ -259,6 +259,60 @@
       : '※ 少人数プランの上限' + COMPACT_HARD_MAX + '名を超えるため、スタンダードプラン料金で計算しています';
   }
 
+  // ---- 黒板の中の「ハイシーズンの平日」の1行（2026-11-25） ------------------
+  // 人物シミュレーションで、ハイシーズンの平日に泊まる人が「平日」のまま黒板の
+  // 数字だけ見て、1人1,000円安く伝えた。数字だけ見る人に届く場所は黒板の中しか
+  // ないため、平日を選んでいるあいだだけ、同じ条件の土日祝・ハイシーズンの金額を
+  // 黒板の中に1行出す。期間の日付はボタンの下の1行（high-season-note.html）にある。
+  // スマホ幅（767px以下）は黒板に入りきらない（測ると最大33pxはみ出した）ので、
+  // 同じ1行を黒板のすぐ下にも作り、どちらを見せるかはCSSで幅ごとに切り替える。
+  // 期間の日付は site.json の highSeason（ボタンの下の1行と同じ元データ）。
+  // 2026-11-25 実装後の読み手の確かめで、「春休み」だけでは2月・4月上旬の人が気づかなかったため日付も入れる。
+  var HIGH_SEASON = (window.KATASHO_DATA && window.KATASHO_DATA.highSeason) || {};
+  var SEASON_HINT_PARTS = [
+    ['夏休み ' + (HIGH_SEASON.summer || '7/15〜9/30')], '・',
+    ['春休み ' + (HIGH_SEASON.spring || '2/1〜4/10')], '・GW・',
+    ['年末年始 ' + (HIGH_SEASON.yearEnd || '12/28〜1/3')], ' は、平日も '
+  ];
+  function setupSeasonHint() {
+    var board = document.querySelector('.top-v2-chalkboard--art');
+    var sub = board && board.querySelector('.top-v2-chalk-sub');
+    if (!board || !sub) { return null; }
+    var inside = document.createElement('li');
+    inside.className = 'top-v2-chalk-season-hint';
+    inside.hidden = true;
+    sub.insertBefore(inside, sub.firstChild);
+    var below = document.createElement('p');
+    below.className = 'top-v2-chalk-season-hint-below';
+    below.hidden = true;
+    board.insertAdjacentElement('afterend', below);
+    return [inside, below];
+  }
+  function nowrapSpan(text) {
+    var span = document.createElement('span');
+    span.className = 'top-v2-nowrap';
+    span.textContent = text;
+    return span;
+  }
+  // amountText の後ろに、土日祝・ハイシーズンの最低人数（7人）に満たないときだけ
+  // 「（7人から）」を付ける（呼び出し側が人数を見て suffix を渡す）。
+  function updateSeasonHint(els, season, amountText, suffix) {
+    if (!els) { return; }
+    els.forEach(function (el) {
+      el.hidden = season !== 'weekday';
+      if (el.hidden) { return; }
+      el.textContent = '';
+      SEASON_HINT_PARTS.forEach(function (part) {
+        el.appendChild(typeof part === 'string' ? document.createTextNode(part) : nowrapSpan(part[0]));
+      });
+      el.appendChild(nowrapSpan(amountText + (suffix || '')));
+    });
+  }
+  function holidayMinSuffix(adults) {
+    var min = SEASONS.holiday.minPeople;
+    return adults < min ? '（' + min + '人から）' : '';
+  }
+
   // ---- グループボード（friends / gasshuku / kenshu） ---------------------
   function initGroupBoard() {
     var unitEl = document.getElementById('chalk-unit');
@@ -292,11 +346,13 @@
     var choice = meal.choice;
     var plan = setupPlanToggle(render);
     var capacityNotice = setupCapacityNotice();
+    var seasonHint = setupSeasonHint();
 
     function render(animate) {
       var compactEligible = n <= COMPACT_HARD_MAX;
       plan.setEligibility(compactEligible);
       var cfg = getRates(season, plan.isCompact() && compactEligible);
+      var holidayCfg = getRates('holiday', plan.isCompact() && compactEligible);
       if (n < cfg.minPeople) { n = cfg.minPeople; }
       var mealCost = 0;
       var bdParts = ['宿泊 ' + fmt(cfg.adult)];
@@ -318,6 +374,7 @@
       minus.disabled = n <= cfg.minPeople;
       plus.disabled = n >= MAX;
       updateCapacityNotice(capacityNotice, plan.isCompact(), n);
+      updateSeasonHint(seasonHint, season, '1人 ' + fmt(holidayCfg.adult + mealCost) + '〜', holidayMinSuffix(n));
       if (animate) { animateRewrite([unitEl, nEl, totalEl]); }
     }
 
@@ -367,14 +424,18 @@
     var choice = meal.choice;
     var plan = setupPlanToggle(render);
     var capacityNotice = setupCapacityNotice();
+    var seasonHint = setupSeasonHint();
 
     function render(animate) {
       var totalPeople = counts.adult + counts.elem + counts.pre;
       var compactEligible = totalPeople <= COMPACT_HARD_MAX;
       plan.setEligibility(compactEligible);
       var cfg = getRates(season, plan.isCompact() && compactEligible);
+      var holidayCfg = getRates('holiday', plan.isCompact() && compactEligible);
       var sum = counts.adult * cfg.adult + counts.elem * cfg.elem + counts.pre * cfg.pre;
       var lodging = Math.max(sum, cfg.floor);
+      var holidaySum = counts.adult * holidayCfg.adult + counts.elem * holidayCfg.elem + counts.pre * holidayCfg.pre;
+      var holidayLodging = Math.max(holidaySum, holidayCfg.floor);
       var mealTotal = 0;
       var anyPaid = false;
       Object.keys(slots).forEach(function (slot) {
@@ -386,6 +447,7 @@
         }
       });
       var total = lodging + mealTotal;
+      updateSeasonHint(seasonHint, season, fmt(holidayLodging + mealTotal) + '〜');
       if (totalLabelEl) { totalLabelEl.textContent = anyPaid ? '宿泊＋お食事で' : '宿泊料金'; }
       var parts = ['おとな' + counts.adult + '人'];
       if (counts.elem > 0) { parts.push('小学生' + counts.elem + '人'); }
@@ -471,6 +533,7 @@
     var choice = meal.choice;
     var plan = setupPlanToggle(render);
     var capacityNotice = setupCapacityNotice();
+    var seasonHint = setupSeasonHint();
 
     function render(animate) {
       if (n < SEASONS[season].minPeople) { n = SEASONS[season].minPeople; }
@@ -478,6 +541,7 @@
       var compactEligible = totalPeople <= COMPACT_HARD_MAX;
       plan.setEligibility(compactEligible);
       var cfg = getRates(season, plan.isCompact() && compactEligible);
+      var holidayCfg = getRates('holiday', plan.isCompact() && compactEligible);
 
       var mealCost = { adult: 0, elem: 0, pre: 0 };
       var bdParts = ['宿泊 ' + fmt(cfg.adult)];
@@ -532,6 +596,18 @@
         answerEl.innerHTML = 'こたえ：みんなで <strong>' + fmt(total) + '</strong>〜';
         breakdownEl.textContent = '1人あたり: おとな ' + fmt(adultUnit) + '・小学生 ' + fmt(elemUnit) + '・3〜5歳 ' + fmt(preUnit) + (anyPaid ? '（お食事込み）' : '');
         animateTargets = [formulaEl, answerEl];
+      }
+      // 黒板の中の「ハイシーズンの平日」の1行：子ども0人なら1人あたり、1人以上ならみんなでの合計で
+      // （土日祝・ハイシーズンは最低人数が7人なので、宿泊は最低利用金額を下回らないようにする）
+      var holidayAdultUnit = holidayCfg.adult + mealCost.adult;
+      if (kidsCount === 0) {
+        updateSeasonHint(seasonHint, season, '1人 ' + fmt(holidayAdultUnit) + '〜', holidayMinSuffix(n));
+      } else {
+        // このボードは土日祝に切り替えると、おとなを最低人数（7人）まで自動で増やす。
+        // 切り替えたときに出る金額と同じになるよう、ここでも同じ人数で計算する。
+        var holidayAdults = Math.max(n, holidayCfg.minPeople);
+        var holidayTotal = holidayAdults * holidayAdultUnit + counts.elem * (holidayCfg.elem + mealCost.elem) + counts.pre * (holidayCfg.pre + mealCost.pre);
+        updateSeasonHint(seasonHint, season, 'みんなで ' + fmt(holidayTotal) + '〜', holidayMinSuffix(n));
       }
       updateCapacityNotice(capacityNotice, plan.isCompact(), totalPeople);
       if (animate) { animateRewrite(animateTargets); }

@@ -14284,3 +14284,53 @@ details.faq[id] { scroll-margin-top: 96px; }
     margin-right: 0;
   }
 }
+
+/* 2026-11-25 料金計算：ハイシーズンの期間を、ボタンのすぐ下にいつも見える1行で（ⓘから出した）。
+   人物シミュレーションで、ハイシーズンの平日に泊まる人の多くが「平日」のまま見積もったため */
+.top-v2-season-note {
+  max-width: 34em;
+  margin: -6px auto 12px;
+  padding: 0 4px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #4e4538;
+  text-align: center;
+  text-wrap: pretty;
+}
+@media (max-width: 767px) {
+  .top-v2-season-note { font-size: 12.5px; text-align: left; }
+}
+/* 黒板の中：平日を選んでいるあいだだけ出す「夏休み・春休み・GW・年末年始は、平日も ◯円〜」 */
+.top-v2-chalkboard--art .top-v2-chalk-sub .top-v2-chalk-season-hint {
+  flex-basis: 100%;
+  text-align: center;
+  color: #f4b271;
+}
+/* 黒板の中の1行は、スマホ幅では黒板のすぐ下に出す（黒板に入りきらないため）。JSが両方を作り、幅で片方だけ見せる */
+.top-v2-chalk-season-hint-below {
+  margin: 10px auto 0;
+  max-width: 34em;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: #a5540e;
+  text-align: center;
+  text-wrap: pretty;
+}
+@media (max-width: 767px) {
+  .top-v2-chalkboard--art .top-v2-chalk-sub .top-v2-chalk-season-hint { display: none; }
+}
+@media (min-width: 768px) {
+  .top-v2-chalk-season-hint-below { display: none; }
+}
+@media (max-width: 767px) {
+  /* 黒板のすぐ下の1行は、黒板にくっつけて出し、下の「※ 20名くらいまでなら…」とは間をあける */
+  .top-v2-chalkboard--art:has(+ .top-v2-chalk-season-hint-below:not([hidden])) { margin-bottom: 6px; }
+  .top-v2-chalk-season-hint-below { margin: 6px auto 12px; }
+}
+@media (max-width: 767px) {
+  /* 場面ページの料金欄（#price）の黒板の余白指定より強くする */
+  #price .top-v2-chalkboard--art:has(+ .top-v2-chalk-season-hint-below:not([hidden])),
+  #banner .top-v2-chalkboard--art:has(+ .top-v2-chalk-season-hint-below:not([hidden])) { margin-bottom: 6px; }
+}
