@@ -329,6 +329,61 @@
       if (a.getAttribute('href') !== next) { a.setAttribute('href', next); }
     });
   }
+  // ---- 「この見積もりをLINEで送る」（2026-11-25 第4弾） ------------------------
+  // 黒板が今出している式・こたえ・季節・お食事の文字をそのまま写して、LINEの送る文面にする
+  // （金額は計算し直さない）。スマホはLINEの共有（文面つき）、PCはLINEのシェア（くわしい計算のURLだけ）。
+  // くわしい計算のリンクの人数・プランは reserve-handoff.js が少し遅れて付けるので、
+  // 黒板を描き直したあと・ボタンを押す直前にも、そのつど作り直す。
+  var BOARD_MEAL_SLOTS = [['lunch', '昼'], ['dinner', '夕'], ['morning', '朝']];
+  var BOARD_MEAL_NAMES = { kyushoku: '給食', bbq: '提供型BBQ', sando: '朝食サンド' };
+  function boardText(selector) {
+    var el = document.querySelector(selector);
+    return el ? el.textContent.replace(/\s+/g, ' ').trim() : '';
+  }
+  function buildBoardLine(choice) {
+    var btn = document.querySelector('[data-board-line]');
+    var sim = document.querySelector('.top-v2-sim-more-link');
+    if (!btn || !sim) { return; }
+    var simUrl;
+    try { simUrl = new URL(sim.getAttribute('href'), window.location.origin).href; } catch (e) { return; }
+    var lines = ['カタショー（静岡・牧之原）の見積もり（目安）'];
+    var formula = boardText('.top-v2-chalk-formula');
+    var answer = boardText('.top-v2-chalk-answer');
+    if (formula) { lines.push(formula); }
+    if (answer) { lines.push(answer); }
+    var tab = document.querySelector('.top-v2-chalk-season .top-v2-chalk-tab.is-on');
+    if (tab) { lines.push(tab.textContent.replace(/\s+/g, ' ').replace(/\s*または\s*/, '・').trim()); }
+    var planState = boardText('.top-v2-chalk-menu--plan .top-v2-chalk-menu-state');
+    if (planState.indexOf('適用中') !== -1) { lines.push('少人数プラン（1階）で計算'); }
+    var meals = [];
+    BOARD_MEAL_SLOTS.forEach(function (slot) {
+      var key = choice && choice[slot[0]];
+      if (key && key !== 'byo') { meals.push((BOARD_MEAL_NAMES[key] || key) + '（' + slot[1] + '）'); }
+    });
+    if (choice && Object.keys(choice).length) { lines.push('お食事：' + (meals.length ? meals.join('・') : 'なし')); }
+    lines.push('同じ条件で計算する →');
+    lines.push(simUrl);
+    var phone = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    var href = phone
+      ? 'https://line.me/R/share?text=' + encodeURIComponent(lines.join('\n'))
+      : 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(simUrl);
+    if (btn.getAttribute('href') !== href) { btn.setAttribute('href', href); }
+  }
+  var boardLineChoice = null;
+  var boardLineReady = false;
+  function updateBoardLine(choice) {
+    boardLineChoice = choice;
+    if (!boardLineReady) {
+      boardLineReady = true;
+      var btn = document.querySelector('[data-board-line]');
+      var again = function () { buildBoardLine(boardLineChoice); };
+      if (btn) { ['pointerdown', 'focus', 'click', 'touchstart'].forEach(function (t) { btn.addEventListener(t, again, true); }); }
+      window.addEventListener('load', again);
+    }
+    buildBoardLine(choice);
+    // reserve-handoff.js が人数を付けたあとにもう一度（同じ回のうちに順番がくる）
+    setTimeout(function () { buildBoardLine(boardLineChoice); }, 0);
+  }
   // 式（人数の並び）を、1かたまりずつ折れない部品にして並べる。幅がせまい・字が大きいときは、
   // かたまりの切れ目で2行に折れる（かたまりの途中では折れない）。2026-11-25
   function setFormulaParts(el, parts) {
@@ -404,6 +459,7 @@
       minus.disabled = n <= cfg.minPeople;
       plus.disabled = n >= MAX;
       updateDetailLink(season, choice);
+      updateBoardLine(choice);
       updateCapacityNotice(capacityNotice, plan.isCompact(), n);
       updateSeasonHint(seasonHint, season, '1人 ' + fmt(holidayCfg.adult + mealCost) + '〜', holidayMinSuffix(n));
       if (animate) { animateRewrite([unitEl, nEl, totalEl]); }
@@ -497,6 +553,7 @@
         if (plusBtns[key]) { plusBtns[key].disabled = totalPeople >= MAX_PEOPLE; }
       });
       updateDetailLink(season, choice);
+      updateBoardLine(choice);
       updateCapacityNotice(capacityNotice, plan.isCompact(), totalPeople);
       if (animate) { animateRewrite([lineEl, totalEl]); }
     }
@@ -642,6 +699,7 @@
         updateSeasonHint(seasonHint, season, 'みんなで ' + fmt(holidayTotal) + '〜', holidayMinSuffix(n));
       }
       updateDetailLink(season, choice);
+      updateBoardLine(choice);
       updateCapacityNotice(capacityNotice, plan.isCompact(), totalPeople);
       if (animate) { animateRewrite(animateTargets); }
     }

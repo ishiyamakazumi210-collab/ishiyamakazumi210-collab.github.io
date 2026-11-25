@@ -31,7 +31,7 @@
 
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261125d"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261125e"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -191,7 +191,14 @@ height: 78vw;
                     </a>
                     <div class="l-header_cont container-fluid">
                         <div class="l-header_contLeft">
-                            <div class="l-header_sns">
+                            <a class="top-v2-header-textlogo" href="/">
+                                <span class="top-v2-header-textlogo-sub">遊んで泊まれる小学校</span>
+                                <span class="top-v2-header-textlogo-main">カタショー</span>
+                            </a>
+                        </div>
+                        <div class="l-header_contRight">
+                            <div class="l-header_btn">
+                                <div class="l-header_sns top-v2-header-sns">
                                 <ul class="l-header_snsList list-unstyled mb-0">
                                     <li><a href="https://twitter.com/katasho2tomaro" target="_blank">
                                         <img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async"/></noscript>
@@ -201,25 +208,24 @@ height: 78vw;
                                     </a></li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="l-header_contRight">
-                            <div class="l-header_btn">
-                                <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="l-header_btnReserve btn btn-orange btn-sm me-5 u-pc" id="headerBtnReserve">
+                            <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="l-header_btnReserve btn btn-orange btn-sm me-5 u-pc" id="headerBtnReserve">
                 予約<span class="u-sm">（空き状況）</span>
               </a>
                                 <button class="l-header_btnMenu" type="button" data-bs-toggle="offcanvas" data-bs-target="#headerNav" aria-controls="headerNav">
                                     <picture>
                                         <source media="(max-width: 576px)" srcset="/assets/wp/themes/katasho/asset/image/icon_menu_sp.svg"/>
-                                        <img src="/assets/wp/themes/katasho/asset/image/icon_menu.svg" alt="メニュー" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/icon_menu.svg" alt="メニュー" decoding="async"/></noscript>
+                                        <img src="/assets/wp/themes/katasho/asset/image/icon_menu.svg" alt="" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/icon_menu.svg" alt="" decoding="async"/></noscript>
                                     </picture>
+<span class="l-header_btnMenuLabel">メニュー</span>
                                 </button>
                             </div>
                             <div class="l-header_btn--fixed" id="menuFixed">
                                 <button class="l-header_btnMenu" type="button" data-bs-toggle="offcanvas" data-bs-target="#headerNav" aria-controls="headerNav">
                                     <picture>
                                         <source media="(max-width: 576px)" srcset="/assets/wp/themes/katasho/asset/image/icon_menu_white_sp.svg"/>
-                                        <img src="/assets/wp/themes/katasho/asset/image/icon_menu_white.svg" alt="メニュー" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/icon_menu_white.svg" alt="メニュー" decoding="async"/></noscript>
+                                        <img src="/assets/wp/themes/katasho/asset/image/icon_menu_white.svg" alt="" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/icon_menu_white.svg" alt="" decoding="async"/></noscript>
                                     </picture>
+<span class="l-header_btnMenuLabel">メニュー</span>
                                 </button>
                             </div>
                         </div>
@@ -456,7 +462,7 @@ height: 78vw;
 <div class="top-v2-teacher-note top-v2-teacher-note--unified">
 <p class="top-v2-teacher-note-label">料金の注意事項</p>
 <ul class="top-v2-price-notes top-v2-price-notes--center">
-<li><span class="top-v2-note-mark">※</span> 最低利用金額は「平日／オフシーズン」44,500円(大人5名分)、「土日祝／ハイシーズン」69,300円(大人7名分)です</li>
+<li><span class="top-v2-note-mark">※</span> 最低利用金額は「平日／オフシーズン」44,500円（大人5名分）、「土日祝／ハイシーズン」69,300円（大人7名分）です</li>
 <li><span class="top-v2-note-mark">※</span> 調理室のご利用は、宿泊の方が優先です</li>
 <li><span class="top-v2-note-mark">※</span> お部屋を分けたい場合は<a class="top-v2-inline-link" href="#stay-option">部屋分けオプション</a>もあります</li>
 </ul>
@@ -517,8 +523,8 @@ height: 78vw;
 </div>
 </div>
 </section>
-<script src="/assets/js/site-data.js?v=20261125c" defer></script>
-<script src="/assets/js/pricing-board.js?v=20261125b" defer></script>
+<script src="/assets/js/site-data.js?v=20261125d" defer></script>
+<script src="/assets/js/pricing-board.js?v=20261125c" defer></script>
 <script src="/assets/js/reserve-handoff.js?v=20261124d" defer></script>
 <script src="/assets/js/info-pop.js?v=20261124a" defer></script>
 <section class="l-section l-option" id="food">
@@ -782,6 +788,26 @@ height: 78vw;
 </div>
 </li>
 </ul>
+<!-- 2026-11-25 第4弾：少人数プランとスタンダードプランの比べ表（どちらにするか迷う人向け）。数字・文はこのページと site.json にあるものだけ -->
+<div class="top-v2-plan-compare" id="plan-compare">
+<h3 class="top-v2-plan-compare-title">少人数プランとスタンダードプラン、どっちにする？</h3>
+<table>
+<thead><tr><th scope="col"><span class="top-v2-sr-only">項目</span></th><th scope="col">少人数プラン<small><span class="top-v2-nowrap">1階・</span><span class="top-v2-nowrap">20名くらいまで</span></small></th><th scope="col">スタンダードプラン<small>3階・特大部屋</small></th></tr></thead>
+<tbody>
+<tr><th scope="row">人数の目安</th><td>20名くらいまで（手狭でもよければ、布団を敷いて最大30名）</td><td>特大部屋の目安25名（3階の中部屋・小部屋を追加できます）</td></tr>
+<tr><th scope="row">大人1人あたり</th><td>平日／オフシーズン 7,900円〜<br>土日祝／ハイシーズン 8,900円〜<br>（スタンダードから1,000円引き）</td><td>平日／オフシーズン 8,900円〜<br>土日祝／ハイシーズン 9,900円〜</td></tr>
+<tr><th scope="row">最低利用金額</th><td>平日／オフシーズン 39,500円（大人5名分）<br>土日祝／ハイシーズン 62,300円（大人7名分）</td><td>平日／オフシーズン 44,500円（大人5名分）<br>土日祝／ハイシーズン 69,300円（大人7名分）</td></tr>
+<tr><th scope="row">泊まる場所</th><td>南棟1階（食堂のある1階のエリア）。3階の特大部屋は使いません</td><td>3階・特大部屋</td></tr>
+<tr><th scope="row">寝る所</th><td>二段ベッド（1階の中部屋16名くらい＋小部屋8名くらい）</td><td>基本は特大部屋1室に布団を並べます（雑魚寝）</td></tr>
+<tr><th scope="row">宴会・食事</th><td>1階の食堂</td><td>夜は、特大部屋で宴会</td></tr>
+<tr><th scope="row">夜</th><td>夜間のフロア貸切はありません（お部屋はグループごとの専有です）</td><td>泊まるフロアは夜間グループ貸切（同じフロアに、ほかのグループは泊まりません）</td></tr>
+<tr><th scope="row">カラオケ・映画</th><td>食堂の大型モニターで</td><td>特大部屋で、大画面と本格DAMのカラオケ</td></tr>
+<tr><th scope="row">夕食で頼めるもの</th><td>提供型BBQ（満腹コース）のみ</td><td>提供型BBQ（満腹コース）・【冬季限定】すき焼き・林間学校式カレー・贅沢しずおか四色弁当</td></tr>
+<tr><th scope="row">追加の部屋</th><td>1部屋まで（16名以上は無料、15名以下は5,000円）</td><td>1部屋5,000円（26名以上は1部屋無料）。特大部屋とあわせて最大3部屋</td></tr>
+</tbody>
+</table>
+<p class="top-v2-plan-compare-note">少人数プランにするときは、予約画面で1階の少人数向けのプランを選んでください。</p>
+</div>
 </div>
 </section>
 

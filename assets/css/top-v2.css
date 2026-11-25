@@ -14646,3 +14646,264 @@ button.btn-close:focus-visible {
 @media (max-width: 991.98px) {
   .reserve-bar-cond { font-size: 13px; }
 }
+
+/* 2026-11-25 第4弾 A・B ヘッダーの文字と「メニュー」
+   A: 中の全ページの左上に「カタショー」の文字ロゴ（トップと同じ作り。SNSは右へ移動済み）。
+      文字ロゴ側の見た目は上の .top-v2-header-textlogo 系をそのまま使う。
+   B: 三本線の下に「メニュー」の文字を添える（三本線だけでは分からないという声への対応）。
+      文字の12px以上、押せる範囲は44px以上。追いかけてくる四角の上では白い文字。 */
+button.l-header_btnMenu {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+.l-header_btnMenuLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #2f7890;
+}
+/* 追いかけてくるメニュー（濃い青緑の四角）: 文字は白、四角は文字ぶん少し詰める */
+.l-header_btn--fixed button.l-header_btnMenu {
+  padding: 22px 26px;
+  gap: 8px;
+}
+.l-header_btn--fixed .l-header_btnMenuLabel {
+  color: #fff;
+}
+@media screen and (max-width: 575px) {
+  .l-header_btn--fixed button.l-header_btnMenu {
+    padding: 8px 10px;
+    gap: 4px;
+  }
+}
+/* 320px幅: 予約ボタンの「（空き状況）」を外し、中央の校章と重ならないようにする
+   （従来から320pxでは校章と予約ボタンが触れていた。文字ロゴを左に置いたぶんの余裕もここで確保） */
+@media screen and (max-width: 359px) {
+  .l-header_btnReserve .u-sm {
+    display: none;
+  }
+}
+
+/* 2026-11-25 第4弾 C・D・F 場面ページの黒板の下・比べ表・料金の行 */
+/* F：ヒーローの「1人 7,900円〜」の行を、説明文のすぐ下・赤いボタンの上へ。説明文の下の空きを詰めて、行と赤いボタンを近づける */
+.top-v2-scene-hero .top-v2-scene-lead + .hero-price-line { margin: -10px 0 16px; }
+@media (max-width: 767px) {
+  .top-v2-scene-hero .top-v2-scene-lead + .hero-price-line { margin: -12px 0 14px; }
+}
+@media (min-width: 992px) {
+  /* PCは前の「.top-v2-scene-hero .hero-price-line { margin-top: 12px; }」より後ろに置いて、上の空きを打ち消す */
+  .top-v2-scene-hero .top-v2-scene-lead + .hero-price-line { margin: -8px 0 14px; }
+}
+
+/* C：黒板の答えのすぐ下の「予約ボタン → LINEで送る → 料金・オプションを見る（文字リンク）」 */
+.top-v2-price-actions--board {
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+.top-v2-price-actions--board .top-v2-cta-big { width: auto; }
+@media (max-width: 767px) {
+  .top-v2-price-actions--board .reserve-cta { width: 100%; }
+  .top-v2-price-actions--board .top-v2-cta-big { width: 100%; box-sizing: border-box; }
+}
+/* 「この人数で、空き状況を見る」は文字数が多いので、375px前後でも1行に収まるよう字を少しだけ小さく */
+@media (max-width: 420px) {
+  .top-v2-price-actions--board .top-v2-cta-big { font-size: 16px; }
+}
+/* LINEで送るボタン：赤い予約ボタンより小さく（LINEの緑はこのボタンだけ） */
+.top-v2-board-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 22px;
+  border: 2px solid #06C755;
+  border-radius: 999px;
+  background: #06C755;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.3;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.top-v2-board-line:hover,
+.top-v2-board-line:focus-visible { background: #05b34c; border-color: #05b34c; color: #fff; }
+.top-v2-board-line:focus-visible { outline: 3px solid #1f4f63; outline-offset: 3px; }
+
+/* C：ページの最後の「LINEでみんなに送る」は、上の赤い予約ボタンより小さく（幅もせまく、高さも低く） */
+.top-v2-scene-finalcta .top-v2-share { margin-top: 18px; }
+.top-v2-scene-finalcta .top-v2-share .top-v2-btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 20px;
+  border-width: 2px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.3;
+  box-sizing: border-box;
+}
+
+/* D：少人数プラン／スタンダードプランの比べ表（落ち着いた紙のカード。マスキングテープはなし） */
+.top-v2-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.top-v2-plan-compare {
+  max-width: 880px;
+  margin: 40px auto 0;
+  padding: 18px 20px 16px;
+  background: #fff;
+  border: 1px solid rgba(47, 120, 144, 0.28);
+  border-radius: 12px;
+  color: #2e2518;
+  box-sizing: border-box;
+}
+.top-v2-plan-compare-title {
+  margin: 0 0 12px;
+  color: #2f7890;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.5;
+  text-align: center;
+}
+.top-v2-plan-compare table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.top-v2-plan-compare th,
+.top-v2-plan-compare td {
+  padding: 10px 12px;
+  border-top: 1px solid rgba(47, 120, 144, 0.18);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.65;
+  text-align: left;
+  vertical-align: top;
+  /* 「5,000／円」のように数字と単位の間で切れないよう、言葉のまとまりで折る（対応していないブラウザはふつうの折り返し） */
+  word-break: auto-phrase;
+  overflow-wrap: break-word;
+}
+.top-v2-plan-compare thead th {
+  border-top: 0;
+  border-bottom: 2px solid #2f7890;
+  background: #fff8e8;
+  color: #2f7890;
+  font-weight: 900;
+  text-align: center;
+  vertical-align: middle;
+}
+.top-v2-plan-compare thead th small {
+  display: block;
+  color: #665a4a;
+  font-size: 12px;
+  font-weight: 700;
+}
+.top-v2-plan-compare thead th:first-child { width: 20%; }
+.top-v2-plan-compare tbody th {
+  width: 20%;
+  color: #2f7890;
+  font-weight: 900;
+}
+.top-v2-plan-compare tbody tr:nth-child(even) > * { background: rgba(255, 248, 232, 0.55); }
+.top-v2-plan-compare-note {
+  margin: 10px 0 0;
+  color: #665a4a;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.7;
+  text-align: center;
+}
+/* 場面ページの短い版：4行。黒板と料金の注意事項のあいだに置く */
+.top-v2-plan-compare--short { max-width: 560px; margin: 28px auto 24px; padding: 14px 14px 12px; }
+.top-v2-plan-compare--short .top-v2-plan-compare-title { margin-bottom: 8px; font-size: 16px; }
+.top-v2-plan-compare--short th,
+.top-v2-plan-compare--short td { padding: 8px 8px; font-size: 13px; line-height: 1.55; }
+.top-v2-plan-compare--short thead th { font-size: 13px; }
+.top-v2-plan-compare--short thead th small { font-size: 12px; }
+.top-v2-plan-compare--short tbody th,
+.top-v2-plan-compare--short thead th:first-child { width: 22%; }
+.top-v2-plan-compare-link { margin: 8px 0 0; text-align: center; font-size: 14px; }
+@media (max-width: 767px) {
+  .top-v2-plan-compare { margin-left: 0; margin-right: 0; padding: 14px 10px 12px; }
+  .top-v2-plan-compare-title { font-size: 16px; }
+  .top-v2-plan-compare th,
+  .top-v2-plan-compare td { padding: 8px 6px; font-size: 13px; line-height: 1.55; }
+  .top-v2-plan-compare tbody th,
+  .top-v2-plan-compare thead th:first-child { width: 25%; }
+}
+/* とてもせまい画面（320px前後）は、1行ごとに「項目 → 少人数 → スタンダード」と縦に積む */
+/* 見出しの「スタンダードプラン」が途中で折れないよう、見出しの左右の余白をせまく（短い版・スマホ） */
+@media (max-width: 767px) {
+  .top-v2-plan-compare thead th { padding-left: 3px; padding-right: 3px; }
+}
+/* 長い版（オプションの比べ表）はスマホで、1行ごとに「項目 → 少人数 → スタンダード」と縦に積む。短い版は、とてもせまい画面（320px前後）だけ縦に積む */
+@media (max-width: 767px) {
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) thead { display: none; }
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) table,
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) tbody,
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) tr,
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) th,
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) td { display: block; width: 100%; }
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) tbody th { width: 100%; padding: 8px 8px 4px; background: #fff8e8; }
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) td { padding: 4px 8px; border-top: 0; background: transparent; }
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) tbody tr:nth-child(even) > td { background: transparent; }
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) tbody tr { padding-bottom: 6px; border-top: 1px solid rgba(47, 120, 144, 0.18); }
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) td:nth-of-type(1)::before { content: "少人数プラン"; color: #2f7890; font-weight: 900; display: block; font-size: 12px; }
+  .top-v2-plan-compare:not(.top-v2-plan-compare--short) td:nth-of-type(2)::before { content: "スタンダードプラン"; color: #2f7890; font-weight: 900; display: block; font-size: 12px; }
+}
+@media (max-width: 359px) {
+  .top-v2-plan-compare--short thead { display: none; }
+  .top-v2-plan-compare--short table,
+  .top-v2-plan-compare--short tbody,
+  .top-v2-plan-compare--short tr,
+  .top-v2-plan-compare--short th,
+  .top-v2-plan-compare--short td { display: block; width: 100%; }
+  .top-v2-plan-compare--short tbody th { width: 100%; padding-bottom: 2px; background: #fff8e8; }
+  .top-v2-plan-compare--short td:nth-of-type(1)::before { content: "少人数プラン　"; color: #2f7890; font-weight: 900; }
+  .top-v2-plan-compare--short td:nth-of-type(2)::before { content: "スタンダード　"; color: #2f7890; font-weight: 900; }
+}
+
+/* 2026-11-25 第4弾 E トップの遊びの札と「48」 */
+/* 「遊びは48種類以上。」の48を、ヒーロー直下の実績帯「6,000」と同じ言語
+   (橙#f0831e・極太900)で大きく見せる。<strong>は文中に溶けるので読み上げは
+   「遊びは48種類以上。」のまま途切れない */
+.top-v2-playroll-lead .top-v2-playroll-num {
+  display: inline-block;
+  margin: 0 0.06em;
+  color: #f0831e;
+  font-size: clamp(46px, 11vw, 68px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  vertical-align: -0.04em;
+}
+/* 黒板の札に出ていた管理用の「No.xx」(::after)をトップの帯でだけ消す。
+   /play/ の一覧(.top-v2-catalog-chalk)には触れない */
+.top-v2-playroll .top-v2-playcard-photo--pending::after {
+  content: none;
+  display: none;
+}

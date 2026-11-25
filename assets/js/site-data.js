@@ -40,8 +40,8 @@ window.KATASHO_DATA = {
     "roomsNote": "寝室は二段ベッド（1階の中部屋16名くらい＋小部屋8名くらい）／手狭でもよければ、布団を敷いて最大30名（20名＋10名）"
   },
   "minSpend": {
-    "weekday": "44,500円(大人5名分)",
-    "holiday": "69,300円(大人7名分)",
+    "weekday": "44,500円（大人5名分）",
+    "holiday": "69,300円（大人7名分）",
     "compactWeekday": "39,500円",
     "compactHoliday": "62,300円"
   },
