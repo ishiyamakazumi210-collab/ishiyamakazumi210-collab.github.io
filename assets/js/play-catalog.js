@@ -10,7 +10,7 @@
 
   var CHIP_FIELDS = [
     { key: 'place', label: '場所' },
-    { key: 'night', label: '夜' },
+    { key: 'night', label: '時間' },
     { key: 'rain', label: '雨' },
     { key: 'gear', label: '道具' }
   ];

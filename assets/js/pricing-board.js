@@ -308,6 +308,36 @@
       el.appendChild(nowrapSpan(amountText + (suffix || '')));
     });
   }
+  // ---- 「オプションも入れて、くわしく計算 →」へ黒板の条件を渡す（2026-11-25） ------
+  // 人数・少人数プランは reserve-handoff.js が付ける（adult・elem・pre・plan）。ここでは
+  // 黒板の季節（season=holiday）とお食事（lunch・dinner・bf=1）を付ける。
+  // 平日・食事なしのときは付けない（くわしい計算の初期値のまま）。price-simulator.js が読む。
+  function updateDetailLink(season, choice) {
+    // リンクは黒板より後ろにあることがあるので、そのつど探す
+    Array.prototype.forEach.call(document.querySelectorAll('.top-v2-sim-more-link'), function (a) {
+      var url;
+      try { url = new URL(a.getAttribute('href'), window.location.origin); } catch (e) { return; }
+      if (url.pathname !== '/price-simulator/') { return; }
+      var set = function (key, value) {
+        if (value) { url.searchParams.set(key, value); } else { url.searchParams.delete(key); }
+      };
+      set('season', season === 'holiday' ? 'holiday' : '');
+      set('lunch', choice.lunch && choice.lunch !== 'byo' ? choice.lunch : '');
+      set('dinner', choice.dinner && choice.dinner !== 'byo' ? choice.dinner : '');
+      set('bf', choice.morning === 'sando' ? '1' : '');
+      var next = url.pathname + url.search + url.hash;
+      if (a.getAttribute('href') !== next) { a.setAttribute('href', next); }
+    });
+  }
+  // 式（人数の並び）を、1かたまりずつ折れない部品にして並べる。幅がせまい・字が大きいときは、
+  // かたまりの切れ目で2行に折れる（かたまりの途中では折れない）。2026-11-25
+  function setFormulaParts(el, parts) {
+    el.textContent = '';
+    parts.forEach(function (part, i) {
+      if (i > 0 && part.charAt(0) !== '（') { el.appendChild(document.createTextNode(' ')); }
+      el.appendChild(nowrapSpan(part));
+    });
+  }
   function holidayMinSuffix(adults) {
     var min = SEASONS.holiday.minPeople;
     return adults < min ? '（' + min + '人から）' : '';
@@ -373,6 +403,7 @@
       if (breakdownEl) { breakdownEl.textContent = '1人あたり: ' + bdParts.join(' ＋ '); }
       minus.disabled = n <= cfg.minPeople;
       plus.disabled = n >= MAX;
+      updateDetailLink(season, choice);
       updateCapacityNotice(capacityNotice, plan.isCompact(), n);
       updateSeasonHint(seasonHint, season, '1人 ' + fmt(holidayCfg.adult + mealCost) + '〜', holidayMinSuffix(n));
       if (animate) { animateRewrite([unitEl, nEl, totalEl]); }
@@ -452,7 +483,7 @@
       var parts = ['おとな' + counts.adult + '人'];
       if (counts.elem > 0) { parts.push('小学生' + counts.elem + '人'); }
       if (counts.pre > 0) { parts.push('3〜5歳' + counts.pre + '人'); }
-      lineEl.textContent = parts.join(' ＋ ');
+      setFormulaParts(lineEl, parts.map(function (part, i) { return i > 0 ? '＋ ' + part : part; }));
       totalEl.textContent = fmt(total);
       renderFamilyUnits(unitsEl, cfg);
       minEl.hidden = !(sum < cfg.floor);
@@ -465,6 +496,7 @@
         if (minusBtns[key]) { minusBtns[key].disabled = counts[key] <= MINIMUMS[key]; }
         if (plusBtns[key]) { plusBtns[key].disabled = totalPeople >= MAX_PEOPLE; }
       });
+      updateDetailLink(season, choice);
       updateCapacityNotice(capacityNotice, plan.isCompact(), totalPeople);
       if (animate) { animateRewrite([lineEl, totalEl]); }
     }
@@ -589,10 +621,10 @@
         animateTargets = [document.getElementById('chalk-unit'), document.getElementById('chalk-n'), document.getElementById('chalk-total')];
       } else {
         // お子さま1人以上: 家族ボード相当の内訳表示に切替
-        var formulaText = 'おとな' + n + '人';
-        if (counts.elem > 0) { formulaText += ' ＋ 小学生' + counts.elem + '人'; }
-        if (counts.pre > 0) { formulaText += '（＋ 3〜5歳' + counts.pre + '人）'; }
-        formulaEl.textContent = formulaText;
+        var formulaParts = ['おとな' + n + '人'];
+        if (counts.elem > 0) { formulaParts.push('＋ 小学生' + counts.elem + '人'); }
+        if (counts.pre > 0) { formulaParts.push('（＋ 3〜5歳' + counts.pre + '人）'); }
+        setFormulaParts(formulaEl, formulaParts);
         answerEl.innerHTML = 'こたえ：みんなで <strong>' + fmt(total) + '</strong>〜';
         breakdownEl.textContent = '1人あたり: おとな ' + fmt(adultUnit) + '・小学生 ' + fmt(elemUnit) + '・3〜5歳 ' + fmt(preUnit) + (anyPaid ? '（お食事込み）' : '');
         animateTargets = [formulaEl, answerEl];
@@ -609,6 +641,7 @@
         var holidayTotal = holidayAdults * holidayAdultUnit + counts.elem * (holidayCfg.elem + mealCost.elem) + counts.pre * (holidayCfg.pre + mealCost.pre);
         updateSeasonHint(seasonHint, season, 'みんなで ' + fmt(holidayTotal) + '〜', holidayMinSuffix(n));
       }
+      updateDetailLink(season, choice);
       updateCapacityNotice(capacityNotice, plan.isCompact(), totalPeople);
       if (animate) { animateRewrite(animateTargets); }
     }

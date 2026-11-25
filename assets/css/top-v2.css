@@ -14516,3 +14516,133 @@ button.btn-close:focus-visible {
     mask-image: none;
   }
 }
+
+/* 2026-11-25 第3弾 文と電話 */
+.top-v2-scene-kicker {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .04em;
+  color: #2f7890;
+}
+@media (min-width: 768px) {
+  .top-v2-scene-kicker { font-size: 14px; }
+}
+.top-v2-hero-tel {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.top-v2-hero-tel a { font-weight: 700; white-space: nowrap; }
+@media (max-width: 767px) {
+  /* スマホは上の3点メモ・ボタンと同じく中央に。1行に収める */
+  .top-v2-hero-tel { margin-top: 10px; font-size: 13px; text-align: center; }
+}
+.top-v2-stay-facts {
+  list-style: none;
+  margin: 28px auto 0;
+  padding: 0;
+  max-width: 760px;
+  text-align: left;
+}
+.top-v2-stay-facts li {
+  position: relative;
+  margin: 0 0 8px;
+  padding-left: 1.3em;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.top-v2-stay-facts li::before {
+  content: "◆";
+  position: absolute;
+  left: 0;
+  color: #2f7890;
+  font-size: .8em;
+}
+.top-v2-access-jump { margin: 12px 0 0; justify-content: center; display: flex; flex-wrap: wrap; gap: 8px 20px; font-weight: 700; }
+.top-v2-total-note { margin-left: .5em; font-size: 12px; font-weight: 400; }
+.top-v2-form-help { margin: 6px 0 0; font-size: 13px; line-height: 1.7; }
+.top-v2-form-optional {
+  margin-left: .6em;
+  font-size: 12px;
+  font-weight: 400;
+  color: #5b6b70;
+}
+.l-footer_tel { margin-top: 6px !important; }
+.l-footer_tel a { color: inherit; font-weight: 700; text-decoration: underline; white-space: nowrap; }
+.l-footer_telhours { margin-left: .4em; font-size: 13px; white-space: nowrap; }
+.l-nav_tel { margin: 16px 0 0; font-size: 14px; line-height: 1.7; text-align: center; }
+.l-nav_tel a { font-weight: 700; white-space: nowrap; }
+.l-nav_telhours { display: block; font-size: 12px; }
+
+/* 2026-11-25 第3弾 黒板 */
+/* 式（人数の並び）：JS が1かたまりずつ折れない部品にしているので、幅がせまい・字が大きいときはかたまりの切れ目で折る */
+.top-v2-chalkboard--art .top-v2-chalk-formula { white-space: normal; text-wrap: balance; line-height: 1.3; margin-inline: -5%; }
+/* 予約ボタンの下の3点メモ（予約時の人数は概算でOK／変更は10日前まで／お支払い）：14px以上。スマホは縦に3行 */
+.reserve-reassure,
+.top-v2-sim-reserve-more .reserve-reassure { font-size: 14px; line-height: 1.7; }
+@media (max-width: 767px) {
+  .reserve-reassure,
+  .top-v2-sim-reserve-more .reserve-reassure { font-size: 14px; }
+  .reserve-reassure > span { display: block; }
+  .reserve-reassure > span:not(:last-child)::after { content: none; }
+}
+/* 黒板の高さ：絵と同じ縦横比を「最低の高さ」にして、文字の量が多い・字が大きいときは、黒板の絵のほうを縦に伸ばす
+   （文字が絵の枠やチョーク・黒板消しに重ならないように）。文字が少ないときは今までと同じ見た目（文字は同じ位置の中央）。
+   上下の余白は絵の中の位置（黒板の中の「今日の算数」の印の下・チョーク受けの上）を黒板の幅に対する割合（cqw）で持つ */
+.top-v2-chalkboard--art {
+  container-type: inline-size;
+  aspect-ratio: 1400 / 809;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  --cb-top: 17.34cqw;
+  --cb-bottom: 12.71cqw;
+  --cb-side: 11%;
+}
+.top-v2-chalkboard--art .top-v2-chalkboard-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.top-v2-chalkboard--art .top-v2-chalkboard-write {
+  position: relative;
+  inset: auto;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--cb-top) var(--cb-side) var(--cb-bottom);
+  gap: 8px;
+}
+@media (max-width: 767px) {
+  .top-v2-chalkboard--art { --cb-top: 15.6cqw; --cb-bottom: 8.09cqw; }
+  .top-v2-chalkboard--art .top-v2-chalkboard-write { gap: 3px; }
+}
+@media (max-width: 575px) {
+  .top-v2-chalkboard--art { aspect-ratio: 1400 / 1000; --cb-top: 19.3cqw; --cb-bottom: 10cqw; }
+  .top-v2-chalkboard--art .top-v2-chalkboard-write { gap: 4px; }
+  .top-v2-chalkboard--art .top-v2-chalk-answer { padding: 3px 18px; line-height: 1.3; }
+  .top-v2-chalkboard--art .top-v2-chalk-sub { gap: 2px 12px; line-height: 1.35; }
+  /* 単価の3行：おとな・小学生は並べて、入りきらない（字が大きい）ときは1つずつ下の行へ。3〜5歳と「（宿泊のみ…）」はそれぞれ1行 */
+  .top-v2-chalkboard--art .top-v2-chalk-unitline { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 12px; }
+  .top-v2-chalkboard--art .top-v2-chalk-unitpart:nth-child(3),
+  .top-v2-chalkboard--art .top-v2-chalk-unitnote { flex: 1 1 100%; text-align: center; }
+}
+/* カードの中に入った黒板（トップ・料金オプション）は、カードの余白ぶん狭くなるので、左右の余白へ少し広げる */
+@media (max-width: 575px) {
+  .top-v2-price-simulator .top-v2-chalkboard--art { margin-left: -12px; margin-right: -12px; }
+}
+@media (max-width: 399px) {
+  .top-v2-chalkboard--art { aspect-ratio: 1400 / 1160; --cb-top: 21.5cqw; --cb-bottom: 14.1cqw; --cb-side: 7%; }
+  .top-v2-chalkboard--art .top-v2-chalk-sub { line-height: 1.25; }
+}
+@media (max-width: 340px) {
+  .top-v2-chalkboard--art { aspect-ratio: 1400 / 1220; --cb-top: 24cqw; --cb-bottom: 13.9cqw; }
+}
+/* スマホ下の予約バーの「※平日・少人数プラン」 */
+@media (max-width: 991.98px) {
+  .reserve-bar-cond { font-size: 13px; }
+}

@@ -1384,6 +1384,19 @@
       if (v !== null && /^\d+$/.test(v) && peopleInputs[key]) { peopleInputs[key].value = v; }
     });
     if (q.get('plan') === 'compact' && compactRadio) { compactRadio.checked = true; }
+    // 2026-11-25 黒板で選んだ時期（season=holiday は土日祝・ハイシーズン）とお食事（lunch・dinner・bf=1）も引き継ぐ。
+    // 日付が決まっていないときの1泊目として入れる。知らない値は無視する（人数が5名に満たないときの食事は update() が外し、理由を出す）
+    if (q.get('season') === 'holiday' && nightRows[0]) {
+      nightRows[0].radios.holiday.checked = true;
+      nightRows[0].radios.weekday.checked = false;
+      // 時期の選び方は「日付が決まっていない場合」の中にあるので、引き継いだ土日祝が見えるよう開いておく
+      if (els.undecided) { els.undecided.open = true; }
+    }
+    var lunchId = q.get('lunch');
+    if (lunchId && els.lunchCards.inputs[lunchId]) { els.lunchCards.inputs[lunchId].checked = true; }
+    var dinnerId = q.get('dinner');
+    if (dinnerId && mealRows[0].cards.inputs[dinnerId]) { mealRows[0].cards.inputs[dinnerId].checked = true; }
+    if (q.get('bf') === '1') { mealRows[0].bf.checked = true; }
   })();
   update(true);
 
