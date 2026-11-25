@@ -1,0 +1,485 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- 計測（Googleタグマネージャー。今のkatasho.jp・予約ページ(ProX)と同じ箱）。本番の katasho.jp のときだけ読み込む。
+       公開プレビューや手元で動かすと確認作業のアクセスが混ざるため。data-event の付いた部品を押したら hp_click を送る（2026-11-21） -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    (function (w, d) {
+      if (/(^|\.)katasho\.jp$/.test(location.hostname)) {
+        w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var j = d.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MZC23TD';
+        var f = d.getElementsByTagName('script')[0];
+        f.parentNode.insertBefore(j, f);
+      }
+      d.addEventListener('click', function (e) {
+        var el = e.target && e.target.closest ? e.target.closest('a[data-event],button[data-event],summary[data-event],li[data-event],div[data-event]') : null;
+        if (!el) { return; }
+        w.dataLayer.push({ event: 'hp_click', click_id: el.getAttribute('data-event'), click_url: el.getAttribute('href') || '' });
+      }, true);
+    })(window, document);
+  </script>
+
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+
+        <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
+        <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261125f"/>
+        <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
+        <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
+
+        <script>
+          // Fix preventDefault for IE
+          (function () {
+            var workingDefaultPrevented = (function () {
+              var e = document.createEvent('CustomEvent')
+              e.initEvent('Bootstrap', true, true)
+              e.preventDefault()
+              return e.defaultPrevented
+            })()
+            if (!workingDefaultPrevented) {
+              var origPreventDefault = Event.prototype.preventDefault
+              Event.prototype.preventDefault = function () {
+                if (!this.cancelable) {
+                  return
+                }
+                origPreventDefault.call(this)
+                Object.defineProperty(this, 'defaultPrevented', {
+                  get: function () {
+                    return true
+                  },
+                  configurable: true
+                })
+              }
+            }
+          })()
+        </script>
+        <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\/script>');</script>
+
+        <title>持ち物と当日の流れ｜遊んで泊まれる小学校 カタショー</title>
+<link rel="alternate" hreflang="ja" href="/guide/" />
+<link rel="alternate" hreflang="x-default" href="/guide/" />
+
+	<meta name="description" content="ご予約のあとに読むページです。持ち物、駐車場、受付、夜と朝のこと、帰るとき、近くのお店をまとめました。" />
+	<meta name="robots" content="noindex,nofollow,noarchive" />
+	<link rel="canonical" href="https://katasho.jp/guide/" />
+		<meta property="og:locale" content="ja_JP" />
+		<meta property="og:site_name" content="遊んで泊まれる小学校 カタショー" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="持ち物と当日の流れ｜遊んで泊まれる小学校 カタショー" />
+		<meta property="og:description" content="ご予約のあとに読むページです。持ち物、駐車場、受付、夜と朝のこと、帰るとき、近くのお店をまとめました。" />
+		<meta property="og:url" content="https://katasho.jp/guide/" />
+		<meta property="og:image" content="https://ishiyamakazumi210-collab.github.io/assets/img/og/top.jpg" />
+		<meta property="og:image:secure_url" content="https://ishiyamakazumi210-collab.github.io/assets/img/og/top.jpg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="持ち物と当日の流れ｜遊んで泊まれる小学校 カタショー" />
+		<meta name="twitter:description" content="ご予約のあとに読むページです。持ち物、駐車場、受付、夜と朝のこと、帰るとき、近くのお店をまとめました。" />
+		<meta name="twitter:image" content="https://ishiyamakazumi210-collab.github.io/assets/img/og/top.jpg" />
+		<!-- 検索エンジン向けの情報（JSON-LD）。name は題名、パンくずは画面のパンくずと同じ名前。題名やパンくずを変えたらここも合わせる -->
+		<script type="application/ld+json">
+		{
+		  "@context": "https://schema.org",
+		  "@graph": [
+		    {
+		      "@type": "BreadcrumbList",
+		      "@id": "https://katasho.jp/guide/#breadcrumb",
+		      "itemListElement": [
+		        {
+		          "@type": "ListItem",
+		          "position": 1,
+		          "name": "トップ",
+		          "item": "https://katasho.jp/"
+		        },
+		        {
+		          "@type": "ListItem",
+		          "position": 2,
+		          "name": "持ち物と当日の流れ"
+		        }
+		      ]
+		    },
+		    {
+		      "@type": "WebPage",
+		      "@id": "https://katasho.jp/guide/#webpage",
+		      "url": "https://katasho.jp/guide/",
+		      "name": "持ち物と当日の流れ｜遊んで泊まれる小学校 カタショー",
+		      "inLanguage": "ja",
+		      "isPartOf": {
+		        "@id": "https://katasho.jp/#website"
+		      },
+		      "about": {
+		        "@id": "https://katasho.jp/#lodging"
+		      },
+		      "breadcrumb": {
+		        "@id": "https://katasho.jp/guide/#breadcrumb"
+		      }
+		    }
+		  ]
+		}
+		</script>
+
+<link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<link rel='stylesheet' id='sbi_styles-css' href='/assets/wp/plugins/instagram-feed/css/sbi-styles.min.css' media='all' />
+<style id="classic-theme-styles-inline-css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+
+<link rel='stylesheet' id='ctf_styles-css' href='/assets/wp/plugins/custom-twitter-feeds/css/ctf-styles.min.css' media='all' />
+<link rel='stylesheet' id='cff-css' href='/assets/wp/plugins/custom-facebook-feed/assets/css/cff-style.min.css' media='all' />
+<link rel='stylesheet' id='sb-font-awesome-css' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=7.0' media='all' />
+<link rel='stylesheet' id='wpml-legacy-horizontal-list-0-css' href='/assets/wp/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css' media='all' />
+<style id="wpml-legacy-horizontal-list-0-inline-css">
+.wpml-ls-statics-footer a, .wpml-ls-statics-footer .wpml-ls-sub-menu a, .wpml-ls-statics-footer .wpml-ls-sub-menu a:link, .wpml-ls-statics-footer li:not(.wpml-ls-current-language) .wpml-ls-link, .wpml-ls-statics-footer li:not(.wpml-ls-current-language) .wpml-ls-link:link {color:#444444;background-color:#ffffff;}.wpml-ls-statics-footer .wpml-ls-sub-menu a:hover,.wpml-ls-statics-footer .wpml-ls-sub-menu a:focus, .wpml-ls-statics-footer .wpml-ls-sub-menu a:link:hover, .wpml-ls-statics-footer .wpml-ls-sub-menu a:link:focus {color:#000000;background-color:#eeeeee;}.wpml-ls-statics-footer .wpml-ls-current-language > a {color:#444444;background-color:#ffffff;}.wpml-ls-statics-footer .wpml-ls-current-language:hover>a, .wpml-ls-statics-footer .wpml-ls-current-language>a:focus {color:#000000;background-color:#eeeeee;}
+/*# sourceURL=wpml-legacy-horizontal-list-0-inline-css */
+</style>
+
+<!-- Instagram Feed CSS -->
+<style type="text/css">
+#sb_instagram .sbi_no_js img{
+display: block !important;
+height: 17.5vw;
+}
+@media screen and (max-width: 800px){
+#sb_instagram .sbi_no_js img{
+height: 38vw;
+}
+}
+@media screen and (max-width: 480px){
+#sb_instagram .sbi_no_js img{
+height: 78vw;
+}
+}
+</style>
+<link rel="icon" href="/assets/wp/uploads/2023/09/cropped-校章映像用-32x32.png" sizes="32x32" />
+<link rel="icon" href="/assets/wp/uploads/2023/09/cropped-校章映像用-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/assets/wp/uploads/2023/09/cropped-校章映像用-180x180.png" />
+<meta name="msapplication-TileImage" content="/assets/wp/uploads/2023/09/cropped-校章映像用-270x270.png" />
+<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>
+
+<link rel="stylesheet" href="/static/local-preview.css">
+<script defer src="/static/local-preview.js"></script>
+<meta name="x-katasho-preview" content="new-page: 持ち物と当日の流れ">
+</head>
+    <body>
+
+        <div class="l-wrapper">
+            <header class="l-header navbar navbar-expand-lg bg-transparent py-3 p-sm-4" id="header">
+                <div class="l-header_inner container-fluid justify-content-center">
+                    <a class="l-header_logo navbar-brand" href="/">
+                        <img src="/assets/wp/themes/katasho/asset/image/logo_header.svg" alt="カタショーロゴ" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/logo_header.svg" alt="カタショーロゴ" decoding="async"/></noscript>
+                    </a>
+                    <div class="l-header_cont container-fluid">
+                        <div class="l-header_contLeft">
+                            <a class="top-v2-header-textlogo" href="/">
+                                <span class="top-v2-header-textlogo-sub">遊んで泊まれる小学校</span>
+                                <span class="top-v2-header-textlogo-main">カタショー</span>
+                            </a>
+                        </div>
+                        <div class="l-header_contRight">
+                            <div class="l-header_btn">
+                                <div class="l-header_sns top-v2-header-sns">
+                                <ul class="l-header_snsList list-unstyled mb-0">
+                                    <li><a href="https://twitter.com/katasho2tomaro" target="_blank">
+                                        <img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async"/></noscript>
+                                    </a></li>
+                                    <li><a href="https://www.instagram.com/shizuoka_katasho/" target="_blank">
+                                        <img src="/assets/wp/themes/katasho/asset/image/sns_instagram_header.svg" alt="Instagram" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/sns_instagram_header.svg" alt="Instagram" decoding="async"/></noscript>
+                                    </a></li>
+                                </ul>
+                            </div>
+                            <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="l-header_btnReserve btn btn-orange btn-sm me-5 u-pc" id="headerBtnReserve">
+                予約<span class="u-sm">（空き状況）</span>
+              </a>
+                                <button class="l-header_btnMenu" type="button" data-bs-toggle="offcanvas" data-bs-target="#headerNav" aria-controls="headerNav">
+                                    <picture>
+                                        <source media="(max-width: 576px)" srcset="/assets/wp/themes/katasho/asset/image/icon_menu_sp.svg"/>
+                                        <img src="/assets/wp/themes/katasho/asset/image/icon_menu.svg" alt="" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/icon_menu.svg" alt="" decoding="async"/></noscript>
+                                    </picture>
+<span class="l-header_btnMenuLabel">メニュー</span>
+                                </button>
+                            </div>
+                            <div class="l-header_btn--fixed" id="menuFixed">
+                                <button class="l-header_btnMenu" type="button" data-bs-toggle="offcanvas" data-bs-target="#headerNav" aria-controls="headerNav">
+                                    <picture>
+                                        <source media="(max-width: 576px)" srcset="/assets/wp/themes/katasho/asset/image/icon_menu_white_sp.svg"/>
+                                        <img src="/assets/wp/themes/katasho/asset/image/icon_menu_white.svg" alt="" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/icon_menu_white.svg" alt="" decoding="async"/></noscript>
+                                    </picture>
+<span class="l-header_btnMenuLabel">メニュー</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <nav class="l-nav offcanvas offcanvas-end" id="headerNav" tabindex="-1" aria-labelledby="headerNavLabel">
+                <div class="l-nav_header offcanvas-header">
+                    <button class="l-nav_headerBtn btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="メニューを閉じる">
+                        <img src="/assets/wp/themes/katasho/asset/image/icon_close.svg" alt="閉じる" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/icon_close.svg" alt="閉じる" decoding="async"/></noscript>
+                    </button>
+                  </div>
+                  <div class="l-nav_body offcanvas-body">
+                    <div class="l-nav_menu">
+                        <ul class="l-nav_menuList list-unstyled">
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/">トップ</a>
+                            </li>
+                            <li class="nav-item menu-item-has-children">
+                                <a class="l-nav_menuLink nav-link" href="/play/">学校で遊んで泊まる</a>
+                                <ul class="l-nav_menuSublist list-unstyled">
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/#catalog">あそび</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/#eat">たべる</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/#stay">とまる</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item menu-item-has-children">
+                                <a class="l-nav_menuLink nav-link" href="/#stay">誰と行く？</a>
+                                <ul class="l-nav_menuSublist list-unstyled">
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/friends/">卒業旅行・友達旅</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/family/">家族でわいわい</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/gasshuku/">サークル・ゼミ合宿</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/kenshu/">研修・会議</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item l-nav_menuDivider" aria-hidden="true"></li>
+                            <li class="nav-item menu-item-has-children">
+                                <a class="l-nav_menuLink nav-link" href="/play/option/">料金・オプション</a>
+                                <ul class="l-nav_menuSublist list-unstyled">
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/option/#price">料金</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/option/#food">食事</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/option/#play">遊び</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="l-nav_menuSublink nav-link" href="/play/option/#spa">温泉</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/map/">校内マップ</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/album/">クチコミ＆SNS</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/access/">アクセス</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/faq/">よくある質問</a>
+                            </li>
+                            <li class="nav-item l-nav_menuDivider" aria-hidden="true"></li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/about/">カタショーについて</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="l-nav_menuLink nav-link" href="/contact/">お問い合わせ</a>
+                            </li>
+                        </ul>
+                        <a class="l-nav_cta" href="https://www.489pro-x.com/ja/s/katasho/search/" data-event="nav_reserve">空き状況を見る →</a>
+                        <p class="l-nav_tel">お電話：<a href="tel:080-7890-0388" data-event="nav_tel">080-7890-0388</a><span class="l-nav_telhours">電話受付時間 9:00〜21:00</span></p>
+                        <div class="l-header_navSns">
+                            <ul class="l-header_snsList list-unstyled mb-0">
+                                <li><a href="https://twitter.com/katasho2tomaro" target="_blank">
+                                    <img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/image/sns_twitter_header.svg" alt="X" decoding="async"/></noscript>
+                                </a></li>
+                                <li><a href="https://www.instagram.com/shizuoka_katasho/" target="_blank">
+                                    <img src="/assets/wp/themes/katasho/asset/image/sns_instagram_header.svg" alt="Instagram" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/sns_instagram_header.svg" alt="Instagram" decoding="async"/></noscript>
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <main class="l-main top-v2-model-main">
+                <div class="l-main_inner pb-lg-5">
+
+<nav class="top-v2-breadcrumb" aria-label="パンくず"><a href="/">トップ</a><span>›</span><span aria-current="page">持ち物と当日の流れ</span></nav>
+
+<!-- 1. ヒーロー -->
+<section class="top-v2-scene-section" style="padding-top:0;" id="hero">
+  <div class="top-v2-scene-hero top-v2-map-hero-grid">
+    <div>
+      <h1 class="top-v2-scene-h1logo top-v2-scene-h1text"><span class="top-v2-scene-title-mark">持ち物と当日の流れ</span></h1>
+      <p class="top-v2-scene-lead">ご予約のあと、前の日の夜に読むページです。みなさんへのご連絡に、そのままお使いください。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 持ち物 -->
+<section class="top-v2-scene-section" id="items">
+  <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">1. 持ち物</span></h2>
+    <ul class="top-v2-stay-facts">
+      <li>パジャマ（お持ちください）</li>
+      <li>体育館を使うなら、体育館シューズ。お子さまサイズの履き物と外履きもお持ちください</li>
+      <li>用意してあるもの：バスタオル（1人1枚・泊まる日数分）・歯ブラシ・リンスインシャンプー・ボディーソープ・室内履き（上履きやスリッパ、22〜28cm）</li>
+      <li>BBQを持ち込むなら：食材・飲み物（お酒は20歳以上の方のみ）・調味料。コンロ・網・炭・トングは学校にあります（無料）</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. 着いたら -->
+<section class="top-v2-scene-section top-v2-scene-section--gray" id="arrive">
+  <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">2. 着いたら</span></h2>
+    <ul class="top-v2-stay-facts">
+      <li>チェックインは13:00から（給食つきは12:30から）</li>
+      <li>車：泊まる方は第3・第4駐車場（グラウンド側）がおすすめ。荷物が多いときは、建物に近い第1・第2駐車場も使えます</li>
+      <li>受付は職員室</li>
+      <li>お支払いは、チェックインのときに、まとめて現金で（カード・QRは使えません）。事前の振込は相談。1人ずつの精算はできません</li>
+      <li>遅れるときは、<a href="tel:080-7890-0388" data-event="guide_tel_late">080-7890-0388</a> へお電話ください</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. 泊まっているあいだ -->
+<section class="top-v2-scene-section" id="stay">
+  <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">3. 泊まっているあいだ</span></h2>
+    <ul class="top-v2-stay-facts">
+      <li>布団は、お客さまに敷いていただきます（シーツ・カバーはセットしてあります。連泊のときは替えません）</li>
+      <li>屋外（BBQ・花火・焚き火・屋上）は22:00まで。部屋の中は時間の決まりなし（廊下や屋外で叫ぶこと、大音量の音楽はお控えください）</li>
+      <li>少人数プランの食堂の宴会・カラオケは、時間の決まりなし。カラオケのときは窓を閉めてください</li>
+      <li>夜の施錠は22時以降。夜中に困ったら、お電話（LINE電話も可）でスタッフがうかがいます</li>
+      <li>ゴミは備え付けのゴミ箱へ</li>
+      <li>朝食サンドイッチは、夕食のときに冷蔵庫に入れておきます。好きな時間に食べてください</li>
+      <li>タバコは喫煙所（職員室横の外）で</li>
+      <li>シャワーは、グループごとの時間の中で、男女の分け方はおまかせ（鍵つき個室3つを女性に、または時間で分けるのがおすすめ）</li>
+      <li>持ってきたドライヤーをシャワー室で使うとブレーカーが落ちることがあります（ドライヤーは宿泊部屋にあります）</li>
+      <li>Wi-Fi は校舎全体で使えます</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5. 帰るとき -->
+<section class="top-v2-scene-section top-v2-scene-section--gray" id="leave">
+  <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">4. 帰るとき</span></h2>
+    <ul class="top-v2-stay-facts">
+      <li>チェックアウトは10:00まで</li>
+      <li>持ち込んだ食事のお皿は洗ってください。それ以外の片付けはスタッフがします（片付けてから出る必要はありません）</li>
+      <li>忘れ物はお預かりします。ご連絡ください</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6. 近くのお店・もしものとき -->
+<section class="top-v2-scene-section" id="nearby">
+  <div class="top-v2-scene-inner top-v2-scene-inner--narrow">
+    <h2 class="top-v2-scene-title"><span class="top-v2-scene-title-mark">5. 近くのお店・もしものとき</span></h2>
+    <ul class="top-v2-stay-facts">
+      <li>スーパーマーケットバロー静波店：10:00〜20:00（土日は9:30から）・火曜定休</li>
+      <li>クスリのアオキ静波店：9:00〜22:00</li>
+      <li>ウエルシア牧之原静波店：8:00〜24:00</li>
+      <li>営業時間は変わることがあります。</li>
+      <li>大きい病院：榛原総合病院（車で15分くらい）</li>
+      <li>地震・津波：カタショーの建物は地域の避難先です。建物の3階以上へ上がってください</li>
+      <li>電話：<a href="tel:080-7890-0388" data-event="guide_tel">080-7890-0388</a>（電話受付時間 9:00〜21:00）</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 7. 解決しないときは -->
+<section class="top-v2-scene-section top-v2-scene-section--gray" id="more-help">
+  <div class="top-v2-scene-inner top-v2-scene-inner--narrow top-v2-morehelp">
+    <h2 class="top-v2-morehelp-title">ほかに知りたいことは</h2>
+    <p class="top-v2-morehelp-text">ここにないことは、<a class="top-v2-inline-link" href="/faq/">よくある質問</a>か、お気軽にご相談ください。</p>
+    <p class="top-v2-morehelp-btn"><a class="top-v2-btn-outline" href="/contact/" data-event="guide_contact_form">フォームで問い合わせる</a></p>
+    <p class="top-v2-morehelp-tel"><a href="tel:080-7890-0388" data-event="guide_contact_tel">電話で問い合わせる 080-7890-0388</a>（電話受付時間 9:00〜21:00）</p>
+  </div>
+</section>
+
+                </div>
+            </main>
+            <footer class="l-footer text-white py-5" id="footer">
+                <div class="l-footer_inner container">
+                    <div class="row">
+                        <div class="col-lg-8 mb-3 mb-lg-0">
+                            <div class="l-footer_info">
+                                <div class="l-footer_logo"><a href="/"><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="カタショー" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/logo_footer.svg" alt="カタショー" decoding="async"/></noscript></a></div>
+                                <div class="l-footer_name">
+                                    <p class="mb-0 fw-bold">遊んで泊まれる小学校　カタショー</p>
+                                </div>
+                                <div class="l-footer_address">
+                                    <p class="mb-0">静岡県牧之原市片浜1216-1</p>
+                                    <p class="mb-0">カタショー・ワンラボ内</p>
+                                    <p class="mb-0 l-footer_tel"><a href="tel:080-7890-0388" data-event="footer_tel">080-7890-0388</a><span class="l-footer_telhours">（電話受付時間 9:00〜21:00）</span></p>
+                                </div>
+                            </div>
+                            <div class="l-footer_contact">
+                                <div class="l-footer_sns">
+                                    <div class="l-footer_snsTitle"><img src="/assets/wp/themes/katasho/asset/image/text_followus.svg" alt="FOLLOW US" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/text_followus.svg" alt="FOLLOW US" decoding="async"/></noscript>
+                                    </div>
+                                    <ul class="l-footer_snsList list-unstyled mb-0">
+                                        <li><a href="https://twitter.com/katasho2tomaro" target="_blank"><img src="/assets/img/sns-x-footer-2026.svg" alt="X" decoding="async" /><noscript><img src="/assets/img/sns-x-footer-2026.svg" alt="X" decoding="async"/></noscript></a></li>
+                                        <li><a href="https://www.instagram.com/shizuoka_katasho/" target="_blank"><img src="/assets/wp/themes/katasho/asset/image/sns_instagram.svg" alt="Instagram" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/sns_instagram.svg" alt="Instagram" decoding="async"/></noscript></a></li>
+                                    </ul>
+                                </div>
+                                <div class="l-footer_contact"><a class="btn btn-outline-white" id="footerBtnContact" href="/contact/">お問い合わせ</a></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 d-flex">
+                            <div class="l-footer_copy">
+                                <p class="text-center text-lg-end mb-1"><small><a href="/privacy/">プライバシーポリシー</a></small></p>
+                                <p class="text-center text-lg-end mb-0"><small>&copy; 2021-2026 <a href="https://makilabo.jp/" target="_blank" rel="noopener">株式会社マキノハラボ</a></small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="l-footer_reserve" id="reserveFixed">
+                    <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="l-footer_reserveLink" id="footerBtnReserve">
+                      <div class="l-footer_reserveBtn">
+                        <picture>
+                          <source media="(max-width: 991px)" srcset="/assets/wp/themes/katasho/asset/image/btn_reserve_sp.svg"/>
+                          <img src="/assets/wp/themes/katasho/asset/image/btn_reserve.svg" alt="予約（空き状況）" decoding="async" /><noscript><img src="/assets/wp/themes/katasho/asset/image/btn_reserve.svg" alt="予約（空き状況）" decoding="async"/></noscript>
+                        </picture>
+                      </div>
+                      <div class="l-footer_reserveImage u-pc"><img src="/assets/wp/themes/katasho/asset/image/btn_reserve_image.png" alt="" decoding="async" loading="lazy" /><noscript><img src="/assets/wp/themes/katasho/asset/image/btn_reserve_image.png" alt="" decoding="async"/></noscript>
+                      </div>
+                    </a>
+                  </div>
+                <!-- スマホの予約バー（2026-11-21）。CSSは top-v2.css 末尾、出し入れと「いまの計算」の表示は reserve-bar.js -->
+                <div class="reserve-bar" id="reserveBar" role="region" aria-label="予約のご案内">
+                  <p class="reserve-bar-text"><span class="reserve-bar-label" id="reserveBarLabel" hidden></span><span class="reserve-bar-main" id="reserveBarMain">1人 7,900円〜</span><span class="reserve-bar-cond" id="reserveBarCond">※平日・少人数プラン</span></p>
+                  <a href="https://www.489pro-x.com/ja/s/katasho/search/" class="btn btn-orange reserve-bar-cta" data-event="bar_reserve">空き状況を見る</a>
+                </div>
+                <script src="/assets/js/reserve-bar.js?v=20261125a" defer></script>
+            </footer>
+        </div>
+
+        <script src="/assets/wp/themes/katasho/asset/js/bundle.js" async></script>
+
+    </body>
+</html>

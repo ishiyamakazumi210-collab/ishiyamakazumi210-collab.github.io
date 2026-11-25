@@ -332,11 +332,11 @@
     if (o.beer.kegs > 0) {
       res.options.push({ label: OPT.beer.name, detail: o.beer.kegs + '樽×' + fmt(OPT.beer.price), amount: o.beer.kegs * OPT.beer.price, group: OPT.beer.group });
     }
-    // 少人数プランは追加部屋1部屋まで。無料の条件は合計人数（おとな＋小学生＋3〜5歳＋2歳以下＝totalPeople。少人数プランの上限判定と同じ数）：
-    // スタンダードは26名以上で1部屋無料、少人数は16名以上で無料（15名以下は5,000円）。合計に入れる（2026-11-25 オーナー決定）
+    // 少人数プランは追加部屋1部屋まで。スタンダードは26名以上で1部屋無料、少人数は16名以上で無料（15名以下は5,000円）。合計に入れる（2026-11-25 オーナー決定）
+    // 無料の人数に、添い寝の0〜2歳は数えない（2026-11-25 オーナー決定）。おとな＋小学生＋3〜5歳＝payers で数える
     var roomCount = compact ? Math.min(o.room.rooms, OPT.room.fields[0].compactMax) : o.room.rooms;
     if (roomCount > 0) {
-      var roomFree = compact ? (totalPeople >= 16 ? 1 : 0) : (totalPeople >= 26 ? 1 : 0);
+      var roomFree = compact ? (payers >= 16 ? 1 : 0) : (payers >= 26 ? 1 : 0);
       var roomPaid = Math.max(0, roomCount - roomFree);
       res.options.push({
         label: OPT.room.name + '（追加' + roomCount + '部屋）',
