@@ -15027,3 +15027,13 @@ input.top-v2-chalk-countinput:focus-visible {
   background-position: 50% 50%;
   background-size: 88% 82%;
 }
+
+/* よくある質問の答えの中の表（キャンセル料、2026-11-26）。
+   パソコンで横に広がりすぎないよう幅をおさえ、表のあとの1文との間をあける */
+.faq_body .top-v2-formal-tablewrap {
+  max-width: 480px;
+  margin-bottom: 16px;
+}
+.faq_body .top-v2-formal-table thead th:first-child {
+  text-align: left;
+}
