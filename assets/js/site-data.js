@@ -176,7 +176,7 @@ window.KATASHO_DATA = {
       "alt": "理科室の骸骨模型"
     },
     "darts": {
-      "src": "/assets/img/play-cards/darts.jpg",
+      "src": "/assets/img/play-cards-2026/darts-2026.jpg",
       "alt": ""
     },
     "basketballGym": {

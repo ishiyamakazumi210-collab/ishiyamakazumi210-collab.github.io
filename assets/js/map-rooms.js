@@ -121,7 +121,7 @@
       sub: '5年教室', body: CLASSROOM_BODY, photo: '/assets/img/rooms-2026/kyoshitsu2.jpg', alt: '木の机と椅子が並ぶ教室' },
     n2f3: {
       name: '北棟宿泊部屋③',
-      sub: '児童会室',
+      sub: '2階の中部屋・児童会室',
       capacity: capacityText('n2f3'),
       chips: stayChips('二段ベッド6台'),
       note: STANDARD_STAY_NOTE,
@@ -161,7 +161,7 @@
     ongaku: { name: '音楽室', chips: ['グランドピアノ'], body: '合唱やバンド練習はこちらで。', note: '大きな音が出る楽器は、基本的に21:00までです。', photo: '/assets/img/rooms-2026/ongaku.jpg', alt: '板張りの広い部屋にグランドピアノと黒板がある音楽室' },
     n3f2: {
       name: '北棟宿泊部屋②',
-      sub: '前室つき・音楽準備室',
+      sub: '3階の小部屋・音楽準備室・前室つき',
       capacity: capacityText('n3f2'),
       chips: stayChips('二段ベッド4台'),
       note: STANDARD_STAY_NOTE,
@@ -170,7 +170,7 @@
     },
     n3f1: {
       name: '北棟宿泊部屋①',
-      sub: 'パソコン室',
+      sub: '特大部屋・パソコン室',
       capacity: capacityText('n3f1'),
       chips: stayChips('布団で就寝'),
       note: STANDARD_STAY_NOTE,

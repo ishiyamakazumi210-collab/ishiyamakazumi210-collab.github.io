@@ -14287,19 +14287,67 @@ details.faq[id] { scroll-margin-top: 96px; }
 
 /* 2026-11-25 料金計算：ハイシーズンの期間を、ボタンのすぐ下にいつも見える1行で（ⓘから出した）。
    人物シミュレーションで、ハイシーズンの平日に泊まる人の多くが「平日」のまま見積もったため */
+/* 2026-11-26 長い1文（結論・期間・例外）が5行に折れて読みにくかったので、見出し1行＋期間の札4つ＋小さな注に分けた。期間はいつも見えるまま */
 .top-v2-season-note {
-  max-width: 34em;
-  margin: -6px auto 12px;
-  padding: 0 4px;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.6;
+  /* トップと料金オプションでは、親がPCで横並び（flex）。1行ぶんを丸ごと使い、中央に置く */
+  flex: 0 0 100%;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 30em;
+  margin: 2px auto 14px;
+  padding: 10px 10px 9px;
+  background: #fff8e8;
+  border-radius: 10px;
   color: #4e4538;
   text-align: center;
-  text-wrap: pretty;
 }
-@media (max-width: 767px) {
-  .top-v2-season-note { font-size: 12.5px; text-align: left; }
+.top-v2-season-note-head {
+  margin: 0 0 7px;
+  color: #2f7890;
+  font-size: 13.5px;
+  font-weight: 900;
+  line-height: 1.4;
+}
+.top-v2-season-note-dates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.top-v2-season-note-dates li {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  padding: 5px 4px;
+  background: #fff;
+  border: 1px solid #ead8b5;
+  border-radius: 999px;
+  color: #4e4538;
+  flex-wrap: wrap;
+  align-content: center;
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+/* 枠がせまいとき（料金オプションの小さい画面など）は、名前と日付を2行に分ける。どちらも途中では切らない */
+.top-v2-season-note-dates li b { color: #c8642a; font-weight: 900; white-space: nowrap; }
+.top-v2-season-note-dates li span { white-space: nowrap; }
+.top-v2-season-note-sub {
+  margin: 7px 0 0;
+  color: #665a4a;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+/* トップと料金オプションのPCでは、親が6列のグリッド。全部の列を使って中央に置く */
+.top-v2-price-simulator-controls > .top-v2-season-note { grid-column: 1 / -1; justify-self: center; }
+@media (max-width: 374px) {
+  .top-v2-season-note { padding-left: 8px; padding-right: 8px; }
+  .top-v2-season-note-dates li { gap: 4px; padding-left: 3px; padding-right: 3px; font-size: 12px; }
 }
 /* 黒板の中：平日を選んでいるあいだだけ出す「夏休み・春休み・GW・年末年始は、平日も ◯円〜」 */
 .top-v2-chalkboard--art .top-v2-chalk-sub .top-v2-chalk-season-hint {
@@ -15117,4 +15165,57 @@ input.top-v2-chalk-countinput:focus-visible {
 /* 375px未満：「チェックアウト：翌10:00まで」が2行に割れないよう、ご利用時間の枠の字を少しだけ小さく（トップ・遊び共通） */
 @media (max-width: 374px) {
   .top-v2-home-staytime .l-stay_infoTitle { font-size: 18px; }
+}
+
+/* 2026-11-26 スタンダードプランの「分けたいとき」：中部屋・小部屋の階と人数は、泊まる棟で違う（北棟の中部屋だけ2階）。
+   図から部屋の箱を外し、南棟・北棟の小さな表にした（partials/room-split-table.html。遊び・家族・友達・料金オプションのダイアログ） */
+.top-v2-roomsplit { margin: 2px 0 12px; }
+.top-v2-roomsplit-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border: 2px solid #2f7890;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 13px;
+  table-layout: fixed;
+}
+.top-v2-roomsplit-table th,
+.top-v2-roomsplit-table td {
+  padding: 7px 6px;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid rgba(47, 120, 144, 0.2);
+}
+.top-v2-roomsplit-table thead th {
+  border-top: 0;
+  background: #2f7890;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 900;
+}
+.top-v2-roomsplit-table thead th:first-child { width: 18%; }
+.top-v2-roomsplit-table tbody th { color: #2f7890; font-weight: 900; }
+.top-v2-roomsplit-table td b {
+  display: block;
+  color: #4e4538;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+.top-v2-roomsplit-table td b.top-v2-roomsplit-floor--other { color: #c8642a; }
+.top-v2-roomsplit-table td > span {
+  display: block;
+  color: #665a4a;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+.top-v2-roomsplit-note {
+  margin: 8px 2px 0;
+  color: #4e4538;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6;
 }
