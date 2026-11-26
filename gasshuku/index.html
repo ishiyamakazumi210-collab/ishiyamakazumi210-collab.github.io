@@ -32,7 +32,7 @@
                 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261126a"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261126b"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -422,7 +422,7 @@ height: 78vw;
     <p class="top-v2-scene-lead">モデルコースの一例です。ぜんぶ入れ替え自由。</p>
     <div class="top-v2-schedule-grid">
     <ul class="top-v2-timeline">
-      <li class="top-v2-timeline-item">
+      <li class="top-v2-timeline-item" data-snap="1">
         <div class="top-v2-timeline-time">12:30</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">登校</span>
@@ -430,7 +430,7 @@ height: 78vw;
           <p>教室に集合、まずは記念撮影</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item">
+      <li class="top-v2-timeline-item" data-snap="2">
         <div class="top-v2-timeline-time">13:00</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">給食</span>
@@ -438,7 +438,7 @@ height: 78vw;
           <p>全員で学校給食スタート</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item">
+      <li class="top-v2-timeline-item" data-snap="3">
         <div class="top-v2-timeline-time">14:00</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">体育</span>
@@ -446,7 +446,7 @@ height: 78vw;
           <p>準備運動がわりに、大人数で体を動かします</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item" data-snap-band="day">
+      <li class="top-v2-timeline-item" data-snap="4">
         <div class="top-v2-timeline-time">15:30</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">運動会</span>
@@ -454,7 +454,7 @@ height: 78vw;
           <p>大玉転がし・チーム対抗リレー・台風の目</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item" data-snap-band="evening">
+      <li class="top-v2-timeline-item" data-snap="5">
         <div class="top-v2-timeline-time">17:30</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">夕食</span>
@@ -463,7 +463,7 @@ height: 78vw;
         </div>
       </li>
       <li class="top-v2-timeline-divider" aria-hidden="true"><span class="top-v2-moon"></span>ここから、夜の交流</li>
-      <li class="top-v2-timeline-item top-v2-timeline-item--night">
+      <li class="top-v2-timeline-item top-v2-timeline-item--night" data-snap="6">
         <div class="top-v2-timeline-time">19:30</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">夜の交流</span>
@@ -471,7 +471,7 @@ height: 78vw;
           <p>大画面で映画や試合観戦も</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item top-v2-timeline-item--night" data-snap-band="night">
+      <li class="top-v2-timeline-item top-v2-timeline-item--night" data-snap="7">
         <div class="top-v2-timeline-time">21:30</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">自由時間</span>
@@ -480,7 +480,7 @@ height: 78vw;
         </div>
       </li>
       <li class="top-v2-timeline-divider" aria-hidden="true"><span class="top-v2-sun"></span>あっという間に、朝</li>
-      <li class="top-v2-timeline-item" data-snap-band="morning">
+      <li class="top-v2-timeline-item" data-snap="8">
         <div class="top-v2-timeline-time">翌朝</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">朝</span>
@@ -488,7 +488,7 @@ height: 78vw;
           <p>地元で人気のサンドイッチ屋さん</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item">
+      <li class="top-v2-timeline-item" data-snap="9">
         <div class="top-v2-timeline-time">10:00</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">下校</span>
@@ -496,7 +496,7 @@ height: 78vw;
           <p>片付けもスタッフにおまかせ</p>
         </div>
       </li>
-      <li class="top-v2-timeline-item">
+      <li class="top-v2-timeline-item" data-snap="10">
         <div class="top-v2-timeline-time">その後</div>
         <div class="top-v2-timeline-body">
           <span class="top-v2-timeline-label">寄り道</span>
@@ -505,11 +505,17 @@ height: 78vw;
         </div>
       </li>
     </ul>
-    <div class="top-v2-schedule-snaps" aria-hidden="true">
-      <figure class="top-v2-schedule-snap is-active" data-band="day"><img src="/assets/img/people-2026/gasshuku-tug-2026.jpg" alt="" loading="lazy"><figcaption>ひるは、ミニ運動会</figcaption></figure>
-      <figure class="top-v2-schedule-snap" data-band="evening"><img src="/assets/img/bbq-platter.jpg" alt="" loading="lazy"><figcaption>夕方、提供型BBQ</figcaption></figure>
-      <figure class="top-v2-schedule-snap" data-band="night"><img src="/assets/img/drinks-lineup.jpg" alt="" loading="lazy"><figcaption>夜は、特大部屋で宴会</figcaption></figure>
-      <figure class="top-v2-schedule-snap" data-band="morning"><img src="/assets/img/room-futon-real.jpg" alt="" loading="lazy"><figcaption>あさ、特大部屋で</figcaption></figure>
+    <div class="top-v2-schedule-snaps top-v2-schedule-snaps--rows" aria-hidden="true">
+      <figure class="top-v2-schedule-snap is-active" data-snap="1"><img src="/assets/img/schedule-snaps/kinen-satsuei.jpg" alt="" width="720" height="540" loading="lazy"><figcaption>まずは、教室で記念撮影</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="2"><img src="/assets/img/schedule-snaps/eat-kyushoku.jpg" alt="" width="720" height="480" loading="lazy"><figcaption>全員で、給食スタート</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="3"><img src="/assets/img/schedule-snaps/gasshuku-tug.jpg" alt="" width="720" height="480" loading="lazy"><figcaption>体育館で、全力の綱引き</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="4"><img src="/assets/img/schedule-snaps/grounds.jpg" alt="" width="720" height="480" loading="lazy"><figcaption>運動会は、芝生のグラウンドで</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="5"><img src="/assets/img/schedule-snaps/bbq-platter.jpg" alt="" width="720" height="540" loading="lazy"><figcaption>夕方、提供型BBQ</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="6"><img src="/assets/img/schedule-snaps/big-screen-game.jpg" alt="" width="480" height="360" loading="lazy"><figcaption>大画面で、ゲーム大会</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="7"><img src="/assets/img/schedule-snaps/enkai-oobeya.jpg" alt="" width="720" height="540" loading="lazy"><figcaption>特大部屋で、宴会</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="8"><img src="/assets/img/schedule-snaps/sando.jpg" alt="" width="720" height="480" loading="lazy"><figcaption>朝は、サンドイッチ</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="9"><img src="/assets/img/schedule-snaps/university-friends.jpg" alt="" width="720" height="480" loading="lazy"><figcaption>最後に、校舎の前で集合写真</figcaption></figure>
+      <figure class="top-v2-schedule-snap" data-snap="10"><img src="/assets/img/schedule-snaps/onsen.jpg" alt="" width="720" height="472" loading="lazy"><figcaption>温泉で、ゆっくり</figcaption></figure>
     </div>
     </div>
     <p class="top-v2-timeline-note">※時間は一例です。人数やプランに合わせてスタッフがご案内します。</p>
@@ -799,21 +805,13 @@ height: 78vw;
 
 <script>
 (function () {
-  var items = document.querySelectorAll('.top-v2-timeline-item');
-  var snaps = document.querySelectorAll('.top-v2-schedule-snap');
+  // 時間割：画面のまん中あたりの行に合わせて、カードを1枚ずつ替える（行とカードは data-snap の番号でつなぐ）
+  var items = document.querySelectorAll('.top-v2-timeline-item[data-snap]');
+  var snaps = document.querySelectorAll('.top-v2-schedule-snap[data-snap]');
   if (!items.length || !snaps.length || !('IntersectionObserver' in window)) { return; }
-  var anchors = [];
-  items.forEach(function (item, index) {
-    if (item.dataset.snapBand) { anchors.push({ index: index, band: item.dataset.snapBand }); }
-  });
-  var bandOf = function (i) {
-    var band = snaps[0].dataset.band;
-    anchors.forEach(function (anchor) { if (anchor.index <= i) { band = anchor.band; } });
-    return band;
-  };
   var visible = new Set();
-  var setActive = function (band) {
-    snaps.forEach(function (s) { s.classList.toggle('is-active', s.dataset.band === band); });
+  var setActive = function (key) {
+    snaps.forEach(function (s) { s.classList.toggle('is-active', s.dataset.snap === key); });
   };
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
@@ -821,8 +819,8 @@ height: 78vw;
       if (entry.isIntersecting) { visible.add(idx); } else { visible.delete(idx); }
     });
     if (visible.size) {
-      var mid = Array.from(visible).sort(function (a, b) { return a - b; });
-      setActive(bandOf(mid[Math.floor(mid.length / 2)]));
+      var list = Array.from(visible).sort(function (a, b) { return a - b; });
+      setActive(items[list[Math.floor(list.length / 2)]].dataset.snap);
     }
   }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
   items.forEach(function (item) { observer.observe(item); });
