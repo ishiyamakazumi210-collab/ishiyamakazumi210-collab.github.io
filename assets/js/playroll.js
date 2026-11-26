@@ -329,7 +329,8 @@
       states.forEach(function (state) {
         if (state.dragging) { return; } // 指が触れている間はpointermoveが直接動かす
         var speed = state.scrollBoost;
-        if (!state.hovered) { speed += state.baseSpeed; }
+        // 2026-11-26 カードの詳しい窓（playroll-detail.js）が開いている間は、自走を止める
+        if (!state.hovered && !document.body.classList.contains('top-v2-playdialog-lock')) { speed += state.baseSpeed; }
         state.offset += state.dir * speed * dt;
         // ドラッグ解放後の惰性（方向つき）。減衰しながら自走に溶ける
         if (state.momentum !== 0) {

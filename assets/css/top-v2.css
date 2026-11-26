@@ -11543,6 +11543,7 @@ body.top-v2-sim-page .l-footer_reserve { display: none; }
 .top-v2-playcard-chalk,
 .top-v2-catalog-numbox .top-v2-catalog-chalk {
   word-break: auto-phrase;
+  --bx-ws: nowrap; /* Safari：文節の中で改行しない（phrase-spans） */
 }
 @media (min-width: 992px) {
   /* サイト共通の固定メニューボタン(右上・高さ約90px)と重ならないよう、追従位置を下げる */
@@ -11989,7 +11990,7 @@ main:has(#catalog) .l-main_inner,
    語中でも折り返せるようにする（2行まで収まるサイズ） */
 .top-v2-playcard-chalk,
 .top-v2-catalog-numbox .top-v2-catalog-chalk {
-  word-break: normal;
+  word-break: normal; --bx-ws: initial;
   overflow-wrap: anywhere;
   line-break: strict;
   max-width: 100%;
@@ -12231,6 +12232,15 @@ main summary {
   text-wrap: pretty;
   word-break: auto-phrase;
 }
+/* Safari で文節の中で改行しないのは、短い文（質問・ボタン・リード・見出し・札）だけ（phrase-spans）。
+   長い本文は文節の境目で字の詰め（カーニング）が少しゆるむので、今までどおりの折り返しにする */
+main summary,
+.top-v2-faq-count,
+.top-v2-faq-all,
+main .top-v2-btn-outline,
+main .btn {
+  --bx-ws: nowrap;
+}
 .top-v2-scene-lead,
 .top-v2-playroll-lead,
 .top-v2-mapsec-lead,
@@ -12246,11 +12256,13 @@ main summary {
 main figcaption {
   text-wrap: balance;
   word-break: auto-phrase;
+  --bx-ws: nowrap; /* Safari：文節の中で改行しない（phrase-spans） */
 }
 /* 見出しはTOP(#usagescene)を除外。:has非対応ブラウザで上のルールごと無効化されないよう別ルールにしている */
 .l-main:not(:has(#usagescene)) :is(h2.top-v2-scene-title, .top-v2-scene-finalcta h2, h3, h4) {
   text-wrap: balance;
   word-break: auto-phrase;
+  --bx-ws: nowrap; /* Safari：文節の中で改行しない（phrase-spans） */
 }
 
 /* B2: 12px未満の文字を12px以上へ（▼矢印・No.xx番号などの純装飾は対象外） */
@@ -14120,7 +14132,7 @@ main small {
 }
 @media (max-width: 374.98px) {
   /* オプション名：行いっぱいに置き、ふつうの改行に（auto-phrase だと「部／屋分け」や枠外はみ出しが起きる） */
-  .l-main #sim-form .top-v2-sim-opt .top-v2-sim-opt-name { flex: 1 1 100%; font-size: 15px; word-break: normal; text-wrap: wrap; }
+  .l-main #sim-form .top-v2-sim-opt .top-v2-sim-opt-name { flex: 1 1 100%; font-size: 15px; word-break: normal; --bx-ws: initial; text-wrap: wrap; }
   .l-main #sim-form .top-v2-sim-opt .top-v2-sim-opt-title { flex: 1 1 100%; }
 }
 /* ==========================================================================
@@ -14191,6 +14203,9 @@ footer#footer.l-footer { padding-bottom: 20px !important; }
   html:has(> body:not(.sample-cro):not(.top-v2-sim-page)) { background-color: #fff; } /* 画面の上下の引っぱり（iOS）では白のまま */
   body:not(.sample-cro):not(.top-v2-sim-page) { background-color: #006d88; }
   body:not(.sample-cro):not(.top-v2-sim-page) .l-wrapper { background-color: #fff; }
+  /* 2026-11-26 上の白い背景（.l-wrapper）の裏に、トップの最後の登り棒の絵（.l-main_bg、z-index:-1）が隠れて、場所だけ空白になっていた。
+     絵を背景より手前へ。絵の下の端は .l-main の overflow で、これまでどおりフッターの上端で切れる */
+  .l-main_bg { z-index: 0; }
 }
 /* V14 PC右下の人物の予約ボタン（「予約する人、この指、と〜まれっ!」）：1280px前後でカードの右端・帯・フッターの著作権表示に重なる
    → 1439pxまでは小さく（129→88px）右へ寄せる（right 40→12px）。フッターの右寄せの文字は、ボタンの分だけ左へ逃がす。1440px以上は今のまま */
@@ -14223,7 +14238,7 @@ footer#footer.l-footer { padding-bottom: 20px !important; }
    ・校歌の横スクロール枠の左端で文字が切れて見える → 左端をぼかして「続きがある」と分かる見せ方に
    ・PC：最後の「空き状況を見る」と「遊びをぜんぶ見る」の高さと上端がずれる → 上端と高さをそろえる */
 @media (max-width: 767px) {
-  .top-v2-about-story-card p:not(.top-v2-about-story-emphasis) { word-break: normal; overflow-wrap: anywhere; text-wrap: pretty; }
+  .top-v2-about-story-card p:not(.top-v2-about-story-emphasis) { word-break: normal; --bx-ws: initial; overflow-wrap: anywhere; text-wrap: pretty; }
   #song .top-v2-about-center { text-wrap: pretty; }
   .top-v2-about-song-scroll {
     -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px);
@@ -15219,3 +15234,85 @@ input.top-v2-chalk-countinput:focus-visible {
   font-weight: 700;
   line-height: 1.6;
 }
+
+/* 2026-11-26 メニューの「×」：細い線（1px）を半透明（Bootstrap の .btn-close の opacity .5）で描いていて見づらかった。
+   開くボタン（右上の青緑の四角「メニュー」）と同じ場所・同じ大きさ・同じ色の四角に、白い太い×と「とじる」 */
+.l-nav .l-nav_header { padding: 0; }
+.l-nav button.l-nav_headerBtn.btn-close {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  width: 70px;
+  height: auto;
+  min-height: 44px;
+  margin: 0 0 0 auto;
+  padding: 8px 10px;
+  background: #006d88;
+  border-radius: 0;
+  opacity: 1;
+  color: #fff;
+}
+.l-nav button.l-nav_headerBtn.btn-close:hover { opacity: 1; }
+.l-nav_closeMark { position: relative; display: block; width: 6.13333vw; height: 6.13333vw; }
+.l-nav_closeMark::before,
+.l-nav_closeMark::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120%;
+  height: 3px;
+  border-radius: 2px;
+  background: #fff;
+}
+.l-nav_closeMark::before { transform: translate(-50%, -50%) rotate(45deg); }
+.l-nav_closeMark::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.l-nav_closeLabel {
+  display: block;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+@media (min-width: 576px) {
+  .l-nav button.l-nav_headerBtn.btn-close { width: 117px; height: 98px; padding: 22px 26px; gap: 8px; }
+  .l-nav_closeMark { width: 34px; height: 34px; }
+}
+
+/* 2026-11-26 トップの遊びのカードを押すと、遊びのページと同じ詳しい窓（.top-v2-playdialog--top）が開く */
+.top-v2-playroll .top-v2-playcard { cursor: pointer; }
+.top-v2-playdialog-more { margin: 12px 0 0; text-align: center; font-size: 14px; font-weight: 800; }
+/* 詳しい窓の札：「道具」などの見出しが「道／具」と2行に割れないように（遊びのページも） */
+.top-v2-playdialog-chip-label { flex-shrink: 0; white-space: nowrap; }
+
+/* ===================================================================
+   2026-11-26 iPhone（Safari）でも「言葉の切れ目」で改行する
+   Chrome は word-break:auto-phrase で文節ごとに改行するが、Safari は対応していないので、
+   ビルド（scripts/phrase-spans.mjs）で文節を <bx-p> で包んである。auto-phrase を指定した所だけ
+   --bx-ws:nowrap を立て（上の各ルール）、対応しないブラウザでだけ文節の中で改行しないようにする。
+   --bx-ws が無い所（initial を含む）は white-space を親から受け継ぐ＝今までどおり。
+   あわせて Safari の text-wrap:pretty は段落全体を短くそろえて右が空くので、本文はふつうの折り返しに。
+   =================================================================== */
+bx-w, bx-p { display: inline; }
+/* 体育館の注など、長い注意書きは文節で止めない */
+.top-v2-timeline-note { --bx-ws: initial; }
+@supports not (word-break: auto-phrase) {
+  bx-p { white-space: var(--bx-ws); }
+  main p, main li, main dd, main summary { text-wrap: wrap; }
+}
+
+/* 2026-11-26 読む文（答え・注意書き）の行間を1.8前後にそろえる。見出し・質問・ボタン・黒板の数字は今のまま */
+.faq_body { line-height: 1.8; }
+.top-v2-timeline-note,
+.top-v2-chalk-menu-note,
+.top-v2-menu-catch,
+.top-v2-catalog-note,
+.top-v2-sim-card-points { line-height: 1.75; }
+.top-v2-faq-count { line-height: 1.7; }
+.top-v2-teacher-note .top-v2-price-notes li { line-height: 1.8; }
+
