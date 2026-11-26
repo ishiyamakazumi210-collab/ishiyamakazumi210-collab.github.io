@@ -58,6 +58,12 @@ html.top-hero-opening-on #mv .top-hero-bug { animation: top-hero-reveal-late 0.8
   #mv .top-hero-bug { left: 14px; bottom: 14px; bottom: max(14px, calc(100% - 100vh + 128px)); bottom: max(14px, calc(100% - 100svh + 128px)); }
   #mv .top-hero-bug-logo { height: 104px; }
 }
+/* タブレットの幅（480〜991px。開いた折りたたみスマホも）：縦長の動画を幅いっぱいに広げるので、動画が画面の約1.8倍の高さになる。
+   上の「最初の画面の下から128px」で置くと、少し進んだだけで動画の途中（人の上）に浮くため、PCと同じく動画の左下の角に置く（2026-11-26 オーナー） */
+@media (min-width: 480px) and (max-width: 991px) {
+  #mv .top-hero-bug { left: 24px; bottom: 24px; }
+  #mv .top-hero-bug-logo { height: 120px; }
+}
 @media (prefers-reduced-motion: reduce) {
   #mv .top-hero-bug,
   #mv .top-v2-mv-scrollcue { transition: none; }
