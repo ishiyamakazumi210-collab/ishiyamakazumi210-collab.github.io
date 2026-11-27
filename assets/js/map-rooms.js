@@ -25,6 +25,7 @@
   var BBQ_PHOTO = window.KATASHO_DATA.images.bbqArea.src;
   var BBQ_ALT = window.KATASHO_DATA.images.bbqArea.alt;
   var ROOMS = window.KATASHO_DATA.rooms;
+  var DAY_ROOMS = window.KATASHO_DATA.dayRooms || {}; // 日中に使う部屋の定員（2026-11-27 オーナー）
 
   // 部屋別定員(目安/最大)も site.json(rooms.<roomId>.typical/max)が単一データソース。
   // 表記は2パターンのみ(全部屋で確認済み): 目安と最大が異なる部屋は
@@ -109,15 +110,15 @@
     bbq3: { name: 'BBQ場③', body: BBQ_BODY, link: BBQ_LINK, photo: '/assets/img/rooms-2026/bbq3.jpg', alt: '屋外のタイル敷きにBBQテーブルとスツールが並ぶBBQ場' },
 
     // --- 2F ---
-    kaigi3: { name: '会議室③',
+    kaigi3: { name: '会議室③', capacity: DAY_ROOMS.kaigi3,
       sub: 'もとから会議室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: '/assets/img/rooms-2026/kaigi3.jpg', alt: 'フローリングに長机とホワイトボードがある会議室' },
-    kaigi2: { name: '会議室②',
+    kaigi2: { name: '会議室②', capacity: DAY_ROOMS.kaigi2,
       sub: '相談室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: '/assets/img/rooms-2026/kaigi2.jpg', alt: '長机と椅子を置いた小さめの会議室' },
-    kaigi1: { name: '会議室①',
+    kaigi1: { name: '会議室①', capacity: DAY_ROOMS.kaigi1,
       sub: '1年教室', chips: ['Wi-Fi', '冷暖房'], body: KAIGI_BODY, photo: '/assets/img/rooms-2026/kaigi1.jpg', alt: '長机が並び、モニターと黒板のある会議室' },
-    cowork: { name: 'コワークスペース',
+    cowork: { name: 'コワークスペース', capacity: DAY_ROOMS.cowork,
       sub: '2年教室', chips: ['Wi-Fi'], photo: '/assets/img/rooms-2026/cowork.jpg', alt: '家型の木枠の下にデスクとモニターが並ぶコワークスペース' },
-    kyoshitsu2: { name: '教室②',
+    kyoshitsu2: { name: '教室②', capacity: DAY_ROOMS.kyoshitsu2,
       sub: '5年教室', body: CLASSROOM_BODY, photo: '/assets/img/rooms-2026/kyoshitsu2.jpg', alt: '木の机と椅子が並ぶ教室' },
     n2f3: {
       name: '北棟宿泊部屋③',
@@ -156,7 +157,7 @@
       photo: '/assets/img/rooms-2026/s3f2.jpg',
       alt: '木の二段ベッドが並ぶ、もと3年教室の宿泊部屋'
     },
-    kyoshitsu1: { name: '教室①',
+    kyoshitsu1: { name: '教室①', capacity: DAY_ROOMS.kyoshitsu1,
       sub: '4年教室', body: CLASSROOM_BODY, photo: '/assets/img/rooms-2026/kyoshitsu1.jpg', alt: '黒板と木の机が並ぶ教室' },
     ongaku: { name: '音楽室', chips: ['グランドピアノ'], body: '合唱やバンド練習はこちらで。', note: '大きな音が出る楽器は、基本的に21:00までです。', photo: '/assets/img/rooms-2026/ongaku.jpg', alt: '板張りの広い部屋にグランドピアノと黒板がある音楽室' },
     n3f2: {

@@ -21,8 +21,9 @@
   // ---- 転記データ（/play/option/ の記載） ---------------------------------
   var MAX_NIGHTS = 5;
   var MEAL_MIN_SERVINGS = 5; // 食事メニューの「5人分〜」
+  var ROOM_FREE_MIN = 17; // 追加の部屋が1部屋無料になる人数（スタンダードも少人数プランも。2026-11-27 オーナー）
   var DISCOUNT_PERCENT = { renpaku: 5, chiiki: 5, repeat: 5 }; // 連泊割・地域割・リピート割とも、宿泊の基本料金から5%OFF（お食事・オプションは対象外）
-  var DRINK = { label: '飲み放題2時間', price: 1500 }; // 1,500円/人（税込）
+  var DRINK = { label: '飲み放題2時間', price: 1500 }; // おとな1,500円/人（税込）。子どもは KID_RATIO（小学生1,050円・3〜5歳750円。2026-11-27 オーナー）
   var SEASON_LABEL = { weekday: '平日・オフシーズン', holiday: '土日祝・ハイシーズン' }; // 2026-11-24 一度「平日／土日祝」にしたが、オーナー判断でこの表記に戻した
 
   // 昼食（チェックイン前）: 給食は MEALS.kyushoku（全年齢同額）、弁当は 1,250円/人（子ども料金の記載なし）
@@ -94,12 +95,12 @@
       fields: [{ key: 'kegs', label: '樽の数', unit: '樽', max: 10 }]
     },
     {
-      id: 'room', name: '部屋分けオプション', quote: true, price: 5000, unitText: '追加1部屋あたり・26名以上は1部屋無料',
+      id: 'room', name: '部屋分けオプション', quote: true, price: 5000, unitText: '追加1部屋あたり・17名以上は1部屋無料',
       // 2026-11-24 「合計には含めず」は合計欄の注記（P91）と重なるので外した（P82）
       // 2026-11-24 オーナー確認：少人数プランも「少人数用の追加部屋を1部屋まで」使える
-      // 2026-11-25 オーナー確認：少人数プランの追加部屋は1部屋まで・16名以上は無料・15名以下は5,000円
+      // 2026-11-25 オーナー確認：少人数プランの追加部屋は1部屋まで。2026-11-27 オーナー：無料になるのはスタンダードも少人数も17名以上（16名以下は5,000円）
       // 2026-11-25 合計に入れたので、カードの見出しは「5,000円（追加1部屋あたり・…）」。金額を2回書かない
-      compactUnitText: '追加1部屋あたり・16名以上は無料',
+      compactUnitText: '追加1部屋あたり・17名以上は無料',
       compactNote: '少人数プランは追加部屋1部屋まで',
       note: '追加部屋は最大2部屋です。料金は合計に入っています。',
       fields: [{ key: 'rooms', label: '追加する部屋数', unit: '部屋', max: 2, compactMax: 1 }]
@@ -298,10 +299,8 @@
           addMeal(nightDate(n) + ' 夕食 ' + dinner.label, dinner, extra, dc);
         }
         if (s.drink[n]) {
-          var cups = payers;
-          var drinkAmount = cups * DRINK.price;
-          res.meals.push({ label: nightDate(n) + ' ' + DRINK.label, detail: cups + '人×' + fmt(DRINK.price), amount: drinkAmount, note: '' });
-          res.mealTotal += drinkAmount;
+          // 飲み放題は料金のかかる方全員分。子どもは夕食と同じ割引（小学生30%OFF・3〜5歳50%OFF。2026-11-27 オーナー）
+          addMeal(nightDate(n) + ' ' + DRINK.label, { flat: DRINK.price, kidRates: true }, '', counts);
         }
         if (s.breakfast[n]) {
           addMeal((d0 ? dateLabel(addDays(d0, n + 1)) : (n + 2) + '日目の朝') + ' 朝食 ' + BREAKFAST.label, BREAKFAST);
@@ -332,15 +331,15 @@
     if (o.beer.kegs > 0) {
       res.options.push({ label: OPT.beer.name, detail: o.beer.kegs + '樽×' + fmt(OPT.beer.price), amount: o.beer.kegs * OPT.beer.price, group: OPT.beer.group });
     }
-    // 少人数プランは追加部屋1部屋まで。スタンダードは26名以上で1部屋無料、少人数は16名以上で無料（15名以下は5,000円）。合計に入れる（2026-11-25 オーナー決定）
+    // 少人数プランは追加部屋1部屋まで。スタンダードも少人数も17名以上で1部屋無料（16名以下は5,000円。2026-11-27 オーナー：少人数プランの16名が入りきらない、という考え方でそろえた）。合計に入れる（2026-11-25 オーナー決定）
     // 無料の人数に、添い寝の0〜2歳は数えない（2026-11-25 オーナー決定）。おとな＋小学生＋3〜5歳＝payers で数える
     var roomCount = compact ? Math.min(o.room.rooms, OPT.room.fields[0].compactMax) : o.room.rooms;
     if (roomCount > 0) {
-      var roomFree = compact ? (payers >= 16 ? 1 : 0) : (payers >= 26 ? 1 : 0);
+      var roomFree = payers >= ROOM_FREE_MIN ? 1 : 0;
       var roomPaid = Math.max(0, roomCount - roomFree);
       res.options.push({
         label: OPT.room.name + '（追加' + roomCount + '部屋）',
-        detail: roomFree > 0 ? (roomPaid > 0 ? '1部屋無料＋' + roomPaid + '部屋×' + fmt(OPT.room.price) : (compact ? '16名以上は無料' : '26名以上は1部屋無料')) : roomPaid + '部屋×' + fmt(OPT.room.price),
+        detail: roomFree > 0 ? (roomPaid > 0 ? '1部屋無料＋' + roomPaid + '部屋×' + fmt(OPT.room.price) : (compact ? '17名以上は無料' : '17名以上は1部屋無料')) : roomPaid + '部屋×' + fmt(OPT.room.price),
         amount: roomPaid * OPT.room.price
       });
     }
@@ -678,9 +677,13 @@
         drinkText.appendChild(drinkStrong);
         drinkText.appendChild(document.createTextNode('\u3000'));
         drinkText.appendChild(h('span', 'top-v2-nowrap', '全員分・'));
-        drinkText.appendChild(h('span', 'top-v2-nowrap', '1人' + priceYen(DRINK.price)));
-        drinkText.appendChild(h('span', 'top-v2-nowrap', '（2歳以下を除く）'));
-        drinkText.appendChild(h('small', 'top-v2-sim-check-sub', '人数は選べません（料金のかかる方全員分）'));
+        drinkText.appendChild(h('span', 'top-v2-nowrap', 'おとな1人' + priceYen(DRINK.price)));
+        // 値段の途中で切れないよう、ひとまとまりずつ nowrap で包む（2026-11-27）
+        var drinkSub = h('small', 'top-v2-sim-check-sub');
+        ['小学生' + fmt(Math.round(DRINK.price * KID_RATIO.elem)) + '・', '3〜5歳' + fmt(Math.round(DRINK.price * KID_RATIO.pre)) + '・', '2歳以下はかかりません。', '人数は選べません', '（料金のかかる方全員分）'].forEach(function (t) {
+          drinkSub.appendChild(h('span', 'top-v2-nowrap', t));
+        });
+        drinkText.appendChild(drinkSub);
         drinkRow.appendChild(drinkInput);
         drinkRow.appendChild(rowThumb('drinks'));
         drinkRow.appendChild(drinkText);

@@ -15316,3 +15316,8 @@ bx-w, bx-p { display: inline; }
 .top-v2-faq-count { line-height: 1.7; }
 .top-v2-teacher-note .top-v2-price-notes li { line-height: 1.8; }
 
+
+/* 2026-11-27 合宿の名前を「サークル・ゼミ・部活の合宿」にそろえた（オーナー）。スマホのメニューではこのボタンだけ2行になるので、
+   同じ段のボタン（研修・会議）の高さをそろえる */
+#headerNav .l-nav_menuList .l-nav_menuSublist > li { display: flex; }
+#headerNav .l-nav_menuList .l-nav_menuSublist > li > .l-nav_menuSublink { flex: 1 1 auto; }
