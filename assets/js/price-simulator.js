@@ -34,13 +34,13 @@
   ];
   // 夕食: 子ども料金（小学生30%OFF・3〜5歳50%OFF）があるのは BBQ とすき焼きだけ（2026-11-24 オーナー決定 D4）。
   // BBQ は MEALS.bbq、すき焼きは大人料金 × KID_RATIO で計算（kidRates）。カレー・弁当は全員同額。
-  // 少人数プランは「夕食オプションはBBQのみ」。
+  // 少人数プランの夕食オプションは BBQ と四色弁当（2026-11-28 オーナー。予約サイトでも少人数プランで四色弁当を選べる）。
   var DINNERS = [
     { id: 'byo', label: '不要・持ち込み（自分たちでBBQもOK）', compactOk: true },
     { id: 'bbq', label: 'BBQ（満腹コース）', mealKey: 'bbq', compactOk: true },
     { id: 'sukiyaki', label: '【冬季限定】すき焼き', flat: 5000, kidRates: true, months: [11, 12, 1, 2, 3], seasonNote: '【冬季限定】すき焼きは11月〜3月のみの提供です' },
     { id: 'curry', label: '林間学校式カレー', flat: 2000, note: 'お客様自身で調理していただきます' },
-    { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250 }
+    { id: 'bento', label: '贅沢しずおか四色弁当', flat: 1250, compactOk: true }
   ];
   var KID_RATIO = { elem: 0.7, pre: 0.5 };
   var BREAKFAST = { label: '朝食サンドイッチ', mealKey: 'sando' }; // 2026-11-24 そろえる言葉「朝食サンドイッチ」
@@ -261,7 +261,7 @@
     }
     if (anyFloor) { note('最低利用金額に満たない泊は、最低利用金額で計算しています'); }
 
-    // 食事（食事は「5人分〜」。少人数プランの夕食はBBQのみ）
+    // 食事（食事は「5人分〜」。少人数プランの夕食はBBQ・四色弁当のみ）
     // 夕食の人数が全員より少ないときは、おとな→小学生→3〜5歳の順に減らす
     function countsFor(count) {
       var c = { adult: counts.adult, elem: counts.elem, pre: counts.pre };
@@ -900,7 +900,7 @@
       for (var j = 0; j < MAX_NIGHTS; j += 1) {
         if (!findDef(DINNERS, s.dinner[j]).compactOk) {
           s.dinner[j] = 'byo';
-          flash.meal = '少人数プランの夕食オプションはBBQのみのため、BBQ以外は「不要・持ち込み」に戻しました。';
+          flash.meal = '少人数プランの夕食オプションはBBQ・四色弁当のみのため、それ以外は「不要・持ち込み」に戻しました。';
         }
       }
       // 少人数プランは追加部屋1部屋まで（スタンダードプランは最大2部屋のまま）
