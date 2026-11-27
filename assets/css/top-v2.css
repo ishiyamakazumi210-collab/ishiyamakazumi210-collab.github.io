@@ -15447,3 +15447,40 @@ bx-w, bx-p { display: inline; }
   inset: -8px;
   border-radius: 50%;
 }
+
+/* 2026-11-27 比べ表：一言の答え＋最初は4行、残り7行は「ほかの違いも見る」で開く（料金・オプション #plan-compare） */
+.top-v2-plan-compare-lead {
+  margin: 0 0 10px !important;
+  color: #2e2518;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.75;
+}
+.top-v2-plan-compare-lead strong { color: #2f7890; font-weight: 900; }
+.top-v2-plan-compare tbody[hidden] { display: none !important; }
+.top-v2-plan-compare-more-wrap { margin: 10px 0 0 !important; text-align: center; }
+.top-v2-plan-compare-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 6px 18px;
+  border: 2px solid #2f7890;
+  border-radius: 999px;
+  background: #fff;
+  color: #2f7890;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.top-v2-plan-compare-toggle::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 2.5px solid currentColor;
+  border-bottom: 2.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+.top-v2-plan-compare-toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
+.top-v2-plan-compare-toggle[hidden] { display: none; }

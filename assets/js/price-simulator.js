@@ -46,14 +46,15 @@
   var BREAKFAST = { label: '朝食サンドイッチ', mealKey: 'sando' }; // 2026-11-24 そろえる言葉「朝食サンドイッチ」
   // 2026-11-24 昼食・夕食は写真つきカードで選ぶ（オーナー判断）。写真は /play/option/ などで使っている写真を
   // カード用に縮めたサムネイル（480×360のJPG、assets/img/meal-thumbs/）。元の大きい写真は読まない。
-  // 写真がないもの（不要・持ち込み、すき焼き＝今の写真は別の料理）は、薄い色の枠に文字だけ出す。
+  // 写真がないもの（不要・持ち込み）は、薄い色の枠だけ出す。すき焼きは 2026-11-27 に写真が入った。
   var MEAL_PHOTOS = {
     kyushoku: { src: '/assets/img/meal-thumbs/kyushoku.jpg', w: 480, h: 360 },
     bento: { src: '/assets/img/meal-thumbs/bento.jpg', w: 480, h: 360 },
     bbq: { src: '/assets/img/meal-thumbs/bbq.jpg', w: 480, h: 360 },
-    curry: { src: '/assets/img/meal-thumbs/curry.jpg', w: 480, h: 360 }
+    curry: { src: '/assets/img/meal-thumbs/curry.jpg', w: 480, h: 360 },
+    sukiyaki: { src: '/assets/img/meal-thumbs/sukiyaki.jpg', w: 480, h: 360 } // 2026-11-27 オーナー選定（実際の鍋の写真をもとに作った画像）
   };
-  var MEAL_NO_PHOTO = { byo: '', sukiyaki: '写真準備中' }; // 2026-11-24 「不要・持ち込み」は名前と重なるので枠は空に
+  var MEAL_NO_PHOTO = { byo: '' }; // 2026-11-24 「不要・持ち込み」は名前と重なるので枠は空に
   // 2026-11-24 朝食・飲み放題・オプションの行にも小さな写真（オーナー指示：写真を付けられるものは全部付ける）。
   // /play/option/ で使っている写真を同じ 480×360 のサムネイルに縮めたもの。写真がないものは「写真準備中」の枠。
   var ROW_PHOTOS = {
