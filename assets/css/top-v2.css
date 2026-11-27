@@ -15484,3 +15484,20 @@ bx-w, bx-p { display: inline; }
 }
 .top-v2-plan-compare-toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
 .top-v2-plan-compare-toggle[hidden] { display: none; }
+
+/* 2026-11-27 クチコミのカードから、Googleマップのそのクチコミへ飛べるようにした（オーナー）。リンクは各クチコミの「共有」のリンク */
+.top-v2-review-card--g .top-v2-review-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.top-v2-review-link {
+  padding: 6px 0;
+  color: #2f7890;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
