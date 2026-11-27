@@ -76,7 +76,7 @@ window.KATASHO_DATA = {
       "max": "6"
     },
     "s3f2": {
-      "typical": "10",
+      "typical": "12",
       "max": "16"
     },
     "n3f2": {

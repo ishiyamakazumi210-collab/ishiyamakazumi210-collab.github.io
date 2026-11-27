@@ -25,6 +25,33 @@
   var BBQ_PHOTO = window.KATASHO_DATA.images.bbqArea.src;
   var BBQ_ALT = window.KATASHO_DATA.images.bbqArea.alt;
   var ROOMS = window.KATASHO_DATA.rooms;
+
+  // 2026-11-27 写真の切り替えで、前に開いた写真が一瞬見えるのを防ぐ（オーナー指摘）。
+  // 新しい写真が届くまで写真を透明にしておき（枠は4:3で場所を取ったまま）、届いたら見せる。
+  // 印に触れた時点（pointerdown・hover・focus）で読み込みを始めて、待ち時間も短くする
+  var preloaded = {};
+  function preloadPhoto(src) {
+    if (!src || preloaded[src]) { return; }
+    preloaded[src] = true;
+    var im = new Image();
+    im.src = src;
+  }
+  function swapPhoto(photoEl, src) {
+    var token = String(Date.now()) + Math.random();
+    photoEl.setAttribute('data-load-token', token);
+    function done() {
+      if (photoEl.getAttribute('data-load-token') !== token) { return; }
+      photoEl.classList.remove('is-loading');
+    }
+    if (photoEl.getAttribute('src') === src && photoEl.complete && photoEl.naturalWidth > 0) { done(); return; }
+    photoEl.classList.add('is-loading');
+    photoEl.onload = done;
+    photoEl.onerror = done;
+    photoEl.src = src;
+    if (photoEl.complete && photoEl.naturalWidth > 0) {
+      if (typeof photoEl.decode === 'function') { photoEl.decode().then(done, done); } else { done(); }
+    }
+  }
   var DAY_ROOMS = window.KATASHO_DATA.dayRooms || {}; // 日中に使う部屋の定員（2026-11-27 オーナー）
 
   // 部屋別定員(目安/最大)も site.json(rooms.<roomId>.typical/max)が単一データソース。
@@ -211,7 +238,7 @@
 
     var photoEl = dialog.querySelector('.top-v2-maproom-dialog-photo');
     if (data.photo) {
-      photoEl.src = data.photo;
+      swapPhoto(photoEl, data.photo);
       photoEl.alt = data.alt || (data.photo === STAY_PHOTO ? STAY_PHOTO_ALT : CLASSROOM_PHOTO_ALT);
       photoEl.hidden = false;
     } else {
@@ -305,6 +332,9 @@
 
       btn.addEventListener('click', function () {
         openRoom(spot.id, dialog);
+      });
+      ['pointerdown', 'pointerenter', 'focus'].forEach(function (ev) {
+        btn.addEventListener(ev, function () { if (data && data.photo) { preloadPhoto(data.photo); } }, { passive: true });
       });
 
       stage.appendChild(btn);

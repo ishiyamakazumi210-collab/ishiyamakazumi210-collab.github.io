@@ -12,6 +12,33 @@
   // クリック時にダイアログを閉じてから既定のアンカー遷移に任せる(下のboot内で配線)
   var FLOORS_LINK = { href: '#floors', label: '各階の部屋を見る ↓' };
 
+  // 2026-11-27 写真の切り替えで、前に開いた写真が一瞬見えるのを防ぐ（オーナー指摘）。
+  // 新しい写真が届くまで写真を透明にしておき（枠は4:3で場所を取ったまま）、届いたら見せる。
+  // 印に触れた時点（pointerdown・hover・focus）で読み込みを始めて、待ち時間も短くする
+  var preloaded = {};
+  function preloadPhoto(src) {
+    if (!src || preloaded[src]) { return; }
+    preloaded[src] = true;
+    var im = new Image();
+    im.src = src;
+  }
+  function swapPhoto(photoEl, src) {
+    var token = String(Date.now()) + Math.random();
+    photoEl.setAttribute('data-load-token', token);
+    function done() {
+      if (photoEl.getAttribute('data-load-token') !== token) { return; }
+      photoEl.classList.remove('is-loading');
+    }
+    if (photoEl.getAttribute('src') === src && photoEl.complete && photoEl.naturalWidth > 0) { done(); return; }
+    photoEl.classList.add('is-loading');
+    photoEl.onload = done;
+    photoEl.onerror = done;
+    photoEl.src = src;
+    if (photoEl.complete && photoEl.naturalWidth > 0) {
+      if (typeof photoEl.decode === 'function') { photoEl.decode().then(done, done); } else { done(); }
+    }
+  }
+
   var SPOT_DATA = {
     kita: {
       name: '北棟',
@@ -87,7 +114,7 @@
 
     var photoEl = dialog.querySelector('.top-v2-mapspot-dialog-photo');
     if (data.photo) {
-      photoEl.src = data.photo;
+      swapPhoto(photoEl, data.photo);
       photoEl.alt = data.alt || '';
       photoEl.hidden = false;
     } else {
@@ -144,6 +171,9 @@
     triggers.forEach(function (btn) {
       btn.addEventListener('click', function () {
         openSpot(btn.dataset.spot, dialog);
+      });
+      ['pointerdown', 'pointerenter', 'focus'].forEach(function (ev) {
+        btn.addEventListener(ev, function () { var d = SPOT_DATA[btn.dataset.spot]; if (d && d.photo) { preloadPhoto(d.photo); } }, { passive: true });
       });
       // 写真のあるスポットだけカメラバッジ(フロア図の部屋バッジと同じ約束=
       // 「押すと写真が見られる」。写真なしスポットに付けると嘘になるため
