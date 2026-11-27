@@ -68,3 +68,19 @@ html.top-hero-opening-on #mv .top-hero-bug { animation: top-hero-reveal-late 0.8
   #mv .top-hero-bug,
   #mv .top-v2-mv-scrollcue { transition: none; }
 }
+
+/* 2026-11-27 タブレットで動画が画面より長すぎる（縦向き1.2〜1.5画面、横向き2.7画面。オーナー「直してみて」）。
+   ・横向き（タブレット・スマホ）は、PCと同じ横長の動画を使う（top-hero.js も同じ条件で読み込む側を選ぶ）
+   ・縦向きのタブレット（480〜991px）は、動画の高さを最初の画面に収まる高さまでにして、上下を少し切る。
+     動画は上から126px（ヘッダーの下）で始まるので、その分を引く。スマホの縦向き（〜479px）は今のまま収まっている */
+@media (max-width: 991px) and (orientation: landscape) {
+  #mv .u-pc { display: block !important; } /* テーマの「991px以下は .u-pc を隠す（!important）」より強くする */
+  #mv .u-tab { display: none !important; }
+}
+@media (min-width: 480px) and (max-width: 991px) and (orientation: portrait) {
+  #mv .l-mv_video .u-tab video {
+    height: max(420px, calc(100vh - 126px));
+    height: max(420px, calc(100svh - 126px));
+    object-fit: cover;
+  }
+}

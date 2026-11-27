@@ -8,7 +8,7 @@
   // 画面幅が変わって表示側が入れ替わったら、その時点で読み込む。動画は再圧縮した軽量版（約5.7MB→約4.1MB）。
   var lazyVideos = document.querySelectorAll('video.top-hero-video');
   if (lazyVideos.length && window.matchMedia) {
-    var tabMq = window.matchMedia('(max-width: 991px)');
+    var tabMq = window.matchMedia('(max-width: 991px) and (orientation: portrait)'); // 2026-11-27 横向きはPCの横長の動画（top-hero.css と同じ条件）
     var activateVideo = function () {
       var want = tabMq.matches ? 'tab' : 'pc';
       Array.prototype.forEach.call(lazyVideos, function (v) {

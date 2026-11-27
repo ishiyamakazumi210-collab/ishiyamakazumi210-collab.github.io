@@ -15501,3 +15501,14 @@ bx-w, bx-p { display: inline; }
   text-underline-offset: 3px;
   white-space: nowrap;
 }
+
+/* 2026-11-27 トップ「行くなら、誰と？」の4枚の下に、社員旅行・町内会・子ども会など団体向けの案内を1行（オーナー了承）。新しいプランやページは作らない */
+.top-v2-doors-more {
+  margin: 14px auto 0 !important;
+  max-width: 40em;
+  color: #4a3f2f;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.75;
+  text-align: center;
+}
