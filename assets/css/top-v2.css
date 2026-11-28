@@ -15512,3 +15512,15 @@ bx-w, bx-p { display: inline; }
   line-height: 1.75;
   text-align: center;
 }
+
+/* 2026-11-28 場面ページでは、1枚のクチコミを中央に置き、2枚は広い画面でも2列に保つ。 */
+@media (min-width: 768px) {
+  .top-v2-review-grid--scene:has(.top-v2-review-card--g) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .top-v2-review-grid--scene:has(> .top-v2-review-card--g:only-child) {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 640px;
+    margin-inline: auto;
+  }
+}

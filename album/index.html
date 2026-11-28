@@ -32,7 +32,7 @@
 
         <link rel="stylesheet" href="/assets/wp/themes/katasho/style.css"/>
         <link rel="stylesheet" href="/assets/wp/themes/katasho/lp-style.css"/>
-        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261127f"/>
+        <link rel="stylesheet" href="/assets/css/top-v2.css?v=20261128a"/>
         <link rel="icon" href="/assets/wp/themes/katasho/asset/image/favicon.svg"/>
         <link rel="mask-icon" href="/assets/wp/themes/katasho/asset/image/favicon_b.svg" color="#fff"/>
 
@@ -465,25 +465,7 @@ height: 78vw;
     <p class="top-v2-actions top-v2-scene-links"><a href="/friends/" class="top-v2-inline-link" data-event="album_scene_friends"><bx-w><bx-p>友達と</bx-p><bx-p> →</bx-p></bx-w></a> <a href="/family/" class="top-v2-inline-link" data-event="album_scene_family"><bx-w><bx-p>家族で</bx-p><bx-p> →</bx-p></bx-w></a> <a href="/gasshuku/" class="top-v2-inline-link" data-event="album_scene_gasshuku"><bx-w><bx-p>合宿で</bx-p><bx-p> →</bx-p></bx-w></a> <a href="/kenshu/" class="top-v2-inline-link" data-event="album_scene_kenshu"><bx-w><bx-p>研修・会議で</bx-p><bx-p> →</bx-p></bx-w></a></p>
   </div>
 </section>
-<script>
-(function () {
-  var cards = document.querySelectorAll('.top-v2-review-card--g');
-  Array.prototype.forEach.call(cards, function (card) {
-    var text = card.querySelector('.top-v2-review-text');
-    var btn = card.querySelector('.top-v2-review-more');
-    if (!text || !btn) return;
-    if (text.scrollHeight > text.clientHeight + 2) {
-      btn.hidden = false;
-      btn.setAttribute('aria-expanded', 'false');
-    }
-    btn.addEventListener('click', function () {
-      var open = card.classList.toggle('is-open');
-      btn.textContent = open ? '閉じる' : 'もっと見る';
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-})();
-</script>
+<script src="/assets/js/review-more.js?v=20261128a" defer></script>
 
 <!-- 3. SNS -->
 <section class="top-v2-scene-section" id="sns">
